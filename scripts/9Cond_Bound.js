@@ -157,7 +157,7 @@ function dataCombinedCompile(xLine, yLine) {
     return dataLine;
 };
 
-function initialPlot (xMin, xMax, t, plotStep, layout, initialAmplitude){
+function dataPlot (xMin, xMax, t, plotStep, initialAmplitude) {
     let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
     let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
     let xLine = setupxData(xMin, xMax, plotStep);
@@ -173,17 +173,43 @@ function initialPlot (xMin, xMax, t, plotStep, layout, initialAmplitude){
     if (condition === "incident") {
         let yLine = setupyIncidentData(xMin, xMax, t, plotStep, initialAmplitude, omega, sigma);
         let dataIncident = dataIncidentCompile (xLine, yLine);
-        Plotly.react("Boundary_Plot_9", [dataIncident, dataIncidentEnvelope], layout);
+        return [dataIncident, dataIncidentEnvelope];
     } else if (condition === "reflected") {
         let yLine = setupyReflectionData (xMin, xMax, plotStep, initialAmplitude, omega, sigma);
         let dataReflection = dataReflectionCompile (xLine, yLine);
-        Plotly.react("Boundary_Plot_9", [dataReflection, dataReflectionEnvelope], layout);
+        return [dataReflection, dataReflectionEnvelope];
     } else if (condition === "reflected plus incident") {
         let yLine = setupyCombinedData (xMin, xMax, plotStep, initialAmplitude, omega, sigma);
         let dataCombined = dataCombinedCompile (xLine, yLine);
-        Plotly.react("Boundary_Plot_9", [dataCombined, dataIncidentEnvelope, dataReflectionEnvelope], layout);
+        return [dataCombined, dataIncidentEnvelope, dataReflectionEnvelope];
     };
 };
+
+function plot(data, layout) {
+    Plotly.react("Boundary_Plot_9", data, layout);
+}
+
+function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
+    let data = dataPlot(xMin, xMax, t, plotStep, initialAmplitude);
+    plot(data, layout);
+}
+
+function playLoop(xMin, xMax, t, plotStep, initialAmplitude){//adds time evolution
+        if(isPlay === true) {
+            t+=0.1;
+            Plotly.animate("Boundary_Plot_9",
+                {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
+                {
+                    fromcurrent: true,
+                    transition: {duration: 0,},
+                    frame: {duration: 0, redraw: false,},
+                    //mode: "afterall"
+                    mode: "immediate"
+                });
+            window.requestAnimationFrame(playLoop);//loads next frame
+        }
+        return 0;
+    }
 
 function main(){
     const xMin = -2e-6;
@@ -223,13 +249,13 @@ function main(){
 
 
 
-    initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude);
+    compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
 
 //jQuery to update the plot as the value of the slider changes.
 
-    dom.tswitch.on("change", initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude) );
-    dom.omegaSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
-    dom.sigmaSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+//    dom.tswitch.on("change", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
+//    dom.omegaSlider.on("input", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
+//    dom.sigmaSlider.on("input", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
 
     $("input[type=range]").each(function () {
         /*Allows for live update for display values*/
@@ -237,7 +263,7 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude);
+            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
         });
 
     });
@@ -248,7 +274,7 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
 //            $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude);
+            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
         });
 
     });
@@ -257,15 +283,9 @@ function main(){
         document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
         isPlay = !isPlay;
 //        t = 0;//reset time
-//        requestAnimationFrame(initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude));
+//        window.requestAnimationFrame(playLoop);
     });
 
-//    $('#Function_Selector').on("input", function(){
-//        //update plots when function is changed
-////        plot(xMin, xMax, yMin, yMax, plotStep, xScalarPlot, yScalarPlot, xScalarLine1_1b, yScalarLine1_1b,
-////        xScalarLine2_1b, yScalarLine2_1b, xLineMin, yLineMin, xLineMax, yLineMax, dataLineAVector, dataLineBVector, dataPointAVector, dataPointBVector,
-////        sigma1b,layoutScalar_1b, layoutVector_1b);
-//    });
 };
 
 $(document).ready(main); //Load setup when document is ready.
