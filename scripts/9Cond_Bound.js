@@ -194,9 +194,9 @@ function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
     plot(data, layout);
 }
 
-function playLoop(xMin, xMax, t, plotStep, initialAmplitude){//adds time evolution
+function playLoop(xMin, xMax, t, plotStep, initialAmplitude, isPlay){//adds time evolution
         if(isPlay === true) {
-            t+=0.1;
+            t += 0.1;
             Plotly.animate("Boundary_Plot_9",
                 {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
                 {
@@ -206,10 +206,12 @@ function playLoop(xMin, xMax, t, plotStep, initialAmplitude){//adds time evoluti
                     //mode: "afterall"
                     mode: "immediate"
                 });
+
             window.requestAnimationFrame(playLoop);//loads next frame
-        }
-        return 0;
-    }
+            console.log(t);
+        } else {
+        console.log("yeet");}
+    };
 
 function main(){
     const xMin = -2e-6;
@@ -263,7 +265,8 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+//            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+            playLoop(xMin, xMax, t, plotStep, initialAmplitude, isPlay);
         });
 
     });
@@ -282,10 +285,10 @@ function main(){
     $('#playButton').on('click', function() {
         document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
         isPlay = !isPlay;
-//        t = 0;//reset time
-//        window.requestAnimationFrame(playLoop);
+        t = 0;//reset time
+        requestAnimationFrame(playLoop(xMin, xMax, t, plotStep, initialAmplitude, isPlay));
     });
 
 };
 
-$(document).ready(main); //Load setup when document is ready.
+$(window).on('load', main); //Load setup when document is ready.
