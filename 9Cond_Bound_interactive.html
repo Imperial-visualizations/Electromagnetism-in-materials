@@ -42,7 +42,7 @@
                     <label class="radioTitle">Wave</label>
 
                     <label for="incident" class="radio">
-                      <input type="radio" id="incident" value="incident" name="wave-switch">
+                      <input type="radio" id="incident" value="incident" name="wave-switch" checked="checked">
                       <span>Incident & Transmitted</span>
                     </label>
                     <label for="reflected" class="radio">
@@ -50,7 +50,7 @@
                       <span>Reflected & Transmitted</span>
                     </label>
                     <label for="reflected plus incident" class="radio">
-                      <input type="radio" id="reflected plus incident" value="reflected plus incident" name="wave-switch" checked="checked" >
+                      <input type="radio" id="reflected plus incident" value="reflected plus incident" name="wave-switch"  >
                       <span>Combined</span>
                     </label>
                 </div>
@@ -72,10 +72,10 @@
 
             <div>
                 <h6> $N / s^{-1} = $
-                    <output id="Slider_Skin_Depth_9_value" for="Slider_Skin_Depth_9">5</output>  </h6>
+                    <output id="Slider_N_9_value" for="Slider_N_9">5</output>  </h6>
                     <label>
                         <span class="sliderMin">A</span>
-                        <input id="Slider_Skin_Depth_9" class="inputs" type="range" value="2" min="0.2" max="10" step="0.1" oninput="Slider_Skin_Depth_9_value.value=Slider_Skin_Depth_9.value"/></input>
+                        <input id="Slider_N_9" class="inputs" type="range" value="2" min="0.2" max="10" step="0.1" oninput="Slider_N_9_value.value=Slider_N_9.value"/></input>
                         <span class="sliderMax">B</span>
                     </label>
                     <!--END Slider-->

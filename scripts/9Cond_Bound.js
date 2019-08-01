@@ -36,11 +36,19 @@ function dataIncidentCompile(xLine, yLine) {
 
 function initialPlot (xMin, xMax, plotStep, layout, initialAmplitude){
     let omega = parseFloat(document.getElementById('Slider_omega_9').value);
-    let skinDepth = parseFloat(document.getElementById('Slider_Skin_Depth_9').value);
+    let skinDepth = parseFloat(document.getElementById('Slider_N_9').value);
     let xLine = setupxData(xMin, xMax, plotStep);
     let yLine = setupyIncidentData(xMin, xMax, plotStep, initialAmplitude, omega, skinDepth);
     let dataIncident = dataIncidentCompile (xLine, yLine);
-    Plotly.react("Boundary_Plot_9", [dataIncident], layout);
+    let condition =  $("input[name = wave-switch]:checked").val();
+
+    if (condition === "incident") {
+        Plotly.react("Boundary_Plot_9", [dataIncident], layout);
+    } else if (condition === "reflected") {
+        Plotly.purge("Boundary_Plot_9");
+    } else if (condition === "reflected plus incident") {
+        Plotly.purge("Boundary_Plot_9");
+    };
 };
 
 function main(){
@@ -50,6 +58,12 @@ function main(){
     let skinDepth = 3;
     let initialAmplitude = 10;
     let omega = 2;
+
+    const dom = {
+        tswitch: $("#wave-switch input"),
+        afSlider: $("input#Slider_omega_9"),
+        NSlider: $("input#Slider_N_9"),
+    };
 
     const layoutVector_1b = {
         title: "Gradient Field",
@@ -76,11 +90,27 @@ function main(){
     initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
 
 //jQuery to update the plot as the value of the slider changes.
+
+    dom.tswitch.on("change", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+    dom.afSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+    dom.NSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+
     $("input[type=range]").each(function () {
         /*Allows for live update for display values*/
         $(this).on('input', function(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
+            //NB: Display values are restricted by their definition in the HTML to always display nice number.
+            initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
+        });
+
+    });
+
+    $("input[type=radio]").each(function () {
+        /*Allows for live update for display values*/
+        $(this).on('input', function(){
+            //Displays: (FLT Value) + (Corresponding Unit(if defined))
+//            $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
             initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
         });
