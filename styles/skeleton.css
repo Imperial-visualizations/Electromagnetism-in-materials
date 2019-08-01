@@ -98,6 +98,8 @@
 
   .one-half.column                { width: 48%; }
 
+  .one-sixth.column               { width: 17.33333333335%; }
+
   /* Offsets */
   .offset-by-one.column,
   .offset-by-one.columns          { margin-left: 8.66666666667%; }
