@@ -10,9 +10,9 @@ function setupyIncidentData (xMin, xMax, plotStep, initialAmplitude, omega, skin
     let yLine = [];
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(initialAmplitude*Math.cos(2* omega / 3 *i));
+            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i));
         } else {
-            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3 *i))
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i))
         };
     };
     return yLine;
@@ -35,8 +35,9 @@ function dataIncidentCompile(xLine, yLine) {
 };
 
 function initialPlot (xMin, xMax, plotStep, layout, initialAmplitude){
-    let omega = parseFloat(document.getElementById('Slider_omega_9').value);
-    let skinDepth = parseFloat(document.getElementById('Slider_N_9').value);
+    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
+    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,4);
+    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega))
     let xLine = setupxData(xMin, xMax, plotStep);
     let yLine = setupyIncidentData(xMin, xMax, plotStep, initialAmplitude, omega, skinDepth);
     let dataIncident = dataIncidentCompile (xLine, yLine);
@@ -52,17 +53,18 @@ function initialPlot (xMin, xMax, plotStep, layout, initialAmplitude){
 };
 
 function main(){
-    const xMin = -20;
-    const xMax = 20;
-    const plotStep = 0.01;
+    const xMin = -1e-6;
+    const xMax = -1* xMin;
+    const plotStep = xMax/10000;
     let skinDepth = 3;
-    let initialAmplitude = 10;
+    let initialAmplitude = 0.7 * xMax;
     let omega = 2;
+    let isPlay = false;
 
     const dom = {
         tswitch: $("#wave-switch input"),
-        afSlider: $("input#Slider_omega_9"),
-        NSlider: $("input#Slider_N_9"),
+        omegaSlider: $("input#Slider_omega_9"),
+        sigmaSlider: $("input#Slider_sigma_9"),
     };
 
     const layoutVector_1b = {
@@ -70,13 +72,13 @@ function main(){
         showlegend: false,
         xaxis: {
             constrain: "domain",
-            range: [-20, 20],
+            range: [xMin, xMax],
             title: "x",
             showticklabels: false
         },
         yaxis: {
 //            scaleanchor: "x",
-            range: [-15, 15],
+            range: [xMin, xMax],
             showticklabels: false,
             title: "y"
         },
@@ -92,8 +94,8 @@ function main(){
 //jQuery to update the plot as the value of the slider changes.
 
     dom.tswitch.on("change", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
-    dom.afSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
-    dom.NSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+    dom.omegaSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+    dom.sigmaSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
 
     $("input[type=range]").each(function () {
         /*Allows for live update for display values*/
@@ -115,6 +117,13 @@ function main(){
             initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
         });
 
+    });
+
+    $('#playButton').on('click', function() {
+        document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
+        isPlay = !isPlay;
+//        t = 0;//reset time
+//        requestAnimationFrame(initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude));
     });
 
 //    $('#Function_Selector').on("input", function(){
