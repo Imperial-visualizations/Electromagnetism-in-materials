@@ -6,17 +6,74 @@ function setupxData (xMin, xMax, plotStep) {
     return xLine;
 };
 
-function setupyIncidentData (xMin, xMax, plotStep, initialAmplitude, omega, skinDepth){
+function setupyIncidentData (xMin, xMax, t, plotStep, initialAmplitude, omega, sigma){
     let yLine = [];
+    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i));
+            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+        } else {
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+        };
+    };
+    return yLine;
+};
+
+function setupyReflectionData (xMin, xMax, plotStep, initialAmplitude, omega, sigma) {
+    let yLine = [];
+    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
+    for (let i = xMin; i <= xMax; i += plotStep) {
+        if (i <= 0) {
+            yLine.push(Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude*Math.cos(2* omega / 3e8 *i - Math.PI));
         } else {
             yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i))
         };
     };
     return yLine;
-};
+
+}
+
+function setupyCombinedData (xMin, xMax, plotStep, initialAmplitude, omega, sigma) {
+    let yLine = [];
+    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
+    for (let i = xMin; i <= xMax; i += plotStep) {
+        if (i <= 0) {
+            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i) +
+            Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude*Math.cos(2* omega / 3e8 *i - Math.PI));
+        } else {
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i));
+        };
+    };
+    return yLine;
+
+}
+
+function setupyIncidentEnvelopeData (xMin, xMax, plotStep, initialAmplitude, omega, sigma) {
+    let yLine = [];
+    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
+    for (let i = xMin; i <= xMax; i += plotStep) {
+        if (i <= 0) {
+            yLine.push(initialAmplitude);
+        } else {
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth));
+        };
+    };
+    return yLine;
+}
+
+function setupyReflectionEnvelopeData (xMin, xMax, plotStep, initialAmplitude, omega, sigma) {
+    let yLine = [];
+    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
+    for (let i = xMin; i <= xMax; i += plotStep) {
+        if (i <= 0) {
+            yLine.push(Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude);
+        } else {
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth));
+        };
+    };
+    return yLine;
+
+}
 
 function dataIncidentCompile(xLine, yLine) {
     let dataLine = {
@@ -34,32 +91,109 @@ function dataIncidentCompile(xLine, yLine) {
     return dataLine;
 };
 
-function initialPlot (xMin, xMax, plotStep, layout, initialAmplitude){
+function dataIncidentEnvelopeCompile(xLine, yLine) {
+    let dataLine = {
+                         x:xLine,
+                         y:yLine,
+                         type: 'scatter',
+                         mode: 'lines',
+                         line: {
+                                dash: 'dashdot',
+                                color: 'rgb(34,139,34)',
+                                width: 3
+                              },
+                         name: 'Path 1',
+                         showscale: false
+                     };
+    return dataLine;
+};
+
+function dataReflectionCompile(xLine, yLine) {
+    let dataLine = {
+                         x:xLine,
+                         y:yLine,
+                         type: 'scatter',
+                         mode: 'lines',
+                         line: {
+                                color: 'rgb(220,20,60)',
+                                width: 3
+                              },
+                         name: 'Path 1',
+                         showscale: false
+                     };
+    return dataLine;
+};
+
+function dataReflectionEnvelopeCompile(xLine, yLine) {
+    let dataLine = {
+                         x:xLine,
+                         y:yLine,
+                         type: 'scatter',
+                         mode: 'lines',
+                         line: {
+                                dash: 'dashdot',
+                                color: 'rgb(186,85,211)',
+                                width: 3
+                              },
+                         name: 'Path 1',
+                         showscale: false
+                     };
+    return dataLine;
+};
+
+function dataCombinedCompile(xLine, yLine) {
+    let dataLine = {
+                         x:xLine,
+                         y:yLine,
+                         type: 'scatter',
+                         mode: 'lines',
+                         line: {
+                                color: '(0,0,128)',
+                                width: 3
+                              },
+                         name: 'Path 1',
+                         showscale: false
+                     };
+    return dataLine;
+};
+
+function initialPlot (xMin, xMax, t, plotStep, layout, initialAmplitude){
     let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
-    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,4);
-    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega))
+    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
     let xLine = setupxData(xMin, xMax, plotStep);
-    let yLine = setupyIncidentData(xMin, xMax, plotStep, initialAmplitude, omega, skinDepth);
-    let dataIncident = dataIncidentCompile (xLine, yLine);
+
     let condition =  $("input[name = wave-switch]:checked").val();
 
+    let yIncidentEnvelope = setupyIncidentEnvelopeData(xMin, xMax, plotStep, initialAmplitude, omega, sigma);
+    let dataIncidentEnvelope = dataIncidentEnvelopeCompile(xLine, yIncidentEnvelope);
+
+    let yReflectionEnvelope = setupyReflectionEnvelopeData(xMin, xMax, plotStep, initialAmplitude, omega, sigma);
+    let dataReflectionEnvelope = dataReflectionEnvelopeCompile(xLine, yReflectionEnvelope);
+
     if (condition === "incident") {
-        Plotly.react("Boundary_Plot_9", [dataIncident], layout);
+        let yLine = setupyIncidentData(xMin, xMax, t, plotStep, initialAmplitude, omega, sigma);
+        let dataIncident = dataIncidentCompile (xLine, yLine);
+        Plotly.react("Boundary_Plot_9", [dataIncident, dataIncidentEnvelope], layout);
     } else if (condition === "reflected") {
-        Plotly.purge("Boundary_Plot_9");
+        let yLine = setupyReflectionData (xMin, xMax, plotStep, initialAmplitude, omega, sigma);
+        let dataReflection = dataReflectionCompile (xLine, yLine);
+        Plotly.react("Boundary_Plot_9", [dataReflection, dataReflectionEnvelope], layout);
     } else if (condition === "reflected plus incident") {
-        Plotly.purge("Boundary_Plot_9");
+        let yLine = setupyCombinedData (xMin, xMax, plotStep, initialAmplitude, omega, sigma);
+        let dataCombined = dataCombinedCompile (xLine, yLine);
+        Plotly.react("Boundary_Plot_9", [dataCombined, dataIncidentEnvelope, dataReflectionEnvelope], layout);
     };
 };
 
 function main(){
-    const xMin = -1e-6;
+    const xMin = -2e-6;
     const xMax = -1* xMin;
     const plotStep = xMax/10000;
     let skinDepth = 3;
     let initialAmplitude = 0.7 * xMax;
     let omega = 2;
     let isPlay = false;
+    let t = 0;
 
     const dom = {
         tswitch: $("#wave-switch input"),
@@ -89,11 +223,11 @@ function main(){
 
 
 
-    initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
+    initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude);
 
 //jQuery to update the plot as the value of the slider changes.
 
-    dom.tswitch.on("change", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
+    dom.tswitch.on("change", initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude) );
     dom.omegaSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
     dom.sigmaSlider.on("input", initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude) );
 
@@ -103,7 +237,7 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
+            initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude);
         });
 
     });
@@ -114,7 +248,7 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
 //            $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            initialPlot(xMin, xMax, plotStep, layoutVector_1b, initialAmplitude);
+            initialPlot(xMin, xMax, t, plotStep, layoutVector_1b, initialAmplitude);
         });
 
     });
