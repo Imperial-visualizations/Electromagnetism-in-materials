@@ -194,24 +194,7 @@ function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
     plot(data, layout);
 }
 
-function playLoop(xMin, xMax, t, plotStep, initialAmplitude, isPlay){//adds time evolution
-        if(isPlay === true) {
-            t += 0.1;
-            Plotly.animate("Boundary_Plot_9",
-                {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
-                {
-                    fromcurrent: true,
-                    transition: {duration: 0,},
-                    frame: {duration: 0, redraw: false,},
-                    //mode: "afterall"
-                    mode: "immediate"
-                });
 
-            window.requestAnimationFrame(playLoop);//loads next frame
-            console.log(t);
-        } else {
-        console.log("yeet");}
-    };
 
 function main(){
     const xMin = -2e-6;
@@ -249,6 +232,25 @@ function main(){
         },
     };
 
+    function playLoop(){//adds time evolution
+        if(isPlay === true) {
+            t += 0.1;
+            Plotly.animate("Boundary_Plot_9",
+                {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
+                {
+                    fromcurrent: true,
+                    transition: {duration: 0,},
+                    frame: {duration: 0, redraw: false,},
+                    //mode: "afterall"
+                    mode: "immediate"
+                });
+
+            window.requestAnimationFrame(playLoop);//loads next frame
+            console.log(t);
+        } else {
+        console.log("yeet");}
+    };
+
 
 
     compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
@@ -266,7 +268,7 @@ function main(){
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
 //            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
-            playLoop(xMin, xMax, t, plotStep, initialAmplitude, isPlay);
+            playLoop();
         });
 
     });
@@ -286,7 +288,7 @@ function main(){
         document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
         isPlay = !isPlay;
         t = 0;//reset time
-        requestAnimationFrame(playLoop(xMin, xMax, t, plotStep, initialAmplitude, isPlay));
+        requestAnimationFrame(playLoop);
     });
 
 };
