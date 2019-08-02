@@ -31,6 +31,7 @@
   <!--Text for left 1/3-->
   <div id="Vis_text" class="container_journey" style="height:100vh">
     <span style="font-weight: bold">The key ideas behind D field - </span>
+    <br>
     Consider an ideal dielectric (perfect insulator) that has no free charge by definition. 
     Placing it in an electric field $\mathbf{E}_{applied}$ will induce a <span style ="color:#D24000;font-weight:bold">polarisation
     field</span> $\mathbf{P}$ in it. 
@@ -53,21 +54,30 @@
     $$ \mathbf{P} = \chi_{e}\epsilon_{0}\mathbf{E}_{total} $$
     where the electric susceptibility $\chi_{e}$ is a constant of proportionality.
     so,
-    $$ \mathbf{D} = \epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total} $$
-    $$ \nabla \cdot \mathbf{D} = \nabla \cdot [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] = 0 $$
-    $$ \nabla \times \mathbf{D} = 0 $$
+    $$ \mathbf{D}_{dielectric} = \epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total} $$
+    $$ \nabla \cdot \mathbf{D}_{dielectric} = \nabla \cdot [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] = 0 $$
+    $$ \nabla \times \mathbf{D}_{dielectric} = 0 $$
     <br>
     <p>Note: The units of the E-field are different to those of the P and D fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
+
     <span style="font-weight: bold">The seemingly contradictory subtlety - </span>
+    <br>
     You might notice that the <span style="color:#02893B; font-weight:bold">E field </span> is weaker in a dielectric than in vacuum but 
     the <span style="color:#9F004E;font-weight:bold">D field</span> does the exact opposite. 
     <br><br>
     A polarised material indeed weakens the <span style="color:#02893B; font-weight:bold">E field </span>
     but enhances the <span style="color:#9F004E;font-weight:bold">D field</span> 
-    due to the definition of the <span style ="color:#D24000;font-weight:bold">P field</span>.
+    due to the definition of the <span style ="color:#D24000;font-weight:bold">P field</span>. 
+    Also note that $\mathbf{D}_{vacuum} \ne \mathbf{D}_{dielectric}$ in the derivation above.
     <img style="width:95%; height:25%;" src="scripts/E&PinDielectric.png">
     The green arrows in the diagram represent the <b>induced</b> (not resultant!) E field while the orange arrows represent the P field. 
     They are in opposite directions since the direction of P field is defined by that of the displacement from the negative to positive charge.
+    <br><br>
+    <span style="font-weight: bold">The resolution - </span>
+    <br>
+    This discontinuity in the <span style="color:#9F004E;font-weight:bold">D field</span> at the boundary 
+    is the result of (1) the abrupt disappearance of <span style ="color:#D24000;font-weight:bold">P field</span>, which originates from the polarisation charge density, 
+    (2) the discontinuity of the <span style="color:#02893B; font-weight:bold">E field </span> due to the surface charge density.
   </div>
 
   <!--Visualisation for right 2/3-->
