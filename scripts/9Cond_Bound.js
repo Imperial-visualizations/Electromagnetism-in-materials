@@ -8,16 +8,17 @@ function setupxData (xMin, xMax, plotStep) {
 
 function setupyIncidentData (xMin, xMax, t, plotStep, initialAmplitude, omega, sigma){
     let yLine = [];
-    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
+    let skinDepth = Math.sqrt( (2)/(0.1 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
 //            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
 //            yLine.push(initialAmplitude*Math.cos(omega*t)* 2e6 * i);
-              yLine.push( initialAmplitude * (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)))
+//              yLine.push( initialAmplitude * (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)))
+              yLine.push( initialAmplitude * (Math.cos(omega / 3 *i)*Math.cos(-omega *t) - Math.sin(omega / 3 *i)*Math.sin(-omega *t)))
         } else {
 //            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
 //            yLine.push(initialAmplitude*Math.cos(omega*t)* Math.exp(2e6 * i) + initialAmplitude*Math.cos(omega*t)* 2e6 * i);
-              yLine.push( initialAmplitude*Math.exp(-i/skinDepth) *  (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)));
+              yLine.push( initialAmplitude*Math.exp(-i/skinDepth) *  (Math.cos(omega / 3 *i)*Math.cos(-omega *t) - Math.sin(omega / 3 *i)*Math.sin(-omega *t)));
         };
     };
     return yLine;
@@ -162,8 +163,11 @@ function dataCombinedCompile(xLine, yLine) {
 };
 
 function dataPlot (xMin, xMax, t, plotStep, initialAmplitude) {
-    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
-    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
+//    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
+//    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
+//    let omega = parseFloat(document.getElementById('Slider_omega_9').value)/1000;
+    let omega = parseFloat(document.getElementById('Slider_omega_9').value);
+    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value);
     let xLine = setupxData(xMin, xMax, plotStep);
 
     let condition =  $("input[name = wave-switch]:checked").val();
@@ -201,13 +205,14 @@ function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
 
 
 function main(){
-    const xMin = -2e-6;
+    const xMin = -20;
+//    const xMin = -2e-6;
     const xMax = -1* xMin;
-    const plotStep = xMax/1000;
+    const plotStep = xMax/100;
     let skinDepth = 3;
     let initialAmplitude = 0.7 * xMax;
-    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
-    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
+//    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
+//    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
     let isPlay = false;
     let t = 0;
 
@@ -238,20 +243,21 @@ function main(){
     };
 
     function playLoop(){//adds time evolution
-        let dt = 2 * Math.PI / omega / 500
+//        let dt = 2 * Math.PI / omega / 500
+//        let dt = 1e-17;
         if(isPlay === true) {
-            t += dt;
+            t += 0.01;
             Plotly.animate("Boundary_Plot_9",
                 {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
                 {
-//                    fromcurrent: true,
+                    fromcurrent: true,
                     transition: {duration: 0},
-                    frame: {duration: 10, redraw: false,},
+                    frame: {duration: 0, redraw: false,},
                     //mode: "afterall"
                     mode: "immediate"
                 });
+            console.log(t);
 //            data = dataPlot (xMin, xMax, t, plotStep, initialAmplitude);
-//            console.log(data);
 //            plot(data, layoutVector_1b);
 
             window.requestAnimationFrame(playLoop);//loads next frame
@@ -265,21 +271,21 @@ function main(){
 
 //jQuery to update the plot as the value of the slider changes.
 
-//    dom.tswitch.on("change", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
-//    dom.omegaSlider.on("input", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
-//    dom.sigmaSlider.on("input", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
+    dom.tswitch.on("change", playLoop() );
+    dom.omegaSlider.on("input", playLoop() );
+    dom.sigmaSlider.on("input", playLoop() );
 
-    $("input[type=range]").each(function () {
-        /*Allows for live update for display values*/
-        $(this).on('input', function(){
-            //Displays: (FLT Value) + (Corresponding Unit(if defined))
-            $("#"+$(this).attr("id") + "Display").val( $(this).val());
-            //NB: Display values are restricted by their definition in the HTML to always display nice number.
-//            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
-            playLoop();
-        });
-
-    });
+//    $("input[type=range]").each(function () {
+//        /*Allows for live update for display values*/
+//        $(this).on('input', function(){
+//            //Displays: (FLT Value) + (Corresponding Unit(if defined))
+//            $("#"+$(this).attr("id") + "Display").val( $(this).val());
+//            //NB: Display values are restricted by their definition in the HTML to always display nice number.
+////            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+//            requestAnimationFrame(playLoop);
+//        });
+//
+//    });
 
     $("input[type=radio]").each(function () {
         /*Allows for live update for display values*/
@@ -287,7 +293,8 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
 //            $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+//            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+            requestAnimationFrame(playLoop);
         });
 
     });
