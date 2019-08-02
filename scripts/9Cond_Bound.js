@@ -234,7 +234,7 @@ function main(){
 
     function playLoop(){//adds time evolution
         if(isPlay === true) {
-            t += 0.01;
+            t += 0.1;
             Plotly.animate("Boundary_Plot_9",
                 {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
                 {
