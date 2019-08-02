@@ -11,9 +11,13 @@ function setupyIncidentData (xMin, xMax, t, plotStep, initialAmplitude, omega, s
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+//            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+//            yLine.push(initialAmplitude*Math.cos(omega*t)* 2e6 * i);
+              yLine.push( initialAmplitude * (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)))
         } else {
-            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+//            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+//            yLine.push(initialAmplitude*Math.cos(omega*t)* Math.exp(2e6 * i) + initialAmplitude*Math.cos(omega*t)* 2e6 * i);
+              yLine.push( initialAmplitude*Math.exp(-i/skinDepth) *  (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)));
         };
     };
     return yLine;
@@ -194,30 +198,16 @@ function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
     plot(data, layout);
 }
 
-function playLoop(xMin, xMax, t, plotStep, initialAmplitude){//adds time evolution
-        if(isPlay === true) {
-            t+=0.1;
-            Plotly.animate("Boundary_Plot_9",
-                {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
-                {
-                    fromcurrent: true,
-                    transition: {duration: 0,},
-                    frame: {duration: 0, redraw: false,},
-                    //mode: "afterall"
-                    mode: "immediate"
-                });
-            window.requestAnimationFrame(playLoop);//loads next frame
-        }
-        return 0;
-    }
+
 
 function main(){
     const xMin = -2e-6;
     const xMax = -1* xMin;
-    const plotStep = xMax/10000;
+    const plotStep = xMax/1000;
     let skinDepth = 3;
     let initialAmplitude = 0.7 * xMax;
-    let omega = 2;
+    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
+    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
     let isPlay = false;
     let t = 0;
 
@@ -247,6 +237,28 @@ function main(){
         },
     };
 
+    function playLoop(){//adds time evolution
+        let dt = 2 * Math.PI / omega / 500
+        if(isPlay === true) {
+            t += dt;
+            Plotly.animate("Boundary_Plot_9",
+                {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
+                {
+//                    fromcurrent: true,
+                    transition: {duration: 0},
+                    frame: {duration: 10, redraw: false,},
+                    //mode: "afterall"
+                    mode: "immediate"
+                });
+//            data = dataPlot (xMin, xMax, t, plotStep, initialAmplitude);
+//            console.log(data);
+//            plot(data, layoutVector_1b);
+
+            window.requestAnimationFrame(playLoop);//loads next frame
+        } else {
+        console.log("yeet");}
+    };
+
 
 
     compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
@@ -263,7 +275,8 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+//            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+            playLoop();
         });
 
     });
@@ -282,8 +295,8 @@ function main(){
     $('#playButton').on('click', function() {
         document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
         isPlay = !isPlay;
-//        t = 0;//reset time
-//        window.requestAnimationFrame(playLoop);
+        t = 0;//reset time
+        requestAnimationFrame(playLoop);
     });
 
 };
