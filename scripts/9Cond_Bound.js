@@ -11,9 +11,13 @@ function setupyIncidentData (xMin, xMax, t, plotStep, initialAmplitude, omega, s
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+//            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+//            yLine.push(initialAmplitude*Math.cos(omega*t)* 2e6 * i);
+              yLine.push( initialAmplitude * (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)))
         } else {
-            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+//            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+//            yLine.push(initialAmplitude*Math.cos(omega*t)* Math.exp(2e6 * i) + initialAmplitude*Math.cos(omega*t)* 2e6 * i);
+              yLine.push( initialAmplitude*Math.exp(-i/skinDepth) *  (Math.cos(omega / 3e8 *i)*Math.cos(omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(omega *t)));
         };
     };
     return yLine;
@@ -199,10 +203,11 @@ function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
 function main(){
     const xMin = -2e-6;
     const xMax = -1* xMin;
-    const plotStep = xMax/10000;
+    const plotStep = xMax/1000;
     let skinDepth = 3;
     let initialAmplitude = 0.7 * xMax;
-    let omega = 2;
+    let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
+    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
     let isPlay = false;
     let t = 0;
 
@@ -233,20 +238,23 @@ function main(){
     };
 
     function playLoop(){//adds time evolution
+        let dt = 2 * Math.PI / omega / 500
         if(isPlay === true) {
-            t += 0.1;
+            t += dt;
             Plotly.animate("Boundary_Plot_9",
                 {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
                 {
-                    fromcurrent: true,
-                    transition: {duration: 0,},
-                    frame: {duration: 0, redraw: false,},
+//                    fromcurrent: true,
+                    transition: {duration: 0},
+                    frame: {duration: 10, redraw: false,},
                     //mode: "afterall"
                     mode: "immediate"
                 });
+//            data = dataPlot (xMin, xMax, t, plotStep, initialAmplitude);
+//            console.log(data);
+//            plot(data, layoutVector_1b);
 
             window.requestAnimationFrame(playLoop);//loads next frame
-            console.log(t);
         } else {
         console.log("yeet");}
     };
@@ -293,4 +301,4 @@ function main(){
 
 };
 
-$(window).on('load', main); //Load setup when document is ready.
+$(document).ready(main); //Load setup when document is ready.
