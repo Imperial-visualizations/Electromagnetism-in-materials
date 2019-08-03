@@ -33,21 +33,34 @@
 </head>
 
 <body>
+
     <div class="container_journey" style="background-color: white"></div>
+
     <div class="container_vis">
+    
+        <!-- Graphs -->
         <div class="row">
-            <!-- GRAPH -->
-            <div id="graph" style="width: 100%; height: 60%"></div>
+            <div class="one-third column">
+                <div id="incident" style="width: 100%; height: 60%"></div>
+            </div>
+            <div class="one-third column">
+                <div id="reflected" style="width: 100%; height: 60%"></div>
+            </div>
+            <div class="one-third column">
+                <div id="transmitted" style="width: 100%; height: 60%"></div>
+            </div>
         </div>
+
         <div class="row">
 
+            <!-- Does slider not support floats?! -->
             <div class="one-half column">
                 <div id="ReflectionCoeffSlider">
-                    <label for="ReflectionCoeff" class="sliderTitle">Reflection Coefficient:
+                    <label for="ReflectionCoeff" class="sliderTitle">Reflection Coefficient (%): 
                         <span id="ReflectionCoeffDisplay"></span>
-                    </label><span class="sliderMin">0.1</span>
-                    <input type="range" id="ReflectionCoeff" name="ReflectionCoeff" min="0.1" max="0.9" value="0.5">
-                    <span class="sliderMax">0.9</span>
+                    </label><span class="sliderMin">1</span>
+                    <input type="range" id="ReflectionCoeff" name="ReflectionCoeff" min="1" max="100" value="50">
+                    <span class="sliderMax">100</span>
                 </div>
             </div>
 
