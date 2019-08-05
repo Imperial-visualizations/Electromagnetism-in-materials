@@ -53,13 +53,13 @@ function ReflectedWaveLayout(DielectricWidth){
 
 class Wave {
 
-    constructor(type, dielectricWidth, reflectionCoeff, numberOfReflections){
+    constructor(type, dielectricWidth, amplitude, direction){
         this.type = type;
         this.dielectricWidth = dielectricWidth;
-        this.reflectionCoeff = reflectionCoeff;
-        this.numberOfReflections = numberOfReflections;
+        this.amplitude = amplitude;
+        this.direction = direction;
         this.Layout = this.FindLayout();
-        this.xData, this.yData = this.GenerateData();
+        this.Data = this.GenerateData();
     }
 
     FindLayout(){
@@ -71,27 +71,22 @@ class Wave {
     }
 
     GenerateData(){
-        let amplitude = IncidentAmplitude;
         let xMax;
-        let direction;
         switch (this.type){
             case "incident":
                 xMax = xMaxIncident;
-                direction = 1;
             case "reflected":
                 xMax = this.dielectricWidth;
-                direction = -1;
             case "transmitted":
                 xMax = this.dielectricWidth;
-                direction = 1;
         }
 
-        let x = numeric.linspace(xMin, xMax, 50);
+        let x = numeric.linspace(xMin, xMax, 500);
         let y = x.map(x1 => {
-            amplitude * Math.cos(k*x1 - direction*omega*t)
+            return this.amplitude * Math.cos(k*x1 - this.direction*omega*t);
         });
 
-        return x, y;
+        return [x, y];
     }
 
 }
@@ -106,26 +101,39 @@ class Waves {
     }
 
     CreateWavesArray(){
-        let IncidentWave = new Wave("incident", this.DielectricWidth, this.ReflectionCoeff, this.NumberOfReflections)
-        let ReflectedWaves = new Wave("reflected", this.DielectricWidth, this.ReflectionCoeff, this.NumberOfReflections)
-        let TransmittedWaves = new Wave("transmitted", this.DielectricWidth, this.ReflectionCoeff, this.NumberOfReflections)
+        //type, dielectricWidth, amplitude, direction
+        //direction right = 1, left = -1
+        let IncidentWave = new Wave("incident", this.DielectricWidth, IncidentAmplitude, 1)
+        let ReflectedWaves = CreateReflectedWaves();
+        //let TransmittedWaves = new Wave("transmitted", this.DielectricWidth, this.ReflectionCoeff, this.NumberOfReflections)
         //return [IncidentWave, ReflectedWaves, TransmittedWaves]
         return [IncidentWave]
     }
+
+    CreateReflectedWaves(){
+        let ReflectedWaves = []
+        for (let i=0; i<this.NumberOfReflections; i++){
+            let direction = (-1)**i;
+            let amplitude = (-1)**i * IncidentAmplitude * (this.ReflectionCoeff)**(i+1);
+            let ReflectedWave = new Wave("reflected", this.DielectricWidth, amplitude, direction);
+            ReflectedWaves.push(ReflectedWave);
+        }
+    }
 }
+
 
 function CreateDataLine(xData, yData) {
     let line = {
-        x: xData,
-        y: yData,
-        type: "scatter",
-        mode: "lines",
-        line: {
-            color: "rgb(0,0,0)",
-            width: 3
-        },
-        showscale: false
-    }
+                x: xData,
+                y: yData,
+                type: "scatter",
+                mode: "lines",
+                line: {
+                    color: "rgb(100,100,100)",
+                    width: 3
+                },
+                showscale: false
+                };
     
     return line;
 }
@@ -133,31 +141,39 @@ function CreateDataLine(xData, yData) {
 
 function initialPlot(waves){
     console.log("called initialPlot");
-    console.log(waves);
 
     waves.WavesArray.forEach(wave => {
-        //console.log(wave.type);
-        let DataLine = CreateDataLine(wave.xData, wave.yData);
-        Plotly.purge(wave.type)
-        Plotly.newPlot(wave.type, DataLine, wave.Layout);
+        console.log(wave);
+        let DataLine = CreateDataLine(wave.Data[0], wave.Data[1]);
+        Plotly.newPlot(wave.type, [DataLine], wave.Layout);
+        // Plotly.newPlot(wave.type);
+        // Plotly.react(wave.type, [DataLine], wave.Layout)
+        
+        
     });
 }
 
 function update(waves) {
     console.log("called update");
     waves.WavesArray.forEach(wave => {
-        let DataLine = CreateDataLine(wave.xData, wave.yData)
-        Plotly.react(wave.type, DataLine, wave.Layout)
+        let DataLine = CreateDataLine(wave.Data[0], wave.Data[1])
+        Plotly.react(wave.type, [DataLine], wave.Layout)
     });
 }
 
-function NextAnimationFrame(waves){
-    t += 0.01;
-    //console.log(1)
+function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections){
+    //console.log("next frame, t = ", t);
+    t += 0.1;
+    let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
+
     waves.WavesArray.forEach(wave => {
-        let DataLine = CreateDataLine(wave.xData, wave.yData)
+        console.log(wave)
+        let DataLine = CreateDataLine(wave.Data[0], wave.Data[1])
+
+        //TODO - BUG - Unhandled Promise Rejection: undefined
+
         Plotly.animate(wave.type,
-            {data: DataLine},
+            {data: [DataLine]},
             {
                 fromcurrent: true,
                 transition: {duration: 0},
@@ -165,15 +181,14 @@ function NextAnimationFrame(waves){
                 mode: "immediate"
             });
     });
-    //AnimateAllGraphs(waves)
+    
+    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 }
 
-function AnimateAllGraphs(waves){
-
+function AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections){
     //TODO - BUG - TESTING FOR loop
-    for (let i=0; i<=2; i++){
-        window.requestAnimationFrame(function() {NextAnimationFrame(waves);})
-    }
+    //create new instance of waves with updated data - inefficient???
+    window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
 }
 
 function main() {
@@ -190,11 +205,11 @@ function main() {
 
     initialPlot(waves);
     //run using the default values of all the sliders
-    update(waves);
-    AnimateAllGraphs(waves);
+    //update(waves);
+    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
     //check if correct!!! - wrapped NextAnimationFrame in anonym func for callback
-    window.requestAnimationFrame( function() {NextAnimationFrame(waves);});
+    //window.requestAnimationFrame( function() {NextAnimationFrame(waves);});
     
    //live update of slider display values and graphs
    $("input[type=range]").each(function () {
@@ -205,10 +220,10 @@ function main() {
         let NumberOfReflections = $("#NumberOfReflections").val();
 
         //t = 0
-        let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+        //let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
         //update
-        update(waves);
-        AnimateAllGraphs(waves);
+        //update(waves);
+        //AnimateAllGraphs(waves);
 
         });
     });
