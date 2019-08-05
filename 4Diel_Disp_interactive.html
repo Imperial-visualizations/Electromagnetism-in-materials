@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dispersion in Dielectrics - Imperial Visualisations</title>
+
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+
+        <script src="
+
+                https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.2.3/math.js"
+                ></script>
+
+
+
+        <script src="
+
+                https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"
+                ></script>
+
+
+
+        <script src="
+
+                https://cdn.plot.ly/plotly-1.47.4.min.js"
+                ></script>
+
+
+
+        <script src="
+
+                https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+                async></script>
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129658302-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-129658302-1');
+    </script>
+
+
+
+</head>
+<body>
+
+<div class="container_journey">
+    <center><h5>Dispersion in Dielectrics</h5></center>
+    <p>
+        Electrons in a dielectric may be modelled as particles attached to the nuclei by a spring.
+        <br><br>
+        When the electromagnetic wave enters the dielectric, it causes forced harmonic motion. The complex displacement of the
+        electrons can be found by solving the forced oscillator equation (FOE):
+        from this the dipole moment is, $\displaystyle \tilde{p}(t) = q\tilde{x}(t)$.= The electric field inside is:
+        <br>$\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0(z,t) e^{-\kappa z} e^{i(kz-\omega t)}$ <br>
+        with the complex wave number $\displaystyle \tilde{k} = k + i\kappa$. <br><br>
+
+        The refractive index is given by: <br>
+        $\displaystyle \tilde{n} = \frac{c \tilde{k}}{\omega}$ $\displaystyle \cong 1 + \frac{N q^2}{2m \epsilon_0}
+        \sum_{j} \frac{f_j(\omega^2_j-\omega^2)}{(\omega^2_j-\omega^2)^2 + \gamma^2_j \omega^2}$ <br> where $\omega_j$
+        are the resonant frequencies of the electrons in the dielectric.
+        From this, it can be seen that the imaginary refractive
+        index corresponds to attenuation of the wave.
+        <br><br>
+        When the incoming wave has the same frequency as the natural frequency of the electrons, resonance occurs:
+        these frequencies correspond to the points of maximum attenuation. Additionally, the real part of the
+        refractive index changes around points of resonance. This is called <strong>
+        anomalous dispersion</strong>.
+        <br><br>
+        Around these points n can become less than 1, however this is not a problem since the
+        energy in the wave does not travel at the wave velocity, and the refractive index inside a dielectric is normally
+        raised due to background effects.
+    </p>
+
+</div>
+
+
+<div class="container_vis">
+     <div class="container">
+      <div class="row">
+       <div class="six columns flexyHold">
+        <div class="row">
+         <div class="flexy" id="graph">
+         </div>
+        </div>
+        <div class="row">
+            <p>
+                 Note: Reflected wave not included in visualisation due to overlap with incident wave. Furthermore,
+                 amplitudes of electric and magnetic fields are set to be equal.
+                </p>
+         <div class="three columns">
+
+
+         </div>
+
+
+        </div>
+       </div>
+       <div class="six columns ">
+        <div id="graph_n" style="height: 70vh; width: 30vw;">
+        </div>
+        <div id="graph_disp" style="height: 70vh; width: 30vw; display: none;"></div>
+        <div id="angular_frequency-slider">
+         <label class="sliderTitle" for="angular_frequency">
+          Ratio of Angular frequencies \(\omega/\omega_0\):
+          <span id="angular_frequency-display">
+          </span>
+         </label>
+         <span class="sliderMin">
+          0
+         </span>
+         <input id="angular_frequency" max="2" min="0" name="angular_frequency" step="0.01" type="range" value="0.9"/>
+         <span class="sliderMax">
+          2
+         </span>
+
+             <button id="graphChangeButton">Dispersion Relation</button>
+             <button id="playButton" type="button">Play</button>
+        </div>
+
+       </div>
+      </div>
+     </div>
+
+</div>
+
+
+<body>
+
+</body>
+
+<!--Implement Scripts Here-->
+
+<script src="scripts/4Diel_Disp.js"></script>
+
+<!--  -->
+</body>
+</html>
