@@ -6,42 +6,47 @@ function setupxData (xMin, xMax, plotStep) {
     return xLine;
 };
 
-function setupyIncidentData (xMin, xMax, t, plotStep, initialAmplitude, omega, sigma){
+function setupyIncidentData (xMin, xMax, t, c, plotStep, initialAmplitude, omega, sigma){
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+//            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i + omega*t));
+//            yLine.push(initialAmplitude*Math.cos(omega*t)* 2e6 * i);
+              yLine.push( initialAmplitude * (Math.cos(omega / c *i)*Math.cos(-omega *t) - Math.sin(omega / c *i)*Math.sin(-omega *t)))
+//              yLine.push( initialAmplitude * (Math.cos(omega / 3e8 *i)*Math.cos(-omega *t) - Math.sin(omega / 3e8 *i)*Math.sin(-omega *t)))
         } else {
-            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+//            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i + omega*t))
+//              yLine.push(initialAmplitude*Math.cos(omega*t)* Math.exp(2e6 * i) + initialAmplitude*Math.cos(omega*t)* 2e6 * i);
+              yLine.push( initialAmplitude*Math.exp(-i/skinDepth) *  (Math.cos(omega / c *i)*Math.cos(-omega *t) - Math.sin(omega / c *i)*Math.sin(-omega *t)));
         };
     };
     return yLine;
 };
 
-function setupyReflectionData (xMin, xMax, plotStep, initialAmplitude, omega, sigma) {
+function setupyReflectionData (xMin, xMax, t, c, plotStep, initialAmplitude, omega, sigma) {
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude*Math.cos(2* omega / 3e8 *i - Math.PI));
+            yLine.push(Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude* ( Math.cos( -omega*t )*Math.cos( omega / c *i - Math.PI) - Math.sin(-omega *t)*Math.sin(omega / c *i - Math.PI)) );
         } else {
-            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i))
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)* ( Math.cos( -omega*t )*Math.cos( omega / c *i - Math.PI) - Math.sin(-omega *t)*Math.sin(omega / c *i - Math.PI)) );
         };
     };
     return yLine;
 
 }
 
-function setupyCombinedData (xMin, xMax, plotStep, initialAmplitude, omega, sigma) {
+function setupyCombinedData (xMin, xMax, t, c, plotStep, initialAmplitude, omega, sigma) {
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
         if (i <= 0) {
-            yLine.push(initialAmplitude*Math.cos(2* omega / 3e8 *i) +
-            Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude*Math.cos(2* omega / 3e8 *i - Math.PI));
+            yLine.push( initialAmplitude * (Math.cos(omega / c *i)*Math.cos(-omega *t) - Math.sin(omega / c *i)*Math.sin(-omega *t)) +
+            Math.sqrt( 1 - Math.sqrt(8*8.85e-12*omega/sigma) )*initialAmplitude* ( Math.cos( -omega*t )*Math.cos( omega / c *i - Math.PI) - Math.sin(-omega *t)*Math.sin(omega / c *i - Math.PI)) );
         } else {
-            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)*Math.cos(2* omega / 3e8 *i));
+            yLine.push(initialAmplitude*Math.exp(-i/skinDepth)* ( Math.cos( -omega*t )*Math.cos( omega / c *i - Math.PI) - Math.sin(-omega *t)*Math.sin(omega / c *i - Math.PI)));
         };
     };
     return yLine;
@@ -157,9 +162,9 @@ function dataCombinedCompile(xLine, yLine) {
     return dataLine;
 };
 
-function dataPlot (xMin, xMax, t, plotStep, initialAmplitude) {
+function dataPlot (xMin, xMax, t, c, plotStep, initialAmplitude) {
     let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
-    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value) * Math.pow(10,5);
+    let sigma = parseFloat(document.getElementById('Slider_sigma_9').value)* Math.pow(10,5);
     let xLine = setupxData(xMin, xMax, plotStep);
 
     let condition =  $("input[name = wave-switch]:checked").val();
@@ -171,15 +176,15 @@ function dataPlot (xMin, xMax, t, plotStep, initialAmplitude) {
     let dataReflectionEnvelope = dataReflectionEnvelopeCompile(xLine, yReflectionEnvelope);
 
     if (condition === "incident") {
-        let yLine = setupyIncidentData(xMin, xMax, t, plotStep, initialAmplitude, omega, sigma);
+        let yLine = setupyIncidentData(xMin, xMax, t, c, plotStep, initialAmplitude, omega, sigma);
         let dataIncident = dataIncidentCompile (xLine, yLine);
         return [dataIncident, dataIncidentEnvelope];
     } else if (condition === "reflected") {
-        let yLine = setupyReflectionData (xMin, xMax, plotStep, initialAmplitude, omega, sigma);
+        let yLine = setupyReflectionData (xMin, xMax, t, c, plotStep, initialAmplitude, omega, sigma);
         let dataReflection = dataReflectionCompile (xLine, yLine);
         return [dataReflection, dataReflectionEnvelope];
     } else if (condition === "reflected plus incident") {
-        let yLine = setupyCombinedData (xMin, xMax, plotStep, initialAmplitude, omega, sigma);
+        let yLine = setupyCombinedData (xMin, xMax, t, c, plotStep, initialAmplitude, omega, sigma);
         let dataCombined = dataCombinedCompile (xLine, yLine);
         return [dataCombined, dataIncidentEnvelope, dataReflectionEnvelope];
     };
@@ -189,8 +194,8 @@ function plot(data, layout) {
     Plotly.react("Boundary_Plot_9", data, layout);
 }
 
-function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
-    let data = dataPlot(xMin, xMax, t, plotStep, initialAmplitude);
+function compileAndPlot(xMin, xMax, t, c, plotStep, initialAmplitude, layout){
+    let data = dataPlot(xMin, xMax, t, c, plotStep, initialAmplitude);
     plot(data, layout);
 }
 
@@ -199,20 +204,13 @@ function compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layout){
 function main(){
     const xMin = -2e-6;
     const xMax = -1* xMin;
-    const plotStep = xMax/10000;
-    let skinDepth = 3;
-    let initialAmplitude = 0.7 * xMax;
-    let omega = 2;
+    const plotStep = xMax/100;
+    const initialAmplitude = 0.7 * xMax;
+    const c = 3e8
     let isPlay = false;
     let t = 0;
 
-    const dom = {
-        tswitch: $("#wave-switch input"),
-        omegaSlider: $("input#Slider_omega_9"),
-        sigmaSlider: $("input#Slider_sigma_9"),
-    };
-
-    const layoutVector_1b = {
+    const plotLayout = {
         title: "Gradient Field",
         showlegend: false,
         xaxis: {
@@ -233,33 +231,41 @@ function main(){
     };
 
     function playLoop(){//adds time evolution
-        if(isPlay === true) {
-            t += 0.1;
-            Plotly.animate("Boundary_Plot_9",
-                {data: dataPlot(xMin, xMax, t, plotStep, initialAmplitude)},
+    if (isPlay === false) {
+    console.log('hey');
+                Plotly.animate("Boundary_Plot_9",
+                {data: dataPlot(xMin, xMax, t, c, plotStep, initialAmplitude)},
                 {
                     fromcurrent: true,
-                    transition: {duration: 0,},
+                    transition: {duration: 0},
+                    frame: {duration: 0, redraw: false,},
+                    //mode: "afterall"
+                    mode: "immediate"
+                });
+}
+         else if(isPlay === true) {
+            t += 1e-17;
+            Plotly.animate("Boundary_Plot_9",
+                {data: dataPlot(xMin, xMax, t, c, plotStep, initialAmplitude)},
+                {
+                    fromcurrent: true,
+                    transition: {duration: 0},
                     frame: {duration: 0, redraw: false,},
                     //mode: "afterall"
                     mode: "immediate"
                 });
 
             window.requestAnimationFrame(playLoop);//loads next frame
-            console.log(t);
-        } else {
-        console.log("yeet");}
+        }
+
     };
 
 
 
-    compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+    compileAndPlot(xMin, xMax, t, c, plotStep, initialAmplitude, plotLayout);
 
 //jQuery to update the plot as the value of the slider changes.
 
-//    dom.tswitch.on("change", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
-//    dom.omegaSlider.on("input", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
-//    dom.sigmaSlider.on("input", compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b) );
 
     $("input[type=range]").each(function () {
         /*Allows for live update for display values*/
@@ -267,8 +273,10 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
             $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-//            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
-            playLoop();
+            if (isPlay === false){
+                playLoop();
+            } else {
+                return 0;}
         });
 
     });
@@ -279,7 +287,11 @@ function main(){
             //Displays: (FLT Value) + (Corresponding Unit(if defined))
 //            $("#"+$(this).attr("id") + "Display").val( $(this).val());
             //NB: Display values are restricted by their definition in the HTML to always display nice number.
-            compileAndPlot(xMin, xMax, t, plotStep, initialAmplitude, layoutVector_1b);
+//            requestAnimationFrame(playLoop);
+        if (isPlay === false){
+                playLoop();
+            } else {
+                return 0;}
         });
 
     });
@@ -287,10 +299,14 @@ function main(){
     $('#playButton').on('click', function() {
         document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
         isPlay = !isPlay;
-        t = 0;//reset time
+//        t = 0;//reset time
+//        if (isPlay === false){
+//                playLoop();
+//            } else {
+//                return 0;}
         requestAnimationFrame(playLoop);
     });
 
 };
 
-$(window).on('load', main); //Load setup when document is ready.
+$(document).ready(main); //Load setup when document is ready.
