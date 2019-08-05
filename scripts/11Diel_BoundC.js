@@ -1,7 +1,7 @@
 //global constants
 const xMin = -20;
 const xMaxIncident = 20;
-const IncidentAmplitude = 5;
+const IncidentAmplitude = 2;
 const omega = 1;
 const k = 1;
 
@@ -10,18 +10,21 @@ const k = 1;
 
 //TICKING CLOCK INIT AT GLOBAL LEVEL?!
 let t = 0;
+let isPlay = false;
 
 const IncidTransLayout = {
     title: "Incident Wave",
     showlegend: false,
     xaxis: {
+        showline: false,
         constrain: "domain",
         range: [xMin, xMaxIncident],
         showticklabels: false
+        
     },
     yaxis: {
         range: [xMin, xMaxIncident],
-        showticklabels: false,
+        showline: false
     },
     margin: {
         l: 1, r: 1, b:30, t: 30, pad: 10
@@ -30,34 +33,35 @@ const IncidTransLayout = {
 
 function ReflectedWaveLayout(DielectricWidth){
     
-    const GraphLayout = {
-        autosize: true,
-        // margin: {
-        //     l: 30, r: 40, t: 30, b: 30
-        // },
-        hovermode: "closest",
-        xaxis: {range: [xMin, DielectricWidth], zeroline: true, title: "d"},
-        yaxis: {
-            zeroline: false, showticklabels: true, tickmode: 'array',
-            tickvals: [30, 60, 90, 120, 150, 180, 210, 240, 270,300],
-            ticktext: ['n=0','n=1', 'n=2', 'n=3', 'n=4', 'n=5', 'n=6', 'n=7', 'n=8', 'n=9', 'n=10'],
-            side: 'right'
-        },
-        aspectratio: {
-            x: 1, y: 1
-        }
-    }
+    // const GraphLayout = {
+    //     autosize: true,
+    //     // margin: {
+    //     //     l: 30, r: 40, t: 30, b: 30
+    //     // },
+    //     hovermode: "closest",
+    //     xaxis: {range: [xMin, DielectricWidth], zeroline: true, title: "d"},
+    //     yaxis: {
+    //         zeroline: false, showticklabels: true, tickmode: 'array',
+    //         //tickvals: [30, 60, 90, 120, 150, 180, 210, 240, 270,300],
+    //         //ticktext: ['n=0','n=1', 'n=2', 'n=3', 'n=4', 'n=5', 'n=6', 'n=7', 'n=8', 'n=9', 'n=10'],
+    //         //side: 'right'
+    //     }
+    // }
 
-    return GraphLayout 
+    // return GraphLayout
+
+    //DEBUGGING
+    return IncidTransLayout;
 }
 
 class Wave {
 
-    constructor(type, dielectricWidth, amplitude, direction){
+    constructor(type, dielectricWidth, amplitude, direction, offset){
         this.type = type;
         this.dielectricWidth = dielectricWidth;
         this.amplitude = amplitude;
         this.direction = direction;
+        this.offset = offset;
         this.Layout = this.FindLayout();
         this.Data = this.GenerateData();
     }
@@ -83,7 +87,7 @@ class Wave {
 
         let x = numeric.linspace(xMin, xMax, 500);
         let y = x.map(x1 => {
-            return this.amplitude * Math.cos(k*x1 - this.direction*omega*t);
+            return this.amplitude * Math.cos(k*x1 - this.direction*omega*t) + this.offset;
         });
 
         return [x, y];
@@ -101,28 +105,28 @@ class Waves {
     }
 
     CreateWavesArray(){
-        //type, dielectricWidth, amplitude, direction
+        //type, dielectricWidth, amplitude, direction, offset
         //direction right = 1, left = -1
-        let IncidentWave = new Wave("incident", this.DielectricWidth, IncidentAmplitude, 1)
-        let ReflectedWaves = CreateReflectedWaves();
-        //let TransmittedWaves = new Wave("transmitted", this.DielectricWidth, this.ReflectionCoeff, this.NumberOfReflections)
-        //return [IncidentWave, ReflectedWaves, TransmittedWaves]
-        return [IncidentWave]
+        let IncidentWave = new Wave("incident", this.DielectricWidth, IncidentAmplitude, 1, 15)
+
+        //need IncidentWave in a nested array - doing this instead of having a separate property for incident (with wave at diff depth in array) saves having to write  code again and again with only slight differences
+        return [[IncidentWave], this.CreateReflectedWaves()];
     }
 
     CreateReflectedWaves(){
-        let ReflectedWaves = []
+        let ReflectedWaves = [];
         for (let i=0; i<this.NumberOfReflections; i++){
             let direction = (-1)**i;
-            let amplitude = (-1)**i * IncidentAmplitude * (this.ReflectionCoeff)**(i+1);
-            let ReflectedWave = new Wave("reflected", this.DielectricWidth, amplitude, direction);
+            let amplitude = (-1)**i * IncidentAmplitude * (this.ReflectionCoeff)/100**(i+1);
+            let offset = 15 - 3*(i+1);
+            let ReflectedWave = new Wave("reflected", this.DielectricWidth, amplitude, direction, offset);
             ReflectedWaves.push(ReflectedWave);
         }
+        return ReflectedWaves
     }
 }
 
-
-function CreateDataLine(xData, yData) {
+function CreateDataLine(xData, yData, type) {
     let line = {
                 x: xData,
                 y: yData,
@@ -132,7 +136,7 @@ function CreateDataLine(xData, yData) {
                     color: "rgb(100,100,100)",
                     width: 3
                 },
-                showscale: false
+                showscale: true
                 };
     
     return line;
@@ -141,23 +145,30 @@ function CreateDataLine(xData, yData) {
 
 function initialPlot(waves){
     console.log("called initialPlot");
-
-    waves.WavesArray.forEach(wave => {
-        console.log(wave);
-        let DataLine = CreateDataLine(wave.Data[0], wave.Data[1]);
-        Plotly.newPlot(wave.type, [DataLine], wave.Layout);
-        // Plotly.newPlot(wave.type);
-        // Plotly.react(wave.type, [DataLine], wave.Layout)
-        
-        
+    console.log(waves)
+    //nested loop
+    waves.WavesArray.forEach(SetOfWaves => {
+        console.log("SetOfWaves", SetOfWaves);
+        SetOfWaves.forEach(wave => {
+            console.log(wave);
+            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
+            Plotly.newPlot(wave.type, [DataLine], wave.Layout);
+            // Plotly.newPlot(wave.type);
+            // Plotly.react(wave.type, [DataLine], wave.Layout)
+        });
     });
 }
 
 function update(waves) {
     console.log("called update");
-    waves.WavesArray.forEach(wave => {
-        let DataLine = CreateDataLine(wave.Data[0], wave.Data[1])
-        Plotly.react(wave.type, [DataLine], wave.Layout)
+    waves.WavesArray.forEach(SetOfWaves => {
+        SetOfWaves.forEach(wave => {
+            console.log(wave);
+            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
+            Plotly.newPlot(wave.type, [DataLine], wave.Layout);
+            // Plotly.newPlot(wave.type);
+            // Plotly.react(wave.type, [DataLine], wave.Layout)
+        });
     });
 }
 
@@ -166,29 +177,34 @@ function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflection
     t += 0.1;
     let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 
-    waves.WavesArray.forEach(wave => {
-        console.log(wave)
-        let DataLine = CreateDataLine(wave.Data[0], wave.Data[1])
+    waves.WavesArray.forEach(SetOfWaves => {
+        SetOfWaves.forEach(wave => {
+            //console.log(wave)
+            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type)
 
-        //TODO - BUG - Unhandled Promise Rejection: undefined
+            //TODO - BUG - Unhandled Promise Rejection: undefined
 
-        Plotly.animate(wave.type,
-            {data: [DataLine]},
-            {
-                fromcurrent: true,
-                transition: {duration: 0},
-                frame: {duration: 0, redraw: false},
-                mode: "immediate"
-            });
+            Plotly.animate(wave.type,
+                {data: [DataLine]},
+                {
+                    fromcurrent: true,
+                    transition: {duration: 0},
+                    frame: {duration: 0, redraw: false},
+                    mode: "immediate"
+                });
+        });
     });
     
-    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections)
+    //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 }
 
 function AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections){
     //TODO - BUG - TESTING FOR loop
     //create new instance of waves with updated data - inefficient???
-    window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
+    while (isPlay === true) {
+        console.log("playing");
+        window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
+    }
 }
 
 function main() {
@@ -206,12 +222,20 @@ function main() {
     initialPlot(waves);
     //run using the default values of all the sliders
     //update(waves);
-    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
     //check if correct!!! - wrapped NextAnimationFrame in anonym func for callback
     //window.requestAnimationFrame( function() {NextAnimationFrame(waves);});
     
    //live update of slider display values and graphs
+    $("#PlayButton").on("click", function() {
+        $("#PlayButton").value = (isPlay) ? "Play" : "Stop";
+        //toggle
+        isPlay = ! isPlay;
+        AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    })
+
+
    $("input[type=range]").each(function () {
     $(this).on('input', function () {
         $("#" + $(this).attr("id") + "Display").text($(this).val());
@@ -222,11 +246,12 @@ function main() {
         //t = 0
         //let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
         //update
-        //update(waves);
-        //AnimateAllGraphs(waves);
+        update(waves);
+        AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
         });
     });
 }
 
-$(window).on("load", main())
+
+$(window).on("load", main)
