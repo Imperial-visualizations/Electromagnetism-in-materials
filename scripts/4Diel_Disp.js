@@ -23,34 +23,44 @@ $(window).on('load', function() {
                 }
             },
         },
-        layout_real:{//layout of real refractive index
+        layout_real:{//layout of refractive index plot
                 autosize: true,
                 xaxis: {
                     range: [0, 2],
                     title: "Angular Frequency Ratio"
                 },
                 yaxis: {
-
+                    range: [-0.06,0.14],
                 },
                 margin: {
                    l: 50, r: 10, b: 50, t: 50, pad: 5
                },
                legend: {
-                   x: 0, y: 10,
-                   orientation: "h"
+                   traceorder: 'normal',
+                   x: 0.05, y: 1,
+                   font: {
+                      family: 'sans-serif',
+                      size: 14,
+                      color: '#000'
+                    },
+                    //bgcolor: '#E2E2E2',
+                    bordercolor: '#ff0000',
+                    borderwidth: 2
+                   //orientation: "h"
                },
                font: {
                    family: "Fira Sans",
                    size: 16
                }
         },
-        layout_disp:{//layout of imaginary refactive index
+        layout_disp:{//layout of dispersion plot
                 autosize: true,
                 xaxis: {
-                    title: "k"
+                    title: "Real Wavenumber, k",
+                    exponentformat: 'e',
                 },
                 yaxis: {
-                    title:"Angular Frequency Ratio"
+                    title:"Relative Angular Frequency"
                 },
                 margin: {
                    l: 50, r: 10, b: 50, t: 50, pad: 5
@@ -68,9 +78,14 @@ $(window).on('load', function() {
 let isPlay = false;
 let t = 0;
 let nPlot = true;
+let extraRes = false;
 
 let w_conversion = 7e5; // Factor to make plot wavelength reasonable
 let w_0 = 2e10;//gives properties of material
+
+let w_ = [2e10];
+let w_1 = 1.5e10;//second resonance
+let w_2 = 3e10;
 let gamma = 0.1*w_0;
 let wd = 0.1*w_0;
 let w_d_squared = wd**2;
@@ -175,57 +190,70 @@ class Wave{//wave object used to produce em wave
 
     attenuation(w_input){
 
-    let w = w_input;
+        let w = w_input;
 
-    let z_range = numeric.linspace(0, 1, size);
-    //calculate real refractive index
-    let n_real = 1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_0,2)),2) + Math.pow(w,2)*Math.pow(gamma,2)));
-    //calculate imaginary refractive index
-    let n_im = (w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_0,2)),2)+Math.pow(w,2)*Math.pow(gamma,2));
-
-    let k_real = (w*n_real)/c;
-
-    let k_im = (w*n_im)/(c);
-
-    let exp_E = this.element_exponential(math.multiply(-k_im,z_range),size);//exponential decay of amplitude
-
-    let k_z_cos = this.element_cos(math.add(-w_r*t,math.multiply(k_real,z_range)),size);
-
-    let decayed_cos = math.dotMultiply(exp_E,k_z_cos);
-
-    let E_end_amp = this.E_0*exp_E.slice(-1);//find final value of amplitude
-    let B_end_amp = this.B_0*exp_E.slice(-1);
-
-    let shift = k_real*1;//phase shift of wave for transmitted wave
+        let z_range = numeric.linspace(0, 1, size);
 
 
-    let E_cos_atten,B_cos_atten;
-
-    if (this.polarisation === "s-polarisation") {
-        E_cos_atten = [zero, math.multiply(this.E_0, decayed_cos), z_range];
-        B_cos_atten = [math.multiply(this.B_0,decayed_cos), zero, z_range];
-        }
-    else{
-        E_cos_atten = [math.multiply(this.E_0, decayed_cos), zero, z_range];
-        B_cos_atten = [zero, math.multiply(this.B_0, decayed_cos), z_range];
+        //calculate refractive indices
+        let niTot = 0;
+        let nrTot = 1;
+        for(let i=0; i < w_.length; i++){
+            niTot = niTot + (w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_[i],2)),2)+Math.pow(w,2)*Math.pow(gamma,2));
+            nrTot = nrTot - (w_d_squared*(Math.pow(w,2)-Math.pow(w_[i],2))/(Math.pow((Math.pow(w,2)-Math.pow(w_[i],2)),2) + Math.pow(w,2)*Math.pow(gamma,2)));
         }
 
-    let E_trace_atten = [];
+        let n_im = niTot;
+        let n_real = nrTot;
 
-    E_trace_atten.push(
-        {
-        type: "scatter3d",
-        mode: "lines",
-        name: "e field attenuated",
-        x: E_cos_atten[0],
-        y: E_cos_atten[1],
-        z: E_cos_atten[2],
-        opacity: 1,
-        line: {
-            width: 4,
-            color: "#02893B",
-            reversescale: false}
-        }
+        //calculate real refractive index
+        //let n_real = 1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_0,2)),2) + Math.pow(w,2)*Math.pow(gamma,2)));
+        //calculate imaginary refractive index
+        //let n_im = (w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_0,2)),2)+Math.pow(w,2)*Math.pow(gamma,2));
+
+        let k_real = (w*n_real)/c;
+
+        let k_im = (w*n_im)/(c);
+
+        let exp_E = this.element_exponential(math.multiply(-k_im,z_range),size);//exponential decay of amplitude
+
+        let k_z_cos = this.element_cos(math.add(-w_r*t,math.multiply(k_real,z_range)),size);
+
+        let decayed_cos = math.dotMultiply(exp_E,k_z_cos);
+
+        let E_end_amp = this.E_0*exp_E.slice(-1);//find final value of amplitude
+        let B_end_amp = this.B_0*exp_E.slice(-1);
+
+        let shift = k_real*1;//phase shift of wave for transmitted wave
+
+
+        let E_cos_atten,B_cos_atten;
+
+        if (this.polarisation === "s-polarisation") {
+            E_cos_atten = [zero, math.multiply(this.E_0, decayed_cos), z_range];
+            B_cos_atten = [math.multiply(this.B_0,decayed_cos), zero, z_range];
+            }
+        else{
+            E_cos_atten = [math.multiply(this.E_0, decayed_cos), zero, z_range];
+            B_cos_atten = [zero, math.multiply(this.B_0, decayed_cos), z_range];
+            }
+
+        let E_trace_atten = [];
+
+        E_trace_atten.push(
+            {
+            type: "scatter3d",
+            mode: "lines",
+            name: "e field attenuated",
+            x: E_cos_atten[0],
+            y: E_cos_atten[1],
+            z: E_cos_atten[2],
+            opacity: 1,
+            line: {
+                width: 4,
+                color: "#02893B",
+                reversescale: false}
+            }
     );
 
     let B_trace_atten = [];
@@ -286,24 +314,49 @@ class Wave{//wave object used to produce em wave
     return data
     };
 
-    function compute_data_n(){// produces data for both imaginary and real parts of refractive index
+    function compute_data_n() {
         let x = numeric.linspace(0, 2, size);
         let yr = [];
         let yi = [];
         let w;
+        let niTot = 0;
+        let nrTot = 0;
 
         for(let i = 0; i< size; i++){
             w = x[i]*w_0;
-            yi.push((w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_0,2)),2)+Math.pow(w,2)*Math.pow(gamma,2)));
+            niTot = 0;
+
+            for(let i=0; i < w_.length; i++){ //sum contributions to imaginary part of refractive index, from each resonance
+                niTot = niTot + (w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_[i],2)),2)+Math.pow(w,2)*Math.pow(gamma,2));
+            }
+            yi.push(niTot);
+            //yi.push((w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_1,2)),2)+Math.pow(w,2)*Math.pow(gamma,2))+(w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_2,2)),2)+Math.pow(w,2)*Math.pow(gamma,2)));
         }
 
         for( let i = 0; i < size; i++){
             w = (x[i])*w_0;
-            yr.push(1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_0,2)),2) + Math.pow(w,2)*Math.pow(gamma,2))) - 1);
+            nrTot = 0;
+
+            for(let i=0; i < w_.length; i++){ //sum contributions to real part of refractive index, from each resonance
+                nrTot = nrTot - (w_d_squared*(Math.pow(w,2)-Math.pow(w_[i],2))/(Math.pow((Math.pow(w,2)-Math.pow(w_[i],2)),2) + Math.pow(w,2)*Math.pow(gamma,2)));
+            }
+            yr.push(nrTot);
+
+            //yr.push(1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_1,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_1,2)),2) + Math.pow(w,2)*Math.pow(gamma,2))) - (w_d_squared*(Math.pow(w,2)-Math.pow(w_2,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_2,2)),2) + Math.pow(w,2)*Math.pow(gamma,2))) - 1);
         }
 
-        let img_n = (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(angular_frequency_ratio,2) - Math.pow(w_0,2)),2)+Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2))
-        let real_n = (1 - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_0,2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2))));
+        niTot = 0;
+        nrTot = 1;
+        for(let i=0; i < w_.length; i++){
+
+            niTot = niTot + (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(angular_frequency_ratio,2) - Math.pow(w_[i],2)),2)+Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2));
+            nrTot = nrTot - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_[i],2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_[i],2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2)));
+        }
+
+        let img_n = niTot;
+        let real_n = nrTot;
+        //let img_n = (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(angular_frequency_ratio,2) - Math.pow(w_1,2)),2)+Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2)) + (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(angular_frequency_ratio,2) - Math.pow(w_2,2)),2)+Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2));
+        //let real_n = (1 - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_1,2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_1,2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2))) - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_2,2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_2,2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2))));
 
         let r_in = {
               x: x,
@@ -342,31 +395,49 @@ class Wave{//wave object used to produce em wave
         return [r_rn, r_in, marker_r ,marker_im]
     }
 
-    function compute_data_disp(){
-        let omega = numeric.linspace(0, 2, size);
+    function compute_data_disp (){ //same but with 2 resonances
+    let omega = numeric.linspace(0, 2, size);
         let k = [];
-        let n = [];
+        let n_real = [];
         let w;
 
         let x = numeric.linspace(0, 2, size);
         let yr = []; //k values
         let yi = [];
-        let e1; //epsilon 1
-        let e2; //epsilon 2
+        let e1 = 1;
+        let e2 = 0;
         let nr; //real part of refractive index
 
         for( let i = 0; i < size; i++){
             w = (x[i])*w_0;
-            e1 = (w*(1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_0,2)),2) + Math.pow(w,2)*Math.pow(gamma,2)))));
-            e2 = (w_d_squared*w*gamma)/(Math.pow((Math.pow(w_0,2)- Math.pow(w,2)),2) + Math.pow(gamma,2)*Math.pow(w,2));
+            e1 = 1; //real part of epsilon
+            e2 = 0; //imaginary part of epsilon
 
-            nr = ((1/Math.pow(2,(1/2)))*(e1 + Math.pow((Math.pow(e1,2)+Math.pow(e2,2)),(1/2))));
+            for(let i = 0; i < w_.length; i++){ //sum the contributions from each resonance
+                e1 = e1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_[i],2))/(Math.pow((Math.pow(w,2)-Math.pow(w_[i],2)),2) + Math.pow(w,2)*Math.pow(gamma,2)));
+                e2 = e2 + (w_d_squared*w*gamma)/(Math.pow((Math.pow(w_[i],2)- Math.pow(w,2)),2) + Math.pow(gamma,2)*Math.pow(w,2));
 
-            yr.push((nr*w)/(3*Math.pow(10,8)));
+            }
+            e1 = e1*w;
+
+            //e1 = (w*(1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_1,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_1,2)),2) + Math.pow(w,2)*Math.pow(gamma,2))) -(w_d_squared*(Math.pow(w,2)-Math.pow(w_2,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_2,2)),2) + Math.pow(w,2)*Math.pow(gamma,2)))));
+            //e2 = (w_d_squared*w*gamma)/(Math.pow((Math.pow(w_1,2)- Math.pow(w,2)),2) + Math.pow(gamma,2)*Math.pow(w,2)) + (w_d_squared*w*gamma)/(Math.pow((Math.pow(w_2,2)- Math.pow(w,2)),2) + Math.pow(gamma,2)*Math.pow(w,2));
+
+            n_real = ((1/Math.pow(2,(1/2)))*(e1 + Math.pow((Math.pow(e1,2)+Math.pow(e2,2)),(1/2))));
+
+            yr.push((n_real*w)/(3*Math.pow(10,8)));
         }
 
-        e1 = (angular_frequency_ratio*(1 - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_0,2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2)))));
-        e2 = (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(w_0,2)- Math.pow(angular_frequency_ratio,2)),2) + Math.pow(gamma,2)*Math.pow(angular_frequency_ratio,2));
+        e1 = 1;
+        e2 = 0;
+        for(let i = 0; i < w_.length; i++){ //sum the contributions from each resonance
+            e1 = e1 - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_[i],2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_[i],2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2)));
+            e2 = e2 + (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(w_[i],2)- Math.pow(angular_frequency_ratio,2)),2) + Math.pow(gamma,2)*Math.pow(angular_frequency_ratio,2));
+        }
+        e1 = angular_frequency_ratio * e1;
+
+        //e1 = (angular_frequency_ratio*(1 - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_1,2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_1,2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2))) - (w_d_squared*(Math.pow(angular_frequency_ratio,2)-Math.pow(w_2,2))/(Math.pow((Math.pow(angular_frequency_ratio,2)-Math.pow(w_2,2)),2) + Math.pow(angular_frequency_ratio,2)*Math.pow(gamma,2)))));
+        //e2 = (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(w_1,2)- Math.pow(angular_frequency_ratio,2)),2) + Math.pow(gamma,2)*Math.pow(angular_frequency_ratio,2)) + (w_d_squared*angular_frequency_ratio*gamma)/(Math.pow((Math.pow(w_2,2)- Math.pow(angular_frequency_ratio,2)),2) + Math.pow(gamma,2)*Math.pow(angular_frequency_ratio,2));
 
         let marker_n = ((1/Math.pow(2,(1/2)))*(e1 + Math.pow((Math.pow(e1,2)+Math.pow(e2,2)),(1/2))));
         let markerK = (marker_n*angular_frequency_ratio)/(3*Math.pow(10,8));
@@ -390,6 +461,7 @@ class Wave{//wave object used to produce em wave
         }
 
         return [trace1, marker]
+
     }
 
     function update_graph_n(){//update refractive index graph
@@ -445,7 +517,36 @@ class Wave{//wave object used to produce em wave
         return 0;
     };
 
-    function graphChangeFunction(){
+    let resNum = 1;
+    function resonanceNumberFunction(){
+        extraRes = !extraRes;
+        if(resNum==2){extraRes = true;}
+        update_graph_n();
+        sliderVal = $('');
+        console.log(resNum, extraRes);
+
+        if(extraRes){
+            w_ = [1.5e10, 3e10]; //change list of resonances
+            if(resNum ==2){
+                w_ = [1.5e10, 2e10, 3e10];
+                $('#resonanceNumber').html('Remove Resonances');//update button text
+            }
+            update_graph_n();
+            $('.sliderTitle').html('Relative Angular Frequency: <span id="angular_frequency-display"></span>');
+            $("#angular_frequency-display").html($("input#angular_frequency").val().toString());//update value of slider display
+            update_graph(); //updates attenuation
+            resNum = resNum+1;
+
+        } else{
+            w_ = [2e10];
+            update_graph_n();
+            $('.sliderTitle').html('Ratio of Angular frequencies: <span id="angular_frequency-display"></span>');
+            $("#angular_frequency-display").html($("input#angular_frequency").val().toString());//update value of slider display
+            update_graph(); //updates attenuation
+            $('#resonanceNumber').html('Add Resonance'); //update button text
+            resNum = 1;
+        }
+
 
     };
 
@@ -476,6 +577,10 @@ class Wave{//wave object used to produce em wave
                 $('#graphChangeButton').html('Refractive Index');
             }
         });
+
+        $('#resonanceNumber').on('click', function() {
+                resonanceNumberFunction();
+                });
 
         $('#playButton').on('click', function() {
             if(isPlay){ $('#playButton').html("Play");}

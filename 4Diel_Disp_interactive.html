@@ -79,8 +79,32 @@
 
         The refractive index is given by: <br>
         $\displaystyle \tilde{n} = \frac{c \tilde{k}}{\omega}$ $\displaystyle \cong 1 + \frac{N q^2}{2m \epsilon_0}
-        \sum_{j} \frac{f_j(\omega^2_j-\omega^2)}{(\omega^2_j-\omega^2)^2 + \gamma^2_j \omega^2}$ <br> where $\omega_j$
-        are the resonant frequencies of the electrons in the dielectric.
+        \sum_{j} \frac{f_j(\omega^2_j-\omega^2)}{(\omega^2_j-\omega^2)^2 + \gamma^2_j \omega^2}$ <br><br>
+        <button id="showDefinitions" >Define Terms</button>
+
+        <script> //show or hide definitions when button pressed
+            let defShown = false;
+            $('#showDefinitions').on('click', function() {
+            defShown = !defShown;
+
+            if(defShown){
+                $('#termDefinitions').show();
+            } else {
+                $('#termDefinitions').hide();
+            }
+            });
+        </script>
+
+            <p id="termDefinitions" style="display:none;">
+                $\omega_j$ - Resonant frequencies of dielectric<br>
+                $\omega$ - Frequency of electromagnetic wave<br>
+                $\gamma_j$ - Damping in each molecule<br>
+                $f_j$ - Number of electrons per molecule<br>
+                m - Electron mass<br>
+                q - Electron charge<br>
+                N - Number of molecules per unit volume
+            </p>
+
         From this, it can be seen that the imaginary refractive
         index corresponds to attenuation of the wave.
         <br><br>
@@ -122,9 +146,10 @@
         <div id="graph_n" style="height: 70vh; width: 30vw;">
         </div>
         <div id="graph_disp" style="height: 70vh; width: 30vw; display: none;"></div>
+        <!--<p>Real part of refractive index has 1 subtracted, so the traces overlap.</p>-->
         <div id="angular_frequency-slider">
          <label class="sliderTitle" for="angular_frequency">
-          Ratio of Angular frequencies \(\omega/\omega_0\):
+          Ratio of Angular frequencies \(\omega/\omega_j\) :
           <span id="angular_frequency-display">
           </span>
          </label>
@@ -138,6 +163,7 @@
 
              <button id="graphChangeButton">Dispersion Relation</button>
              <button id="playButton" type="button">Play</button>
+             <button id="resonanceNumber">Add Resonance</button>
         </div>
 
        </div>
