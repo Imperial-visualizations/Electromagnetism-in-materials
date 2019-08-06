@@ -34,7 +34,7 @@
 <body>
 
 <div style="width:65%; float:right;">
-    <div class="row">
+
         <div style="width:40%; float:right;">
             <div>
             <input type="button" id="playButton" value="Play">
@@ -61,48 +61,59 @@
             </div>
 
             <div>
-                <h6 >$\omega =$
+                <h7 >$\omega =$
                             <output id="Slider_omega_9_value" for="Slider_omega_9">2</output> $\times 10^{15} \, rad \, s^{-1}$
-                </h6>
+                </h7>
                 <!--BEGIN Slider-->
 
                     <label>
-                        <span class="sliderMin">1</span>
-                        <input id="Slider_omega_9" class="inputs" type="range" value="2" min="1" max="5" step="0.01" oninput="Slider_omega_9_value.value=Slider_omega_9.value"/></input>
-                        <span class="sliderMax">5</span>
+                        <span class="sliderMin">0.5</span>
+                        <input id="Slider_omega_9" class="inputs" type="range" value="2" min="0.5" max="3" step="0.001" oninput="Slider_omega_9_value.value=Slider_omega_9.value"/></input>
+                        <span class="sliderMax">3</span>
                     </label>
                     <!--END Slider-->
             </div>
 
             <div>
-                <h6 >$E =$
-                            <output id="Slider_E_9_value" for="Slider_E_9">5</output> $\times 10^{15} \, V \, m^{-2}$
-                </h6>
+                <h7 >$E =$
+                            <output id="Slider_E_9_value" for="Slider_E_9">2</output> $\times 10^{15} \, V \, m^{-2}$
+                </h7>
                 <!--BEGIN Slider-->
 
                     <label>
-                        <span class="sliderMin">2</span>
-                        <input id="Slider_E_9" class="inputs" type="range" value="2" min="1" max="5" step="0.01" oninput="Slider_E_9_value.value=Slider_E_9.value"/></input>
-                        <span class="sliderMax">5</span>
+                        <span class="sliderMin">0.5</span>
+                        <input id="Slider_E_9" class="inputs" type="range" value="2" min="0.5" max="3.5" step="0.001" oninput="Slider_E_9_value.value=Slider_E_9.value"/></input>
+                        <span class="sliderMax">3.5</span>
                     </label>
                     <!--END Slider-->
             </div>
 
 
             <div>
-                <h6> $\sigma = $
-                    <output id="Slider_sigma_9_value" for="Slider_sigma_9">5</output> $\times 10^{5} \, \Omega^{-1} \, m$ </h6>
+                <h7> $\sigma = $
+                    <output id="Slider_sigma_9_value" for="Slider_sigma_9">2</output> $\times 10^{5} \, \Omega^{-1} \, m$ </h7>
                     <label>
-                        <span class="sliderMin">0.01</span>
-                        <input id="Slider_sigma_9" class="inputs" type="range" value="2" min="0.2" max="10" step="0.01" oninput="Slider_sigma_9_value.value=Slider_sigma_9.value"/></input>
-                        <span class="sliderMax">10</span>
+                        <span class="sliderMin">0.5</span>
+                        <input id="Slider_sigma_9" class="inputs" type="range" value="2" min="0.5" max="200" step="0.001" oninput="Slider_sigma_9_value.value=Slider_sigma_9.value"/></input>
+                        <span class="sliderMax">200</span>
                     </label>
                     <!--END Slider-->
             </div>
             <br>
-            <div id = "radiationPressure">  </div>
-            <h6 id = "approximationMessage"style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;" >
-                Approximation is invalid as the medium is no longer a good conductor.</h6>
+
+            <div>
+                <h7>
+                    $P_{rad} = $   <output id = "radiationPressureFactor"></output> $ \frac{ < S^i >}{c} \, = \,$ <output id = "radiationPressure"></output> $ \times 10^{19} \, Pa$
+                    <br>
+                    $ \delta = $ <output id = "skinDepth"></output> $\times 10^{-8} m$
+<!--                    $P_{rad}$ =  <output id = "radiationPressure"></output> $ \frac{ < S^i >}{c} $-->
+                </h7>
+            </div>
+
+            <h7 id = "approximationMessage"style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;" >
+                Approximation is invalid as the medium is no longer a good conductor.
+
+            </h7>
         </div>
 
 <!--        <div style="width:40%; float:right;">-->
