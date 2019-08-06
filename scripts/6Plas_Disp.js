@@ -65,23 +65,26 @@ class Wave1D{
 }
 
 
-function setLayout(sometitlex, sometitley, sometitlez, Mode){
+function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
     //set layout of graphs.  'Mode' sets what type of graph you want the layout for
     let new_layout;
     if (Mode == "Wave"){
         new_layout = {//layout of 3D graph
-            showlegend: false,
-            showscale: false,
+            //showlegend: false,
+            //showscale: false,
             uirevision: 'dataset',
             margin: {
-                l: 10, r: 10, b: 10, t: 1, pad: 0
+                l: 1, r: 1, b: 10, t: 1, pad: 0
             },
             dragmode: 'turntable',
             scene: {
                 aspectmode: "cube",
-                xaxis: {range: [-100, 100], title: sometitlex, showticklabels: false},
-                yaxis: {range: [-100, 100], title: sometitley, showticklabels: false},
-                zaxis: {range: [-100, 100], title: sometitlez, showticklabels: false},
+                //xaxis: {range: [-max_axis, max_axis], title: sometitlex},//, showticklabels: false},
+                //yaxis: {range: [-max_axis, max_axis], title: sometitley},//, showticklabels: false},
+                //zaxis: {range: [-max_axis, max_axis], title: sometitlez},//, showticklabels: false},
+                xaxis: {title: sometitlex},//, showticklabels: false},
+                yaxis: {title: sometitley},//, showticklabels: false},
+                zaxis: {title: sometitlez},//, showticklabels: false},
 
                 camera: {
                     up: {x: 0, y: 0, z: 1},//sets which way is up
@@ -102,7 +105,7 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode){
             },
             yaxis: {
                 //scaleanchor: "x",
-                //range: [0, 50],
+                range: [0, max_axis],
                 //showticklabels: false,
                 title: sometitley
             },
@@ -201,25 +204,25 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList){
 }
 
 
-function UpdatePlots(Data){
+function UpdatePlots(Data, x_max, Omega_max){
     //update plots using react - should be faster than doing newPlot
-    Plotly.react('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion'));
-    Plotly.react('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave'));
+    Plotly.react('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
+    Plotly.react('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
 
-function NewPlots(Data){
+function NewPlots(Data, x_max, Omega_max){
     //create plots using newPlot
-    Plotly.newPlot('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion'));
-    Plotly.newPlot('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave'));
+    Plotly.newPlot('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
+    Plotly.newPlot('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
-function GetWaves(xValues, k){
+function GetWaves(xValues, k, omega){
     let A0 = 10;
     let Phase = 0;
-    let omega = (1/50);
+    //let omega = (1/50);
     let t = 0;
-    k = math.complex({re:(1/10), im:0});
+    //k = math.complex({re:(1/10), im:0});
     let EWave = new Wave1D(A0, k, omega, Phase, "blue");
     let BWave = new Wave1D(A0, k, omega, Phase, "red");
 
@@ -273,29 +276,35 @@ function Refresh(PlotNew = false){
     let PlotDensity = 10; //per 1 unit
     let n = (Omega_max - Omega_min)*PlotDensity;
 
-    let x_max = 50;
-    let x_min = -x_max;
-    let PlotDensity3D = 10;
-    let n3D = (x_max - x_min)*PlotDensity3D;
-    let xValues = numeric.linspace(x_min, x_max, n3D);
-
     let Omega = numeric.linspace(Omega_min, Omega_max, n);
+
+    
 
     let OmegaP = GetOmegaP(Ne);
     UpdateOmegaP(OmegaP);
 
     let Currentk = DispersionRelation([CurrentOmega], OmegaP);
-    
-    let WaveList = GetWaves(xValues, Currentk[0]);
-
     let k = DispersionRelation(Omega, OmegaP);
+
+    let x_max = 50;
+    // if (Currentk.re >=0.1){
+    //     x_max = Math.round(2*Math.PI/(k.re));
+    //    
+    // }
+    let x_min = -x_max;
+    let PlotDensity3D = 1;
+    let n3D = (x_max - x_min)*PlotDensity3D;
+
+    let xValues = numeric.linspace(x_min, x_max, n3D);
+    
+    let WaveList = GetWaves(xValues, Currentk[0], CurrentOmega);
     
     let GraphData = GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList);
     
     if (PlotNew){
-        NewPlots(GraphData);
+        NewPlots(GraphData, x_max, Omega_max);
     }else{
-        UpdatePlots(GraphData);
+        UpdatePlots(GraphData, x_max, Omega_max);
     }
 }
 

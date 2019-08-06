@@ -37,7 +37,7 @@
         <div style = "width:50%; float:left">
             <h7>Wave graph</h7>
             <!--<div id='DispersionGraph' style="width:40vw; height:40vh;"></div>-->
-            <div id='3DGraph' style="width:70%; float:center"></div>
+            <div id='3DGraph' style="width:100%; float:center"></div>
         </div>
         <div style = "width:50%; float:right">
             <h7>Dispersion Graph</h7>
@@ -45,11 +45,12 @@
             <div id='DispersionGraph' style="width:70%; float:center"></div>
             <label class="sliderTitle" style="padding-bottom:20px;">$N_e$:
                 <span id="NeSliderDisplay" data-unit="">0.15</span>
+                $\times 10^{17}$
             </label>
             <label style = "width:100%">
-                <span class="sliderMin">0.075</span>
-                <input id="NeSlider" class="inputs" type="range" value="0.15" min="0.075" max="0.15" step="0.001">
-                <span class="sliderMax">0.15</span>
+                <span class="sliderMin">1</span>
+                <input id="NeSlider" class="inputs" type="range" value="1" min="1" max="10" step="0.01">
+                <span class="sliderMax">10</span>
             </label> 
             <label class="sliderTitle" style="padding-bottom:20px;">$\omega_p$:<!--is that meant to be capital p on the omega?-->
                 <span id="OmegaPDisplay" data-unit=""></span>
@@ -59,8 +60,8 @@
             </label>
             <label style = "width:100%">
                 <span class="sliderMin">1</span>
-                <input id="OmegaSlider" class="inputs" type="range" value="0" min="1" max="50" step="0.1">
-                <span class="sliderMax">50</span>
+                <input id="OmegaSlider" class="inputs" type="range" value="1" min="1" max="100" step="0.01">
+                <span class="sliderMax">10</span>
             </label> 
         </div>
     </div>
