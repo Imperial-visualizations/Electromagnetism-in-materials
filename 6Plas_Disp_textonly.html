@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Page Info-->
+    <title>Plasma Dispersion</title>
+    <!--css link-->
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <!--Required JS resources-->
+    <!--NB: better to have resources before the main body but still works even if they are not-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+            },
+            "HTML-CSS": { fonts: ["TeX"] }
+        });
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+
+<div style = "width:35%; float:left">
+    <h4 style = "text-align:center">Dispersion in Plasma</h4>
+
+    <p>
+        The dependence of wave speed and index of refraction on wavelength is called dispersion. (Plagiarised)(is this the 
+        definition we want anyway?)
+    </p>
+    <p>
+        The dispersion relation for a plasma is given by
+    </p>
+    <p style = "text-align:center">
+        $k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$,
+    </p>
+    <p>
+        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e \varepsilon_0}}$.
+    </p>
+  
+    <h6 style = "text-align:left">Derivation</h6>
+
+    <p>
+        Start with Maxwell's equations.
+    </p>
+    <p style = "text-align:center">
+        $\nabla\cdot\boldsymbol{E} = \frac{\rho_f}{\varepsilon}$
+        <br/>
+        <br/>
+        $\nabla\cdot\boldsymbol{B} = 0$
+        <br/>
+        <br/>
+        $\nabla \times \boldsymbol{E} = -\frac{\partial \boldsymbol{B}}{\partial t}$
+        <br/>
+        <br/>
+        $\nabla \times \boldsymbol{B} = \mu \boldsymbol{J}_c + \mu \varepsilon \frac{\partial \boldsymbol{E}}{\partial t}$
+        
+
+    </p>
+    
+    <p>
+        For a plane wave, $\nabla$ becomes $i\boldsymbol{k}$ and $\frac{\partial}{\partial t}$ becomes $-i\omega$.  Therefore 
+        Maxwell's equations become:
+    </p>
+    <p>
+        $\boldsymbol{k}\cdot\boldsymbol{E} = -i\frac{\rho_f}{\varepsilon}$<br/>
+        $\boldsymbol{k}\cdot\boldsymbol{B} = 0$<br/>
+        $\boldsymbol{k} \times \boldsymbol{E} = \omega \boldsymbol{B}$<br/>
+        $\boldsymbol{k} \times \boldsymbol{B} = -i \mu_0 \boldsymbol{J}_c - \mu_0 \varepsilon \omega \boldsymbol{E}$<br/>
+
+
+    </p>
+    <p>
+        In a plasma we assume
+    </p>
+    <p>
+        $\rho_f \neq 0$<br/>
+        $\boldsymbol{J}_c = i \frac{N_e e^2}{m_e \omega}\boldsymbol{E}$<br/>
+        $\varepsilon = \varepsilon_0$<br/>
+            
+    </p>
+
+    <p>
+        Taking the fourth Maxwell equation
+    </p>
+    <p>
+        $\begin{eqnarray}\boldsymbol{k} \times \boldsymbol{B} &=& -i\mu_0\Big(i\frac{N_e e^2}{m_e \omega}\boldsymbol{E}\Big) - \varepsilon_0 \mu_0 \omega \boldsymbol{E}\\
+        &=& \varepsilon_0 \mu_0 \omega \Big(\frac{N_e e^2}{m_e \varepsilon_0 \omega^2} - 1\Big)\boldsymbol{E}\\
+        &=& \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{E}\end{eqnarray}$
+        
+    </p>
+    <p>
+        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e e^2}}$<br/>
+    </p>
+    <p>
+        $\boldsymbol{k} \times (\boldsymbol{k} \times \boldsymbol{B}) = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{k}\times\boldsymbol{E}$<br/>
+        $-k^2\boldsymbol{B} = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\omega\boldsymbol{B} = \Big(\frac{\omega_p^2 - \omega^2}{c^2}\boldsymbol{B}\Big)$<br/>
+        $\Big(k^2 + \frac{\omega_p^2 - \omega^2}{c^2}\Big)\boldsymbol{B} = 0$<br/>
+
+    </p>
+    <p>
+        Dispersion relation
+    </p>
+    <p>
+        $∴ k^2 = \frac{\omega^2 - \omega_p^2}{c^2}$<br/>
+        $∴ k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^\frac{1}{2}$</br>
+    </p>
+</div>
+
+</body>
