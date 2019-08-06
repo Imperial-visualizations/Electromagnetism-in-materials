@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Page Info-->
+    <title>Radiation Pressure on Good Conductor</title>
+    <!--css link-->
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <!--Required JS resources-->
+    <!--NB: better to have resources before the main body but still works even if they are not-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+
+<div style="width:35%; float:left;">
+     <center><h5>Radiation Pressure on a Good Conductor</h5></center>
+    <p>
+        <br>
+        For a given vector field, if $\mathbf{A} \cdot \mathbf{ dl }$ is an exact differential, $\mathbf{A}$ is a conservative field. Then, $\mathbf{A}$ is the
+        gradient function of some scalar function $\Omega$. That is, $\mathbf{A} = \nabla {\Omega}$.
+        We can relate $\Omega$ and $\nabla \Omega$ by the equation below:
+            $$ \int _A ^B \nabla \Omega \cdot \mathbf{ dl } = \Omega_B - \Omega_A$$
+        From this equation above, we can see that the integral is independent of the path that one takes from A to B,
+        for it is determined by only the values from the parent function $\Omega_B - \Omega_A$. This is a generalisation of the Fundamental Theorem of Calculus.
+        <div>
+            <h6>Visualisation Guide</h6>
+                <ol>
+                    <li>On the right, you can see a gradient field and its scalar parent function.
+                        Change the value of the parameter $a$, and observe the change in $\nabla \Omega$ and $\Omega$.</li>
+                    <li>Note that as the magnitude of $a$ increases, the length of the arrows in $\nabla \Omega$ increases and the contour of the parent function
+                        $\Omega$ becomes steeper as well. Hence, the gradient vector increases in magnitude as well.</li>
+                    <li>All gradient fields shown in this suite are conservative. This means that the line integral along the field,
+                        $\int \nabla \Omega \cdot \mathbf{ dl }$ is path independent. Move the path of the ball from Point A to Point B
+                        along 2 different paths, Path 1 and Path 2.</li>
+                    <li>Observe their function values. Note that along the path, the value of $\Omega$ may be different.
+                        However, when the balls reach Point B, their function values are equal.</li>
+                    <li>This means that the line integral $\int _A ^B \nabla \Omega \cdot \mathbf{ dl }$  is determined
+                        only by the value of $\Omega$ at the limits, $\Omega_B - \Omega_A$.</li>
+                    <li>There are a few other functions for you to play around with. Click the dropdown menu to find out.</li>
+                </ol>
+        <div>
+    </p>
+</div>
+
+</body>

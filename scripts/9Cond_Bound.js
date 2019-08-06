@@ -1,3 +1,4 @@
+//This sets up the x-axis values.
 function setupxData (xMin, xMax, plotStep) {
     let xLine = [];
     for (let i = xMin; i <= xMax; i += plotStep){
@@ -6,6 +7,7 @@ function setupxData (xMin, xMax, plotStep) {
     return xLine;
 };
 
+//This sets up the data for incident wave.
 function setupyIncidentData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma){
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
@@ -20,6 +22,7 @@ function setupyIncidentData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma
     return yLine;
 };
 
+//This sets up the data for reflected wave.
 function setupyReflectionData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma) {
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
@@ -32,9 +35,9 @@ function setupyReflectionData (xMin, xMax, t, c, plotStep, amplitude, omega, sig
         };
     };
     return yLine;
-
 }
 
+//This sets up the data for combined wave.
 function setupyCombinedData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma) {
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
@@ -48,9 +51,9 @@ function setupyCombinedData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma
     };
 
     return yLine;
-
 }
 
+//This sets up the data for incident envelope.
 function setupyIncidentEnvelopeData (xMin, xMax, plotStep, amplitude, omega, sigma) {
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
@@ -64,6 +67,7 @@ function setupyIncidentEnvelopeData (xMin, xMax, plotStep, amplitude, omega, sig
     return yLine;
 }
 
+//This sets up the data for reflected envelope.
 function setupyReflectionEnvelopeData (xMin, xMax, plotStep, amplitude, omega, sigma) {
     let yLine = [];
     let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
@@ -75,9 +79,9 @@ function setupyReflectionEnvelopeData (xMin, xMax, plotStep, amplitude, omega, s
         };
     };
     return yLine;
-
 }
 
+//This compiles the data in the structure for the incident wave that plotly takes.
 function dataIncidentCompile(xLine, yLine) {
     let dataLine = {
                          x:xLine,
@@ -92,8 +96,9 @@ function dataIncidentCompile(xLine, yLine) {
                          showscale: false
                      };
     return dataLine;
-};
+}
 
+//This compiles the data in the structure for the incident envelope that plotly takes.
 function dataIncidentEnvelopeCompile(xLine, yLine) {
     let dataLine = {
                          x:xLine,
@@ -109,8 +114,9 @@ function dataIncidentEnvelopeCompile(xLine, yLine) {
                          showscale: false
                      };
     return dataLine;
-};
+}
 
+//This compiles the data in the structure for the reflected wave that plotly takes.
 function dataReflectionCompile(xLine, yLine) {
     let dataLine = {
                          x:xLine,
@@ -125,8 +131,9 @@ function dataReflectionCompile(xLine, yLine) {
                          showscale: false
                      };
     return dataLine;
-};
+}
 
+//This compiles the data in the structure for the reflected envelope that plotly takes.
 function dataReflectionEnvelopeCompile(xLine, yLine) {
     let dataLine = {
                          x:xLine,
@@ -142,8 +149,9 @@ function dataReflectionEnvelopeCompile(xLine, yLine) {
                          showscale: false
                      };
     return dataLine;
-};
+}
 
+//This compiles the data in the structure for the resultant wave that plotly takes.
 function dataCombinedCompile(xLine, yLine) {
     let dataLine = {
                          x:xLine,
@@ -160,6 +168,7 @@ function dataCombinedCompile(xLine, yLine) {
     return dataLine;
 };
 
+//Preparing the data to be plotted depending on the option selected.
 function dataPlot (xMin, xMax, yMin, yMax, xEdge, t, c, plotStep) {
     let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
     let sigma = parseFloat(document.getElementById('Slider_sigma_9').value)* Math.pow(10,5);
@@ -232,6 +241,7 @@ function dataPlot (xMin, xMax, yMin, yMax, xEdge, t, c, plotStep) {
 
 };
 
+//plotting the data depending on the option selected.
 function plot(data, layout) {
     Plotly.react("Boundary_Plot_9", data, layout);
 }
@@ -242,7 +252,7 @@ function compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, layout){
 }
 
 
-
+//main
 function main(){
     const xMin = -2e-6;
     const xMax = -1* xMin;
@@ -277,6 +287,10 @@ function main(){
 
     document.getElementById("approximationMessage").style.display = "none"
 
+
+//interestingly adding arguments in the requestAnimationFrame creates certain problems.
+//This is why I have put playLoop (that requires requestAnimationFrame) inside the main, so that variables in the main scope can be passed into playLoop.
+//I decided to use Plotly.react eventually because Plotly.animate creates problem that the frame speed keeps increasing when sliders are changed.
     function playLoop(){//adds time evolution
         if (isPlay === false) {
     //        Plotly.animate("Boundary_Plot_9",
@@ -303,9 +317,7 @@ function main(){
             compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, plotLayout);
             requestAnimationFrame(playLoop);//loads next frame
             }
-
-    };
-
+    }
 
 
     compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, plotLayout);
