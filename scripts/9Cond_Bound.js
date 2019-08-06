@@ -78,41 +78,6 @@ function setupyReflectionEnvelopeData (xMin, xMax, plotStep, amplitude, omega, s
 
 }
 
-function dataMediumCompile (xMin, xMax, plotStep) {
-    let zSurface = [[10, 10.625, 12.5, 15.625, 20],
-    [5.625, 6.25, 8.125, 11.25, 15.625],
-    [2.5, 3.125, 5.0, 8.125, 12.5],
-    [0.625, 1.25, 3.125, 6.25, 10.625],
-    [0, 0.625, 2.5, 5.625, 10]];
-    let xSurface = [xMin, xMax/4, xMax/3, xMax/2, xMax/1];
-    let ySurface = [xMin, xMax/4, xMax/3, xMax/2, xMax/1];
-
-//    let dataMedium = {
-//                         x: xSurface,
-//                         y: ySurface,
-//                         z: zSurface,
-//                         type: 'contour',
-//                         opacity : 1,
-//                         showscale: true,
-//                         colorscale: 'Jet',
-//                     };
-//    return dataMedium;
-
-let data = {
-  z: [[10,10,10,10,10],
-     [10,10,10,10,10],
-     [10,10,10,10,10],
-     [10,10,10,10,10],
-     [10,10,10,10,10]],
-      x: [-9, -6, -5 , -3, -1],
-  y: [0, 1, 4, 5, 7],
-  type: 'contour',
-  opacity: 0.5,
-  colorscale: 'Jet',
-};
-return data;
-}
-
 function dataIncidentCompile(xLine, yLine) {
     let dataLine = {
                          x:xLine,
