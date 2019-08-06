@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Page Info-->
+    <title>Dielectric Boundaries C</title>
+    <!--css link-->
+    <link rel="stylesheet"
+            href="styles/skeleton.css">
+    <link rel="stylesheet"
+            href="styles/style.css">
+    <!--Required JS resources-->
+    <!--NB: better to have resources before the main body but still works even if they are not-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+    });
+
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+
+    <div class="container_journey" style="background-color: white"></div>
+
+    <div class="container_vis">
+    
+        <!-- Graphs -->
+        <div class="row">
+            <div class="one-third column">
+                <div id="incident" style="width: 100%; height: 60%"></div>
+            </div>
+            <div class="one-third column">
+                <div id="reflected" style="width: 100%; height: 60%"></div>
+            </div>
+            <div class="one-third column">
+                <div id="transmitted" style="width: 100%; height: 60%"></div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <!-- Does slider not support floats?! -->
+            <div class="one-half column">
+                <div id="ReflectionCoeffSlider">
+                    <label for="ReflectionCoeff" class="sliderTitle">Reflection Coefficient (%): 
+                        <span id="ReflectionCoeffDisplay"></span>
+                    </label><span class="sliderMin">1</span>
+                    <input type="range" id="ReflectionCoeff" name="ReflectionCoeff" min="1" max="100" value="50">
+                    <span class="sliderMax">100</span>
+                </div>
+            </div>
+
+            <div class="one-half column">
+                <div id="DielectricWidthSlider">
+                    <label for="DielectricWidth" class="sliderTitle">Dielectric Width (mm):
+                        <span id="DielectricWidthDisplay"></span>
+                    </label><span class="sliderMin">1</span>
+                    <input type="range" id="DielectricWidth" name="DielectricWidth" min="1" max="100" value="50">
+                    <span class="sliderMax">100</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <center><div id="NumberOfReflectionsSlider">
+                <label for="NumberOfReflections" class="sliderTitle">Number of Reflections:
+                    <span id="NumberOfReflectionsDisplay"></span>
+                </label>
+                <span class="sliderMin">1</span>
+                <input type="range" id="NumberOfReflections" name="NumberOfReflections" min="1" max="10" value="1">
+                <span class="sliderMax">10</span>
+            </div>
+            <input type="button" id="PlayButton" value="Play">
+        </div></center>
+
+        <div class="row" style="display: flex; align-items: center">
+            <div class="cabinet red">
+                Total Energy Transmission Coefficient: <span id="TETCDisplay"></span>
+            </div>
+        </div>
+    </div>
+
+<script src="scripts/11Diel_BoundC.js"></script>
+</body>
+</html>

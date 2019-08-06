@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+ /*jshint esversion: 6 */
 $(window).on('load', function() {//main
     const dom = {//assigning switches and slider
 
