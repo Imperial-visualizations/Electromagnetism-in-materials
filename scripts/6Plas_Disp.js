@@ -1,7 +1,7 @@
 /*jshint esversion: 7 */
 
 class Wave1D{
-    constructor(A0, k, omega, Phase, Colour){
+    constructor(A0, k, omega, Phase, Colour, name = "Wavey McWaveface"){
         this.A0 = A0;//Initial amplitude
         this.k = k; //wave "vector".  can be complex number
         this.omega = omega; //angular frequency
@@ -10,6 +10,8 @@ class Wave1D{
         this.y = [];
         this.z = [];
         this.Colour = Colour;
+        //this.PlotLimits = PlotLimits;
+        this.Name = name;
     }
 
     evaluate(xValues, t, Axis, Plane){
@@ -25,6 +27,16 @@ class Wave1D{
         let CurrentValue;
         let x;
         let Values = [];
+        //let PlotLimits = this.PlotLimits;
+
+        // if (PlotLimits != "ignore"){
+        //     for (i = 0; i < xValues.length; i++){
+        //         if (xValues[i] < PlotLimits[0] | xValues[i] > PlotLimits[1]){
+        //             xValues.splice(i, 1);
+        //         }
+        //     }
+        // }
+        //console.log(k.re);
 
         for (i = 0; i < xValues.length; i++){
             x = xValues[i];
@@ -50,6 +62,7 @@ class Wave1D{
         let WaveData = ({
             type: "scatter3d",
             mode: "lines",
+            name: this.Name,
             x: this.x,
             y: this.y,
             z: this.z,
@@ -78,13 +91,18 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
             },
             dragmode: 'turntable',
             scene: {
-                aspectmode: "cube",
-                //xaxis: {range: [-max_axis, max_axis], title: sometitlex},//, showticklabels: false},
-                //yaxis: {range: [-max_axis, max_axis], title: sometitley},//, showticklabels: false},
-                //zaxis: {range: [-max_axis, max_axis], title: sometitlez},//, showticklabels: false},
-                xaxis: {title: sometitlex},//, showticklabels: false},
-                yaxis: {title: sometitley},//, showticklabels: false},
-                zaxis: {title: sometitlez},//, showticklabels: false},
+                //aspectmode: "cube",
+                xaxis: {range: [-0.05, 0.05], title: sometitlex},//, showticklabels: false},
+                yaxis: {range: [-0.01, 0.01], title: sometitley},//, showticklabels: false},
+                zaxis: {range: [-0.01, 0.01], title: sometitlez},//, showticklabels: false},
+                // xaxis: {title: sometitlex},//, showticklabels: false},
+                // yaxis: {title: sometitley},//, showticklabels: false},
+                // zaxis: {title: sometitlez},//, showticklabels: false},
+                
+                aspectmode: "manual",
+                aspectratio: {
+                    x: 5, y: 1, z: 1,
+                },
 
                 camera: {
                     up: {x: 0, y: 0, z: 1},//sets which way is up
@@ -100,12 +118,13 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
                 //constrain: "domain",
                 //range: [0, 0.00000001],
                 title: sometitlex,
+                range:[-10,350]
                 //showticklabels: false
                 //title: "Angle"
             },
             yaxis: {
                 //scaleanchor: "x",
-                range: [0, max_axis],
+                range: [(10**10-5000000000), 10**11],
                 //showticklabels: false,
                 title: sometitley
             },
@@ -115,13 +134,15 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
 }
 
 
-function GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList){
+function GetGraphData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas, WaveList){
     let Realk = [];
     let Imk = [];
 
 
-    let EWave = WaveList[0];
-    let BWave = WaveList[1];
+    let EWaveVac = WaveList[0];
+    let BWaveVac = WaveList[1];
+    let EWavePlas = WaveList[2];
+    let BWavePlas = WaveList[3];
 
     
 
@@ -156,7 +177,7 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList){
         mode: "markers",
         name: "Current omega",
         marker: {size: 10, color: "darkblue"},
-        x: [Currentk[0].im],
+        x: [CurrentkPlas.im],
         y: [CurrentOmega]
     });
     
@@ -165,39 +186,37 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList){
         mode: "markers",
         name: "Current omega",
         marker: {size: 10, color: "darkred"},
-        x: [Currentk[0].re],
+        x: [CurrentkPlas.re],
         y: [CurrentOmega]
     });
     
     let WaveData = [];
-    WaveData.push(EWave.GetGraphData());
-    WaveData.push(BWave.GetGraphData());
+    WaveData.push(EWaveVac.GetGraphData());
+    WaveData.push(BWaveVac.GetGraphData());
+    WaveData.push(EWavePlas.GetGraphData());
+    WaveData.push(BWavePlas.GetGraphData());
 
-    // WaveData.push({
-    //     type: "scatter3d",
-    //     mode: "lines",
-    //     x: EWave.x,
-    //     y: EWave.y,
-    //     z: EWave.z,
-    //     line: {
-    //         width: 6,
-    //         color: "blue",
-    //         //reversescale: false
-    //     }
-    // });
+    WaveData.push(
+        {//plasma material block thing
+            opacity: 0.5,
+            color: 'violet',
+            type: "mesh3d",
+            name: "plasma",
+            // x: [-1, -1, 1, 1, -1, -1, 1, 1],
+            // y: [0, 1, 1, 0, 0, 1, 1, 0],
+            // z: [ 2, 2, 2, 2, -2, -2, -2, -2],
+            // i: [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
+            // j: [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
+            // k: [0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
 
-    // WaveData.push({
-    //     type: "scatter3d",
-    //     mode: "lines",
-    //     x: BWave.x,
-    //     y: BWave.y,
-    //     z: BWave.z,
-    //     line: {
-    //         width: 6,
-    //         color: "blue",
-    //         //reversescale: false
-    //     }
-    // });
+            x: [0, 0, 0, 0, 0.05, 0.05, 0.05, 0.05],
+            y: [0.01, 0.01, -0.01, -0.01, 0.01, 0.01, -0.01, -0.01],
+            z: [-0.01, 0.01, 0.01, -0.01, -0.01, 0.01, 0.01, -0.01],
+            i: [0,0,0,1,5,4,2,3,1,2,0,3],
+            j: [1,2,1,4,6,5,3,6,2,5,3,4],
+            k: [2,3,4,5,7,7,6,7,5,6,4,7],
+        });
+    
     
   
     return [DispersionData, WaveData];
@@ -217,31 +236,50 @@ function NewPlots(Data, x_max, Omega_max){
     Plotly.newPlot('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
-function GetWaves(xValues, k, omega){
-    let A0 = 10;
+function GetWaves(x_max, PlotDensity3D, kVac, kPlas, omega){
+    let A0 = 0.01;
     let Phase = 0;
     //let omega = (1/50);
     let t = 0;
-    //k = math.complex({re:(1/10), im:0});
-    let EWave = new Wave1D(A0, k, omega, Phase, "blue");
-    let BWave = new Wave1D(A0, k, omega, Phase, "red");
 
-    EWave.evaluate(xValues, t, "x", "xy");
-    BWave.evaluate(xValues, t, "x", "xz");
+    let x_min = -x_max;
+    let n3D = (x_max)*PlotDensity3D;
 
-    return [EWave, BWave];
+    let NegativexValues = numeric.linspace(x_min, 0, n3D);
+    let PositivexValues = numeric.linspace(0, x_max, n3D);
+
+
+    let EWaveVac = new Wave1D(A0, kVac, omega, Phase, "blue", "E in vacuum");
+    let BWaveVac = new Wave1D(A0, kVac, omega, Phase, "red", "B in vacuum");
+    let EWavePlas = new Wave1D(A0, kPlas, omega, Phase, "blue", "E in plasma");
+    let BWavePlas = new Wave1D(A0, kPlas, omega, Phase, "red", "B in plasma");
+
+    EWaveVac.evaluate(NegativexValues, t, "x", "xy");
+    BWaveVac.evaluate(NegativexValues, t, "x", "xz");
+    EWavePlas.evaluate(PositivexValues, t, "x", "xy");
+    BWavePlas.evaluate(PositivexValues, t, "x", "xz");
+
+    return [EWaveVac, BWaveVac, EWavePlas, BWavePlas];
 }
 
 
-function DispersionRelation(Omega, OmegaP){
+function DispersionRelation(Omega, OtherVariables, Medium){
     let c = 3*10**8;
     let k = [];
     let Currentk;
-    for (i = 0; i<Omega.length; i++){
-        //note we appear to have two math libraries, one called Math and one called math.
-        //math does complex numbers apparently.
-        Currentk = math.complex(math.multiply((Omega[i]/c), math.sqrt(1 - (OmegaP**2/(Omega[i])**2))));
-        k.push(Currentk);
+    if (Medium == "Plasma"){
+        let OmegaP = OtherVariables[0];
+        for (i = 0; i<Omega.length; i++){
+            //note we appear to have two math libraries, one called Math and one called math.
+            //math does complex numbers apparently.
+            Currentk = math.complex(math.multiply((Omega[i]/c), math.sqrt(1 - (OmegaP**2/(Omega[i])**2))));
+            k.push(Currentk);
+        }
+    }else{//medium = "Vacuum"
+        for (i = 0; i< Omega.length; i++){
+            Currentk = math.complex({re: Omega[i]/c, im:0});
+            k.push(Currentk);
+        }
     }
     return k;
 }
@@ -261,8 +299,9 @@ function UpdateOmegaP(OmegaP){
 
 function GetNewInputs(){
     let Ne = document.getElementById("NeSlider").value;
+    Ne = Ne*10**(17);
     let CurrentOmega = document.getElementById("OmegaSlider").value;
-
+    CurrentOmega = CurrentOmega*10**10;
     return [Ne, CurrentOmega];
 }
 
@@ -271,9 +310,19 @@ function Refresh(PlotNew = false){
     let Ne = NewVariables[0];
     let CurrentOmega = NewVariables[1];
 
-    let Omega_min = 1;
-    let Omega_max = 50;
-    let PlotDensity = 10; //per 1 unit
+
+    //note to self
+    //lower is 1.78*10**10
+    //upper is 5.63*10**10
+    //so lets use 10**10
+    //and 10*10**10
+
+
+
+
+    let Omega_min = 10**10;
+    let Omega_max = 10**11;
+    let PlotDensity = 2/900000000; //per 1 unit
     let n = (Omega_max - Omega_min)*PlotDensity;
 
     let Omega = numeric.linspace(Omega_min, Omega_max, n);
@@ -283,23 +332,24 @@ function Refresh(PlotNew = false){
     let OmegaP = GetOmegaP(Ne);
     UpdateOmegaP(OmegaP);
 
-    let Currentk = DispersionRelation([CurrentOmega], OmegaP);
-    let k = DispersionRelation(Omega, OmegaP);
+    let CurrentkVac = DispersionRelation([CurrentOmega], [0], "Vacuum")[0];
+    let CurrentkPlas = DispersionRelation([CurrentOmega], [OmegaP], "Plasma")[0];
+    let k = DispersionRelation(Omega, [OmegaP], "Plasma");
 
-    let x_max = 50;
+    let x_max = 0.05;
     // if (Currentk.re >=0.1){
     //     x_max = Math.round(2*Math.PI/(k.re));
     //    
     // }
-    let x_min = -x_max;
-    let PlotDensity3D = 1;
-    let n3D = (x_max - x_min)*PlotDensity3D;
+    //let x_min = -x_max;
+    let PlotDensity3D = 10000;
+    //let n3D = (x_max - x_min)*PlotDensity3D;
 
-    let xValues = numeric.linspace(x_min, x_max, n3D);
+    //let xValues = numeric.linspace(x_min, x_max, n3D);
     
-    let WaveList = GetWaves(xValues, Currentk[0], CurrentOmega);
+    let WaveList = GetWaves(x_max, PlotDensity3D, CurrentkVac, CurrentkPlas, CurrentOmega);
     
-    let GraphData = GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList);
+    let GraphData = GetGraphData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas, WaveList);
     
     if (PlotNew){
         NewPlots(GraphData, x_max, Omega_max);
