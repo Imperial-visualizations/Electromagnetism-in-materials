@@ -19,7 +19,7 @@ const yBoundary = numeric.linspace(yLayoutMin, yLayoutMax, resolution)
 
 //TICKING CLOCK INIT AT GLOBAL LEVEL?!
 let t = 0;
-//let isPlay = false;
+//let isPlay = true;
 
 function CreateLayout(DielectricWidth){
 
@@ -93,7 +93,11 @@ class Waves {
          this.DielectricWidth = DielectricWidth;
          this.ReflectionCoeff = ReflectionCoeff;
          this.NumberOfReflections = NumberOfReflections;
+
          this.WavesArray = this.CreateWavesArray();
+
+         //array [left, right]
+         this.SumOfWaves = this.CreateSumWaves();
     }
 
     CreateWavesArray(){
@@ -129,6 +133,23 @@ class Waves {
         return ReflectedWaves;
     }
 
+    CreateSumWaves(){
+        let r = this.ReflectionCoeff/100;
+        let t = 1 - r;
+        
+        let LeftAmplitude = IncidentAmplitude;
+        let RightAmplitude = 0;
+
+        for (let i=0; i<this.NumberOfReflections; i++){
+            RightAmplitude += IncidentAmplitude * t**2 * r**i;
+            LeftAmplitude += -1 * IncidentAmplitude * t**2 * r**(1 + i*2);
+        }
+
+        let LeftWave = new Wave("leftSum", LeftAmplitude, 1, 0,0, this.DielectricWidth);
+        let RightWave = new Wave("rightSum", RightAmplitude, 1, 0, 0, this.DielectricWidth);
+
+        return [LeftWave, RightWave]
+    }
 
     CreateTransmittedWaves(){
         let xMin;
@@ -158,7 +179,8 @@ class Waves {
             xMin = 0;
             xMax = xMaxIncident;
 
-            amplitude = IncidentAmplitude * t**2 * r**(1 + i*2);
+            amplitude = -1 * IncidentAmplitude * t**2 * r**(1 + i*2);
+
             offset = 5 - 6*i;
             TransmittedWave = new Wave("transmitted", amplitude, -1, offset, xMin, xMax);
             TransmittedWaves.push(TransmittedWave);
@@ -253,16 +275,16 @@ function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflection
             mode: "immediate"
         });
     
-    //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections)
+    //FOR TESTING ONLY - do not use infinite call stack in final version!
+
+    //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 }
 
 function AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections){
-    //TODO - BUG - TESTING FOR loop
-    //create new instance of waves with updated data - inefficient???
-    // for (let i=0; i<100; i++) {
-    //     window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
-    // }
-    window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
+
+    window.requestAnimationFrame(function() {
+        NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    });
 }
 
 function main() {
@@ -279,10 +301,7 @@ function main() {
 
     initialPlot(waves);
 
-
-    // for (let i=0; i<2; i++){
-    //     AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-    // }
+    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
     
    //live update of slider display values and graphs
     // $("#PlayButton").on("click", function() {
@@ -300,10 +319,10 @@ function main() {
         let DielectricWidth = parseFloat($("#DielectricWidth").val());
         let NumberOfReflections = parseInt($("#NumberOfReflections").val());
 
-        let updatedWaves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+        let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
         //t = 0
 
-        update(updatedWaves);
+        update(waves);
         //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
         });
