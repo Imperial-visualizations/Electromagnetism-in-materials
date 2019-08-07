@@ -1,104 +1,82 @@
 //global constants
 const xMaxIncident = 20;
-const IncidentAmplitude = 2;
-const omega = 1;
+const IncidentAmplitude = 3;
+const omega = 0.5;
 const k = 1;
-const graphDiv = "graph";
 
-//REFLECTION & TRANSM shifted waves??, Add maths (amplit changes)
+const xLayoutMin = -20;
+const xLayoutMax = 120;
+
+const yLayoutMin = -20;
+const yLayoutMax = 20;
+
+const resolution = 500;
+
+const graphDiv = "graph";
+const xMinBoundary = Array(resolution).fill(xMaxIncident);
+const yBoundary = numeric.linspace(yLayoutMin, yLayoutMax, resolution)
 
 
 //TICKING CLOCK INIT AT GLOBAL LEVEL?!
 let t = 0;
 //let isPlay = false;
 
-const IncidTransLayout = {
-    title: "Incident Wave",
-    showlegend: false,
-    xaxis: {
-        showline: false,
-        constrain: "domain",
-        range: [-20, xMaxIncident+100],
-        showticklabels: false
-        
-    },
-    yaxis: {
-        range: [-20, xMaxIncident],
-        showline: false
-    },
-    margin: {
-        l: 1, r: 1, b:30, t: 30, pad: 10
+function CreateLayout(DielectricWidth){
+
+    let layout = {
+        showlegend: false,
+        shapes: [{
+            type: "rect",
+            xref: "x",
+            yref: "paper",
+            x0: xMaxIncident,
+            y0: 0,
+            x1: xMaxIncident + DielectricWidth,
+            y1: 1,
+            fillcolor: '#d3d3d3',
+            opacity: 0.4,
+            line: {
+                width: 0
+            }
+        }],
+        xaxis: {
+            zeroline: false,
+            showgrid: false,
+            constrain: "domain",
+            range: [xLayoutMin, xLayoutMax],
+            showticklabels: false
+            
+        },
+        yaxis: {
+            zeroline: false,
+            showgrid: false,
+            range: [yLayoutMin, yLayoutMax],
+            showline: false
+        },
+        margin: {
+            l: 1, r: 1, b:30, t: 30, pad: 10
+        }
     }
+
+    return layout
 }
 
-function ReflectedWaveLayout(DielectricWidth){
-    
-    // const GraphLayout = {
-    //     autosize: true,
-    //     // margin: {
-    //     //     l: 30, r: 40, t: 30, b: 30
-    //     // },
-    //     hovermode: "closest",
-    //     xaxis: {range: [xMin, DielectricWidth], zeroline: true, title: "d"},
-    //     yaxis: {
-    //         zeroline: false, showticklabels: true, tickmode: 'array',
-    //         //tickvals: [30, 60, 90, 120, 150, 180, 210, 240, 270,300],
-    //         //ticktext: ['n=0','n=1', 'n=2', 'n=3', 'n=4', 'n=5', 'n=6', 'n=7', 'n=8', 'n=9', 'n=10'],
-    //         //side: 'right'
-    //     }
-    // }
-
-    // return GraphLayout
-
-    //DEBUGGING
-    return IncidTransLayout;
-}
 
 class Wave {
 
-    constructor(type, dielectricWidth, amplitude, direction, offset){
+    constructor(type, amplitude, direction, offset, xMin, xMax){
         this.type = type;
-        this.dielectricWidth = dielectricWidth;
         this.amplitude = amplitude;
         this.direction = direction;
         this.offset = offset;
-        this.Layout = IncidTransLayout;
+        this.xMin = xMin;
+        this.xMax = xMax;
+
         this.Data = this.GenerateData();
     }
 
     GenerateData(){
-        let xMin;
-        let xMax;
-
-        console.log(this.type);
-
-        if (this.type === "incident"){
-            xMin = 0;
-            xMax = xMaxIncident;
-        } else if (this.type === "reflected"){
-            xMin = xMaxIncident;
-            xMax = xMaxIncident+this.dielectricWidth;
-        } else if (this.type === "transmitted"){
-            xMin = xMaxIncident+this.dielectricWidth;
-            xMax = 2*xMaxIncident+this.dielectricWidth;
-        } else {
-            console.log("ERROR");
-        }
-
-        //What's wrong with the syntax here?!
-        // switch (this.type){
-        //     case "incident":
-        //         xMin = 0;
-        //         xMax = xMaxIncident;
-        //     case "reflected":
-        //         xMin = xMaxIncident;
-        //         xMax = xMaxIncident+this.dielectricWidth;
-        //     case "transmitted":
-        //         xMin = xMaxIncident+this.dielectricWidth;
-        //         xMax = 2*xMaxIncident+this.dielectricWidth;
-        // }
-
-        let x = numeric.linspace(xMin, xMax, 500);
+        let x = numeric.linspace(this.xMin, this.xMax, resolution);
         //console.log("xMin", xMin);
         let y = x.map(x1 => {
             return this.amplitude * Math.cos(k*x1 - this.direction*omega*t) + this.offset;
@@ -121,34 +99,87 @@ class Waves {
     CreateWavesArray(){
         //type, dielectricWidth, amplitude, direction, offset
         //direction right = 1, left = -1
-        let IncidentWave = new Wave("incident", this.DielectricWidth, IncidentAmplitude, 1, 15)
-
         //need IncidentWave in a nested array - doing this instead of having a separate property for incident (with wave at diff depth in array) saves having to write  code again and again with only slight differences
-        return [[IncidentWave], this.CreateReflectedWaves()];
+        return [[this.CreateIncidentWave()], this.CreateReflectedWaves(), this.CreateTransmittedWaves()];
+    }
+
+    CreateIncidentWave(){
+        let xMin = 0;
+        let xMax = xMaxIncident;
+        let direction = 1;
+        let offset = 15;
+        let IncidentWave = new Wave("incident", IncidentAmplitude, direction, offset, xMin, xMax);
+        return IncidentWave;
     }
 
     CreateReflectedWaves(){
+        let xMin = xMaxIncident;
+        let xMax = xMaxIncident + this.DielectricWidth;
+        let r = this.ReflectionCoeff/100;
+        let t = 1 - r;
+
         let ReflectedWaves = [];
         for (let i=0; i<this.NumberOfReflections; i++){
-            let direction = (-1)**i;
-            let amplitude = (-1)**i * IncidentAmplitude * (this.ReflectionCoeff)/100**(i+1);
-            let offset = 15 - 3*(i+1);
-            let ReflectedWave = new Wave("reflected", this.DielectricWidth, amplitude, direction, offset);
+            let direction = (-1)**(i+1);
+            let amplitude = (-1)**(i+1) * IncidentAmplitude * t * r**(i+1);
+            let offset = 7 - 6*i;
+            let ReflectedWave = new Wave("reflected", amplitude, direction, offset, xMin, xMax);
             ReflectedWaves.push(ReflectedWave);
         }
-        return ReflectedWaves
+        return ReflectedWaves;
+    }
+
+
+    CreateTransmittedWaves(){
+        let xMin;
+        let xMax;
+        let amplitude;
+        let offset;
+        let TransmittedWave;
+        let r = this.ReflectionCoeff/100;
+        let t = 1 - r;
+
+        let TransmittedWaves = [];
+
+        let InitialTransmittedWave = new Wave("transmitted", IncidentAmplitude*t, 1, 13, xMaxIncident, xMaxIncident+this.DielectricWidth);
+        TransmittedWaves.push(InitialTransmittedWave);
+
+        for (let i=0; i<this.NumberOfReflections; i++){
+            //transmitted waves on the right
+            xMin = xMaxIncident + this.DielectricWidth;
+            xMax = xMin + xMaxIncident;
+
+            amplitude = IncidentAmplitude * t**2 * r**i;
+            offset = 10 - 6*i;
+            TransmittedWave = new Wave("transmitted", amplitude, 1, offset, xMin, xMax);
+            TransmittedWaves.push(TransmittedWave);
+
+            //transmitted waves on the left
+            xMin = 0;
+            xMax = xMaxIncident;
+
+            amplitude = IncidentAmplitude * t**2 * r**(1 + i*2);
+            offset = 5 - 6*i;
+            TransmittedWave = new Wave("transmitted", amplitude, -1, offset, xMin, xMax);
+            TransmittedWaves.push(TransmittedWave);
+        }
+        return TransmittedWaves;
     }
 }
 
 function CreateDataLine(xData, yData, type) {
     let colour;
+
     if (type === "incident"){
-        colour = "rgb(100,100,100)"
+        colour = "rgb(100,100,100)";
     } else if (type === "reflected"){
-        colour = "rgb(200,100,100)"
+        colour = "rgb(200,0,0)";
     } else if (type === "transmitted"){
-        colour = "rgb(100,100,200)"
+        colour = "rgb(0,0,200)";
+    } else if (type === "boundary"){
+        colour = "rgb(200,200,200)"
     }
+
     let line = {
                 x: xData,
                 y: yData,
@@ -164,6 +195,30 @@ function CreateDataLine(xData, yData, type) {
     return line;
 }
 
+function CreateDataLines(waves){
+    let DataLines = [];
+
+    //Boundary Lines
+
+    // let MinBoundaryLine = CreateDataLine(xMinBoundary, yBoundary, "boundary");
+    // DataLines.push(MinBoundaryLine);
+
+    // let xMaxBoundary = Array(resolution).fill(xMaxIncident + waves.DielectricWidth);
+    // let MaxBoundaryLine = CreateDataLine(xMaxBoundary, yBoundary, "boundary");
+    // DataLines.push(MaxBoundaryLine);
+
+    waves.WavesArray.forEach(SetOfWaves => {
+        console.log("SetOfWaves", SetOfWaves);
+        SetOfWaves.forEach(wave => {
+            console.log(wave);
+            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
+            DataLines.push(DataLine);
+            // Plotly.newPlot(wave.type);
+            //Plotly.plot(graphDiv, [DataLine], wave.Layout);
+        });
+    });
+    return DataLines;
+}
 
 function initialPlot(waves){
     console.log("called initialPlot");
@@ -171,61 +226,32 @@ function initialPlot(waves){
     //nested loop
 
     //Plotly.newPlot(graphDiv, IncidTransLayout);
-    let DataLines = [];
-    waves.WavesArray.forEach(SetOfWaves => {
-        console.log("SetOfWaves", SetOfWaves);
-        SetOfWaves.forEach(wave => {
-            console.log(wave);
-            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
-            DataLines.push(DataLine);
-            // Plotly.newPlot(wave.type);
-            //Plotly.plot(graphDiv, [DataLine], wave.Layout);
-        });
-    });
-
-    Plotly.newPlot(graphDiv, DataLines, IncidTransLayout);
+    let DataLines = CreateDataLines(waves)
+    Plotly.newPlot(graphDiv, DataLines, CreateLayout(waves.DielectricWidth));
 }
 
 function update(waves) {
     console.log("called update");
-    let DataLines = [];
-    waves.WavesArray.forEach(SetOfWaves => {
-        console.log("SetOfWaves", SetOfWaves);
-        SetOfWaves.forEach(wave => {
-            console.log(wave);
-            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
-            DataLines.push(DataLine);
-            // Plotly.newPlot(wave.type);
-            //Plotly.plot(graphDiv, [DataLine], wave.Layout);
-        });
-    });
+    
+    let DataLines = CreateDataLines(waves)
 
-    Plotly.react(graphDiv, DataLines, IncidTransLayout);
+    Plotly.react(graphDiv, DataLines, CreateLayout(waves.DielectricWidth));
 }
 
 function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections){
-    //console.log("next frame, t = ", t);
     t += 0.1;
     let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 
-    waves.WavesArray.forEach(SetOfWaves => {
-        let DataLines = [];
-        SetOfWaves.forEach(wave => {
-            //console.log(wave)
-            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type)
-            DataLines.push(DataLine);
-            //TODO - BUG - Unhandled Promise Rejection: undefined
-        });
+    let DataLines = CreateDataLines(waves);
 
-        Plotly.animate(graphDiv,
-            {data: DataLines},
-            {
-                fromcurrent: true,
-                transition: {duration: 0},
-                frame: {duration: 0, redraw: false},
-                mode: "immediate"
-            });
-    });
+    Plotly.animate(graphDiv,
+        {data: DataLines},
+        {
+            fromcurrent: true,
+            transition: {duration: 0},
+            frame: {duration: 0, redraw: false},
+            mode: "immediate"
+        });
     
     //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 }
@@ -276,9 +302,6 @@ function main() {
 
         let updatedWaves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
         //t = 0
-
-        console.log(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-
 
         update(updatedWaves);
         //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
