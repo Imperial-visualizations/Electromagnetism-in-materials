@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Page Info-->
+    <title></title>
+    <!--css link-->
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <!--Required JS resources-->
+    <!--NB: better to have resources before the main body but still works even if they are not-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+
+<div style="width:65%; float:right;">
+
+        <div style="width:40%; float:right;">
+            <div>
+            <input type="button" id="playButton" value="Play">
+                <div id="wave-switch" name = "wave-switch" class="switch">
+                    <label class="radioTitle">Wave</label>
+
+                    <label for="incident" class="radio">
+                      <input type="radio" id="incident" value="incident" name="wave-switch" checked="checked">
+                      <span>Incident Electromagnetic Wave</span>
+                    </label>
+                    <label for="electron" class="radio">
+                      <input type="radio" id="electron" value="electron" name="wave-switch" >
+                      <span>Electron Oscillation</span>
+                    </label>
+                    <label for="resultant" class="radio">
+                      <input type="radio" id="resultant" value="resultant" name="wave-switch"  >
+                      <span>Resultant</span>
+                    </label>
+                    <label for="all" class="radio">
+                      <input type="radio" id="all" value="all" name="wave-switch"  >
+                      <span>All</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <h7 >$\omega =$
+                            <output id="Slider_omega_9_value" for="Slider_omega_9">2</output> $\times 10^{15} \, rad \, s^{-1}$
+                </h7>
+                <!--BEGIN Slider-->
+
+                    <label>
+                        <span class="sliderMin">0.5</span>
+                        <input id="Slider_omega_9" class="inputs" type="range" value="2" min="0.5" max="3" step="0.001" oninput="Slider_omega_9_value.value=Slider_omega_9.value"/></input>
+                        <span class="sliderMax">3</span>
+                    </label>
+                    <!--END Slider-->
+            </div>
+
+            <div>
+                <h7 >$ \epsilon =$
+                            <output id="Slider_E_9_value" for="Slider_E_9">2</output> $\times 10^{15} \, V \, m^{-2}$
+                </h7>
+                <!--BEGIN Slider-->
+
+                    <label>
+                        <span class="sliderMin">0.5</span>
+                        <input id="Slider_E_9" class="inputs" type="range" value="2" min="0.5" max="3.5" step="0.001" oninput="Slider_E_9_value.value=Slider_E_9.value"/></input>
+                        <span class="sliderMax">3.5</span>
+                    </label>
+                    <!--END Slider-->
+            </div>
+
+
+            <div>
+                <h7> $\sigma = $
+                    <output id="Slider_sigma_9_value" for="Slider_sigma_9">2</output> $\times 10^{5} \, \Omega^{-1} \, m$ </h7>
+                    <label>
+                        <span class="sliderMin">0.5</span>
+                        <input id="Slider_sigma_9" class="inputs" type="range" value="2" min="0.5" max="200" step="0.001" oninput="Slider_sigma_9_value.value=Slider_sigma_9.value"/></input>
+                        <span class="sliderMax">200</span>
+                    </label>
+                    <!--END Slider-->
+            </div>
+            <br>
+
+            <div>
+                <h7>
+                    $P_{rad} = $   <output id = "radiationPressureFactor"></output> $ \frac{ < S^i >}{c} \, = \,$ <output id = "radiationPressure"></output> $ \times 10^{19} \, Pa$
+                    <br>
+                    $ \delta = $ <output id = "skinDepth"></output> $\times 10^{-8} m$
+<!--                    $P_{rad}$ =  <output id = "radiationPressure"></output> $ \frac{ < S^i >}{c} $-->
+                </h7>
+            </div>
+
+            <h7 id = "approximationMessage"style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;" >
+                Approximation is invalid as the medium is no longer a good conductor.
+
+            </h7>
+        </div>
+
+<!--        <div style="width:40%; float:right;">-->
+<!--            <div>-->
+<!--                <div id = "conductorMessage"><h6>Medium is no longer a good conductor anymore.</h6></div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+        <div style="width:60%; float:left;">
+            <div>
+                <div id='Boundary_Plot_9' style="width:35vw; height:90vh;"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <!--THE BRAINS-->
+    <script src=scripts/3bMaterial_Intro_XK.js></script>
+    <script src=scripts/Objects_EMM.js></script>
+</body>
+</html>
