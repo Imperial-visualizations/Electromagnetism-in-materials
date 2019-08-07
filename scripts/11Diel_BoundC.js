@@ -1,16 +1,16 @@
 //global constants
-const xMin = -20;
 const xMaxIncident = 20;
 const IncidentAmplitude = 2;
 const omega = 1;
 const k = 1;
+const graphDiv = "graph";
 
 //REFLECTION & TRANSM shifted waves??, Add maths (amplit changes)
 
 
 //TICKING CLOCK INIT AT GLOBAL LEVEL?!
 let t = 0;
-let isPlay = false;
+//let isPlay = false;
 
 const IncidTransLayout = {
     title: "Incident Wave",
@@ -18,12 +18,12 @@ const IncidTransLayout = {
     xaxis: {
         showline: false,
         constrain: "domain",
-        range: [xMin, xMaxIncident],
+        range: [-20, xMaxIncident+100],
         showticklabels: false
         
     },
     yaxis: {
-        range: [xMin, xMaxIncident],
+        range: [-20, xMaxIncident],
         showline: false
     },
     margin: {
@@ -62,30 +62,44 @@ class Wave {
         this.amplitude = amplitude;
         this.direction = direction;
         this.offset = offset;
-        this.Layout = this.FindLayout();
+        this.Layout = IncidTransLayout;
         this.Data = this.GenerateData();
     }
 
-    FindLayout(){
-        let layout = IncidTransLayout
-        if (this.type == "reflected"){
-            layout = ReflectedWaveLayout(this.dielectricWidth);
-        }
-        return layout;
-    }
-
     GenerateData(){
+        let xMin;
         let xMax;
-        switch (this.type){
-            case "incident":
-                xMax = xMaxIncident;
-            case "reflected":
-                xMax = this.dielectricWidth;
-            case "transmitted":
-                xMax = this.dielectricWidth;
+
+        console.log(this.type);
+
+        if (this.type === "incident"){
+            xMin = 0;
+            xMax = xMaxIncident;
+        } else if (this.type === "reflected"){
+            xMin = xMaxIncident;
+            xMax = xMaxIncident+this.dielectricWidth;
+        } else if (this.type === "transmitted"){
+            xMin = xMaxIncident+this.dielectricWidth;
+            xMax = 2*xMaxIncident+this.dielectricWidth;
+        } else {
+            console.log("ERROR");
         }
+
+        //What's wrong with the syntax here?!
+        // switch (this.type){
+        //     case "incident":
+        //         xMin = 0;
+        //         xMax = xMaxIncident;
+        //     case "reflected":
+        //         xMin = xMaxIncident;
+        //         xMax = xMaxIncident+this.dielectricWidth;
+        //     case "transmitted":
+        //         xMin = xMaxIncident+this.dielectricWidth;
+        //         xMax = 2*xMaxIncident+this.dielectricWidth;
+        // }
 
         let x = numeric.linspace(xMin, xMax, 500);
+        //console.log("xMin", xMin);
         let y = x.map(x1 => {
             return this.amplitude * Math.cos(k*x1 - this.direction*omega*t) + this.offset;
         });
@@ -127,13 +141,21 @@ class Waves {
 }
 
 function CreateDataLine(xData, yData, type) {
+    let colour;
+    if (type === "incident"){
+        colour = "rgb(100,100,100)"
+    } else if (type === "reflected"){
+        colour = "rgb(200,100,100)"
+    } else if (type === "transmitted"){
+        colour = "rgb(100,100,200)"
+    }
     let line = {
                 x: xData,
                 y: yData,
                 type: "scatter",
                 mode: "lines",
                 line: {
-                    color: "rgb(100,100,100)",
+                    color: colour,
                     width: 3
                 },
                 showscale: true
@@ -147,29 +169,38 @@ function initialPlot(waves){
     console.log("called initialPlot");
     console.log(waves)
     //nested loop
+
+    //Plotly.newPlot(graphDiv, IncidTransLayout);
+    let DataLines = [];
     waves.WavesArray.forEach(SetOfWaves => {
         console.log("SetOfWaves", SetOfWaves);
         SetOfWaves.forEach(wave => {
             console.log(wave);
             let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
-            Plotly.newPlot(wave.type, [DataLine], wave.Layout);
+            DataLines.push(DataLine);
             // Plotly.newPlot(wave.type);
-            // Plotly.react(wave.type, [DataLine], wave.Layout)
+            //Plotly.plot(graphDiv, [DataLine], wave.Layout);
         });
     });
+
+    Plotly.newPlot(graphDiv, DataLines, IncidTransLayout);
 }
 
 function update(waves) {
     console.log("called update");
+    let DataLines = [];
     waves.WavesArray.forEach(SetOfWaves => {
+        console.log("SetOfWaves", SetOfWaves);
         SetOfWaves.forEach(wave => {
             console.log(wave);
             let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
-            Plotly.newPlot(wave.type, [DataLine], wave.Layout);
+            DataLines.push(DataLine);
             // Plotly.newPlot(wave.type);
-            // Plotly.react(wave.type, [DataLine], wave.Layout)
+            //Plotly.plot(graphDiv, [DataLine], wave.Layout);
         });
     });
+
+    Plotly.react(graphDiv, DataLines, IncidTransLayout);
 }
 
 function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections){
@@ -178,21 +209,22 @@ function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflection
     let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 
     waves.WavesArray.forEach(SetOfWaves => {
+        let DataLines = [];
         SetOfWaves.forEach(wave => {
             //console.log(wave)
             let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type)
-
+            DataLines.push(DataLine);
             //TODO - BUG - Unhandled Promise Rejection: undefined
-
-            Plotly.animate(wave.type,
-                {data: [DataLine]},
-                {
-                    fromcurrent: true,
-                    transition: {duration: 0},
-                    frame: {duration: 0, redraw: false},
-                    mode: "immediate"
-                });
         });
+
+        Plotly.animate(graphDiv,
+            {data: DataLines},
+            {
+                fromcurrent: true,
+                transition: {duration: 0},
+                frame: {duration: 0, redraw: false},
+                mode: "immediate"
+            });
     });
     
     //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections)
@@ -201,57 +233,59 @@ function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflection
 function AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections){
     //TODO - BUG - TESTING FOR loop
     //create new instance of waves with updated data - inefficient???
-    while (isPlay === true) {
-        console.log("playing");
-        window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
-    }
+    // for (let i=0; i<100; i++) {
+    //     window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
+    // }
+    window.requestAnimationFrame(function() {NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);})
 }
 
 function main() {
     //initial
     let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
     let DielectricWidth = parseFloat($("#DielectricWidth").val());
-    let NumberOfReflections = parseFloat($("#NumberOfReflections").val());
+    let NumberOfReflections = parseInt($("#NumberOfReflections").val());
 
-    $("#ReflectionCoeffDisplay").text(ReflectionCoeff)
-    $("#DielectricWidthDisplay").text(DielectricWidth)
-    $("#NumberOfReflectionsDisplay").text(NumberOfReflections)
+    $("#ReflectionCoeffDisplay").text(ReflectionCoeff);
+    $("#DielectricWidthDisplay").text(DielectricWidth);
+    $("#NumberOfReflectionsDisplay").text(NumberOfReflections);
 
     let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
     initialPlot(waves);
-    //run using the default values of all the sliders
-    //update(waves);
-    //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
-    //check if correct!!! - wrapped NextAnimationFrame in anonym func for callback
-    //window.requestAnimationFrame( function() {NextAnimationFrame(waves);});
+
+    // for (let i=0; i<2; i++){
+    //     AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    // }
     
    //live update of slider display values and graphs
-    $("#PlayButton").on("click", function() {
-        $("#PlayButton").value = (isPlay) ? "Play" : "Stop";
-        //toggle
-        isPlay = ! isPlay;
-        AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-    })
+    // $("#PlayButton").on("click", function() {
+    //     $("#PlayButton").value = (isPlay) ? "Play" : "Stop";
+    //     //toggle
+    //     isPlay = ! isPlay;
+    //     AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    // })
 
 
    $("input[type=range]").each(function () {
     $(this).on('input', function () {
         $("#" + $(this).attr("id") + "Display").text($(this).val());
-        let ReflectionCoeff = $("#ReflectionCoeff").val();
-        let DielectricWidth = $("#DielectricWidth").val();
-        let NumberOfReflections = $("#NumberOfReflections").val();
+        let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
+        let DielectricWidth = parseFloat($("#DielectricWidth").val());
+        let NumberOfReflections = parseInt($("#NumberOfReflections").val());
 
+        let updatedWaves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
         //t = 0
-        //let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-        //update
-        update(waves);
-        AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+
+        console.log(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+
+
+        update(updatedWaves);
+        //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
         });
     });
 }
 
 
-$(window).on("load", main)
+$(window).on("load", main);
