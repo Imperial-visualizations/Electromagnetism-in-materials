@@ -1,52 +1,90 @@
 /*jshint esversion: 7 */
 
-
-class Wave2D{
-  
-}
-
 class Wave1D{
-    constructor(A0, k, omega){
+    constructor(A0, k, omega, Phase, Colour){
         this.A0 = A0;//Initial amplitude
-        this.k = k; //wave "vector"
+        this.k = k; //wave "vector".  can be complex number
         this.omega = omega; //angular frequency
+        this.Phase = Phase;
+        this.x = [];
+        this.y = [];
+        this.z = [];
+        this.Colour = Colour;
     }
 
-    evaluate(xArray, t){
+    evaluate(xValues, t, Axis, Plane){
+        let Zeroes = [];
+
+        for (i = 0; i<xValues.length; i++){
+            Zeroes.push(0);
+        }
+
         let A = this.A0;
         let k = this.k;
         let omega = this.omega;
         let CurrentValue;
         let x;
-        let Values;
+        let Values = [];
 
-        for (i = 0; i < xArray.length; i++){
-            x = xArray[i];
-            CurrentValue = Math.complex({r:A, phi:k*x - omega*t});
-            Values.push(CurrentValue);
+        for (i = 0; i < xValues.length; i++){
+            x = xValues[i];
+            CurrentValue = math.multiply(math.complex({r: A, phi: (math.add(math.multiply(k.re,x), -omega*t))}), Math.exp(-k.im*x));
+            Values.push(CurrentValue.re);
         }
-        return Values;
+        
+        if (Axis == "x"){
+            if (Plane == "xy"){
+                this.x = xValues;
+                this.y = Values;
+                this.z = Zeroes;
+            }
+            if (Plane == "xz"){
+                this.x = xValues;
+                this.y = Zeroes;
+                this.z = Values;
+            }
+        } 
+    }
+
+    GetGraphData(){
+        let WaveData = ({
+            type: "scatter3d",
+            mode: "lines",
+            x: this.x,
+            y: this.y,
+            z: this.z,
+            line: {
+                width: 6,
+                color: this.Colour,
+                //reversescale: false
+            }
+        });
+
+        return WaveData;
     }
 }
 
 
-function setLayout(sometitlex, sometitley, sometitlez, Mode){
+function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
     //set layout of graphs.  'Mode' sets what type of graph you want the layout for
     let new_layout;
-    if (Mode == "2D"){
+    if (Mode == "Wave"){
         new_layout = {//layout of 3D graph
-            showlegend: false,
-            showscale: false,
+            //showlegend: false,
+            //showscale: false,
             uirevision: 'dataset',
             margin: {
-                l: 10, r: 10, b: 10, t: 1, pad: 0
+                l: 1, r: 1, b: 10, t: 1, pad: 0
             },
             dragmode: 'turntable',
             scene: {
                 aspectmode: "cube",
-                xaxis: {range: [-100, 100], title: sometitlex, showticklabels: false},
-                yaxis: {range: [-100, 100], title: sometitley, showticklabels: false},
-                zaxis: {range: [-100, 100], title: sometitlez, showticklabels: false},
+                //xaxis: {range: [-max_axis, max_axis], title: sometitlex},//, showticklabels: false},
+                //yaxis: {range: [-max_axis, max_axis], title: sometitley},//, showticklabels: false},
+                //zaxis: {range: [-max_axis, max_axis], title: sometitlez},//, showticklabels: false},
+                xaxis: {title: sometitlex},//, showticklabels: false},
+                yaxis: {title: sometitley},//, showticklabels: false},
+                zaxis: {title: sometitlez},//, showticklabels: false},
 
                 camera: {
                     up: {x: 0, y: 0, z: 1},//sets which way is up
@@ -56,7 +94,6 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode){
         };
     }else{//mode = Dispersion
         new_layout = {
-            //autosize: true,
             //autosize: true,
             //showlegend: false,
             xaxis: {
@@ -68,7 +105,7 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode){
             },
             yaxis: {
                 //scaleanchor: "x",
-                //range: [0, 50],
+                range: [0, max_axis],
                 //showticklabels: false,
                 title: sometitley
             },
@@ -78,17 +115,24 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode){
 }
 
 
-function GetGraphData(Omega, k, CurrentOmega, Currentk){
+function GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList){
     let Realk = [];
     let Imk = [];
+
+
+    let EWave = WaveList[0];
+    let BWave = WaveList[1];
+
+    
+
     for (i = 0; i < k.length; i++){
         Realk.push(k[i].re);
         Imk.push(k[i].im);
     }
 
-    let Data = [];
+    let DispersionData = [];
 
-    Data.push({ //push real data
+    DispersionData.push({ //push real data
         type: 'scatter',
         mode: "lines",
         name: "Real k",
@@ -97,7 +141,7 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk){
         y: Omega
     });
 
-    Data.push({ //push imaginary data
+    DispersionData.push({ //push imaginary data
         type: 'scatter',
         mode: "lines",
         name: "Imaginary k",
@@ -106,8 +150,8 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk){
         y: Omega
     });
 
-    //if (Currentk[0].re == 0){
-    Data.push({ //imaginary point
+    
+    DispersionData.push({ //imaginary point
         type: "scatter",
         mode: "markers",
         name: "Current omega",
@@ -115,8 +159,8 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk){
         x: [Currentk[0].im],
         y: [CurrentOmega]
     });
-    //}else{
-    Data.push({ //push real point
+    
+    DispersionData.push({ //push real point
         type: "scatter",
         mode: "markers",
         name: "Current omega",
@@ -124,25 +168,69 @@ function GetGraphData(Omega, k, CurrentOmega, Currentk){
         x: [Currentk[0].re],
         y: [CurrentOmega]
     });
-    //}
+    
+    let WaveData = [];
+    WaveData.push(EWave.GetGraphData());
+    WaveData.push(BWave.GetGraphData());
+
+    // WaveData.push({
+    //     type: "scatter3d",
+    //     mode: "lines",
+    //     x: EWave.x,
+    //     y: EWave.y,
+    //     z: EWave.z,
+    //     line: {
+    //         width: 6,
+    //         color: "blue",
+    //         //reversescale: false
+    //     }
+    // });
+
+    // WaveData.push({
+    //     type: "scatter3d",
+    //     mode: "lines",
+    //     x: BWave.x,
+    //     y: BWave.y,
+    //     z: BWave.z,
+    //     line: {
+    //         width: 6,
+    //         color: "blue",
+    //         //reversescale: false
+    //     }
+    // });
     
   
-    console.log(Data);
-    return Data;
+    return [DispersionData, WaveData];
 }
 
 
-function UpdatePlots(Data){
+function UpdatePlots(Data, x_max, Omega_max){
     //update plots using react - should be faster than doing newPlot
-    Plotly.react('DispersionGraph', Data, setLayout('k', 'Omega', '', 'Scalar'));
+    Plotly.react('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
+    Plotly.react('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
 
-function NewPlots(Data){
+function NewPlots(Data, x_max, Omega_max){
     //create plots using newPlot
-    Plotly.newPlot('DispersionGraph', Data, setLayout('k', 'Omega', '', 'Scalar'));
+    Plotly.newPlot('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
+    Plotly.newPlot('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
+function GetWaves(xValues, k, omega){
+    let A0 = 10;
+    let Phase = 0;
+    //let omega = (1/50);
+    let t = 0;
+    //k = math.complex({re:(1/10), im:0});
+    let EWave = new Wave1D(A0, k, omega, Phase, "blue");
+    let BWave = new Wave1D(A0, k, omega, Phase, "red");
+
+    EWave.evaluate(xValues, t, "x", "xy");
+    BWave.evaluate(xValues, t, "x", "xz");
+
+    return [EWave, BWave];
+}
 
 
 function DispersionRelation(Omega, OmegaP){
@@ -190,21 +278,33 @@ function Refresh(PlotNew = false){
 
     let Omega = numeric.linspace(Omega_min, Omega_max, n);
 
+    
+
     let OmegaP = GetOmegaP(Ne);
     UpdateOmegaP(OmegaP);
 
     let Currentk = DispersionRelation([CurrentOmega], OmegaP);
-    // if (Currentk == 0){
-    //     Currentk = GetImaginaryk(CurrentOmega);
-    // }
     let k = DispersionRelation(Omega, OmegaP);
+
+    let x_max = 50;
+    // if (Currentk.re >=0.1){
+    //     x_max = Math.round(2*Math.PI/(k.re));
+    //    
+    // }
+    let x_min = -x_max;
+    let PlotDensity3D = 1;
+    let n3D = (x_max - x_min)*PlotDensity3D;
+
+    let xValues = numeric.linspace(x_min, x_max, n3D);
     
-    let GraphData = GetGraphData(Omega, k, CurrentOmega, Currentk);
+    let WaveList = GetWaves(xValues, Currentk[0], CurrentOmega);
+    
+    let GraphData = GetGraphData(Omega, k, CurrentOmega, Currentk, xValues, WaveList);
     
     if (PlotNew){
-        NewPlots(GraphData);
+        NewPlots(GraphData, x_max, Omega_max);
     }else{
-        UpdatePlots(GraphData);
+        UpdatePlots(GraphData, x_max, Omega_max);
     }
 }
 
