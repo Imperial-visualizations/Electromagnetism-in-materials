@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <!--Page Info-->
     <title>Radiation Pressure on Good Conductor</title>
@@ -33,35 +32,61 @@
 </head>
 
 <body>
+    <div style="width:35%; float:left;">
+         <center><h5>Radiation Pressure on a Good Conductor</h5></center>
+        <p>
+            In a good conductor, when an electromagnetic wave is incident on a conductor, most of the incident wave is reflected.
+            This is because the electric field amplitude decays away rapidly
+            inside a good conductor due to the skin effect.
+            The length in which current density falls to $\frac {1}{e} $ compared to its value near the surface is known as the skin depth, $\delta$. It is given by
+            $$ \delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$$
+            where $\omega$ is the angular frequency of incident electromagnetic wave and $\sigma$ is the conductivity of the medium.
+            <br>
+            The transmitted electromagnetic wave inside the conductor drives a conduction current in the conductor due to Ohm's Law ($\mathbf{J}_c = \sigma \mathbf{E}^t$).
+            This conduction current experiences a force due to the magnetic field of the transmitted electromagnetic wave.
+            This force acts in the same direction as the incident wave, as if the electromagnetic radiation is exerting a force on the conductor.
+            This creates a radiation pressure by the electromagnetic radiation on the conductor, $P_{rad}$. In a good conductor, $ \frac{ \epsilon_0 \omega}{\sigma} \ll 1 $
+            and radiation pressure is given by
+            $$P_{rad} \approx \Big( 2 - \sqrt{ \frac{8 \epsilon_0 \omega}{\sigma} } \Big) \frac{1}{c} < S^i > $$
+            where $ < S^i > $ is the intensity of the incident wave given by the Poynting vector:
+            $$ < S^i > = \frac{c \epsilon_0}{2} E^2$$
+            and $E$ is the incident electric field amplitude.
+            <br>
+            As $ \sigma \rightarrow \infty $, $ \delta \rightarrow 0$ and $\sqrt{ \frac{8 \epsilon_0 \omega}{\sigma} } \rightarrow 0 $.
+            Therefore, in a perfect conductor, $ P_{rad} = \frac{2}{c} < S^i >$.
+        </p>
 
-<div style="width:35%; float:left;">
-     <center><h5>Radiation Pressure on a Good Conductor</h5></center>
-    <p>
-        <br>
-        For a given vector field, if $\mathbf{A} \cdot \mathbf{ dl }$ is an exact differential, $\mathbf{A}$ is a conservative field. Then, $\mathbf{A}$ is the
-        gradient function of some scalar function $\Omega$. That is, $\mathbf{A} = \nabla {\Omega}$.
-        We can relate $\Omega$ and $\nabla \Omega$ by the equation below:
-            $$ \int _A ^B \nabla \Omega \cdot \mathbf{ dl } = \Omega_B - \Omega_A$$
-        From this equation above, we can see that the integral is independent of the path that one takes from A to B,
-        for it is determined by only the values from the parent function $\Omega_B - \Omega_A$. This is a generalisation of the Fundamental Theorem of Calculus.
-        <div>
+        <p>
             <h6>Visualisation Guide</h6>
                 <ol>
-                    <li>On the right, you can see a gradient field and its scalar parent function.
-                        Change the value of the parameter $a$, and observe the change in $\nabla \Omega$ and $\Omega$.</li>
-                    <li>Note that as the magnitude of $a$ increases, the length of the arrows in $\nabla \Omega$ increases and the contour of the parent function
-                        $\Omega$ becomes steeper as well. Hence, the gradient vector increases in magnitude as well.</li>
-                    <li>All gradient fields shown in this suite are conservative. This means that the line integral along the field,
-                        $\int \nabla \Omega \cdot \mathbf{ dl }$ is path independent. Move the path of the ball from Point A to Point B
-                        along 2 different paths, Path 1 and Path 2.</li>
-                    <li>Observe their function values. Note that along the path, the value of $\Omega$ may be different.
-                        However, when the balls reach Point B, their function values are equal.</li>
-                    <li>This means that the line integral $\int _A ^B \nabla \Omega \cdot \mathbf{ dl }$  is determined
-                        only by the value of $\Omega$ at the limits, $\Omega_B - \Omega_A$.</li>
-                    <li>There are a few other functions for you to play around with. Click the dropdown menu to find out.</li>
+                    <li>On the right, we visualise a scenario where an electomagnetic wave, travelling from left to right, is incident on a conductor.
+                        Click "Play" to begin the visualisation.</li>
+                    <li>Switch around between the reflected and resultant waves.</li>
+                    <li>There are 3 parameters you can change: the angular frequency of the electromagnetic wave $\omega$,
+                        the amplitude of the electric field $E$ and the conductivity of the medium $\sigma$.
+                        Look at their effects on the skin depth, radiation pressure and the reflected wave amplitude.</li>
+                    <li>There are certain combination of values where the reflected wave would not display. This is because the medium is no longer a good conductor
+                        $\Big( \frac{ \epsilon_0 \omega}{\sigma} \not\ll 1 \Big).$
+                        Hence, $R \approx 1 - \sqrt{ \frac{8\epsilon_0 \omega}{\sigma} } $ (Hagen-Rubens Relation) is no longer applicable.</li>
                 </ol>
-        <div>
-    </p>
-</div>
+        </p>
+
+        <p>
+            <h6>A Quantum Approach</h6>
+                In a wave approach, the intensity $< S^i >$ is only dependent on the electric field amplitude of the wave.
+                However, in a quantum perspective, $< S^i > = N E_{photon} $ where $N$ is the number of photons incident on the medium per unit time per unit area and
+                $E_{photon} = \hbar \omega$ is the energy of a single photon.
+                Hence,
+                $$< S^i > = N \hbar \omega .$$
+                Note that $< S^i >$ is dependent on both $N$ and $\omega$.
+                In this visualisation, we took a purely wave approach:
+                increasing $\omega$ does not increase the radiation pressure, as $E$ remains unchanged.
+                From a quantum perspective, even though the energy of each photon increases, $N$ decreases such that intensity remains constant.
+                <br>
+                Radiation pressure can be understood as the force exerted by the photons on the surface due to the change in momentum of the photons.
+                Assuming all photons are reflected,
+                $$ P_{rad} = 2 N \Delta p = 2 N \hbar k = 2 N \hbar  \frac{\omega}{c} .$$
+        </p>
+    </div>
 
 </body>
