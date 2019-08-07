@@ -1,4 +1,3 @@
-/*jshint esversion:7*/
 $(window).on('load', function() {//main
     const
     dom = {//assigning switches and slider
@@ -101,9 +100,9 @@ $(window).on('load', function() {//main
 
         let number_x, number_y;
         let colour,number_of_arrows, linewidth = 10, top_of_arrow = 0.9, bottom_of_arrow = -0.75;
-        let E = Math.round(voltage/10);
-        let D = Math.round(((relative_p)/2)*(Math.pow(E,0.5)));//ignore e_0
-        let P = Math.round(((relative_p - 1)/2)*(Math.pow(E,0.5)));
+        let E = Math.round((voltage+4)/10);
+        let D = E; //ignore e_0
+        let P = Math.round((relative_p/2)*(Math.pow(E,0.5)));
 
         if (c_material === "vacuum"){
             number_of_arrows = E ;
@@ -133,7 +132,7 @@ $(window).on('load', function() {//main
 
         extra_spacing = (1 / number_of_arrows);//value used to position field lines in center of the capacitor
 
-        if ((c_material === "vacuum" && c_field === "e-field") || (c_material === "vacuum" && c_field === "d-field")) {
+        if ((c_material === "vacuum" && c_field === "e-field") || (c_material === "vacuum" && c_field === "d-field") || (c_material === "dielectric" && c_field === "d-field")) {
             for (let i = 0; i < number_of_arrows; i++) {//used to create grid of field lines hence only square numbers possible
                 for (let q = 0; q < number_of_arrows; q++) {
                     number_x = ((2 * (i / number_of_arrows)) - 1) + extra_spacing;
@@ -206,106 +205,12 @@ $(window).on('load', function() {//main
             mid_bottom_of_arrow = -dielectric_h+0.2;
             top_of_arrow_below = -dielectric_h;
             bottom_of_arrow_below = -0.75;
-            let number_of_arrows_reduced = Math.round(number_of_arrows/2);
+            number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,-0.8));
             let extra_space_mod = 1/number_of_arrows_reduced;
             for (let i = 0; i < number_of_arrows_reduced; i++) {
                 for (let q = 0; q < number_of_arrows_reduced; q++) {
                     number_x = ((2 * (i / number_of_arrows_reduced)) - 1) + extra_space_mod;
                     number_y = ((2 * (q / number_of_arrows_reduced)) - 1) + extra_space_mod;
-                    data.push({
-                        type: "scatter3d",
-                        mode: "lines",
-                        name: "field line",
-                        line: {width: linewidth, color: colour},
-                        x: [number_x, number_x],
-                        y: [number_y, number_y],
-                        z: [mid_top_of_arrow, mid_bottom_of_arrow]
-                    });
-                    let [x, y, z, u, v, w] = make_arrows([number_x, number_x], [number_y, number_y], [mid_top_of_arrow, mid_bottom_of_arrow]);
-                    data.push({
-                        type: "cone",
-                        colorscale: [[0, colour], [1, colour]],
-                        name: "arrow",
-                        x: [x],
-                        y: [y],
-                        z: [z],
-                        u: [u],
-                        v: [v],
-                        w: [w],
-                        sizemode: "absolute",
-                        sizeref: 0.2,
-                        showscale: false,
-                    });
-                }
-            }
-            for (var i = 0; i < number_of_arrows; i++) {
-                for (var q = 0; q < number_of_arrows; q++) {
-                    number_x = ((2 * (i / number_of_arrows)) - 1) + extra_spacing;
-                    number_y = ((2 * (q / number_of_arrows)) - 1) + extra_spacing;
-                    //top arrows
-                    data.push({
-                        type: "scatter3d",
-                        mode: "lines",
-                        name: "field line",
-                        line: {width: linewidth, color: colour},
-                        x: [number_x, number_x],
-                        y: [number_y, number_y],
-                        z: [top_of_arrow_above, bottom_of_arrow_above]
-                    });
-                    let [x_1, y_1, z_1, u_1, v_1, w_1] = make_arrows([number_x, number_x], [number_y, number_y], [top_of_arrow_above, bottom_of_arrow_above]);
-                    data.push({
-                        type: "cone",
-                        colorscale: [[0, colour], [1, colour]],
-                        name: "arrow",
-                        x: [x_1],
-                        y: [y_1],
-                        z: [z_1],
-                        u: [u_1],
-                        v: [v_1],
-                        w: [w_1],
-                        sizemode: "absolute",
-                        sizeref: 0.2,
-                        showscale: false,
-                    });
-                    data.push({
-                        type: "scatter3d",
-                        mode: "lines",
-                        name: "field line",
-                        line: {width: linewidth, color: colour},
-                        x: [number_x, number_x],
-                        y: [number_y, number_y],
-                        z: [top_of_arrow_below, bottom_of_arrow_below]
-                    });
-                    let [x_2, y_2, z_2, u_2, v_2, w_2] = make_arrows([number_x, number_x], [number_y, number_y], [top_of_arrow_below, bottom_of_arrow_below]);
-                    data.push({
-                        type: "cone",
-                        colorscale: [[0, colour], [1, colour]],
-                        name: "arrow",
-                        x: [x_2],
-                        y: [y_2],
-                        z: [z_2],
-                        u: [u_2],
-                        v: [v_2],
-                        w: [w_2],
-                        sizemode: "absolute",
-                        sizeref: 0.2,
-                        showscale: false,
-                    });
-                }
-            }
-        } else if (c_material === "dielectric" && c_field === "d-field") {
-            top_of_arrow_above = 0.9;
-            bottom_of_arrow_above = dielectric_h+0.15;
-            mid_top_of_arrow = dielectric_h;
-            mid_bottom_of_arrow = -dielectric_h+0.2;
-            top_of_arrow_below = -dielectric_h;
-            bottom_of_arrow_below = -0.75;
-            let number_of_arrows_increased = 2*number_of_arrows;
-            let extra_space_mod = 1/number_of_arrows_increased;
-            for (let i = 0; i < number_of_arrows_increased; i++) {
-                for (let q = 0; q < number_of_arrows_increased; q++) {
-                    number_x = ((2 * (i / number_of_arrows_increased)) - 1) + extra_space_mod;
-                    number_y = ((2 * (q / number_of_arrows_increased)) - 1) + extra_space_mod;
                     data.push({
                         type: "scatter3d",
                         mode: "lines",
