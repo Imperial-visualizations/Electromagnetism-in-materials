@@ -26,13 +26,57 @@
 </head>
 
 
-<body style="overflow: hidden">
+<body style="overflow: scroll">
 
   <!--Text for left 1/3-->
-  <div id="Vis_text" class="container_journey">
+  <div id="Vis_text" class="container_journey" style="height:100vh">
 
-    Insert text here.
+    $$\mathbf{J}_c = -N_e e \mathbf{v}_e *$$
 
+    <span style="font-weight: bold">The Drude Model - </span>
+    The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
+    (1) electric force from applied electric field, $\mathbf{F}_E$
+    (2) force arises from the collisions among the electrons $\mathbf{F}_c$
+    so the long range interactions between electrons and ions are neglected.
+    <br><br>
+    By Newton's second law of motion,
+    $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
+    So,
+    $$ m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+    where $\tau_c$ is the electron collision time.
+    <br><br>
+    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
+    or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
+    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real. 
+    In this case, we also assume that $\mathbf{v}_e \propto e^{-i \omega t}$
+    <br><br>
+    Now we obtain
+    $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+    so
+    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
+    Recall that 
+    $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
+    so
+    $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
+    where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
+    <br><br>
+
+    <span style="font-weight: bold">Plasmas - </span>
+    We shall only talk about <b>collisionless</b> plasmas.
+    Based on the Drude Model,
+    $$\mathbf{J}_c = \frac{1}{1 - i \omega \tau_c} \frac{N_e e^2 \tau_c}{m_e} \mathbf{E}$$
+    where $\mathbf{E}$ is the applied electric field.
+    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
+    or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
+    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real. 
+    <br><br>
+    In a collisionless plasmas, $\omega \tau_c \gg 1$ so
+    $$\mathbf{J}_c \approx \frac{1}{- i \omega \tau_c} \frac{N_e e^2 \tau_c}{m_e} \mathbf{E} = \frac{N_e e^2 \tau_c}{m_e \omega} i\mathbf{E}$$
+    <br><br>
+    <span style="font-weight: bold">Is $\mathbf{J}_c$ imaginary? </span>
+    No. Since $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$, 
+    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \omega} e^{-i(\omega t - \frac{\pi}{2})} \mathbf{E}_0$$
+    $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.  
   </div>
 
   <!--Visualisation for right 2/3-->
