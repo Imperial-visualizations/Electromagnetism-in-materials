@@ -8,16 +8,10 @@ function setupxData (xMin, xMax, plotStep) {
 };
 
 //This sets up the data for incident wave.
-function setupyIncidentData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma){
+function setupyIncidentData (xMin, xMax, t, c, plotStep, amplitude, omega, k, sigma){
     let yLine = [];
-    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
     for (let i = xMin; i <= xMax; i += plotStep) {
-        if (i <= 0) {
-              yLine.push( amplitude * (Math.cos(omega / c *i)*Math.cos(-omega *t) - Math.sin(omega / c *i)*Math.sin(-omega *t)))
-
-        } else {
-              yLine.push( amplitude*Math.exp(-i/skinDepth) *  (Math.cos(omega / c *i)*Math.cos(-omega *t) - Math.sin(omega / c *i)*Math.sin(-omega *t)));
-        };
+        yLine.push( amplitude * (Math.cos(k *i)*Math.cos(-omega *t) - Math.sin(k *i)*Math.sin(-omega *t)))
     };
     return yLine;
 };
@@ -169,29 +163,13 @@ function dataCombinedCompile(xLine, yLine) {
 };
 
 //Preparing the data to be plotted depending on the option selected.
-function dataPlot (xMin, xMax, yMin, yMax, xEdge, t, c, plotStep) {
+function dataPlot (xMin, xMax, yMin, yMax, t, c, plotStep) {
     let omega = parseFloat(document.getElementById('Slider_omega_9').value)* Math.pow(10,15);
+    let k = omega/c;
     let sigma = parseFloat(document.getElementById('Slider_sigma_9').value)* Math.pow(10,5);
     let xLine = setupxData(xMin, xMax, plotStep);
     let amplitude = parseFloat(document.getElementById('Slider_E_9').value)* Math.pow(10,15);
-    let skinDepth = Math.sqrt( (2)/(4e-7 * Math.PI * sigma * omega));
 
-//    let dataMedium = dataMediumCompile(xMin, xMax, plotStep);
-    let opacityMedium = 0.3 + sigma/(200*Math.pow(10,5))*0.7;
-
-    let dataMedium = {
-          z: [[10,10,10,10,10],
-             [10,10,10,10,10],
-             [10,10,10,10,10],
-             [10,10,10,10,10],
-             [10,10,10,10,10]],
-              x: [0, xEdge/4, xEdge/3, xEdge/2,xEdge],
-          y: [yMin, yMin/Math.pow(10,10), 0, yMax/Math.pow(10,10), yMax],
-          type: 'contour',
-          opacity: opacityMedium,
-          colorscale: 'Jet',
-          showscale: false
-};
 
     let condition =  $("input[name = wave-switch]:checked").val();
 
@@ -215,17 +193,17 @@ function dataPlot (xMin, xMax, yMin, yMax, xEdge, t, c, plotStep) {
     let dataReflectionEnvelope = dataReflectionEnvelopeCompile(xLine, yReflectionEnvelope);
 
     if (condition === "incident") {
-        let yLine = setupyIncidentData(xMin, xMax, t, c, plotStep, amplitude, omega, sigma);
+        let yLine = setupyIncidentData(xMin, xMax, t, c, plotStep, amplitude, omega, k, sigma);
         let dataIncident = dataIncidentCompile (xLine, yLine);
-        return [dataIncident, dataIncidentEnvelope, dataMedium];
+        return [dataIncident, dataIncidentEnvelope];
     } else if (condition === "reflected") {
         let yLine = setupyReflectionData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma);
         let dataReflection = dataReflectionCompile (xLine, yLine);
-        return [dataReflection, dataIncidentEnvelope, dataReflectionEnvelope, dataMedium];
+        return [dataReflection, dataIncidentEnvelope, dataReflectionEnvelope];
     } else if (condition === "resultant") {
         let yLine = setupyCombinedData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma);
         let dataCombined = dataCombinedCompile (xLine, yLine);
-        return [dataCombined, dataIncidentEnvelope, dataReflectionEnvelope, dataMedium];
+        return [dataCombined, dataIncidentEnvelope, dataReflectionEnvelope];
     } else if (condition === "all"){
         let yIncidentLine = setupyIncidentData(xMin, xMax, t, c, plotStep, amplitude, omega, sigma);
         let dataIncident = dataIncidentCompile (xLine, yIncidentLine);
@@ -236,7 +214,7 @@ function dataPlot (xMin, xMax, yMin, yMax, xEdge, t, c, plotStep) {
         let yCombinedLine = setupyCombinedData (xMin, xMax, t, c, plotStep, amplitude, omega, sigma);
         let dataCombined = dataCombinedCompile (xLine, yCombinedLine);
 
-        return [dataIncident, dataReflection, dataCombined, dataMedium];
+        return [dataIncident, dataReflection, dataCombined];
     };
 
 };
@@ -246,8 +224,8 @@ function plot(data, layout) {
     Plotly.react("Boundary_Plot_9", data, layout);
 }
 
-function compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, layout){
-    let data = dataPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep);
+function compileAndPlot(xMin, xMax, yMin, yMax, t, c, plotStep, layout){
+    let data = dataPlot(xMin, xMax, yMin, yMax, t, c, plotStep);
     plot(data, layout);
 }
 
@@ -257,13 +235,12 @@ function main(){
     const xMin = 0;
     const xMax = 1e-6;
     const plotStep = xMax/100;
-    const c = 3e8
+    const c = 3e8;
     let isPlay = false;
     let t = 0;
-    let xEdge = 0;
 
-    const yMin = xMin*Math.pow(10,21.5);
-    const yMax = xMax*Math.pow(10,21.5);
+    const yMin = -1e16;
+    const yMax = -yMin;
 
     const plotLayout = {
         title: "Radiation Pressure Exerted on a Conductor Boundary",
@@ -302,7 +279,7 @@ function main(){
     //            //mode: "afterall"
     //            mode: "immediate"
     //        });
-            compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, plotLayout);
+            compileAndPlot(xMin, xMax, yMin, yMax, t, c, plotStep, plotLayout);
         } else if (isPlay === true) {
             t += 1e-17;
     //        Plotly.animate("Boundary_Plot_9",
@@ -314,13 +291,13 @@ function main(){
     //                //mode: "afterall"
     //                mode: "immediate"
     //            });
-            compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, plotLayout);
+            compileAndPlot(xMin, xMax, yMin, yMax, t, c, plotStep, plotLayout);
             requestAnimationFrame(playLoop);//loads next frame
             }
     }
 
 
-    compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, plotLayout);
+    compileAndPlot(xMin, xMax, yMin, yMax, t, c, plotStep, plotLayout);
 
 //jQuery to update the plot as the value of the slider changes.
 
