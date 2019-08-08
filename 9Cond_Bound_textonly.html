@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <!--Page Info-->
+    <title>Radiation Pressure on Good Conductor</title>
+    <!--css link-->
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <!--Required JS resources-->
+    <!--NB: better to have resources before the main body but still works even if they are not-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+    <div style="width:35%; float:left;">
+         <center><h5>Radiation Pressure on a Good Conductor</h5></center>
+        <p>
+            In a good conductor, when an electromagnetic wave is incident on a conductor, most of the incident wave is reflected.
+            This is because the electric field amplitude decays away rapidly
+            inside a good conductor due to the skin effect.
+            The length in which current density falls to $\frac {1}{e} $ compared to its value near the surface is known as the skin depth, $\delta$. It is given by
+            $$ \delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$$
+            where $\omega$ is the angular frequency of incident electromagnetic wave and $\sigma$ is the conductivity of the medium.
+            <br>
+            The transmitted electromagnetic wave inside the conductor drives a conduction current in the conductor due to Ohm's Law ($\mathbf{J}_c = \sigma \mathbf{E}^t$).
+            This conduction current experiences a force due to the magnetic field of the transmitted electromagnetic wave.
+            This force acts in the same direction as the incident wave, as if the electromagnetic radiation is exerting a force on the conductor.
+            This creates a radiation pressure by the electromagnetic radiation on the conductor, $P_{rad}$. In a good conductor, $ \frac{ \epsilon_0 \omega}{\sigma} \ll 1 $
+            and radiation pressure is given by
+            $$P_{rad} \approx \Big( 2 - \sqrt{ \frac{8 \epsilon_0 \omega}{\sigma} } \Big) \frac{1}{c} < S^i > $$
+            where $ < S^i > $ is the time average of the Poynting vector:
+            $$ < S^i > = \frac{c \epsilon_0}{2} E^2$$
+            and $E$ is the incident electric field amplitude.
+            <br>
+            As $ \sigma \rightarrow \infty $, $ \delta \rightarrow 0$ and $\sqrt{ \frac{8 \epsilon_0 \omega}{\sigma} } \rightarrow 0 $.
+            Therefore, in a perfect conductor, $ P_{rad} = \frac{2}{c} < S^i >$.
+        </p>
+
+        <p>
+            <h6>Visualisation Guide</h6>
+                <ol>
+                    <li>On the right, we visualise a scenario where an electomagnetic wave, travelling from left to right, is incident on a conductor.
+                        Click "Play" to begin the visualisation.</li>
+                    <li>Switch around between the reflected and resultant waves.</li>
+                    <li>There are 3 parameters you can change: the angular frequency of the electromagnetic wave $\omega$,
+                        the amplitude of the electric field $E$ and the conductivity of the medium $\sigma$.
+                        Look at their effects on the skin depth, radiation pressure and the reflected wave amplitude.</li>
+                    <li>There are certain combination of values where the reflected wave would not display. This is because the medium is no longer a good conductor
+                        $\Big( \frac{ \epsilon_0 \omega}{\sigma} \not\ll 1 \Big).$
+                        Hence, $R \approx 1 - \sqrt{ \frac{8\epsilon_0 \omega}{\sigma} } $ (Hagen-Rubens Relation) is no longer applicable.</li>
+                </ol>
+        </p>
+
+        <p>
+            <h6>A Quantum Approach</h6>
+                In a wave approach, the intensity $< S^i >$ is only dependent on the electric field amplitude of the wave.
+                However, in a quantum perspective, $< S^i > = N E_{photon} $ where $N$ is the number of photons incident on the medium per unit time per unit area and
+                $E_{photon} = \hbar \omega$ is the energy of a single photon.
+                Hence,
+                $$< S^i > = N \hbar \omega .$$
+                Note that $< S^i >$ is dependent on both $N$ and $\omega$.
+                In this visualisation, we took a purely wave approach:
+                increasing $\omega$ does not increase the radiation pressure, as $E$ remains unchanged.
+                From a quantum perspective, even though the energy of each photon increases, $N$ decreases such that intensity remains constant.
+                <br>
+                Radiation pressure can be understood as the force exerted by the photons on the surface due to the change in momentum of the photons.
+                Assuming all photons are reflected,
+                $$ P_{rad} = 2 N \Delta p = 2 N \hbar k = 2 N \hbar  \frac{\omega}{c} .$$
+        </p>
+    </div>
+
+</body>
