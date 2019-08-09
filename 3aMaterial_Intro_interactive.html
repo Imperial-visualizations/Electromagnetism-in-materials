@@ -56,7 +56,7 @@
 
       <strong>Solving for x - </strong> Putting all these forces into Newton's second law gives a forced oscillator
       equation, with complex solutions.<br>
-      $\displaystyle \tilde{x}(t) = \frac{q/m}{\omega_0^2 - \omega^2 - i \gamma \omega} E_0 e^{- \omega t}$
+      $\displaystyle \tilde{x}(t) = \frac{q/m}{\omega_0^2 - \omega^2 - i \gamma \omega} E_0 e^{-i \omega t}$
       <br><br>
 
       <strong>Electric Field in Dielectric - </strong> The dipole moment of each electron nucleus pair, is given by
@@ -85,22 +85,20 @@
   </div>
 
   <!--Visualisation for right 2/3-->
-  <div id="Vis_interactive" class="container_vis" style="position: relative;">
+  <div id="Vis_interactive" class="container_vis" style="position: relative; height: 100vh;">
       <div id="plot"></div>
-      <button id="playButton">Play</button>
 
+
+
+    <div style="width:30vw; padding-left:2vw;">
+        <button id="playButton">Play</button>
      <label class="sliderTitle" for="angular_frequency">
       Ratio of Angular frequencies \(\omega/\omega_0\) :
       <span id="angular_frequency-display">
       </span>
      </label>
-     <span class="sliderMin">
-      0
-     </span>
-     <input id="angular_frequency" max="2" min="0" name="angular_frequency" step="0.01" type="range" value="0.9" style="width:30vw;"/>
-     <span class="sliderMax">
-      2
-     </span>
+     <input id="angular_frequency" max="1.225" min="0.5" name="angular_frequency" step="0.01" type="range" value="0.9" style="width:30vw;"/>
+    </div>
   </div>
 
 
