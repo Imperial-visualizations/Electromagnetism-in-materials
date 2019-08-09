@@ -10,11 +10,9 @@
     <link rel="stylesheet" href="styles/style.css">
     <!--Required JS resources-->
     <script src="scripts/plotly-1.47.4.min.js"></script>
-    <script src="scripts/p5.min.js"></script>
     <script type="text/javascript" async
             src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
-    <script language="javascript" type="text/javascript" src="scripts/p5.dom.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="scripts/numeric/src/numeric.js"></script>
     <script src="scripts/math.min.js"></script>
@@ -26,20 +24,81 @@
 </head>
 
 
-<body style="overflow: hidden">
+<body style="overflow: scroll">
 
   <!--Text for left 1/3-->
-  <div id="Vis_text" class="container_journey">
+  <div id="Vis_text" class="container_journey" style="height: 200vh">
 
-    Insert text here.
+    <strong>Dielectrics -</strong> contain electrons bonded at an equilibrium separation from their respective nuclei.
+      To model the behaviour of dielectrics we treat the electrons as particles attached to their respective nuclei by a spring:
+      this is a simplified classical model, but it accounts for the behaviour relatively well.
+      <br><br>
+
+      <strong>Binding force -</strong> The actual forces between electrons and their nuclei can be complicated but we
+      approximate it as: <br> $F_{binding} = -k_{spring} x = -m \omega_0^2 x$. <br>
+      This is for small displacements, since you can expand the potential energy with a Taylor series about the
+      equilibrium position, giving: <br> $U(x) = U(0) + x U'(0) + \frac{1}{2} x^2 U''(0) + ...$<br>
+      The first term is a constant potential offset which can be ignored, and the second term can be aproximated as zero
+      around the equilibrium position. This leaves the third term which can be differentiated to give the expression for
+      force we saw earlier, where<br> $k_{spring} = U''(0)$.
+      <br><br>
+
+      <strong>Damping force -</strong> As well as the restoring force there is a damping force which is partially caused
+      by radiation emitted by the electrons. For simplicity we say that this force is opposite in direction to the velocity.
+      It is given by:<br>
+      $F_{damping} = -m \gamma \frac{dx}{dt}$<br>
+      where m is the mass of the electron and gamma is a proportionality constant.
+      <br><br>
+
+      <strong>Driving force -</strong> The E field from an electromagnetic wave can drive the electrons, with a force
+      of<br> $F_{driving} = q E_0 cos(\omega t)$<br>
+      where $\omega$ is the angular frequency of the light.
+
+      <strong>Solving for x - </strong> Putting all these forces into Newton's second law gives a forced oscillator
+      equation, with complex solutions.<br>
+      $\displaystyle \tilde{x}(t) = \frac{q/m}{\omega_0^2 - \omega^2 - i \gamma \omega} E_0 e^{-i \omega t}$
+      <br><br>
+
+      <strong>Electric Field in Dielectric - </strong> The dipole moment of each electron nucleus pair, is given by
+      $\tilde{p}(t) = q \tilde{x}(t)$. By summing these dipole moments over a volume element, we can find the polarisation
+      of the material. <br>
+      $\displaystyle \tilde{\mathbf{P}} = \frac{N q^2}{m} \left(\sum_j \frac{f_i}{\omega_j^2 - \omega^2 - i \gamma_j \omega}\right) \tilde{\mathbf{E}}$ <br>
+      The electric field is related to the polarisation by $\displaystyle \tilde{\mathbf{P}} = \epsilon_0 \tilde{\chi}_e \tilde{\mathbf{E}}$.
+      From this we can find plane wave solutions of the E field inside the dielectric. These are:<br>
+      $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0  e^{i(\tilde{k}z-\omega t)}$ <br>
+      where $\tilde{k}$ is the complex wave number. This can be rearranged to: <br>
+      $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0(z,t) e^{-\kappa z} e^{i(kz-\omega t)}$ <br>
+      where $\kappa$ is the complex part of $\tilde{k}$ and $k$ is the real part.
+      <br><br>
+
+      <strong>Attenuation -</strong> From the previous equation it is clear that the imaginary component of $\tilde{k}$
+      will cause an exponential decay in the amplitude of the EM wave. Normally in a dielectric the imaginary component
+      is very small, however when the frequency of the EM wave approaches the natural frequency of the electron oscillators,
+      resonance occurs and the oscillators absorb much more energy from the wave, meaning the material becomes opaque and
+      the imaginary component of $\tilde{k}$ becomes significant. Most dielectrics have electron oscillators in several
+      different environments, each having it's own natural frequency, meaning the material is opaque over a range of
+      frequencies. Transparent materials normally have resonances in the ultraviolet part of the spectrum, rather than
+      the visible part.
+
+
 
   </div>
 
   <!--Visualisation for right 2/3-->
-  <div id="Vis_interactive" class="container_vis" style="position: relative;">
+  <div id="Vis_interactive" class="container_vis" style="position: relative; height: 100vh;">
+      <div id="plot"></div>
 
-      Insert interactive part here.
 
+
+    <div style="width:30vw; padding-left:2vw;">
+        <button id="playButton">Play</button>
+     <label class="sliderTitle" for="angular_frequency">
+      Ratio of Angular frequencies \(\omega/\omega_0\) :
+      <span id="angular_frequency-display">
+      </span>
+     </label>
+     <input id="angular_frequency" max="1.225" min="0.5" name="angular_frequency" step="0.01" type="range" value="0.9" style="width:30vw;"/>
+    </div>
   </div>
 
 

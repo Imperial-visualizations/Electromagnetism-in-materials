@@ -100,9 +100,37 @@
 
     $$ \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} = \frac{\omega \epsilon}{\sigma} $$
     Using the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, we see
-    $$ \frac{\omega \epsilon}{\sigma} = \omega \tau^{\star} = 2\pi \frac{\tau^{\star}}{T} $$, which is the ratio of electron movement timescale
+    $$ \frac{\omega \epsilon}{\sigma} = \omega \tau^{\star} = 2\pi \frac{\tau^{\star}}{T} $$ which is the ratio of electron movement timescale
     to the field timescale (period). And so $$\frac{\omega \epsilon}{\sigma}$$ dictates whether the material is a good conductor
     for an EM field of that frequency.
+    <br><br>
+    <span style="font-weight: bold">Skin Effect - </span>
+    When an alternating current passes through a conductor, the alternating electric field produces an alternating magnetic field.
+    This magnetic field in turn creates an electric field that opposes the original alternating current, known as the "back emf".
+    The back emf is the strongest at the centre of a conductor, pushing the current to the surface of the conductor.
+    <br>
+      The current diffusion equation is given by
+      $$ \nabla^2 \mathbf{J}_c = \mu_0 \sigma \frac{\partial \mathbf{J}_c}{\partial t}$$
+      where $\mathbf{J}_c$ is the conduction current density in the conductor.
+      The LHS of the above above equation gives the gradient field of the flow of current density in the conductor.
+      The current density of an alternating current in a cylindrical wire can be written as
+      $\mathbf{J}_c = \widetilde{J}_c (r) e^{-i \omega t} \mathbf{\hat{z}}$, which gives
+      $$\nabla^2 \widetilde{J}_c = -\kappa ^2 \widetilde{J}_c $$
+      where $\kappa^2 = i \omega \mu_0 \sigma$.
+      This is a Helmholtz Equation, where $\kappa$ provides a measure of the wavenumber.
+      Hence,
+      $$\kappa = \sqrt{\mu_0 \omega \sigma} \, i^{\frac{1}{2}} = \frac{1+i}{\delta}$$
+      where $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$ is the skin depth, a current diffusion lengthscale.
+      This means that $J_c$ reduces by a factor of $\frac{1}{e}$ after travelling for one $\delta$.
+    <br>
+      Let $a$ be the radius of a wire. If the AC frequency $( \omega )$ is low, $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} } \gg a$
+      and $\mathbf{J}_c$ is roughly uniform throughout the wire. However, if $\omega$ is high, $\delta \ll a$ and $\mathbf{J}_c$ is
+      confined within the layer of width $\approx \delta$ on the surface on the wire.
+
+
+
+
+
   </div>
 
   <!--Visualisation for right 2/3-->

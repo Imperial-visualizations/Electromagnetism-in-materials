@@ -3,7 +3,6 @@ $(window).on('load', function() {
             pswitch: $("#polarisation-switch input"),
             wSlider:$("input#angular_frequency"),
             condSlider:$("input#conductorQuality"),
-
         }
     let plt = {//layout of graph
         layout : {
@@ -29,7 +28,7 @@ $(window).on('load', function() {
                 autosize: true,
                 xaxis: {
                     showticklabels: false,
-                    title: "Wavenumber k"
+                    title: "Wavenumber k",
                 },
                 yaxis: {
                     showticklabels: true,
@@ -40,7 +39,7 @@ $(window).on('load', function() {
                },
                legend: {
                    traceorder: 'normal',
-                   x: 0.05, y: 1,
+                   x: 0.05, y: 1.05,
                    font: {
                       family: 'sans-serif',
                       size: 14,
@@ -49,7 +48,7 @@ $(window).on('load', function() {
                     //bgcolor: '#E2E2E2',
                     //bordercolor: '#ff0000',
                     //borderwidth: 2
-                   //orientation: "h"
+                   orientation: "h"
                },
                font: {
                    family: "Fira Sans",
@@ -63,7 +62,7 @@ $(window).on('load', function() {
                     exponentformat: 'e',
                 },
                 yaxis: {
-                    title:"Phase Shift"
+                    title:"Phase Shift (Radians)"
                 },
                 margin: {
                    l: 50, r: 10, b: 50, t: 50, pad: 5
@@ -202,27 +201,22 @@ class Wave{//wave object used to produce em wave
 
         //calculate complex and real parts of wavenumber
         let k_im_unscaled = 10000*w*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/100000*w),2),(1/2))-1),(1/2));
-        let k_im = 0.0000000000000000001*k_im_unscaled;
+        let k_im = 0.00000000000000000004*k_im_unscaled;
 
         let n_im = (c*k_im)/w;
 
-        let k_real_unscaled = w*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/w),2),(1/2))+1),(1/2));
+        let k_real_unscaled = w*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/w),2),(1/2))+1),(1/2)); // scaled for display
         let k_real = 0.000000002*k_real_unscaled;
         let n_real = (c*k_real)/w;
 
+
         //calculate phase shift
-        let phi = Math.atan2(k_im_unscaled, k_real_unscaled)*100000000000;
-        //console.log(phi);
+        let x = w/w_0;
+        let kReal = 1000000*x*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/1000000*x),2),(1/2))+1),(1/2));
+        let kIm = 1000000*x*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/1000000*x),2),(1/2))-1),(1/2));
+        let phi = Math.atan2(kIm, kReal)*2;
+        console.log(phi);
 
-
-        //calculate real refractive index
-        //let n_real = 1 - (w_d_squared*(Math.pow(w,2)-Math.pow(w_0,2))/(Math.pow((Math.pow(w,2)-Math.pow(w_0,2)),2) + Math.pow(w,2)*Math.pow(gamma,2)));
-        //calculate imaginary refractive index
-        //let n_im = (w_d_squared*w*gamma)/(Math.pow((Math.pow(w,2) - Math.pow(w_0,2)),2)+Math.pow(w,2)*Math.pow(gamma,2));
-
-        //let k_real = (w*n_real)/c;
-
-        //let k_im = (w*n_im)/c;
 
         let exp_E = this.element_exponential(math.multiply(-k_im,z_range),size);//exponential decay of amplitude
 
@@ -308,7 +302,7 @@ class Wave{//wave object used to produce em wave
         material_1.push(
             {//dielectric
                 opacity: conductorQuality,
-                color: '#d9e1ea',
+                color: '#adc7dc',
                 type: "mesh3d",
                 name: "material_1",
                 x: [-1, -1, 1, 1, -1, -1, 1, 1],
@@ -419,13 +413,13 @@ class Wave{//wave object used to produce em wave
             w = (x[i]);
             kReal = 1000000*w*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/1000000*w),2),(1/2))+1),(1/2));
             kIm = 1000000*w*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/1000000*w),2),(1/2))-1),(1/2));
-            let phiVal = Math.atan2(kIm, kReal);
+            let phiVal = Math.atan2(kIm, kReal)*2;
             phi.push(phiVal);
         }
 
         kReal = 1000000*angular_frequency_ratio*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/1000000*angular_frequency_ratio),2),(1/2))+1),(1/2));
         kIm = 1000000*angular_frequency_ratio*Math.pow((Math.pow(1 + Math.pow((conductorQuality*10000000/1000000*angular_frequency_ratio),2),(1/2))-1),(1/2));
-        let phiVal = Math.atan2(kIm, kReal);
+        let phiVal = Math.atan2(kIm, kReal)*2;
         let markerPhi = phiVal;
 
 
