@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--Page Info-->
+    <title>2a</title>
+    <!--css link-->
+    <link rel="stylesheet" href="styles/skeleton.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <!--Required JS resources-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="scripts/p5.min.js"></script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script language="javascript" type="text/javascript" src="scripts/p5.dom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+
+
+    </script>
+</head>
+
+<body style="overflow: scroll">
+<div id="charge" class="container_journey" style="height:100vh">
+    <div id="pol">
+        <h4>Polarisation:</h4>
+        <p>At the microscopic level, an applied electric field causes a charge separation within an atom. This results
+            in the generation of an
+            atomic dipole moment:</p>
+        $$ \textbf{p}=q \textbf{d}, $$
+        <p>where $q$ is the charge in the dipole and $\textbf{d}$ is the charge separation vector [defined from the
+            negative end of the dipole to the
+            positive end{NEED TO CHECK THIS}]. Hence, polarisation $\textbf{P}$ is defined as</p>
+        $$ \textbf{P}=N\textbf{p},$$
+        <p>where $N$ is the number density of the atoms. In a homogeneous, isotropic and linear (HIL) {dielectric}
+            material, polarisation is
+            also defined as</p>
+        $$ \textbf{P}= \chi_e \epsilon_0 \textbf{E},$$
+        <p>where $\chi_e$ is the electric susceptibility. </p>
+    </div>
+    <div id="density">
+        <h4>Charge densities:</h4>
+        <div>
+            FURTHER EXPLAIN THESE
+            <p>$\rho_{sf}$: Free surface charge density, which is zero for a dielectric.</p>
+            <p>$\rho_{f}$: Free charge density (within the material), which is zero for a dielectric.</p>
+            <p>$\rho_{sp}$: Polarisation surface charge density, which is produced due to bound charges.</p>
+            <p>$\rho_{p}$: Polarisation charge density (within the material), which is produced due to bound charges.</p>
+        </div>
+        <p>Consider a small  element of a dielectric material. When an electric field is applied, atomic dipole moments are generated within atoms due to charge separation.
+        The diagram shows a microscopic view of a dielectric and an applied electric field from left to right. As you can see, this results in specific ends of the dipoles sticking of the surface which is parallel
+        to the electric field. This results in a charge being developed on these surfaces. The surface charge on Face 1 is </p>
+        $$Q_s=qNdA=PA=\textbf{P} \cdot \textbf{A},$$
+        <p>where $A$ is the area of Face 1, hence $dA$ is the volume spanned by the dipole layer on the surface. Hence, $\rho_{sp}$ is </p>
+        $$\rho_{sp}=\frac{Q_s}{A}=P.$$
+        <p>For a non-parallel surface, the new surface area is $\textbf{A}'=A'\hat{\textbf{n}}$, where $A'=A/\cos(\theta)$ (look at the diagram). Therefore, the
+        surface charge is</p>
+        $$ Q_s'=\textbf{P} \cdot \textbf{A}'= PA'\cos(\theta)=PA.$$
+        <p>This equation is the same as that for a parallel face. Hence, the surface charge being developed is the same. This makes sense as the number of dipoles sticking out of the surface
+        does not change. However, $\rho_{sp}$ is now </p>
+        $$\rho_{sp}=\frac{Q_s'}{A'}=\frac{PA}{A/\cos(\theta)}=P\cos(\theta)=\textbf{P} \cdot \hat{\textbf{n}}.$$
+        <p>If we place more of these elements next to each other to construct a shape, we can see that the net charge developed on the shared sides is zero (look at the visualisation on the right).
+        Hence, a net surface charge is only developed on the surface of the shape. The surface charge due to polarisation is</p>
+        $$ Q_p=\oint \textbf{P} \cdot \textbf{ds}.$$
+        <p>Keep in mind that the net charge of the shape before applying an electric field is zero, and no new charges are added or removed. Hence, </p>
+        $$ Q_{inside} + Q_{surface}=0,$$
+        <p>where</p>
+        $$Q_{surface}=\oint \textbf{P} \cdot \textbf{ds}=\int\nabla \cdot \textbf{P} dV,$$
+        <p>and</p>
+        $$Q_{inside}=\int \rho_{p} dV,$$
+        <p> where $\rho_{p}$ is the polarisation charge density. Hence,</p>
+        $$ \rho_{p}=-\nabla \cdot \textbf{P}.$$
+    </div>
+    <div id="magnetisation">
+        <h4>Magnetization:</h4>
+        <p> Due to electron's intrinsic property of spin and electric charge, a magnetic dipole moment is generated.
+        It is easy to visualise the magnetic dipole moment as the orbital motion of the electron resulting in a current loop around the atom.
+        The magnetic dipole moment is defined as</p>
+        $$\textbf{m}=I\textbf{A},$$
+        <p>where $I$ is the current generated by the electron's motion, and $\textbf{A}$ is the vector defining the area enclosed by the current loop.
+        Hence, magnetisation is defined as</p>
+        $$\textbf{M}=N\textbf{m},$$
+        <p>where $N$ is the number density of atoms in the dielectric. Magnetisation is defined by the Right-hand Thumb Rule.</p>
+    </div>
+    <div id="current">
+        <h4>Current densities:</h4>
+        <div>
+            <p>$\textbf{J}_{c}$: Conduction current density which is due to movement of free charges</p>
+            <p>$\textbf{J}_{sc}$: Surface conduction current density which is due to movement of free charges</p>
+            <p>$\textbf{J}_{m}$: Magnetisation current density which is due to movement of bound charges</p>
+            <p>$\textbf{J}_{sm}$: Surface magnetisation current density which is due to movement of bound charges</p>
+            <p>$\textbf{J}_{p}$: Polarisation current density which is due to movement of bound charges</p>
+        </div>
+        <p>Consider a small  element of a dielectric material. Taking a layer of this element which is an atom thick, we can see that the net current is generated along the surface
+        in a direction determined by the orientation of the current loops (look at the diagram); within the layer, the adjacent current loops act to oppose each other and cancel out. Hence, for the dielectric element, a
+        current, $I_{element}$ is generated along the faces which are perpendicular to the direction of the magnetic moment of the element $\textbf{m}_{element}$.</p>
+        $$m_{element}=MlA=I_{block}A$$
+        <p>where $lA$ is the volume of the element. Hence, Surface magnetisation current density $J_{sm}$, which is defined as current per unit width of the surface, is</p>
+        $$J_{sm}=\frac{I_{block}}{L}=\frac{ML}{L}=M$$
+        <p>As a vector, $J_{sm}$ is defined as</p>
+        $$\textbf{J}_{sm}=\textbf{M} \times \hat{\textbf{n}}$$
+        <p>For uniform $\textbf{M}$, meaning that $\textbf{M}$ is that same for each element, when multiple elements are placed adjacent to each other, the current travels along
+        the outer faces. The current along the inner shared faces cancel out.</p>
+        <p>The Magnetisation current density $\textbf{J}_{m}$ is</p>
+        $$\textbf{J}_{m}=\nabla \times \textbf{M}.$$
+        <p>Returning to polarisation, polarisation current density can be determined by considering the time variation of $\textbf{P}$:</p>
+        $$\textbf{J}_{p}=\frac{\partial \textbf{P}}{\partial t}=Nq\frac{\partial \textbf{d}}{\partial t}=Nq\textbf{v}.$$
+        <p>This suggest that there is a variation in the dipole separation over time. Hence, the bound charges move, which produces a current density.</p>
+
+    </div>
+
+
+</div>
+
+
+</body>
