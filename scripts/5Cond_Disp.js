@@ -302,7 +302,7 @@ class Wave{//wave object used to produce em wave
         material_1.push(
             {//dielectric
                 opacity: conductorQuality,
-                color: '#d9e1ea',
+                color: '#adc7dc',
                 type: "mesh3d",
                 name: "material_1",
                 x: [-1, -1, 1, 1, -1, -1, 1, 1],
