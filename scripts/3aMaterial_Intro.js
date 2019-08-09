@@ -26,7 +26,7 @@ let k = 4;
 let t = 1;
 let attenuation = 0.5;
 let springAmp = 0.5;
-let playing = false;
+let playing = true;
 let w_0 = 1.225 ; //creates 2 resonances either side of omega_0 for some reason
 
 function computeData() { //computer data for plot
