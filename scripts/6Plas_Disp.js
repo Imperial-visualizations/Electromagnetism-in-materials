@@ -73,12 +73,6 @@ class Wave1D{
     }
 }
 
-
-//Declare global variables:
-//let Play = false;
-//let time = 0;
-//end of global variables
-
 function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
     //set layout of graphs.  'Mode' sets what type of graph you want the layout for
     let new_layout;
@@ -215,7 +209,7 @@ function GetGraphData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas, WaveLis
     return [DispersionData, WaveData];
 }
 
-function GetDispersionData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas){
+function GetDispersionData(Omega, k, CurrentOmega, CurrentkPlas, OmegaVac, kVac){
     let Realk = [];
     let Imk = [];
 
@@ -225,6 +219,18 @@ function GetDispersionData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas){
     }
 
     let DispersionData = [];
+
+    //console.log([kVac[0], kVac[1]]);
+
+
+    DispersionData.push({
+        type: "scatter",
+        mode: "lines",
+        name: "Vacuum dispersion",
+        line: {color: "orange", width:3},
+        x: [kVac[0].re, kVac[1].re],
+        y: OmegaVac
+    });
 
     DispersionData.push({ //push real data
         type: 'scatter',
@@ -342,6 +348,7 @@ function DispersionRelation(Omega, OtherVariables, Medium){
         }
     }else{//medium = "Vacuum"
         for (i = 0; i< Omega.length; i++){
+            console.log(Omega[i]);
             Currentk = math.complex({re: Omega[i]/c, im:0});
             k.push(Currentk);
         }
@@ -358,8 +365,8 @@ function GetOmegaP(Ne){
 }
 
 function UpdateOmegaP(OmegaP){
-    document.getElementById('OmegaPDisplay').innerHTML = OmegaP;
-    //$("#OmegaPDisplay").text($(this).val() + $("#" + $(this).attr("id") + "Display").attr("data-unit"));
+    OmegaP = OmegaP/10000000000;//account for this change in the html (x10**10)
+    document.getElementById('OmegaPDisplay').innerHTML = OmegaP.toFixed(2);
 }
 
 function GetNewInputs(){
@@ -373,7 +380,6 @@ function GetNewInputs(){
     return [Ne, CurrentOmega, Play];
 }
 
-//function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//adds time evolution
 function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//adds time evolution
     let EWaveVac = WaveList[0];
     let BWaveVac = WaveList[1];
@@ -405,7 +411,7 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//ad
             mode: "immediate"
         }
     );
-    
+
     Play = document.getElementById("PlayButton").value;
     if (Play == "true"){
         requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
@@ -427,6 +433,7 @@ function Refresh(PlotNew = false){
     let PlotDensity = 2/900000000; //per 1 unit
     let n = (Omega_max - Omega_min)*PlotDensity;
 
+    let OmegaVac = [Omega_min, Omega_max];
     let Omega = numeric.linspace(Omega_min, Omega_max, n);
 
     let OmegaP = GetOmegaP(Ne);
@@ -435,6 +442,7 @@ function Refresh(PlotNew = false){
     let CurrentkVac = DispersionRelation([CurrentOmega], [0], "Vacuum")[0];
     let CurrentkPlas = DispersionRelation([CurrentOmega], [OmegaP], "Plasma")[0];
     let k = DispersionRelation(Omega, [OmegaP], "Plasma");
+    let kVac = DispersionRelation(OmegaVac, [0], "Vacuum");
 
     let x_max = 0.05;
 
@@ -452,8 +460,7 @@ function Refresh(PlotNew = false){
     
     let WaveList = GetWaves(NegativexValues, PositivexValues, CurrentkVac, CurrentkPlas, CurrentOmega);
     
-    //let GraphData = GetGraphData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas, WaveList);
-    let DispersionData = GetDispersionData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas);
+    let DispersionData = GetDispersionData(Omega, k, CurrentOmega, CurrentkPlas, OmegaVac, kVac);
     let WaveData = GetWaveData(WaveList);
     
     if (PlotNew){
@@ -464,20 +471,9 @@ function Refresh(PlotNew = false){
 
     let TimeStep = 0.000000000001;
 
-    //if (Play == "true"){
-        //Evolve(WaveList, NegativexValues, PositivexValues, TimeStep);
-
-    // while(Play == "true"){
-    console.log("1");
-    //Evolve(WaveList, NegativexValues, PositivexValues, TimeStep);
     if (Play == "true"){
-        //requestAnimationFrame(Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play));
         requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
     }
-    console.log("2");
-    //Play = document.getElementById("PlayButton").value;
-    //}
-    //}
 }
 
 
