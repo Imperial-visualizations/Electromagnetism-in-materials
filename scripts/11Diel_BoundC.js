@@ -24,6 +24,8 @@ const yBoundary = numeric.linspace(yLayoutMin, yLayoutMax, resolution)
 let t = 0;
 //let isPlay = true;
 
+let OldNumberOfReflections = parseInt($("#NumberOfReflections").val());
+
 function CreateLayout(DielectricWidth){
 
     let layout = {
@@ -57,7 +59,7 @@ function CreateLayout(DielectricWidth){
             showline: false
         },
         margin: {
-            l: 0, r: 0, b:10, t: 10, pad: 0
+            l: 0, r: 0, b:10, t: 10, pad: 2
         }
     }
 
@@ -83,7 +85,7 @@ const SumGraphLayout = {
     },
 
     margin: {
-        l: 0, r: 0, b:0, t:0, pad:0
+        l: 0, r: 0, b:0, t:0, pad:2
     }
 }
 
@@ -137,7 +139,7 @@ class Waves {
         let xMin = 0;
         let xMax = xMaxIncident;
         let direction = 1;
-        let offset = 15;
+        let offset = 16;
         let IncidentWave = new Wave("incident", IncidentAmplitude, direction, offset, xMin, xMax);
         return IncidentWave;
     }
@@ -171,7 +173,7 @@ class Waves {
             LeftAmplitude += -1 * IncidentAmplitude * t**2 * r**(1 + i*2);
         }
 
-        let LeftWave = new Wave("leftSum", LeftAmplitude, 1, 0,0, 20);
+        let LeftWave = new Wave("leftSum", LeftAmplitude, 1, 0, 0, 20);
         let RightWave = new Wave("rightSum", RightAmplitude, 1, 0, 0, 20);
 
         return [LeftWave, RightWave]
@@ -182,12 +184,12 @@ class Waves {
         let xMax;
         let amplitude;
         let offset;
-        let TransmittedWave;
         let r = this.ReflectionCoeff/100;
         let t = 1 - r;
 
         let TransmittedWaves = [];
 
+        //initial transmitted wave in dielectric so needs to be incl as edge case
         let InitialTransmittedWave = new Wave("transmitted", IncidentAmplitude*t, 1, 13, xMaxIncident, xMaxIncident+this.DielectricWidth);
         TransmittedWaves.push(InitialTransmittedWave);
 
@@ -198,8 +200,8 @@ class Waves {
 
             amplitude = IncidentAmplitude * t**2 * r**i;
             offset = 10 - 6*i;
-            TransmittedWave = new Wave("transmitted", amplitude, 1, offset, xMin, xMax);
-            TransmittedWaves.push(TransmittedWave);
+            let TransmittedWaveRight = new Wave("transmitted", amplitude, 1, offset, xMin, xMax);
+            TransmittedWaves.push(TransmittedWaveRight);
 
             //transmitted waves on the left
             xMin = 0;
@@ -208,9 +210,10 @@ class Waves {
             amplitude = -1 * IncidentAmplitude * t**2 * r**(1 + i*2);
 
             offset = 5 - 6*i;
-            TransmittedWave = new Wave("transmitted", amplitude, -1, offset, xMin, xMax);
-            TransmittedWaves.push(TransmittedWave);
+            let TransmittedWaveLeft = new Wave("transmitted", amplitude, -1, offset, xMin, xMax);
+            TransmittedWaves.push(TransmittedWaveLeft);
         }
+
         return TransmittedWaves;
     }
 }
@@ -237,7 +240,7 @@ function CreateDataLine(xData, yData, type) {
                 mode: "lines",
                 line: {
                     color: colour,
-                    width: 3
+                    width: 2
                 },
                 showscale: true
                 };
@@ -279,14 +282,16 @@ function initialPlot(waves){
     //Left Amplit Sum Graph
     let LeftSumWave = waves.SumOfWavesArray[0];
     let LeftDataLine = CreateDataLine(LeftSumWave.Data[0], LeftSumWave.Data[1], LeftSumWave.type);
+
     console.log("LeftDataLine", LeftDataLine);
     Plotly.newPlot(leftSumGraphDiv, LeftDataLine, SumGraphLayout);
 
     //Right Amplit Sum Graph
     let RightSumWave = waves.SumOfWavesArray[1];
     let RightDataLine = CreateDataLine(RightSumWave.Data[0], RightSumWave.Data[1], RightSumWave.type);
+    
     console.log("RightDataLine", RightDataLine);
-    Plotly.newPlot(rightSumGraphDiv, RightSumWave, SumGraphLayout);
+    Plotly.newPlot(rightSumGraphDiv, RightDataLine, SumGraphLayout);
 
     
 }
@@ -299,14 +304,17 @@ function update(waves) {
     Plotly.react(dielectricGraphDiv, DataLines, CreateLayout(waves.DielectricWidth));
 }
 
-function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections){
+function NextAnimationFrame(waves){
+
     t += 0.2;
-    let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 
     let DataLines = CreateDataLines(waves);
 
     Plotly.animate(dielectricGraphDiv,
-        {data: DataLines},
+        {
+            data: DataLines,
+            layout: CreateLayout(waves.DielectricWidth)
+        },
         {
             fromcurrent: true,
             transition: {duration: 0},
@@ -314,15 +322,59 @@ function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflection
             mode: "immediate"
         });
     
+    let LeftSumWave = waves.SumOfWavesArray[0];
+    let LeftSumDataLine = CreateDataLine(LeftSumWave.Data[0], LeftSumWave.Data[1], LeftSumWave.type);
+    //console.log("LeftSumDataLine", LeftSumDataLine);
+
+    // Plotly.animate(leftSumGraphDiv,
+    //     {
+    //         data: LeftSumDataLine,
+    //         layout: SumGraphLayout
+    //     },
+    //     {
+    //         fromcurrent: true,
+    //         transition: {duration: 0},
+    //         frame: {duration: 0, redraw: false},
+    //         mode: "immediate"
+    //     });
+
+    let RightSumWave = waves.SumOfWavesArray[1];
+    let RightSumDataLine = CreateDataLine(RightSumWave.Data[0], RightSumWave.Data[1], LeftSumWave.type);
+    //console.log(RightSumDataLine);
+    // Plotly.animate(rightSumGraphDiv,
+    //     {
+    //         data: RightSumDataLine,
+    //         layout: SumGraphLayout
+    //     },
+    //     {
+    //         fromcurrent: true,
+    //         transition: {duration: 0},
+    //         frame: {duration: 0, redraw: false},
+    //         mode: "immediate"
+    //     });
+    
     //FOR TESTING ONLY - do not use infinite call stack in final version!
 
     AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 }
 
-function AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections){
+function AnimateAllGraphs(){
+       //cannot pass these as arguments - need to avoid two contradictory infinite call stacks
+    let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
+    let DielectricWidth = parseFloat($("#DielectricWidth").val());
+    let NumberOfReflections = parseInt($("#NumberOfReflections").val());
+
+    let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+
+    //only update if there has been a change
+    //don't use jquery on-change as its async and may cause problems
+    if (waves.WavesArray[1].length != OldNumberOfReflections) {
+        update(waves);
+        OldNumberOfReflections = NumberOfReflections;
+    }
 
     window.requestAnimationFrame(function() {
-        NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+        NextAnimationFrame(waves);
     });
 }
 
@@ -340,7 +392,7 @@ function main() {
 
     initialPlot(waves);
 
-    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    AnimateAllGraphs();
     
    //live update of slider display values and graphs
     // $("#PlayButton").on("click", function() {
@@ -354,14 +406,14 @@ function main() {
    $("input[type=range]").each(function () {
     $(this).on('input', function () {
         $("#" + $(this).attr("id") + "Display").text($(this).val());
-        let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
-        let DielectricWidth = parseFloat($("#DielectricWidth").val());
-        let NumberOfReflections = parseInt($("#NumberOfReflections").val());
+        // let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
+        // let DielectricWidth = parseFloat($("#DielectricWidth").val());
+        // let NumberOfReflections = parseInt($("#NumberOfReflections").val());
 
-        let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+        //let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
         //t = 0
 
-        update(waves);
+        //update(waves);
         //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
         });
