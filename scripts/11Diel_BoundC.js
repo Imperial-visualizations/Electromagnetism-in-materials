@@ -300,7 +300,7 @@ function update(waves) {
 }
 
 function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections){
-    t += 0.1;
+    t += 0.2;
     let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 
     let DataLines = CreateDataLines(waves);
