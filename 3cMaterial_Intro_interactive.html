@@ -93,8 +93,9 @@
     $$\mathbf{J}_c \approx \frac{N_e e^2 \tau_c}{m_e} e^{i \frac{\pi}{2}} \mathbf{E}_{applied} $$
     $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.
     <br><br>
+
     <span style="font-weight: bold">Plasmas oscillation - </span>
-    Consider a cloud of plasma left alone to reach its equilibrium distribution in the absence of external electromagnetic field.
+    Consider a cloud of neutral plasma left alone to reach its equilibrium distribution in the absence of external electromagnetic field.
     What happens if we displace one of the electrons in the plasma slightly?
     (Hint: the keywords are <b>equilibrium</b> and <b>displace slightly</b>.)
     <br><br>
@@ -105,6 +106,61 @@
     <br><br>
     It turns out that plasma oscillates at the plasma frequency:
     $$\omega_p = \sqrt{\frac{N_e e^2}{m_e \epsilon_0}}$$
+    where $N_e$ is the number density of electrons, $e$ is the fundamental charge and $\epsilon_0$ is the permittivity of free space.
+    Notice how the plasma frequency here depends only on the characteristics of electron distribution.
+    This is due to the assumption that the electrons moving much faster than the positive ions in a neutral plasma.
+    <br><br>
+    How do we justify this assumption?
+    Consider the lightest element, hydrogen. Ignoring the heavier isotopes, the simplest hydrogen atom consists of a proton and an electron. 
+    The mass of a proton is roughly 1800 times greater than that of an electron. 
+    Given the same initial conditions, an electron would be accelerated much more than a proton in an electric field that is not too strong.
+    Therefore, in any plasmas, the positive ions are always much heavier than the electrons and so the movement of the positive ions can be ignored 
+    given that the electric field is not too strong.
+    <br><br>
+    Derivation:
+    Displacing an electron in a neutral plasma means that the number density of electron, $N_e$ depends on the position and time.
+    Let $N_e = N_0 + N_1 (x, t)$, where $N_0$ is the initial number density of electron and $x$ is the direction of perturbation.
+    Generally, the free charge density $\rho_f$ is given by $\rho_f = N_i e - N_e e$, where $N_i$ is the number density of positive ions.
+    In this case, $\rho_f = N_i e - (N_0 + N_1(x, t))e$ but $N_i e = N_0 e$ for a neutral plasma so 
+    $$\rho_f = -N_1(x, t)e$$
+    Also, in general, the conduction current density $\mathbf{J}_c$ is given by 
+    $$\mathbf{J}_c = N_i e \mathbf{v}_e - N_e e \mathbf{v}_e$$
+    Based on the assumption of small perturbation of electron such that the movements of positive ions can be ignored, the first term vanishes so
+    $\mathbf{J}_c = - N_e e \mathbf{v}_e = -(N_0 + N_1(x, t)) e \mathbf{v}_e$. Also based on the assumption of small perturbation, $N_0 \gg N_1$
+    so $$\mathbf{J}_c = - N_0 e \mathbf{v}_e$$
+    In a closed system, we require conservation of free charge,
+    $$\frac{\partial \rho_f}{\partial t} + \nabla \cdot \mathbf{J}_c = 0$$
+    so,
+    $$-e\frac{\partial N_1}{\partial t} - N_0 e \nabla \cdot \mathbf{v}_e = 0$$
+    Consider only in the direction of perturbation,
+    $$-e\frac{\partial N_1}{\partial t} - N_0 e \frac{\partial v_{e, x}}{\partial x} = 0$$
+    We can rewrite this as
+    $$\frac{\partial v_{e, x}}{\partial x} = -\frac{1}{N_0} \frac{\partial N_1}{\partial t}$$
+    Assuming that
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = \frac{\partial^2 v_{e, x}}{\partial t \partial x}$$
+    We get (1):
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = -\frac{1}{N_0} \frac{\partial^2 N_1}{\partial t^2}$$
+    By Gauss' Law for electrostatics,
+    $$\nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
+    where $\rho = \rho_f + \rho_p$, $\rho_f$ is the free charge density while $\rho_p$ is the polarisation charge density.
+    In plasmas, $\rho_p = 0$ so 
+    $$\nabla \cdot \mathbf{E} = \frac{\rho_f}{\epsilon_0}$$
+    From the result above, $\rho_f = -N_1(x, t)e$ so
+    $$\nabla \cdot \mathbf{E} = -\frac{N_1 e}{\epsilon_0}$$
+    Consider only in the direction of perturbation,
+    $$\frac{\partial E_x}{\partial x} = -\frac{N_1 e}{\epsilon_0}$$
+    Now, by Newton's second law,
+    $$m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E}$$
+    Consider only in the direction of perturbation,
+    $$m_e \frac{\partial v_{e, x}}{\partial t} = -e E_x$$
+    So
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \frac{\partial E_x}{\partial x}$$
+    From the result for $\frac{\partial E_x}{\partial x}$ above, we obtain (2):
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \cdot -\frac{N_1 e}{\epsilon_0} = \frac{e^2}{m_e \epsilon_0} N_1 $$
+    Equating (1) and (2) and rearranging the result,
+    $$\frac{\partial^2 N_1}{\partial t^2} + \frac{N_0 e^2}{m_e \epsilon_0} N_1 = 0$$
+    This is the equation of simple harmonic motion for plasma, with a natural frequency of 
+    $$\omega_p = \sqrt{\frac{N_0 e^2}{m_e \epsilon_0}}$$
   </div>
 
   <!--Visualisation for right 2/3-->
