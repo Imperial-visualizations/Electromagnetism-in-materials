@@ -209,6 +209,7 @@ class Waves {
             xMin = xMaxIncident + this.DielectricWidth;
             xMax = xMin + xMaxIncident;
 
+            //TODO - WRONG????
             amplitude = IncidentAmplitude * t**2 * r**i;
             offset = 10 - 6*i;
             let TransmittedWaveRight = new Wave("transmitted", amplitude, 1, offset, xMin, xMax, k1);
@@ -433,6 +434,7 @@ function main() {
 
     initialPlot(waves);
 
+    //Comment to disable animation
     AnimateAllGraphs();
 
 
@@ -440,16 +442,17 @@ function main() {
     $(this).on('input', function () {
         $("#" + $(this).attr("id") + "Display").text($(this).val());
         $("#TETCDisplay").text()
+
+        //UNCOMMENT FOR STATIC BUT UPDATING PLOTS
+
         // let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
         // let DielectricWidth = parseFloat($("#DielectricWidth").val());
         // let NumberOfReflections = parseInt($("#NumberOfReflections").val());
 
-        //let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-        //t = 0
+        // let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
-        //update(waves);
-        //AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-
+        //Uses newPlot - for debugging only
+        // initialPlot(waves)
         });
     });
 }
