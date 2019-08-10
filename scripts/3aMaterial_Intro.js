@@ -26,7 +26,8 @@ let k = 4;
 let t = 1;
 let attenuation = 0.5;
 let springAmp = 0.5;
-let playing = false;
+let playing = true;
+let w_0 = 1.225 ; //creates 2 resonances either side of omega_0 for some reason
 
 function computeData() { //computer data for plot
 
@@ -48,10 +49,13 @@ function computeData() { //computer data for plot
             yUnAt.push(yVal);
         }
 
+    springAmp = (0.5*(Math.pow(w_0,2) - Math.pow(omega,2)))/(Math.pow((Math.pow(w_0,2)-Math.pow(omega,2)),2)-Math.pow(attenuation*omega,2));
+    if(Math.abs(1/springAmp) > 1){springAmp =1;}
+
         //draw attenuated part of wave
         if (x[i]>5){
             x2.push(x[i]);
-            yVal = attenuation*Math.cos(k*x[i] - omega*t);
+            yVal = (1/springAmp)*Math.cos(k*x[i] - omega*t);
             yAt.push(yVal);
         }
 
@@ -63,7 +67,10 @@ function computeData() { //computer data for plot
 
     E0 = yUnAt[yUnAt.length - 1];
     ySpring.push(0);
-    ySpring.push(-springAmp *E0);
+    springAmp = (0.1*(Math.pow(w_0,2) - Math.pow(omega,2)))/(Math.pow((Math.pow(w_0,2)-Math.pow(omega,2)),2)-Math.pow(attenuation*omega,2));
+    springX = springAmp*Math.cos(omega*t);
+    console.log(springX);
+    ySpring.push(springX);
 
 
     let spring = {
@@ -71,15 +78,15 @@ function computeData() { //computer data for plot
       y: ySpring,
       type: 'scatter',
       name: 'Spring',
-      showlegend: false,
+      showlegend: true,
     }
 
     let electron = {
       x: xSpring,
       y: ySpring,
       type: 'scatter',
-      name: 'Spring',
-      showlegend: false,
+      name: 'Electron',
+      showlegend: true,
       mode:"markers",
       marker: {color: "#ff0000", size: 12}
     }
@@ -88,8 +95,8 @@ function computeData() { //computer data for plot
       x: xSpring,
       y: [0,0],
       type: 'scatter',
-      name: 'Spring',
-      showlegend: false,
+      name: 'Equilibrium Position',
+      showlegend: true,
       mode:"markers",
       marker: {color: "#00ff11", size: 20}
     }
@@ -99,7 +106,7 @@ function computeData() { //computer data for plot
       y: yUnAt,
       type: 'scatter',
       name: 'Unattenuated EM Wave',
-      showlegend: false,
+      showlegend: true,
     };
 
     let attenuated = {
@@ -107,7 +114,7 @@ function computeData() { //computer data for plot
       y: yAt,
       type: 'scatter',
       name: 'Attenuated EM Wave',
-      showlegend: false,
+      showlegend: true,
     };
 
 
@@ -130,6 +137,7 @@ function updateGraph(){//update animation
 function playAnimation() {
     if(playing){
     t = t + Math.PI/20;
+    if(omega*t > Math.Pi*8){t = 0;}
     Plotly.animate("plot",
         {data: computeData()},
         {
