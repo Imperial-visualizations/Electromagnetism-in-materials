@@ -13,7 +13,7 @@ const xLayoutMax = 100;
 const yLayoutMin = -20;
 const yLayoutMax = 20;
 
-const resolution = 500;
+const resolution = 250;
 
 const dielectricGraphDiv = "dielectricGraph";
 const leftSumGraphDiv = "leftSumGraph";
@@ -110,7 +110,7 @@ const RightSumGraphLayout = {
     },
 
     margin: {
-        l: 0, r: 10, b:0, t:0, pad:2
+        l: 0, r: 30, b:0, t:0, pad:0
     }
 }
 
@@ -237,12 +237,12 @@ function FindSumWaveData(waves){
     let yRight = Array(resolution).fill(0); //initially zeros
 
     for (let waveIndex=0; waveIndex<waves.WavesArray[2].length; waveIndex++){
-        
+
         let offsetLeft = waves.WavesArray[3][waveIndex].offset;
         let offsetRight = waves.WavesArray[4][waveIndex].offset;
 
         yLeft = yLeft.map(function(num, yindex){
-            return num + waves.WavesArray[3][waveIndex].Data[1][yindex] - offsetLeft;
+            return num + waves.WavesArray[3][waveIndex].Data[1][yindex] - offsetLeft - 16;
         });
 
         yRight = yRight.map(function(num, yindex){
