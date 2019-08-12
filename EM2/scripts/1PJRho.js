@@ -38,7 +38,7 @@ Z_slider.oninput = function () {
 };
 
 function setup() {
-    let C = createCanvas(windowWidth / 2.5, windowWidth / 2.5, WEBGL);
+    let C = createCanvas(windowWidth / 1.7, windowWidth / 1.7, WEBGL);
     C.parent('sketch-holder');
     frameRate(60);
 }
