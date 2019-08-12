@@ -28,71 +28,10 @@
 
 <body style="overflow: scroll">
 
-  <!--Text for left 1/3-->
-  <div id="Vis_text" class="container_journey" style="height:100vh">
-    <span style="font-weight: bold">The key idea behind D field - </span>
-    <br>
-    Consider an ideal dielectric (perfect insulator) that stretches to infinity. 
-    Placing it in a uniform electric field $\mathbf{E}_{applied}$ will induce a <span style ="color:#D24000;font-weight:bold">polarisation
-    field</span> $\mathbf{P}$ in it. 
-    This will give rise to a <span style="color:#02893B; font-weight:bold">total electric field </span> $\mathbf{E}_{total}$ within the dielectric.
-    <br><br>
-    In general, $ \nabla \cdot \mathbf{P} = -\rho_p $, where $\rho_p$ is the polarisation charge density.
-    However, $ \nabla \times \mathbf{P} $ depends on the material. 
-    <br><br>
-    Define the <span style="color:#9F004E;font-weight:bold">electric displacement field</span>, $\mathbf{D}$ as
-    $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $. 
-    In general, $ \nabla \cdot \mathbf{D} = \rho_f $, where $\rho_f$ is the free charge density. 
-    <br><br>
-    In true vacuum, where there is no dipole by definition,
-    $$ \mathbf{P} = 0 $$
-    so,
-    $$ \mathbf{D}_{vacuum} = \epsilon_{0}\mathbf{E}_{applied} $$
-    $$ \nabla \cdot \mathbf{D}_{vacuum} = \nabla \cdot (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
-    $$ \nabla \times \mathbf{D}_{vacuum} = \nabla \times (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
-    <br>
-    In a homogenous, isotropic and linear dielectric (HIL),
-    $$ \mathbf{P} = \chi_{e}\epsilon_{0}\mathbf{E}_{total} $$
-    where the electric susceptibility $\chi_{e}$ is a constant of proportionality, or
-    $$ \mathbf{P} = \epsilon_{r}\mathbf{E}_{total} $$
-    where $\epsilon_r = \chi_{e}\epsilon_{0}$.
-    So,
-    $$ \mathbf{D}_{dielectric} = \epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total} $$
-    $$ = \epsilon_{0}\mathbf{E}_{applied} $$
-    $$ = \mathbf{D}_{vacuum} $$
-    $$ \nabla \cdot \mathbf{D}_{dielectric} = \nabla \cdot [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
-    $$ = 0 $$
-    $$ \nabla \times \mathbf{D}_{dielectric} = \nabla \times [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
-    $$ = 0 $$
-    <br>
-    <p>Note: The units of the E-field are different to those of the P and D fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
+  
 
-    <span style="font-weight: bold">The subtlety - </span>
-    <br>
-    You might notice that the <span style="color:#02893B; font-weight:bold"> total E field </span> is weaker in a dielectric than in vacuum but 
-    the <span style="color:#9F004E;font-weight:bold">D field</span> remains <b>constant</b>. 
-    <br><br>
-    A polarised material indeed weakens the <span style="color:#02893B; font-weight:bold">total E field </span>.
-    However, the <span style="color:#9F004E;font-weight:bold">D field</span> remains constant because:
-    <br>
-    (1) $ \nabla \cdot \mathbf{D} = \rho_f $ and $\rho_f$ is 0 in both the vacuum and the ideal dielectric here,
-    <br>
-    (2) $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $ is defined in terms of the <b>total</b> <span style="color:#02893B; font-weight:bold">E field </span> everywhere, so
-      the reduction in <span style="color:#02893B; font-weight:bold">total E field </span> is complemented by the presence of <span style ="color:#D24000;font-weight:bold">P field</span>
-      to keep the <span style="color:#9F004E;font-weight:bold">D field</span> constant.
-    <br><br>
-    Also note that $\mathbf{D}_{vacuum} = \mathbf{D}_{dielectric}$ in the derivation above.
-    <br><br>
-    
-    <span style="font-weight: bold">Time variant D field - </span>
-    Before we talk about H field, we want to consider time variant D field. 
-    Similar to time variant E field gives rise to curl in B field, time variant D field gives rise to curl in H field.
-    More importantly, changing this electric displacement field gives rise to displacement current density, i.e.
-    $$\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$$
-  </div>
-
-  <!--Visualisation for right 2/3-->
-  <div id="Vis_interactive" class="container_vis" style="position: relative;">
+  <!--Visualisation-->
+  <div id="Vis_interactive" class="" style="position: relative;">
 
     <div class="six columns">
         <div class="row">
