@@ -629,22 +629,13 @@
         The refractive index is given by: <br>
         $\displaystyle \tilde{n} = \frac{c \tilde{k}}{\omega}$ $\displaystyle \cong 1 + \frac{N q^2}{2m \epsilon_0}
         \sum_{j} \frac{f_j(\omega^2_j-\omega^2)}{(\omega^2_j-\omega^2)^2 + \gamma^2_j \omega^2}$ <br><br>
-        <button id="showDefinitions" >Define Terms</button>
-
-        <script> //show or hide definitions when button pressed
-            let defShown = false;
-            $('#showDefinitions').on('click', function() {
-            defShown = !defShown;
-
-            if(defShown){
-                $('#termDefinitions').show();
-            } else {
-                $('#termDefinitions').hide();
-            }
-            });
-        </script>
-
-            <p id="termDefinitions" style="display:none;">
+        <span class="section-extra-head-container">
+            <button class="section-extra-head" data-toggle="collapse"  @click="hideShowToggle($event)"
+                    data-target="#regroupexplainContainer"> Define Terms </button>
+            </span>
+            <div id="regroupexplainContainer" class="collapse extra-content-container">
+                <div id="defineterms" class="extra-content">
+                            <p id="termDefinitions">
                 $\omega_j$ - Resonant frequencies of dielectric<br>
                 $\omega$ - Frequency of electromagnetic wave<br>
                 $\gamma_j$ - Damping in each molecule<br>
@@ -653,6 +644,9 @@
                 q - Electron charge<br>
                 N - Number of molecules per unit volume
             </p>
+                        </div>
+                    </div>
+
 
         From this, it can be seen that the imaginary refractive
         index corresponds to attenuation of the wave.
@@ -803,6 +797,9 @@
                         </li>
                         <li :class="[subSection[4] === 2 ? 'shaded' : '', 'tabRight']">
                             <a data-toggle="tab" href="#ampereElecIntegral" @click="subScrollTo(5); subSection[4]=2; loadSubScripts(); $forceUpdate();">Integral</a>
+                        </li>
+                        <li :class="[subSection[4] === 3 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#ampereElecIntegral" @click="subScrollTo(5); subSection[4]=3; loadSubScripts(); $forceUpdate();">Integral</a>
                         </li>
                     </ul>
                     <!--    Sub-Section Text Containers    -->
