@@ -51,7 +51,7 @@
     Now we obtain
     $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
     so
-    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
+    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c} \mathbf{E}$$
     Recall that the conduction current density is given by
     $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
     where N is the number density, subscript $i$ is for ions and $e$ for electrons.
@@ -82,7 +82,7 @@
     Based on the Drude Model,
     $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
     where $\mathbf{E}_{applied}$ is the applied electric field.
-    The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
+    The <b>phase shift</b> between $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
     <br><br>
     We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
     where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real. 
@@ -136,7 +136,8 @@
     $$-e\frac{\partial N_1}{\partial t} - N_0 e \frac{\partial v_{e, x}}{\partial x} = 0$$
     We can rewrite this as
     $$\frac{\partial v_{e, x}}{\partial x} = -\frac{1}{N_0} \frac{\partial N_1}{\partial t}$$
-    Assuming that
+    Velocity must be continuous with respect to space and time (If it was not, it would mean we would be using 'infinite forces').
+    Given that its continuous, 
     $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = \frac{\partial^2 v_{e, x}}{\partial t \partial x}$$
     We get (1):
     $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = -\frac{1}{N_0} \frac{\partial^2 N_1}{\partial t^2}$$
