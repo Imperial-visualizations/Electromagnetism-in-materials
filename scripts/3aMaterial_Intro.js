@@ -1,6 +1,7 @@
 $(window).on('load', function() {
         const dom = {//assigning switches and sliders]
             wSlider:$("input#angular_frequency"),
+            gammaSlider:$("input#gamma"),
         }
 
 const layout = {//layout of refractive index plot
@@ -21,18 +22,37 @@ const layout = {//layout of refractive index plot
                    }
               }
 
+const layoutPhase = {//layout of refractive index plot
+                    autosize: true,
+                    xaxis: {
+                        title: "Angular Frequency Ratio"
+                    },
+                    yaxis: {
+                        title: "Phase Shift /Radians"
+                    },
+                    margin: {
+                       l: 50, r: 10, b: 50, t: 50, pad: 5
+                   },
+                   font: {
+                       family: "Fira Sans",
+                       size: 16
+                   }
+              }
+
 let omega = 1;
 let k = 4;
 let t = 1;
 let attenuation = 0.5;
+let gamma = 0.05;
 let springAmp = 0.5;
-let playing = true;
-let w_0 = 1.225 ; //creates 2 resonances either side of omega_0 for some reason
+let playing = false;
+let w_0 = 1; //creates 2 resonances either side of omega_0 for some reason
 
 function computeData() { //computer data for plot
 
     $("#angular_frequency-display").html($("input#angular_frequency").val().toString());//update value of display
     omega = parseFloat($("input#angular_frequency").val());
+    gamma = parseFloat($("input#gamma").val());
 
     let x = numeric.linspace(0,10, 1000);
     let yUnAt = [];
@@ -49,13 +69,19 @@ function computeData() { //computer data for plot
             yUnAt.push(yVal);
         }
 
-    springAmp = (0.5*(Math.pow(w_0,2) - Math.pow(omega,2)))/(Math.pow((Math.pow(w_0,2)-Math.pow(omega,2)),2)-Math.pow(attenuation*omega,2));
+    let alpha = 1- Math.pow(omega,2);
+    let Q = w_0/gamma;
+    let beta = omega/Q;
+    let springAmp = Math.pow((Math.pow(alpha,2) + Math.pow(beta,2)),(-1/2));
+
+    let phaseShift = Math.atan2((-omega*gamma),(Math.pow(w_0,2)-Math.pow(omega,2)));
+
     if(Math.abs(1/springAmp) > 1){springAmp =1;}
 
         //draw attenuated part of wave
         if (x[i]>5){
             x2.push(x[i]);
-            yVal = (1/springAmp)*Math.cos(k*x[i] - omega*t);
+            yVal = (1/springAmp)*Math.cos(k*x[i] - omega*t + phaseShift);
             yAt.push(yVal);
         }
 
@@ -65,11 +91,14 @@ function computeData() { //computer data for plot
     let xSpring = [5,5];
     let ySpring = [];
 
-    E0 = yUnAt[yUnAt.length - 1];
     ySpring.push(0);
-    springAmp = (0.1*(Math.pow(w_0,2) - Math.pow(omega,2)))/(Math.pow((Math.pow(w_0,2)-Math.pow(omega,2)),2)-Math.pow(attenuation*omega,2));
+
+    let alpha = 1- Math.pow(omega,2);
+    let Q = w_0/gamma;
+    let beta = omega/Q;
+    let springAmp = 0.3*(Math.pow((Math.pow(alpha,2) + Math.pow(beta,2)),(-1/2)));
+
     springX = springAmp*Math.cos(omega*t);
-    console.log(springX);
     ySpring.push(springX);
 
 
@@ -121,9 +150,56 @@ function computeData() { //computer data for plot
     return [unattenuated, attenuated, spring, electron, nucleus]
 }
 
+function computePhase() {
+    $("#angular_frequency-display").html($("input#angular_frequency").val().toString());//update value of display
+    omega = parseFloat($("input#angular_frequency").val());
+    gamma = parseFloat($("input#gamma").val());
+
+    let w = numeric.linspace(0, 2, 200);
+    let phi = [];
+
+    for(let i = 0; i < w.length; i++){
+        phi.push(Math.atan2((-w[i]*gamma),(Math.pow(w_0,2)-Math.pow(w[i],2))));
+    }
+
+    let phaseShift = Math.atan2((-omega*gamma),(Math.pow(w_0,2)-Math.pow(omega,2)));
+
+
+    let trace1 = {
+      x: w,
+      y: phi,
+      type: 'scatter',
+      name: 'Phase shift',
+      showlegend: false,
+    };
+
+    let marker = {
+      x: [omega],
+      y: [phaseShift],
+      type: 'scatter',
+      name: 'Electron',
+      showlegend: false,
+      mode:"markers",
+      marker: {color: "#002147", size: 12}
+    }
+
+    return [trace1, marker]
+
+}
+
 function updateGraph(){//update animation
     Plotly.animate("plot",
         {data: computeData()},//updated data
+        {
+            fromcurrent: true,
+            transition: {duration: 0,},
+            frame: {duration: 0, redraw: false,},
+            mode: "immediate"
+        }
+    );
+
+    Plotly.animate("phasePlot",
+        {data: computePhase()},//updated data
         {
             fromcurrent: true,
             transition: {duration: 0,},
@@ -162,5 +238,9 @@ $('#playButton').on('click', function() {
 Plotly.purge("plot");
 Plotly.newPlot('plot', computeData(), layout);
 
+Plotly.purge("phasePlot");
+Plotly.newPlot('phasePlot', computePhase(), layoutPhase);
+
 dom.wSlider.on("input",updateGraph);
+dom.gammaSlider.on("input",updateGraph);
 })
