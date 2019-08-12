@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--Title-->
+    <title>Visualisations EM 1</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+        integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+
+<body>
+<div id="app">
+    <!--   Title of non-current sections to appear on hovering above respective number in navbar     -->
+    <div id="hoverTitleSpace" :style="{left: mouseX +'px'}" v-show="hoverTitle !== false">
+        {{hoverTitle}}
+    </div>
+    <!--    Left Side of Window - containing mainly text    -->
+    <div class="vis-container left" id="left-container">
+        <!--     Dynamic Navigation Bar and Section Headings       -->
+        <div class="" id="progress-container">
+            <!--    Dynamic Section Heading Text - overlaid on meters    -->
+            <!--    Also act as buttons to navigate between sections    -->
+            <div class="" id="overlay" @mousemove="hoverTitle !== false ? updateMouseX($event) : ''">
+                <button :class="[currentTitle === 1 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle1"
+                        key="sectionTitle1" data-no=1 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[0]}}
+                </button>
+                <button :class="[currentTitle === 2 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle2"
+                        key="sectionTitle2" data-no=2 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[1]}}
+                </button>
+                <button :class="[currentTitle === 3 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle3"
+                        key="sectionTitle3" data-no=3 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[2]}}
+                </button>
+                <button :class="[currentTitle === 4 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle4"
+                        key="sectionTitle4" data-no=4 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[3]}}
+                </button>
+                <button :class="[currentTitle === 5 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle5"
+                        key="sectionTitle5" data-no=5 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[4]}}
+                </button>
+                <button :class="[currentTitle === 6 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle6"
+                        key="sectionTitle6" data-no=6 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[5]}}
+                </button>
+                <button :class="[currentTitle === 7 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle7"
+                        key="sectionTitle7" data-no=7 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[6]}}
+                </button>
+                <button :class="[currentTitle === 8 ? 'activeButton' : '', 'overlay-button']" id="sectionTitle8"
+                        key="sectionTitle8" data-no=8 @click="scrollTo($event)" @mouseover="hoverPosUpdate($event); selectHover();" @mouseout="hoverTitle=false">{{sectionTitle[7]}}
+                </button>
+            </div>
+            <!--    Dynamic meters indicating progress through each section    -->
+            <meter :class="[currentTitle === 1 ? 'activeMeter' : '']" id="m1" :min="sectionTops[0]"
+                   :max="sectionBottoms[0]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 2 ? 'activeMeter' : '']" id="m2" :min="sectionTops[1]"
+                   :max="sectionBottoms[1]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 3 ? 'activeMeter' : '']" id="m3" :min="sectionTops[2]"
+                   :max="sectionBottoms[2]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 4 ? 'activeMeter' : '']" id="m4" :min="sectionTops[3]"
+                   :max="sectionBottoms[3]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 5 ? 'activeMeter' : '']" id="m5" :min="sectionTops[4]"
+                   :max="sectionBottoms[4]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 6 ? 'activeMeter' : '']" id="m6" :min="sectionTops[5]"
+                   :max="sectionBottoms[5]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 7 ? 'activeMeter' : '']" id="m7" :min="sectionTops[6]"
+                   :max="sectionBottoms[6]" :value="scrollPos"></meter>
+            <meter :class="[currentTitle === 8 ? 'activeMeter' : '']" id="m8" :min="sectionTops[7]"
+                   :max="sectionBottoms[7]" :value="scrollPos"></meter>
+            <div id="banner-dummy"></div>
+        </div>
+        <!--    Container for text content split into sections    -->
+        <div class="journey" id="main-journey" @scroll.passive="scrollFunc">
+            <!--    Section Text Containers   -->
+            <div class="section-container" id="sc1">
+                <div class="placeholder" id="ph1">
+                    <hr>
+                    <h2 class="text section-head" id="s1">
+                        {{sectionTitleLong[0]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p1">
+                    <div id="charge">
+
+        <h3 class="section-sub-head">Polarisation:</h3>
+        <p>At the microscopic level, an applied electric field causes a charge separation within an atom. This results
+            in the generation of an
+            atomic dipole moment:</p>
+        $$ \textbf{p}=q \textbf{d}, $$
+        <p>where $q$ is the charge in the dipole and $\textbf{d}$ is the charge separation vector [defined from the
+            negative end of the dipole to the
+            positive end{NEED TO CHECK THIS}]. Hence, polarisation $\textbf{P}$ is defined as</p>
+        $$ \textbf{P}=N\textbf{p},$$
+        <p>where $N$ is the number density of the atoms. In a homogeneous, isotropic and linear (HIL) {dielectric}
+            material, polarisation is
+            also defined as</p>
+        $$ \textbf{P}= \chi_e \epsilon_0 \textbf{E},$$
+        <p>where $\chi_e$ is the electric susceptibility. </p>
+    </div>
+    <div id="density">
+        <h3 class="section-sub-head">Charge densities:</h3>
+        <div>
+            FURTHER EXPLAIN THESE
+            <p>$\rho_{sf}$: Free surface charge density, which is zero for a dielectric.</p>
+            <p>$\rho_{f}$: Free charge density (within the material), which is zero for a dielectric.</p>
+            <p>$\rho_{sp}$: Polarisation surface charge density, which is produced due to bound charges.</p>
+            <p>$\rho_{p}$: Polarisation charge density (within the material), which is produced due to bound charges.</p>
+        </div>
+        <p>Consider a small  element of a dielectric material. When an electric field is applied, atomic dipole moments are generated within atoms due to charge separation.
+        The diagram shows a microscopic view of a dielectric and an applied electric field from left to right. As you can see, this results in specific ends of the dipoles sticking of the surface which is parallel
+        to the electric field. This results in a charge being developed on these surfaces. The surface charge on Face 1 is </p>
+        $$Q_s=qNdA=PA=\textbf{P} \cdot \textbf{A},$$
+        <p>where $A$ is the area of Face 1, hence $dA$ is the volume spanned by the dipole layer on the surface. Hence, $\rho_{sp}$ is </p>
+        $$\rho_{sp}=\frac{Q_s}{A}=P.$$
+        <p>For a non-parallel surface, the new surface area is $\textbf{A}'=A'\hat{\textbf{n}}$, where $A'=A/\cos(\theta)$ (look at the diagram). Therefore, the
+        surface charge is</p>
+        $$ Q_s'=\textbf{P} \cdot \textbf{A}'= PA'\cos(\theta)=PA.$$
+        <p>This equation is the same as that for a parallel face. Hence, the surface charge being developed is the same. This makes sense as the number of dipoles sticking out of the surface
+        does not change. However, $\rho_{sp}$ is now </p>
+        $$\rho_{sp}=\frac{Q_s'}{A'}=\frac{PA}{A/\cos(\theta)}=P\cos(\theta)=\textbf{P} \cdot \hat{\textbf{n}}.$$
+        <p>If we place more of these elements next to each other to construct a shape, we can see that the net charge developed on the shared sides is zero (look at the visualisation on the right).
+        Hence, a net surface charge is only developed on the surface of the shape. The surface charge due to polarisation is</p>
+        $$ Q_p=\oint \textbf{P} \cdot \textbf{ds}.$$
+        <p>Keep in mind that the net charge of the shape before applying an electric field is zero, and no new charges are added or removed. Hence, </p>
+        $$ Q_{inside} + Q_{surface}=0,$$
+        <p>where</p>
+        $$Q_{surface}=\oint \textbf{P} \cdot \textbf{ds}=\int\nabla \cdot \textbf{P} dV,$$
+        <p>and</p>
+        $$Q_{inside}=\int \rho_{p} dV,$$
+        <p> where $\rho_{p}$ is the polarisation charge density. Hence,</p>
+        $$ \rho_{p}=-\nabla \cdot \textbf{P}.$$
+    </div>
+    <div id="magnetisation">
+        <h3 class="section-sub-head">Magnetization:</h3>
+        <p> Due to electron's intrinsic property of spin and electric charge, a magnetic dipole moment is generated.
+        It is easy to visualise the magnetic dipole moment as the orbital motion of the electron resulting in a current loop around the atom.
+        The magnetic dipole moment is defined as</p>
+        $$\textbf{m}=I\textbf{A},$$
+        <p>where $I$ is the current generated by the electron's motion, and $\textbf{A}$ is the vector defining the area enclosed by the current loop.
+        Hence, magnetisation is defined as</p>
+        $$\textbf{M}=N\textbf{m},$$
+        <p>where $N$ is the number density of atoms in the dielectric. Magnetisation is defined by the Right-hand Thumb Rule.</p>
+    </div>
+    <div id="current">
+        <h3 class="section-sub-head">Current densities:</h3>
+        <div>
+            <p>$\textbf{J}_{c}$: Conduction current density which is due to movement of free charges</p>
+            <p>$\textbf{J}_{sc}$: Surface conduction current density which is due to movement of free charges</p>
+            <p>$\textbf{J}_{m}$: Magnetisation current density which is due to movement of bound charges</p>
+            <p>$\textbf{J}_{sm}$: Surface magnetisation current density which is due to movement of bound charges</p>
+            <p>$\textbf{J}_{p}$: Polarisation current density which is due to movement of bound charges</p>
+        </div>
+        <p>Consider a small  element of a dielectric material. Taking a layer of this element which is an atom thick, we can see that the net current is generated along the surface
+        in a direction determined by the orientation of the current loops (look at the diagram); within the layer, the adjacent current loops act to oppose each other and cancel out. Hence, for the dielectric element, a
+        current, $I_{element}$ is generated along the faces which are perpendicular to the direction of the magnetic moment of the element $\textbf{m}_{element}$.</p>
+        $$m_{element}=MlA=I_{block}A$$
+        <p>where $lA$ is the volume of the element. Hence, Surface magnetisation current density $J_{sm}$, which is defined as current per unit width of the surface, is</p>
+        $$J_{sm}=\frac{I_{block}}{L}=\frac{ML}{L}=M$$
+        <p>As a vector, $J_{sm}$ is defined as</p>
+        $$\textbf{J}_{sm}=\textbf{M} \times \hat{\textbf{n}}$$
+        <p>For uniform $\textbf{M}$, meaning that $\textbf{M}$ is that same for each element, when multiple elements are placed adjacent to each other, the current travels along
+        the outer faces. The current along the inner shared faces cancel out.</p>
+        <p>The Magnetisation current density $\textbf{J}_{m}$ is</p>
+        $$\textbf{J}_{m}=\nabla \times \textbf{M}.$$
+        <p>Returning to polarisation, polarisation current density can be determined by considering the time variation of $\textbf{P}$:</p>
+        $$\textbf{J}_{p}=\frac{\partial \textbf{P}}{\partial t}=Nq\frac{\partial \textbf{d}}{\partial t}=Nq\textbf{v}.$$
+        <p>This suggest that there is a variation in the dipole separation over time. Hence, the bound charges move, which produces a current density.</p>
+
+    </div>
+
+
+
+                    
+                </div>
+            </div>
+
+            <div class="section-container" id="sc2">
+                <div class="placeholder" id="ph2">
+                    <hr>
+                    <h2 class="text section-head" id="s2">
+                        {{sectionTitleLong[1]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p2">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[1] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#E-field" @click="subScrollTo(2); subSection[1]=1; loadSubScripts(); $forceUpdate();">E-field</a>
+                        </li>
+                        <li :class="[subSection[1] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#M-field" @click="subScrollTo(2); subSection[1]=2; loadSubScripts(); $forceUpdate();">M-field</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                        <div id="E-field" class="tab-pane fade in active show">
+                            Maxwell's first law states that:
+                            $$ \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
+                            Where $\nabla$ is the divergence operator. This law implies that electric charges exhibit divergence
+                            that is proportional to E-field density. But what does this actually mean?
+                            <br>
+                            A field is divergent if the field is varies along the path of the field lines. So, if one was to take an 'infinitesimal step' along a
+                            field line, then the field strength would change. In terms of electrostatics this means that electric charges are the
+                            sources of electric fields.
+                            <br>
+                            The visualisation on the right considers an infinitesimally small section of a charge density the causes
+                            field lines to diverge.
+                        </div>
+                        <div id="M-field" class="tab-pane fade">
+                            Gauss's law for electrostatics can be expressed as:
+                            $$ \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_{0}}$$
+                            Where $\displaystyle \nabla $ is the divergence operator. A simple way to visualise this law is through electric field lines.
+                            Geometrically, the divergence of a field is represented by the net number of field lines moving in or out of a volume element.
+                            So Gauss's law states that the number of field lines moving in or out of a volume element is proportional to the charge density inside the element.
+                            <br>
+                            We can see this is true if electric charges act as a source or sink of field lines, as shown in the visualisation to the right.
+                            <br><br>
+                            Consider a sphere of radius $R$ and non-uniform density $\displaystyle \rho $, defined by:
+                            $$ \rho = r^3 e^{-cos\theta}.$$
+                            What is the Electric field of the sphere in the radial direction?
+                            <br><br>
+                            Solution:
+                            <br>
+                            We want $E_r$ (Electric field in radial direction) as a function of $r$, $\theta$, and $\phi$:
+                            <ol>
+                                <li>
+                                    Use Gauss Law in integral form:
+                                    $$\int \int E \cdot dS = \frac{1}{\epsilon_0} \int \int \int \rho dV $$
+                                </li>
+                                <li>
+                                    For the RHS use $\displaystyle dQ=\rho dV$ and hence:
+                                    $$ Q= \int\rho dv = \int r^3 e^{cos\theta} dV $$
+                                    where $\displaystyle dV=r^2 sin\theta d\theta dr d\phi$ in spherical polar coordinates.
+                                </li>
+                                <li>Compute the integral</li>
+                                <li>
+                                    We now deal with the LHS. Since we only want the E-field in the radial direction we only
+                                    need to consider the dot product of $\displaystyle E_r$ with $\displaystyle dS$. Recall from
+                                    vector calculus (insert hyperlink?) that for spherical polar co-ordinates, in the $\displaystyle
+                                    dr$ direction, $\displaystyle dS$ is given by:
+                                    $$ dS= r^2 sin \theta d\theta d\phi dr$$
+                                </li>
+                                <li>Compute the integral of $\displaystyle E \cdot dS$</li>
+                                <li>
+                                    Divide by $\displaystyle 4 \pi r^2$ and in the wise words of VJT, VOILA! We obtain
+                                    $$ E=\frac{k R^6}{6 \epsilon_0 r^2} sinh(1) $$
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container" id="sc3">
+                <div class="placeholder" id="ph3">
+                    <hr>
+                    <h2 class="text section-head" id="s3">
+                        {{sectionTitleLong[2]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p3">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[2] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#die" @click="subScrollTo(3); subSection[2]=1; loadSubScripts(); $forceUpdate();">Dielectric</a>
+                        </li>
+                        <li :class="[subSection[2] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#con" @click="subScrollTo(3); subSection[2]=2; loadSubScripts(); $forceUpdate();">Conductor</a>
+                        </li>
+                        <li :class="[subSection[2] === 3 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#plas" @click="subScrollTo(3); subSection[2]=3; loadSubScripts(); $forceUpdate();">Plasma</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                        <div id="die" class="tab-pane fade in active show">
+                            <strong>Dielectrics -</strong> contain electrons bonded at an equilibrium separation from their respective nuclei.
+      To model the behaviour of dielectrics we treat the electrons as particles attached to their respective nuclei by a spring:
+      this is a simplified classical model, but it accounts for the behaviour relatively well.
+      <br><br>
+
+      <strong>Binding force -</strong> The actual forces between electrons and their nuclei can be complicated but we
+      approximate it as: <br> $F_{binding} = -k_{spring} x = -m \omega_0^2 x$. <br>
+      This is for small displacements, since you can expand the potential energy with a Taylor series about the
+      equilibrium position, giving: <br> $U(x) = U(0) + x U'(0) + \frac{1}{2} x^2 U''(0) + ...$<br>
+      The first term is a constant potential offset which can be ignored, and the second term can be aproximated as zero
+      around the equilibrium position. This leaves the third term which can be differentiated to give the expression for
+      force we saw earlier, where<br> $k_{spring} = U''(0)$.
+      <br><br>
+
+      <strong>Damping force -</strong> As well as the restoring force there is a damping force which is partially caused
+      by radiation emitted by the electrons. For simplicity we say that this force is opposite in direction to the velocity.
+      It is given by:<br>
+      $F_{damping} = -m \gamma \frac{dx}{dt}$<br>
+      where m is the mass of the electron and gamma is a proportionality constant.
+      <br><br>
+
+      <strong>Driving force -</strong> The E field from an electromagnetic wave can drive the electrons, with a force
+      of<br> $F_{driving} = q E_0 cos(\omega t)$<br>
+      where $\omega$ is the angular frequency of the light.
+
+      <strong>Solving for x - </strong> Putting all these forces into Newton's second law gives a forced oscillator
+      equation, with complex solutions.<br>
+      $\displaystyle \tilde{x}(t) = \frac{q/m}{\omega_0^2 - \omega^2 - i \gamma \omega} E_0 e^{-i \omega t}$
+      <br><br>
+
+      <strong>Electric Field in Dielectric - </strong> The dipole moment of each electron nucleus pair, is given by
+      $\tilde{p}(t) = q \tilde{x}(t)$. By summing these dipole moments over a volume element, we can find the polarisation
+      of the material. <br>
+      $\displaystyle \tilde{\mathbf{P}} = \frac{N q^2}{m} \left(\sum_j \frac{f_i}{\omega_j^2 - \omega^2 - i \gamma_j \omega}\right) \tilde{\mathbf{E}}$ <br>
+      The electric field is related to the polarisation by $\displaystyle \tilde{\mathbf{P}} = \epsilon_0 \tilde{\chi}_e \tilde{\mathbf{E}}$.
+      From this we can find plane wave solutions of the E field inside the dielectric. These are:<br>
+      $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0  e^{i(\tilde{k}z-\omega t)}$ <br>
+      where $\tilde{k}$ is the complex wave number. This can be rearranged to: <br>
+      $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0(z,t) e^{-\kappa z} e^{i(kz-\omega t)}$ <br>
+      where $\kappa$ is the complex part of $\tilde{k}$ and $k$ is the real part.
+      <br><br>
+
+      <strong>Attenuation -</strong> From the previous equation it is clear that the imaginary component of $\tilde{k}$
+      will cause an exponential decay in the amplitude of the EM wave. Normally in a dielectric the imaginary component
+      is very small, however when the frequency of the EM wave approaches the natural frequency of the electron oscillators,
+      resonance occurs and the oscillators absorb much more energy from the wave, meaning the material becomes opaque and
+      the imaginary component of $\tilde{k}$ becomes significant. Most dielectrics have electron oscillators in several
+      different environments, each having it's own natural frequency, meaning the material is opaque over a range of
+      frequencies. Transparent materials normally have resonances in the ultraviolet part of the spectrum, rather than
+      the visible part.
+
+                        </div>
+                        <div id="con" class="tab-pane fade">
+                           <span style="font-weight: bold">Conductors - </span>
+    A conductor contains mobile free electrons.
+    The positively charged ion left behind is usually fixed so we investigate only the behavior of the free electrons in an electric field.
+    <br><br>
+
+    <span style="font-weight: bold">Charge rearrangement time - </span>
+    Given some arbitrary electric field, the free electrons would rearrange themselves until the total electric field inside the conductor is 0.
+    This arrangement happens within the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, where $\epsilon = \epsilon_0\epsilon_r$,
+    $\epsilon_0$ is the permittivity of free space, $\epsilon_r$ and $\sigma$ are the relative permittivity and the conductivity of the material respectively.
+    A physical insight to $\tau^{\star}$ is that $\epsilon$ is 'a measurement of how much the material dampens the electric field felt by the charges'
+    while $\sigma$ is 'a measurement as to how ready is the charge to move given some electric field'.
+    So the charge rearrangement time $\tau^{\star}$ is a characteristic of the conductor.
+    <br><br>
+    Derivation:
+    <br>
+    Approximating the material to be linear, meaning that charges respond to electric fields by producing a current that is a linear
+    function of the electric field they feel, we can use Ohm's law:
+    $$ \mathbf{J}_c = \sigma \mathbf{E} $$
+    where $\sigma$ is a constant (not a function position because we take the material to be homogenous)
+    scalar (not a tensor because we take the material to be isotropic).
+    <br><br>
+    Conservation of free charge requires
+    $$ \frac{\partial \rho_f}{\partial t} = - \nabla \cdot \mathbf{J}_c $$
+    Substituting Ohm's Law for the electric field,
+    $$ \frac{\partial \rho_f}{\partial t} = - \sigma \nabla \cdot \mathbf{E} $$
+    $$ = - \sigma \frac{\rho_f}{\epsilon} = - \frac{\sigma}{\epsilon} \rho_f$$
+    So,
+    $$ \rho_f = \rho_{f, initial} e^{-\frac{t}{\tau^{\star}}} $$
+    where $\tau^{\star} = \frac{\epsilon}{\sigma}$.
+    <br><br>
+    <span style="font-weight: bold">Good or poor conductor ? </span>
+    Not to be confused with electrical conductivity, the conductivity we are talking about here is how responsive the material is to any changes in the electric field applied to it.
+    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$,
+    where $\omega = \frac{2\pi}{T}$ is the angular frequency of the field.
+    <br><br>
+    <b>Now we ask the question: Are the free electrons rearranging themselves fast enough to 'cancel out' $\mathbf{E}_{applied}$?</b>
+    In other words, we want to know if the timescale of electron movement is small enough relative to the timescale of the electric field
+    changing in order for $\mathbf{E}_{applied}$ to be cancelled out. And so an important quantity for us
+    is the ratio of timescales $\frac{\tau^{\star}}{T}$.
+    That ratio turns out to be $\frac{\tau^{\star}}{T} = \frac{1}{2\pi} \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} $,
+    or $\omega \tau^{\star} = \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} $, which is shown later.
+    <br><br>
+    If the <b>free electrons take much less time </b> than the wave period to rearrange, i.e. $\omega \tau^{\star} \ll 1$,
+    then we expect the material to be a <b>good conductor</b>, as they can move quickly enough to
+    cancel out the applied field.
+    The 'good conductor' criterion depends on $\omega$ and $\tau^{\star}$ so it depends on both the material <b>and the applied electric field</b>.
+    <br><br>
+    The conduction current density is
+    $$ \mathbf{J}_c = \sigma \mathbf{E}_{applied}, $$
+    (This is the same from the Ohm's law approximation as above)
+    <br>
+    $ \mathbf{J}_c $ is a current density due to electrons experiencing a <b>non-zero electric field</b>.
+    Notice $\sigma$ is a property of the material, which relates the electric field to the observed conduction current.
+    <br><br>
+    The displacement current density is
+    $$ \mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t} = \frac{\partial }{\partial t} (\epsilon \mathbf{E}_{applied})$$
+    $ \mathbf{J}_d $ is an apparent current density due to <b>the rate of change of the electric field</b>.
+    Notice $\epsilon$ is a property of the material, which relates the electric field to the observed displacement current.
+    Notice that both the conduction current density and the displacement current density are linearly proportional to
+    the amplitude of the applied electric field (if the field amplitude is doubled, the rate of change of the field value
+    is also doubled).
+    In this case, $E_{applied} \propto e^{-i \omega t}$, and so
+    $$ \mathbf{J}_d = -i \omega \epsilon \mathbf{E}_{applied} $$
+    We only care about how quickly the field is changing and the material properties in order to classify a good or a poor conductor, not about
+    the value of the field itself. We can achieve such a quantity by dividing the magnitudes of the two currents, as both are only linearly
+    proportional to the electric field amplitude.
+
+    $$ \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} = \frac{\omega \epsilon}{\sigma} $$
+    Using the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, we see
+    $$ \frac{\omega \epsilon}{\sigma} = \omega \tau^{\star} = 2\pi \frac{\tau^{\star}}{T} $$ which is the ratio of electron movement timescale
+    to the field timescale (period). And so $$\frac{\omega \epsilon}{\sigma}$$ dictates whether the material is a good conductor
+    for an EM field of that frequency.
+    <br><br>
+    <span style="font-weight: bold">Skin Effect - </span>
+    When an alternating current passes through a conductor, the alternating electric field produces an alternating magnetic field.
+    This magnetic field in turn creates an electric field that opposes the original alternating current, known as the "back emf".
+    The back emf is the strongest at the centre of a conductor, pushing the current to the surface of the conductor.
+    <br>
+      The current diffusion equation is given by
+      $$ \nabla^2 \mathbf{J}_c = \mu_0 \sigma \frac{\partial \mathbf{J}_c}{\partial t}$$
+      where $\mathbf{J}_c$ is the conduction current density in the conductor.
+      The LHS of the above above equation gives the gradient field of the flow of current density in the conductor.
+      The current density of an alternating current in a cylindrical wire can be written as
+      $\mathbf{J}_c = \widetilde{J}_c (r) e^{-i \omega t} \mathbf{\hat{z}}$, which gives
+      $$\nabla^2 \widetilde{J}_c = -\kappa ^2 \widetilde{J}_c $$
+      where $\kappa^2 = i \omega \mu_0 \sigma$.
+      This is a Helmholtz Equation, where $\kappa$ provides a measure of the wavenumber.
+      Hence,
+      $$\kappa = \sqrt{\mu_0 \omega \sigma} \, i^{\frac{1}{2}} = \frac{1+i}{\delta}$$
+      where $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$ is the skin depth, a current diffusion lengthscale.
+      This means that $J_c$ reduces by a factor of $\frac{1}{e}$ after travelling for one $\delta$.
+    <br>
+      Let $a$ be the radius of a wire. If the AC frequency $( \omega )$ is low, $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} } \gg a$
+      and $\mathbf{J}_c$ is roughly uniform throughout the wire. However, if $\omega$ is high, $\delta \ll a$ and $\mathbf{J}_c$ is
+      confined within the layer of width $\approx \delta$ on the surface on the wire.
+
+
+                        </div>
+                        <div id="plas" class="tab-pane fade">
+                            <span style="font-weight: bold">The Drude Model - </span>
+    The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
+    (1) electric force from applied electric field, $\mathbf{F}_E$
+    (2) force arises from the collisions among the electrons and between electrons and ions, $\mathbf{F}_c$
+    so the coulombic forces between electrons and ions are neglected.
+    <br><br>
+    By Newton's second law of motion,
+    $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
+    So,
+    $$ m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+    where $\tau_c$ is the electron collision time.
+    <br><br>
+    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
+    or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
+    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+    In this case, the solution to the equation is such that $\mathbf{v}_e \propto e^{-i \omega t}$.
+    <br><br>
+    Now we obtain
+    $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+    so
+    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
+    Recall that the conduction current density is given by
+    $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
+    where N is the number density, subscript $i$ is for ions and $e$ for electrons.
+    In general, $\mathbf{v}_e \gg \mathbf{v}_i$ given the same initial conditions for ions and electrons because ions are much heavier than electrons.
+    We assume that the first term tends to zero so
+    $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
+    Taking the result for $\mathbf{v}_e$ from above, we get
+    $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
+    where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
+    We can rewrite $\mathbf{J}_c$ in terms of complex exponential form:
+    $$ \mathbf{J}_c = \frac{\sigma}{\sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E} $$
+    The phase shift of $\mathbf{J}_c$ to $\mathbf{E}$ is given by $\tan^{-1} {(\omega \tau})$.
+    An alternative way of looking at the phase shift between $\mathbf{J}_c$ and $\mathbf{E}$
+    is that $\mathbf{J}_c$ is analogous to the velocity of the electrons and
+    $\mathbf{E}$ is analogous to the acceleration of the electrons.
+    (In fact, it is just a matter of scalling.)
+    <br><br>
+    This phase shift comes out of the fact that this is effectively a damped driven harmonic oscillation.
+    The source of the driving force is the applied electric field while the source of the damping force is
+    the collisions between electrons or electrons and ions.
+    <br><br>
+    In a damped driven harmonic oscillation, the phase shift of the steady state is due to
+    the amount of time for the transient phase to decay away.
+    <br><br>
+
+    <span style="font-weight: bold">Plasmas in oscillatory electric field - </span>
+    We shall only talk about <b>collisionless</b> plasmas.
+    Based on the Drude Model,
+    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
+    where $\mathbf{E}_{applied}$ is the applied electric field.
+    The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
+    <br><br>
+    We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
+    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+    <br><br>
+    In collisionless plasmas, the electron collision time $\tau_c$ is much greater than
+    the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \gg T$ or $\frac{\tau_c}{T} \gg 1$ so $\omega \tau_c \gg 1$.
+    Taking the limits $\omega \tau_c + 1 \rightarrow \omega \tau_c$ and $\tan^{-1} {(\omega \tau}) \rightarrow \frac{\pi}{2}$,
+    $$\mathbf{J}_c \approx \frac{N_e e^2 \tau_c}{m_e} e^{i \frac{\pi}{2}} \mathbf{E}_{applied} $$
+    $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.
+    <br><br>
+
+    <span style="font-weight: bold">Plasmas oscillation - </span>
+    Consider a cloud of neutral plasma left alone to reach its equilibrium distribution in the absence of external electromagnetic field.
+    What happens if we displace one of the electrons in the plasma slightly?
+    (Hint: the keywords are <b>equilibrium</b> and <b>displace slightly</b>.)
+    <br><br>
+    The electron should be sitting at the bottom of the potential well initially.
+    The small displacement will result in simple harmonic motion of the electron.
+    Since plasma is a cloud of free electrons and ions, this small displacement actually causes the entire cloud to oscillate
+    hence the collective behaviour of plasma oscillations.
+    <br><br>
+    It turns out that plasma oscillates at the plasma frequency:
+    $$\omega_p = \sqrt{\frac{N_e e^2}{m_e \epsilon_0}}$$
+    where $N_e$ is the number density of electrons, $e$ is the fundamental charge and $\epsilon_0$ is the permittivity of free space.
+    Notice how the plasma frequency here depends only on the characteristics of electron distribution.
+    This is due to the assumption that the electrons moving much faster than the positive ions in a neutral plasma.
+    <br><br>
+    How do we justify this assumption?
+    Consider the lightest element, hydrogen. Ignoring the heavier isotopes, the simplest hydrogen atom consists of a proton and an electron.
+    The mass of a proton is roughly 1800 times greater than that of an electron.
+    Given the same initial conditions, an electron would be accelerated much more than a proton in an electric field that is not too strong.
+    Therefore, in any plasmas, the positive ions are always much heavier than the electrons and so the movement of the positive ions can be ignored
+    given that the electric field is not too strong.
+    <br><br>
+    Derivation:
+    Displacing an electron in a neutral plasma means that the number density of electron, $N_e$ depends on the position and time.
+    Let $N_e = N_0 + N_1 (x, t)$, where $N_0$ is the initial number density of electron and $x$ is the direction of perturbation.
+    Generally, the free charge density $\rho_f$ is given by $\rho_f = N_i e - N_e e$, where $N_i$ is the number density of positive ions.
+    In this case, $\rho_f = N_i e - (N_0 + N_1(x, t))e$ but $N_i e = N_0 e$ for a neutral plasma so
+    $$\rho_f = -N_1(x, t)e$$
+    Also, in general, the conduction current density $\mathbf{J}_c$ is given by
+    $$\mathbf{J}_c = N_i e \mathbf{v}_e - N_e e \mathbf{v}_e$$
+    Based on the assumption of small perturbation of electron such that the movements of positive ions can be ignored, the first term vanishes so
+    $\mathbf{J}_c = - N_e e \mathbf{v}_e = -(N_0 + N_1(x, t)) e \mathbf{v}_e$. Also based on the assumption of small perturbation, $N_0 \gg N_1$
+    so $$\mathbf{J}_c = - N_0 e \mathbf{v}_e$$
+    In a closed system, we require conservation of free charge,
+    $$\frac{\partial \rho_f}{\partial t} + \nabla \cdot \mathbf{J}_c = 0$$
+    so,
+    $$-e\frac{\partial N_1}{\partial t} - N_0 e \nabla \cdot \mathbf{v}_e = 0$$
+    Consider only in the direction of perturbation,
+    $$-e\frac{\partial N_1}{\partial t} - N_0 e \frac{\partial v_{e, x}}{\partial x} = 0$$
+    We can rewrite this as
+    $$\frac{\partial v_{e, x}}{\partial x} = -\frac{1}{N_0} \frac{\partial N_1}{\partial t}$$
+    Assuming that
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = \frac{\partial^2 v_{e, x}}{\partial t \partial x}$$
+    We get (1):
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = -\frac{1}{N_0} \frac{\partial^2 N_1}{\partial t^2}$$
+    By Gauss' Law for electrostatics,
+    $$\nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
+    where $\rho = \rho_f + \rho_p$, $\rho_f$ is the free charge density while $\rho_p$ is the polarisation charge density.
+    In plasmas, $\rho_p = 0$ so
+    $$\nabla \cdot \mathbf{E} = \frac{\rho_f}{\epsilon_0}$$
+    From the result above, $\rho_f = -N_1(x, t)e$ so
+    $$\nabla \cdot \mathbf{E} = -\frac{N_1 e}{\epsilon_0}$$
+    Consider only in the direction of perturbation,
+    $$\frac{\partial E_x}{\partial x} = -\frac{N_1 e}{\epsilon_0}$$
+    Now, by Newton's second law,
+    $$m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E}$$
+    Consider only in the direction of perturbation,
+    $$m_e \frac{\partial v_{e, x}}{\partial t} = -e E_x$$
+    So
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \frac{\partial E_x}{\partial x}$$
+    From the result for $\frac{\partial E_x}{\partial x}$ above, we obtain (2):
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \cdot -\frac{N_1 e}{\epsilon_0} = \frac{e^2}{m_e \epsilon_0} N_1 $$
+    Equating (1) and (2) and rearranging the result,
+    $$\frac{\partial^2 N_1}{\partial t^2} + \frac{N_0 e^2}{m_e \epsilon_0} N_1 = 0$$
+    This is the equation of simple harmonic motion for plasma, with a natural frequency of
+    $$\omega_p = \sqrt{\frac{N_0 e^2}{m_e \epsilon_0}}$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container" id="sc4">
+                <div class="placeholder" id="ph4">
+                    <hr>
+                    <h2 class="text section-head" id="s4">
+                        {{sectionTitleLong[3]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p4">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[3] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#die-disp" @click="subScrollTo(4); subSection[3]=1; loadSubScripts(); $forceUpdate();">Dielectric</a>
+                        </li>
+                        <li :class="[subSection[3] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#con-disp" @click="subScrollTo(4); subSection[3]=2; loadSubScripts(); $forceUpdate();">Conductor</a>
+                        </li>
+                        <li :class="[subSection[3] === 3 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#plas-disp" @click="subScrollTo(4); subSection[3]=3; loadSubScripts(); $forceUpdate();">Plasma</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                        <div id="die-disp" class="tab-pane fade in active show">
+                            <center><h5>Dispersion in Dielectrics</h5></center>
+    <p>
+        Electrons in a dielectric may be modelled as particles attached to the nuclei by a spring.
+        <br><br>
+        When the electromagnetic wave enters the dielectric, it causes forced harmonic motion. The complex displacement of the
+        electrons can be found by solving the forced oscillator equation (FOE):
+        from this the dipole moment is, $\displaystyle \tilde{p}(t) = q\tilde{x}(t)$.= The electric field inside is:
+        <br>$\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0(z,t) e^{-\kappa z} e^{i(kz-\omega t)}$ <br>
+        with the complex wave number $\displaystyle \tilde{k} = k + i\kappa$. <br><br>
+
+        The refractive index is given by: <br>
+        $\displaystyle \tilde{n} = \frac{c \tilde{k}}{\omega}$ $\displaystyle \cong 1 + \frac{N q^2}{2m \epsilon_0}
+        \sum_{j} \frac{f_j(\omega^2_j-\omega^2)}{(\omega^2_j-\omega^2)^2 + \gamma^2_j \omega^2}$ <br><br>
+        <button id="showDefinitions" >Define Terms</button>
+
+        <script> //show or hide definitions when button pressed
+            let defShown = false;
+            $('#showDefinitions').on('click', function() {
+            defShown = !defShown;
+
+            if(defShown){
+                $('#termDefinitions').show();
+            } else {
+                $('#termDefinitions').hide();
+            }
+            });
+        </script>
+
+            <p id="termDefinitions" style="display:none;">
+                $\omega_j$ - Resonant frequencies of dielectric<br>
+                $\omega$ - Frequency of electromagnetic wave<br>
+                $\gamma_j$ - Damping in each molecule<br>
+                $f_j$ - Number of electrons per molecule<br>
+                m - Electron mass<br>
+                q - Electron charge<br>
+                N - Number of molecules per unit volume
+            </p>
+
+        From this, it can be seen that the imaginary refractive
+        index corresponds to attenuation of the wave.
+        <br><br>
+        When the incoming wave has the same frequency as the natural frequency of the electrons, resonance occurs:
+        these frequencies correspond to the points of maximum attenuation. Additionally, the real part of the
+        refractive index changes around points of resonance. This is called <strong>
+        anomalous dispersion</strong>.
+        <br><br>
+        Around these points n can become less than 1, however this is not a problem since the
+        energy in the wave does not travel at the wave velocity, and the refractive index inside a dielectric is normally
+        raised due to background effects.
+    </p>
+                        </div>
+                        <div id="con-disp" class="tab-pane fade">
+                            <center><h5>Dispersion in Conductors</h5></center>
+    <p>
+        In conductors Maxwell's equations are the same as in non-conducting media, except for the curl of B, which
+        becomes: <br>
+        $\displaystyle \nabla \times \mathbf{B} = \mu \epsilon \frac{\partial \mathbf{E}}{\partial t} + \mu \sigma \mathbf{E}$.
+        <br>
+        This reduces to the equation for nonconducting media in the case when $\sigma = 0$.
+        From this we can obtain plane wave solutions:<br><br>
+        $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0  e^{i(\tilde{k}z-\omega t)} $  ,
+        $\displaystyle \tilde{\textbf{B}}(z,t) = \tilde{\textbf{B}}_0  e^{i(\tilde{k}z-\omega t)} $ <br><br>
+
+        Where $\tilde{k}$ is the complex wavenumber, given by:<br>
+        $\displaystyle \tilde{k}^2 = \mu \epsilon \omega^2 + i \mu \sigma \omega$. <br><br>
+
+        The imaginary part of $\tilde{k}$ results in attenuation inside the conductor, as seen previously, but this time the
+        attenuation strength is dependent on the frequency of the wave and sigma; it is also significantly stronger than attenuation
+        in dielectrics. The attenuation is due to the fact that, in
+        a conductor, electrons move in such a way as to oppose any electric field. In a good conductor
+        the electrons can move faster to oppose the electric field and with a faster frequency of EM wave, it is easier for the
+        electrons to oppose the electric field.<br><br>
+
+        Furthermore, since $\tilde{k}$ can be expressed as $\tilde{k} = Ke^{i\phi}$ and
+        $\tilde{\textbf{B}}_0 = \frac{Ke^{i\phi}}{ \omega} \tilde{\textbf{E}}_0 $<br>
+        the B field is phase shifted, from E, by $\phi$ inside the conductor.
+
+
+    </p>
+
+                        </div>
+                        <div id="plas-disp" class="tab-pane fade">
+                            <h5 style = "text-align:center">Dispersion in Plasma</h5>
+
+    <p>
+        The dependence of wave speed and index of refraction on wavelength is called dispersion. (Plagiarised)(is this the
+        definition we want anyway?)
+    </p>
+    <p>
+        The dispersion relation for a plasma is given by
+    </p>
+    <p style = "text-align:center">
+        $k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$,
+    </p>
+    <p>
+        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e \varepsilon_0}}$.
+    </p>
+
+    <h6 style = "text-align:left">Derivation</h6>
+
+    <p>
+        Start with Maxwell's equations.
+    </p>
+    <p style = "text-align:center">
+        $\nabla\cdot\boldsymbol{E} = \frac{\rho_f}{\varepsilon}$
+        <br/>
+        <br/>
+        $\nabla\cdot\boldsymbol{B} = 0$
+        <br/>
+        <br/>
+        $\nabla \times \boldsymbol{E} = -\frac{\partial \boldsymbol{B}}{\partial t}$
+        <br/>
+        <br/>
+        $\nabla \times \boldsymbol{B} = \mu \boldsymbol{J}_c + \mu \varepsilon \frac{\partial \boldsymbol{E}}{\partial t}$
+
+
+    </p>
+
+    <p>
+        For a plane wave, $\nabla$ becomes $i\boldsymbol{k}$ and $\frac{\partial}{\partial t}$ becomes $-i\omega$.  Therefore
+        Maxwell's equations become:
+    </p>
+    <p>
+        $\boldsymbol{k}\cdot\boldsymbol{E} = -i\frac{\rho_f}{\varepsilon}$<br/>
+        $\boldsymbol{k}\cdot\boldsymbol{B} = 0$<br/>
+        $\boldsymbol{k} \times \boldsymbol{E} = \omega \boldsymbol{B}$<br/>
+        $\boldsymbol{k} \times \boldsymbol{B} = -i \mu_0 \boldsymbol{J}_c - \mu_0 \varepsilon \omega \boldsymbol{E}$<br/>
+
+
+    </p>
+    <p>
+        In a plasma we assume
+    </p>
+    <p>
+        $\rho_f \neq 0$<br/>
+        $\boldsymbol{J}_c = i \frac{N_e e^2}{m_e \omega}\boldsymbol{E}$<br/>
+        $\varepsilon = \varepsilon_0$<br/>
+
+    </p>
+
+    <p>
+        Taking the fourth Maxwell equation
+    </p>
+    <p>
+        $\begin{eqnarray}\boldsymbol{k} \times \boldsymbol{B} &=& -i\mu_0\Big(i\frac{N_e e^2}{m_e \omega}\boldsymbol{E}\Big) - \varepsilon_0 \mu_0 \omega \boldsymbol{E}\\
+        &=& \varepsilon_0 \mu_0 \omega \Big(\frac{N_e e^2}{m_e \varepsilon_0 \omega^2} - 1\Big)\boldsymbol{E}\\
+        &=& \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{E}\end{eqnarray}$
+
+    </p>
+    <p>
+        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e e^2}}$<br/>
+    </p>
+    <p>
+        $\boldsymbol{k} \times (\boldsymbol{k} \times \boldsymbol{B}) = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{k}\times\boldsymbol{E}$<br/>
+        $-k^2\boldsymbol{B} = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\omega\boldsymbol{B} = \Big(\frac{\omega_p^2 - \omega^2}{c^2}\boldsymbol{B}\Big)$<br/>
+        $\Big(k^2 + \frac{\omega_p^2 - \omega^2}{c^2}\Big)\boldsymbol{B} = 0$<br/>
+
+    </p>
+    <p>
+        Dispersion relation
+    </p>
+    <p>
+        $∴ k^2 = \frac{\omega^2 - \omega_p^2}{c^2}$<br/>
+        $∴ k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^\frac{1}{2}$</br>
+    </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container" id="sc5">
+                <div class="placeholder" id="ph5">
+                    <hr>
+                    <h2 class="text section-head" id="s5">
+                        {{sectionTitleLong[4]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p5">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[4] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#ampereElecDifferential" @click="subScrollTo(5); subSection[4]=1; loadSubScripts(); $forceUpdate();">Differential</a>
+                        </li>
+                        <li :class="[subSection[4] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#ampereElecIntegral" @click="subScrollTo(5); subSection[4]=2; loadSubScripts(); $forceUpdate();">Integral</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                            <div id="ampereElecDifferential" class="tab-pane fade in active show">
+                                $$ \nabla \times \mathbf{E} = 0$$
+                                The curl of $\mathbf{E}$ is 0 because it is a conservative field. A conservative field can be described by a potential such that
+                                $\mathbf{E} = \nabla \phi$. The curl of the gradient of a scalar field ($\nabla \times \nabla \phi$) is 0. Hence, the curl of $\mathbf{E}$ is 0.      
+                            </div>
+                            <div id="ampereElecIntegral" class="tab-pane fade">
+                                The electrostatic equation demonstrated in this visualisation is:
+                                $$\oint \mathbf {E} \cdot \mathrm {d} {\boldsymbol {l}} = 0$$
+                                As you can see from the visualisation on the right the net flux through a loop in an electric field is always zero,
+                                regardless of the positions of charges or even if there is some background field: as long as the background
+                                field has no curl!
+                                <br><br>
+                                Another way of thinking about this equation is by using Stokes' Law which states:<br><br>
+                                <center>$\displaystyle \oint_{l} \mathbf{A.dl} =$ $\displaystyle \iint_{S} \nabla \times \mathbf {A} \cdot d\mathbf{S}$</center>
+                                <br>
+                                From this it is clear that the first equation, and the fact that electric fields have no curl are identical.
+                                This also implies that electric fields are conservative, since the loop integral is always zero, and the field
+                                has no curl.
+                            </div>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="section-container" id="sc6">
+                <div class="placeholder" id="ph6">
+                    <hr>
+                    <h2 class="text section-head" id="s6">
+                        {{sectionTitleLong[5]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p6">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[5] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#elecPotential" @click="subScrollTo(6); subSection[5]=1; loadSubScripts(); $forceUpdate();">Field</a>
+                        </li>
+                        <li :class="[subSection[5] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#elecField" @click="subScrollTo(6); subSection[5]=2; loadSubScripts(); $forceUpdate();">Potential</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                            <div id="elecPotential" class="tab-pane fade in active show">
+                                <center><h4>Gradient of an electric potential</h4></center>
+                                Consider a particle with charge $Q$ positioned at the origin.  The graph on the right 
+                                shows the potential field $V(x,y)$ around the particle (when only considering a 2D 
+                                slice of space passing through the centre of the charge).  
+                                <br><br>
+                                Beneath it the electric field is shown, which is the negative of the gradient of the 
+                                electric potential.
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                            <div id="elecField" class="tab-pane fade">
+                                <center><h5>$$ V_B - V_A = - \int _A ^B \mathbf{E} \cdot \mathbf{ dl }$$</h5></center>
+                                In electrostatics, all electric fields are conservative. This means that we can find out the potential difference between any two points (A and B) by performing a line integral:
+
+                                $$\displaystyle \Delta V_{AB} = V_B - V_A = \frac{\Delta U_{AB} }{q} $$
+                                $$\displaystyle = -\frac{1}{q} \int _A ^B \mathbf{F} \cdot \mathbf{ dl }$$
+                                $$\displaystyle =  - \int _A ^B \mathbf{E} \cdot \mathbf{ dl } $$
+
+
+                                <br>
+                                Visualisation Guide
+                                <br><br>
+                                <ol>
+                                    <li>On the right, you can see a electric field and the electric potential associated with this field.
+                                        Change the value of the charge, $q$, and observe the change in $\mathbf{E}$ and $V$.</li>
+                                    <li>As the magnitude of $q$ increases, the length of the arrows in $\mathbf{E}$ increases and the contour of the electric potential
+                                        $V$ becomes steeper as well. Since $\mathbf{E} = - \nabla V$, the gradient vector of $V$ is its electric field vector,
+                                        which points in the direction of steepest decrease of $V$.</li>
+                                    <li>The line integral along the electric field,
+                                        $\int \mathbf{E} \cdot \mathbf{ dl }$ is path independent. Move the path of the ball from Point A to Point B
+                                        along 2 different paths, Path 1 and Path 2.</li>
+                                    <li>Observe their electric potential values. Note that along the path, the value of $V$ may be different.
+                                        However, when the balls reach Point B, they have the same electric potential.</li>
+                                    <li>This shows that static electric fields are conservative, hence $\mathbf{E}$ is only dependent on its position.</li>
+                                    <li>There are a few other electric fields for you to play around with. Click the dropdown menu to find out.</li>
+                                </ol>
+
+
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="section-container" id="sc7">
+                <div class="placeholder" id="ph7">
+                    <hr>
+                    <h2 class="text section-head" id="s7">
+                        {{sectionTitleLong[6]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p7">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[6] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#elecPotential" @click="subScrollTo(7); subSection[6]=1; loadSubScripts(); $forceUpdate();">Field</a>
+                        </li>
+                        <li :class="[subSection[6] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#elecField" @click="subScrollTo(7); subSection[6]=2; loadSubScripts(); $forceUpdate();">Potential</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                            <div id="" class="tab-pane fade in active show">
+
+                            </div>
+                            <div id="" class="tab-pane fade">
+
+
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container" id="sc8">
+                <div class="placeholder" id="ph8">
+                    <hr>
+                    <h2 class="text section-head" id="s8">
+                        {{sectionTitleLong[7]}}
+                    </h2>
+                    <hr>
+                </div>
+                <div class="text section-body odd" id="p8">
+                    <!--    Sub-Section Tabs    -->
+                    <ul class="nav nav-tabs nav-justified">
+                        <li :class="[subSection[7] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                            <a data-toggle="tab" href="#elecPotential" @click="subScrollTo(8); subSection[7]=1; loadSubScripts(); $forceUpdate();">Field</a>
+                        </li>
+                        <li :class="[subSection[7] === 2 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#elecField" @click="subScrollTo(8); subSection[7]=2; loadSubScripts(); $forceUpdate();">Potential</a>
+                        </li>
+                    </ul>
+                    <!--    Sub-Section Text Containers    -->
+                    <div class="tab-content">
+                            <div id="elecPotential" class="tab-pane fade in active show">
+
+                            </div>
+                            <div id="elecField" class="tab-pane fade">
+
+
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!--    Right Side of Window - containing mainly interactive and visual content    -->
+    <div class="vis-container right" id="right-container">
+        <!--    Title Banner above Right Side    -->
+        <div class="banner">
+            <!--    Visualisation Title    -->
+            <h1 class="" id="vis-title">
+                STATIC ELECTROMAGNETISM
+            </h1>
+            <a href="https://www.imperialvisualisations.com/learn/">
+                <img id="vis-logo" src="VisualisationsLogoWhite2.png">
+            </a>
+        </div>
+        <!--    Space into which visualisations are loaded    -->
+        <div id="rightloadSpace">
+        <!--    fade transition tag for RHS - applied by Vue and CSS    -->
+        <transition-group name="fade" tag="div" class="transition-container">
+            <!--    Interactive Zone Containers   -->
+            <div class="rightload" id="loadwait" key="loadwait" v-if="true">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            </div>
+            <div class="rightload text odd" id='loadout1' key="loadout1" v-if="currentSection === 1">
+                <iframe style="width: 100%; height: 100%" src="EM2/1PJRho_interactive.html"></iframe>
+            </div>
+            <div class="rightload text even" id='loadout2' key="loadout2" v-if="currentSection === 2">
+
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout2sub1' key="loadout2sub1"
+                         v-if="subSection[1] === 1">
+
+                        <iframe src="EM/2Gauss_Law_Electric_Interactive.html" style='width: 100%; height: 100%'></iframe>
+
+                        <!--Buttons/Sliders-->
+                        <!--        <div class="one-third column" style="padding-left: 50px;">-->
+
+                        <!--Main body contents-->
+
+
+                    </div>
+                    <div class="rightload text" id='loadout2sub2' key="loadout2sub2" v-else-if="subSection[1] === 2">
+                        <iframe src="EM/2Gauss_Law_Elec_Inte_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+
+
+            </div>
+            <div class="rightload text odd" id='loadout3' key="loadout3" v-if="currentSection === 3">
+
+
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout3sub1' key="loadout3sub1"
+                         v-if="subSection[2] === 1">
+                        <!-- Graph -->
+
+                        <iframe src="EM2/3aMaterial_Intro_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout3sub2' key="loadout3sub2" v-else-if="subSection[2] === 2">
+                        <iframe src="EM2/3bMaterial_Intro_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                <div class="rightload text" id='loadout3sub3' key="loadout3sub3" v-else-if="subSection[2] === 3">
+                        <iframe src="EM2/3bMaterial_Intro_interactive_XK.html" width="950px" height="800px"></iframe>
+                    </div>
+
+            </div>
+            <div class="rightload text even" id='loadout4' key="loadout4" v-if="currentSection === 4">
+
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout4sub1' key="loadout4sub1"
+                         v-if="subSection[3] === 1">
+                        <iframe src="EM2/4Diel_Disp_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout4sub2' key="loadout4sub2" v-else-if="subSection[3]===2">
+                        <iframe src="EM2/5Cond_Disp_interactive.html" id='subSecIframe' height="800px" width="950px"></iframe>
+
+
+                    </div>
+                <div class="rightload text" id='loadout4sub3' key="loadout4sub3" v-else-if="subSection[3] === 3">
+                        <iframe src="EM2/6Plas_Disp_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+
+            </div>
+
+            <div class="rightload text even" id='loadout5' key="loadout5" v-if="currentSection === 5">
+                <transition name="fade">
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout5sub1' key="loadout5sub1"
+                         v-if="subSection[4] === 1">
+                        <iframe src="EM/5Amp_Elec_Diff_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout5sub2' key="loadout5sub2" v-else-if="subSection[4] === 2">
+                        <iframe src="EM/5Amp_Elec_Integ_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <!--<div class="rightload text" id='loadout5sub3' key="loadout5sub3" v-else>
+                        <iframe src="EM/6AmpLaw_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>-->
+                </transition>
+            </div>
+
+            <div class="rightload text even" id='loadout6' key="loadout6" v-if="currentSection === 6">
+                <transition name="fade">
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout6sub1' key="loadout6sub1"
+                         v-if="subSection[5] === 1">
+                        <iframe src="EM/7Electric_Potential_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout6sub2' key="loadout6sub2" v-else>
+                        <iframe src="EM/7Electric_Field_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                </transition>
+            </div>
+
+            <div class="rightload text even" id='loadout7' key="loadout7" v-if="currentSection === 7">
+                <transition name="fade">
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout7sub1' key="loadout7sub1"
+                         v-if="subSection[6] === 1">
+                        <iframe src="EM/7Electric_Potential_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout7sub2' key="loadout7sub2" v-else>
+                        <iframe src="EM/7Electric_Field_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                </transition>
+            </div>
+
+            <div class="rightload text even" id='loadout8' key="loadout8" v-if="currentSection === 8">
+                <transition name="fade">
+                    <!--Interactive Zone Sub Containers-->
+                    <div class="rightload text" id='loadout8sub1' key="loadout8sub1"
+                         v-if="subSection[7] === 1">
+                        <iframe src="EM/7Electric_Potential_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout8sub2' key="loadout8sub2" v-else>
+                        <iframe src="EM/7Electric_Field_Interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+                </transition>
+            </div>
+
+
+        </transition-group>
+    </div>
+    </div>
+
+</div>
+</body>
+
+<script src="scripts/nav_Script.js"></script>
+
+</html>
