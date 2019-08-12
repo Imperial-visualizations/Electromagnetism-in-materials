@@ -119,7 +119,8 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
             },
             yaxis: {
                 //scaleanchor: "x",
-                range: [(10**10-5000000000), 10**11],
+                //range: [(10**10-5000000000), 10**11],
+                range: [0, 10**11],
                 //showticklabels: false,
                 title: sometitley
             },
@@ -428,7 +429,7 @@ function Refresh(PlotNew = false){
     let CurrentOmega = NewVariables[1];
     let Play = NewVariables[2];
 
-    let Omega_min = 10**10;
+    let Omega_min = 1000000000;//10**10;
     let Omega_max = 10**11;
     let PlotDensity = 2/900000000; //per 1 unit
     let n = (Omega_max - Omega_min)*PlotDensity;
