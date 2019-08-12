@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--Title-->
-    <title>Visualisations EM 1</title>
+    <title>EM 2 Visualisations</title>
     <!--css links-->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -224,58 +224,104 @@
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
                         <div id="E-field" class="tab-pane fade in active show">
-                            Maxwell's first law states that:
-                            $$ \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
-                            Where $\nabla$ is the divergence operator. This law implies that electric charges exhibit divergence
-                            that is proportional to E-field density. But what does this actually mean?
-                            <br>
-                            A field is divergent if the field is varies along the path of the field lines. So, if one was to take an 'infinitesimal step' along a
-                            field line, then the field strength would change. In terms of electrostatics this means that electric charges are the
-                            sources of electric fields.
-                            <br>
-                            The visualisation on the right considers an infinitesimally small section of a charge density the causes
-                            field lines to diverge.
+                            <span style="font-weight: bold">The key idea behind D field - </span>
+    <br>
+    Consider an ideal dielectric (perfect insulator) that stretches to infinity.
+    Placing it in a uniform electric field $\mathbf{E}_{applied}$ will induce a <span style ="color:#D24000;font-weight:bold">polarisation
+    field</span> $\mathbf{P}$ in it.
+    This will give rise to a <span style="color:#02893B; font-weight:bold">total electric field </span> $\mathbf{E}_{total}$ within the dielectric.
+    <br><br>
+    In general, $ \nabla \cdot \mathbf{P} = -\rho_p $, where $\rho_p$ is the polarisation charge density.
+    However, $ \nabla \times \mathbf{P} $ depends on the material.
+    <br><br>
+    Define the <span style="color:#9F004E;font-weight:bold">electric displacement field</span>, $\mathbf{D}$ as
+    $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $.
+    In general, $ \nabla \cdot \mathbf{D} = \rho_f $, where $\rho_f$ is the free charge density.
+    <br><br>
+    In true vacuum, where there is no dipole by definition,
+    $$ \mathbf{P} = 0 $$
+    so,
+    $$ \mathbf{D}_{vacuum} = \epsilon_{0}\mathbf{E}_{applied} $$
+    $$ \nabla \cdot \mathbf{D}_{vacuum} = \nabla \cdot (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
+    $$ \nabla \times \mathbf{D}_{vacuum} = \nabla \times (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
+    <br>
+    In a homogenous, isotropic and linear dielectric (HIL),
+    $$ \mathbf{P} = \chi_{e}\epsilon_{0}\mathbf{E}_{total} $$
+    where the electric susceptibility $\chi_{e}$ is a constant of proportionality, or
+    $$ \mathbf{P} = \epsilon_{r}\mathbf{E}_{total} $$
+    where $\epsilon_r = \chi_{e}\epsilon_{0}$.
+    So,
+    $$ \mathbf{D}_{dielectric} = \epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total} $$
+    $$ = \epsilon_{0}\mathbf{E}_{applied} $$
+    $$ = \mathbf{D}_{vacuum} $$
+    $$ \nabla \cdot \mathbf{D}_{dielectric} = \nabla \cdot [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
+    $$ = 0 $$
+    $$ \nabla \times \mathbf{D}_{dielectric} = \nabla \times [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
+    $$ = 0 $$
+    <br>
+    <p>Note: The units of the E-field are different to those of the P and D fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
+
+    <span style="font-weight: bold">The subtlety - </span>
+    <br>
+    You might notice that the <span style="color:#02893B; font-weight:bold"> total E field </span> is weaker in a dielectric than in vacuum but
+    the <span style="color:#9F004E;font-weight:bold">D field</span> remains <b>constant</b>.
+    <br><br>
+    A polarised material indeed weakens the <span style="color:#02893B; font-weight:bold">total E field </span>.
+    However, the <span style="color:#9F004E;font-weight:bold">D field</span> remains constant because:
+    <br>
+    (1) $ \nabla \cdot \mathbf{D} = \rho_f $ and $\rho_f$ is 0 in both the vacuum and the ideal dielectric here,
+    <br>
+    (2) $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $ is defined in terms of the <b>total</b> <span style="color:#02893B; font-weight:bold">E field </span> everywhere, so
+      the reduction in <span style="color:#02893B; font-weight:bold">total E field </span> is complemented by the presence of <span style ="color:#D24000;font-weight:bold">P field</span>
+      to keep the <span style="color:#9F004E;font-weight:bold">D field</span> constant.
+    <br><br>
+    Also note that $\mathbf{D}_{vacuum} = \mathbf{D}_{dielectric}$ in the derivation above.
+    <br><br>
+
+    <span style="font-weight: bold">Time variant D field - </span>
+    Before we talk about H field, we want to consider time variant D field.
+    Similar to time variant E field gives rise to curl in B field, time variant D field gives rise to curl in H field.
+    More importantly, changing this electric displacement field gives rise to displacement current density, i.e.
+    $$\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$$
                         </div>
                         <div id="M-field" class="tab-pane fade">
-                            Gauss's law for electrostatics can be expressed as:
-                            $$ \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_{0}}$$
-                            Where $\displaystyle \nabla $ is the divergence operator. A simple way to visualise this law is through electric field lines.
-                            Geometrically, the divergence of a field is represented by the net number of field lines moving in or out of a volume element.
-                            So Gauss's law states that the number of field lines moving in or out of a volume element is proportional to the charge density inside the element.
-                            <br>
-                            We can see this is true if electric charges act as a source or sink of field lines, as shown in the visualisation to the right.
-                            <br><br>
-                            Consider a sphere of radius $R$ and non-uniform density $\displaystyle \rho $, defined by:
-                            $$ \rho = r^3 e^{-cos\theta}.$$
-                            What is the Electric field of the sphere in the radial direction?
-                            <br><br>
-                            Solution:
-                            <br>
-                            We want $E_r$ (Electric field in radial direction) as a function of $r$, $\theta$, and $\phi$:
-                            <ol>
-                                <li>
-                                    Use Gauss Law in integral form:
-                                    $$\int \int E \cdot dS = \frac{1}{\epsilon_0} \int \int \int \rho dV $$
-                                </li>
-                                <li>
-                                    For the RHS use $\displaystyle dQ=\rho dV$ and hence:
-                                    $$ Q= \int\rho dv = \int r^3 e^{cos\theta} dV $$
-                                    where $\displaystyle dV=r^2 sin\theta d\theta dr d\phi$ in spherical polar coordinates.
-                                </li>
-                                <li>Compute the integral</li>
-                                <li>
-                                    We now deal with the LHS. Since we only want the E-field in the radial direction we only
-                                    need to consider the dot product of $\displaystyle E_r$ with $\displaystyle dS$. Recall from
-                                    vector calculus (insert hyperlink?) that for spherical polar co-ordinates, in the $\displaystyle
-                                    dr$ direction, $\displaystyle dS$ is given by:
-                                    $$ dS= r^2 sin \theta d\theta d\phi dr$$
-                                </li>
-                                <li>Compute the integral of $\displaystyle E \cdot dS$</li>
-                                <li>
-                                    Divide by $\displaystyle 4 \pi r^2$ and in the wise words of VJT, VOILA! We obtain
-                                    $$ E=\frac{k R^6}{6 \epsilon_0 r^2} sinh(1) $$
-                                </li>
-                            </ol>
+                            <span style="font-weight: bold">The key idea behind H field - </span>
+    <br>
+    Consider a magnetic material that stretches to infinity.
+    Placing it in a uniform magnetic field $\mathbf{B}_{applied}$ will induce a
+    <span style ="color:#D24000;font-weight:bold">magnetisation field</span> $\mathbf{M}$ in it.
+    This will give rise to a <span style="color:#0281d6; font-weight:bold">total magnetic field </span> $\mathbf{B}_{total}$.
+    <br><br>
+    In general, $ \nabla \times \mathbf{M} = \mathbf{J}_m $, where $\mathbf{J}_m $ is the magnetisation current density.
+    However, $ \nabla \cdot \mathbf{M} $ depends on the material.
+    <br><br>
+    Define the <span style="color:#9F004E;font-weight:bold">magnetising field</span>, $\mathbf{H}$ as
+    $ \mathbf{H} = \frac{1}{\mu_0}\mathbf{B}_{total} - \mathbf{M} $, where $\mu_0$ is the permeability of free space.
+    In general, $ \nabla \cdot \mathbf{H} = - \nabla \cdot \mathbf{M} $ and
+    $ \nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t} $, where $\mathbf{J}_c$ is the conduction current density.
+    (Note: $\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$ - displacement current density.)
+    <br><br>
+    In a magnetic material, $\mathbf{M} = \chi_m \mathbf{H}$,
+    where $\chi_m$ is the magnetic susceptibility of the material.
+    So, $ \mathbf{H} = \frac{1}{\mu_0\mu_r}\mathbf{B}_{total} $,
+    where $\mu_r = 1 + \chi_m$.
+    <br><br>
+    <p>Note: The units of the B-field are different to those of the M and H fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
+
+    <span style="font-weight: bold">The subtlety - </span>
+    <br>
+    You might notice that the <span style="color:#0281d6; font-weight:bold">total magnetic field </span> remaining <b>constant</b> when $\mu_r$ is varied.
+    The logic behind is similar to that of D field remains constant with varying $\epsilon_r$.
+    The change in <span style="color:#0281d6; font-weight:bold">total magnetic field </span> is complemented by
+    the change in <span style ="color:#D24000;font-weight:bold">magnetisation field</span>
+    to keep the <span style="color:#0281d6; font-weight:bold">total magnetic field </span> constant.
+    <br><br>
+    Now let us state the Maxwell's equations (differential) in matter:
+    $$\nabla \cdot \mathbf{D} = \rho_f$$
+    $$\nabla \cdot \mathbf{B} = 0$$
+    $$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$
+    $$\nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t}$$
+    We shall use these equations to study dielectrics, conductors and plasmas in the following visualisations.
                         </div>
                     </div>
                 </div>
@@ -805,37 +851,78 @@
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
                             <div id="die-A" class="tab-pane fade in active show">
-                                $$ \nabla \times \mathbf{E} = 0$$
-                                The curl of $\mathbf{E}$ is 0 because it is a conservative field. A conservative field can be described by a potential such that
-                                $\mathbf{E} = \nabla \phi$. The curl of the gradient of a scalar field ($\nabla \times \nabla \phi$) is 0. Hence, the curl of $\mathbf{E}$ is 0.      
+                                <div id="intro" class="divclass">
+            <center><h4>The Fresnel Equations</h4></center>
+            <p>
+                This visualisation explains the behaviour of electromagnetic waves incident on a dielectric boundary. More specifically, it focusses on the Fresnel coefficients, also known as the reflection and transmission coefficients.
+            </p>
+        </div>
+<span class="section-extra-head-container">
+                                        <button class="section-extra-head" data-toggle="collapse"  @click="hideShowToggle($event)"
+                                                data-target="#pillbox"> Pill-box Volume </button>
+                                    </span>
+                                <div id="pillbox" class="collapse extra-content-container">
+                                    <div class="extra-content">
+                                            <h5>Pill-box Volume</h5>
+                                            <p>
+                    The Fresnel equations follow directly from Maxwell’s equations. To see why this is the case, consider the following pill-box volume.
+                                            </p>
+                                            <center><img src="EM2/images/7PillboxImage.png" alt="Pillbox Volume"
+                                                style = "width:80%; height: 80%"></center>
+                                            <p>
+                Applying the 4-field form of Maxwell’s equations on this pill-box, we arrive at 4 general boundary conditions for an EM wave incident on a dielectric boundary. The conditions can be simplified for simple media by setting $\mu_r=1$.
+                                            </p>
+                                    </div>
+                                </div>
+
+
+    <div id="main_text" class="divclass">
+        <p>
+            Of the four boundary conditions obtained from Maxwell’s equations, only the continuity of the electric and magnetic fields at the boundary are needed to derive the Fresnel equations.
+        </p>
+
+        <div id="intro_polarisation" class="divclass bigdropdown">
+            <h4>Introduction to Polarisation</h4>
+            Note here that the incident wave has two main modes of polarisation. The first mode is p-polarisation – here the electric field is parallel to the plane of incidence. The second is s-polarised – here the opposite is true in that the electric field is perpendicular to the plane of incidence. These two linear polarisations can then form any arbitrary polarisation.
+        </div>
+
+        <p>
+            To avoid sign errors in our two boundary conditions, we must account for the polarisation of the incident wave. The right-hand rule should help you avoid any such errors. This is perhaps best shown in the following diagrams. Superscript $i$, $t$ and $r$ denote the incident, transmitted and reflected wave respectively.
+        </p>
+
+        <center><img src="EM2/images/7P-Polarisation.png" alt="P-Polarisation"
+        style = "width:80%; height:80%"></center>
+        <center><img src="EM2/images/7S-Polarisation.png" alt="S-Polarisation"
+        style = "width:80%; height:80%"></center>
+
+        <p>
+            Thus, for a p-polarised incident wave, we obtain the boundary conditions $E_0^i\cos\theta^i+E_0^r\cos\theta^i=E_0^t\cos\theta^t$ and $B_0^i-B_0^r=B_0^t$.
+            <br>
+            We can also make use of $B=\frac{\mu_0E_0}{Z}$, where $\mu_0$ is the vacuum permeability and $Z$ is the wave impedance, to write $B_0^i-B_0^r=B_0^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=\frac{E_0^t}{Z_2}$
+        </p>
+        <p>
+            Similarly, for s-polarisation, we obtain the boundary conditions $E_0^i-E_0^r=E_0^t$ and $-B_0^i\cos\theta^i+B_0^r\cos\theta^i=-B_0^t\cos\theta^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}$$=-\frac{E_0^t}{Z_2}\cos\theta^t$.
+        </p>
+        <p>
+            Finally, we make use of Snell’s law to obtain an expression for θ^t in terms of θ^i, to arrive at the Fresnel equations
+            $$t_{p,s}=\frac{E_0^t}{E_0^i}=\frac{2\cos\theta^i}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}}$$
+            and
+            $$r_{p,s}=\frac{E_0^r}{E_0^i}=\frac{\cos\theta^{t,i}-(\frac{n_2}{n_1})\cos\theta^{i,t}}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}},$$
+            where $n$ denotes the refractive index of the medium.
+        </p>
+        <p>
+            We now define the Brewster angle to be the angle where $r_p=0$, thus $\theta_B=\arctan\frac{n_2}{n_1}$.
+        </p>
+        <p>
+            Also, recall that past the critical angle $θ_c=\arcsin\frac{n_2}{n_1}$, Snell’s law breaks down and we get total internal reflection.
+        </p>
+    </div>
                             </div>
                             <div id="die-B" class="tab-pane fade">
-                                The electrostatic equation demonstrated in this visualisation is:
-                                $$\oint \mathbf {E} \cdot \mathrm {d} {\boldsymbol {l}} = 0$$
-                                As you can see from the visualisation on the right the net flux through a loop in an electric field is always zero,
-                                regardless of the positions of charges or even if there is some background field: as long as the background
-                                field has no curl!
-                                <br><br>
-                                Another way of thinking about this equation is by using Stokes' Law which states:<br><br>
-                                <center>$\displaystyle \oint_{l} \mathbf{A.dl} =$ $\displaystyle \iint_{S} \nabla \times \mathbf {A} \cdot d\mathbf{S}$</center>
-                                <br>
-                                From this it is clear that the first equation, and the fact that electric fields have no curl are identical.
-                                This also implies that electric fields are conservative, since the loop integral is always zero, and the field
-                                has no curl.
+                                text needed
                             </div>
                         <div id="die-C" class="tab-pane fade">
-                                The electrostatic equation demonstrated in this visualisation is:
-                                $$\oint \mathbf {E} \cdot \mathrm {d} {\boldsymbol {l}} = 0$$
-                                As you can see from the visualisation on the right the net flux through a loop in an electric field is always zero,
-                                regardless of the positions of charges or even if there is some background field: as long as the background
-                                field has no curl!
-                                <br><br>
-                                Another way of thinking about this equation is by using Stokes' Law which states:<br><br>
-                                <center>$\displaystyle \oint_{l} \mathbf{A.dl} =$ $\displaystyle \iint_{S} \nabla \times \mathbf {A} \cdot d\mathbf{S}$</center>
-                                <br>
-                                From this it is clear that the first equation, and the fact that electric fields have no curl are identical.
-                                This also implies that electric fields are conservative, since the loop integral is always zero, and the field
-                                has no curl.
+                                Text needed
                             </div>
                         </div>
                 </div>
@@ -851,7 +938,7 @@
                 </div>
                 <div class="text section-body odd" id="p6">
                     <!--    Sub-Section Tabs    -->
-                    <ul class="nav nav-tabs nav-justified">
+                    <!--<ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[5] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
                             <a data-toggle="tab" href="#elecPotential" @click="subScrollTo(6); subSection[5]=1; loadSubScripts(); $forceUpdate();">Field</a>
                         </li>
@@ -859,7 +946,7 @@
                             <a data-toggle="tab" href="#elecField" @click="subScrollTo(6); subSection[5]=2; loadSubScripts(); $forceUpdate();">Potential</a>
                         </li>
                     </ul>
-                    <!--    Sub-Section Text Containers    -->
+                    &lt;!&ndash;    Sub-Section Text Containers    &ndash;&gt;
                     <div class="tab-content">
                             <div id="elecPotential" class="tab-pane fade in active show">
                                 <center><h4>Gradient of an electric potential</h4></center>
@@ -907,11 +994,65 @@
                                 </ol>
 
 
-                            </div>
+                            </div>-->
 
+
+                    <p>
+            In a good conductor, when an electromagnetic wave is incident on a conductor, most of the incident wave is reflected.
+            This is because the electric field amplitude decays away rapidly
+            inside a good conductor due to the skin effect.
+            The length in which current density falls to $\frac {1}{e} $ compared to its value near the surface is known as the skin depth, $\delta$. It is given by
+            $$ \delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$$
+            where $\omega$ is the angular frequency of incident electromagnetic wave and $\sigma$ is the conductivity of the medium.
+            <br>
+            The transmitted electromagnetic wave inside the conductor drives a conduction current in the conductor due to Ohm's Law ($\mathbf{J}_c = \sigma \mathbf{E}^t$).
+            This conduction current experiences a force due to the magnetic field of the transmitted electromagnetic wave.
+            This force acts in the same direction as the incident wave, as if the electromagnetic radiation is exerting a force on the conductor.
+            This creates a radiation pressure by the electromagnetic radiation on the conductor, $P_{rad}$. In a good conductor, $ \frac{ \epsilon_0 \omega}{\sigma} \ll 1 $
+            and radiation pressure is given by
+            $$P_{rad} \approx \Big( 2 - \sqrt{ \frac{8 \epsilon_0 \omega}{\sigma} } \Big) \frac{1}{c} < S^i > $$
+            where $ < S^i > $ is the time average of the Poynting vector:
+            $$ < S^i > = \frac{c \epsilon_0}{2} E^2$$
+            and $E$ is the incident electric field amplitude.
+            <br>
+            As $ \sigma \rightarrow \infty $, $ \delta \rightarrow 0$ and $\sqrt{ \frac{8 \epsilon_0 \omega}{\sigma} } \rightarrow 0 $.
+            Therefore, in a perfect conductor, $ P_{rad} = \frac{2}{c} < S^i >$.
+        </p>
+
+        <p>
+            <h6>Visualisation Guide</h6>
+                <ol>
+                    <li>On the right, we visualise a scenario where an electomagnetic wave, travelling from left to right, is incident on a conductor.
+                        Click "Play" to begin the visualisation.</li>
+                    <li>Switch around between the reflected and resultant waves.</li>
+                    <li>There are 3 parameters you can change: the angular frequency of the electromagnetic wave $\omega$,
+                        the amplitude of the electric field $E$ and the conductivity of the medium $\sigma$.
+                        Look at their effects on the skin depth, radiation pressure and the reflected wave amplitude.</li>
+                    <li>There are certain combination of values where the reflected wave would not display. This is because the medium is no longer a good conductor
+                        $\Big( \frac{ \epsilon_0 \omega}{\sigma} \not\ll 1 \Big).$
+                        Hence, $R \approx 1 - \sqrt{ \frac{8\epsilon_0 \omega}{\sigma} } $ (Hagen-Rubens Relation) is no longer applicable.</li>
+                </ol>
+        </p>
+
+        <p>
+            <h6>A Quantum Approach</h6>
+                In a wave approach, the intensity $< S^i >$ is only dependent on the electric field amplitude of the wave.
+                However, in a quantum perspective, $< S^i > = N E_{photon} $ where $N$ is the number of photons incident on the medium per unit time per unit area and
+                $E_{photon} = \hbar \omega$ is the energy of a single photon.
+                Hence,
+                $$< S^i > = N \hbar \omega .$$
+                Note that $< S^i >$ is dependent on both $N$ and $\omega$.
+                In this visualisation, we took a purely wave approach:
+                increasing $\omega$ does not increase the radiation pressure, as $E$ remains unchanged.
+                From a quantum perspective, even though the energy of each photon increases, $N$ decreases such that intensity remains constant.
+                <br>
+                Radiation pressure can be understood as the force exerted by the photons on the surface due to the change in momentum of the photons.
+                Assuming all photons are reflected,
+                $$ P_{rad} = 2 N \Delta p = 2 N \hbar k = 2 N \hbar  \frac{\omega}{c} .$$
+        </p>
                     </div>
                 </div>
-            </div>
+
 
 
             <div class="section-container" id="sc7">
@@ -923,8 +1064,9 @@
                     <hr>
                 </div>
                 <div class="text section-body odd" id="p7">
+                    Text Needed
                     <!--    Sub-Section Tabs    -->
-                    <ul class="nav nav-tabs nav-justified">
+                    <!--<ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[6] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
                             <a data-toggle="tab" href="#elecPotential" @click="subScrollTo(7); subSection[6]=1; loadSubScripts(); $forceUpdate();">Field</a>
                         </li>
@@ -932,7 +1074,7 @@
                             <a data-toggle="tab" href="#elecField" @click="subScrollTo(7); subSection[6]=2; loadSubScripts(); $forceUpdate();">Potential</a>
                         </li>
                     </ul>
-                    <!--    Sub-Section Text Containers    -->
+                    &lt;!&ndash;    Sub-Section Text Containers    &ndash;&gt;
                     <div class="tab-content">
                             <div id="" class="tab-pane fade in active show">
 
@@ -942,7 +1084,7 @@
 
                             </div>
 
-                    </div>
+                    </div>-->
                 </div>
             </div>
 
@@ -987,7 +1129,7 @@
         <div class="banner">
             <!--    Visualisation Title    -->
             <h1 class="" id="vis-title">
-                STATIC ELECTROMAGNETISM
+                ELECTROMAGNETISM IN MATERIALS
             </h1>
             <a href="https://www.imperialvisualisations.com/learn/">
                 <img id="vis-logo" src="VisualisationsLogoWhite2.png">
@@ -1012,7 +1154,7 @@
                     <div class="rightload text" id='loadout2sub1' key="loadout2sub1"
                          v-if="subSection[1] === 1">
 
-                        <iframe src="EM/2Gauss_Law_Electric_Interactive.html" style='width: 100%; height: 100%'></iframe>
+                        <iframe src="EM2/2aFour_Field_interactive.html" style='width: 100%; height: 100%'></iframe>
 
                         <!--Buttons/Sliders-->
                         <!--        <div class="one-third column" style="padding-left: 50px;">-->
@@ -1022,7 +1164,7 @@
 
                     </div>
                     <div class="rightload text" id='loadout2sub2' key="loadout2sub2" v-else-if="subSection[1] === 2">
-                        <iframe src="EM/2Gauss_Law_Elec_Inte_interactive.html" width="950px" height="800px"></iframe>
+                        <iframe src="EM2/2bFour_Field_interactive.html" width="950px" height="800px"></iframe>
                     </div>
 
 
@@ -1068,40 +1210,29 @@
                     <!--Interactive Zone Sub Containers-->
                     <div class="rightload text" id='loadout5sub1' key="loadout5sub1"
                          v-if="subSection[4] === 1">
-                        <iframe src="EM/5Amp_Elec_Diff_interactive.html" width="950px" height="800px"></iframe>
+                        <iframe src="EM2/7Diel_BoundA_interactive.html" width="950px" height="800px"></iframe>
                     </div>
                     <div class="rightload text" id='loadout5sub2' key="loadout5sub2" v-else-if="subSection[4] === 2">
-                        <iframe src="EM/5Amp_Elec_Integ_interactive.html" width="950px" height="800px"></iframe>
+                        <iframe src="EM2/8Diel_BoundB_interactive.html" width="950px" height="800px"></iframe>
                     </div>
-                    <!--<div class="rightload text" id='loadout5sub3' key="loadout5sub3" v-else>
-                        <iframe src="EM/6AmpLaw_Interactive.html" width="950px" height="800px"></iframe>
-                    </div>-->
+                    <div class="rightload text" id='loadout5sub3' key="loadout5sub3" v-else-if="subSection[4] === 3">
+                        <iframe src="EM2/11Diel_BoundC_interactive.html" width="950px" height="800px"></iframe>
+                    </div>
+
                 </transition>
             </div>
 
             <div class="rightload text even" id='loadout6' key="loadout6" v-if="currentSection === 6">
                 <transition name="fade">
                     <!--Interactive Zone Sub Containers-->
-                    <div class="rightload text" id='loadout6sub1' key="loadout6sub1"
-                         v-if="subSection[5] === 1">
-                        <iframe src="EM/7Electric_Potential_Interactive.html" width="950px" height="800px"></iframe>
-                    </div>
-                    <div class="rightload text" id='loadout6sub2' key="loadout6sub2" v-else>
-                        <iframe src="EM/7Electric_Field_Interactive.html" width="950px" height="800px"></iframe>
-                    </div>
+                    <iframe src="EM2/9Cond_Bound_interactive.html" style="height: 100%; width: 100%"></iframe>
                 </transition>
             </div>
 
             <div class="rightload text even" id='loadout7' key="loadout7" v-if="currentSection === 7">
                 <transition name="fade">
                     <!--Interactive Zone Sub Containers-->
-                    <div class="rightload text" id='loadout7sub1' key="loadout7sub1"
-                         v-if="subSection[6] === 1">
-                        <iframe src="EM/7Electric_Potential_Interactive.html" width="950px" height="800px"></iframe>
-                    </div>
-                    <div class="rightload text" id='loadout7sub2' key="loadout7sub2" v-else>
-                        <iframe src="EM/7Electric_Field_Interactive.html" width="950px" height="800px"></iframe>
-                    </div>
+                    <iframe src="EM2/10Plas_Bound_interactive.html" style="width: 100%; height: 100%"></iframe>
                 </transition>
             </div>
 
