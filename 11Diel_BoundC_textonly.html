@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .divclass {
+            width: 33vw;
+            text-align: left;
+        }
+        .solidline {
+            /* Indicates a drop down box to hide stuff */
+            border-style: outset;
+            border-color: coral;
+            border-width: 3px;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        .bigdropdown {
+            /* Indicates a drop down box to hide sections*/
+            border-style: outset;
+            border-color: blueviolet;
+            border-width: 3px;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        .verticalline {
+            width: 2px;
+            background-color: #000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 34vw;
+            opacity: 0.3;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Transmission in Dielectrics</title>
+
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+
+    <div class="verticalline">&nbsp;</div>
+
+    <div class="container_journey">
+
+        <div id="intro" class="divclass">
+            <center>
+                <h1>
+                    Transmission in Dielectrics
+                </h1>
+            </center>
+
+            <p>
+                This visualisation aims to explain a somewhat suprising property of waves incident on a dielectric boundary. More specifically, it will show that for any non-unity reflection coefficient, all of the energy of the incident wave can be made to transmit through the dielectric.
+            </p>
+    </div>
+
+    <div id="main_text" class="divclass">
+        <p>
+            To understand this, consider a wave normally incident on a dielectric of thickness $t$. Recall that a wave can both transmit through and be reflected by a dielectric boundary. Here we label the reflection coefficient and transmission coefficient as $r$ and $t$ respectively.
+        </p>
+
+    </div>
+</body>
