@@ -793,23 +793,37 @@
                     <!--    Sub-Section Tabs    -->
                     <ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[4] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
-                            <a data-toggle="tab" href="#ampereElecDifferential" @click="subScrollTo(5); subSection[4]=1; loadSubScripts(); $forceUpdate();">Differential</a>
+                            <a data-toggle="tab" href="#die-A" @click="subScrollTo(5); subSection[4]=1; loadSubScripts(); $forceUpdate();">A</a>
                         </li>
                         <li :class="[subSection[4] === 2 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#ampereElecIntegral" @click="subScrollTo(5); subSection[4]=2; loadSubScripts(); $forceUpdate();">Integral</a>
+                            <a data-toggle="tab" href="#die-B" @click="subScrollTo(5); subSection[4]=2; loadSubScripts(); $forceUpdate();">B</a>
                         </li>
                         <li :class="[subSection[4] === 3 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#ampereElecIntegral" @click="subScrollTo(5); subSection[4]=3; loadSubScripts(); $forceUpdate();">Integral</a>
+                            <a data-toggle="tab" href="#die-C" @click="subScrollTo(5); subSection[4]=3; loadSubScripts(); $forceUpdate();">C</a>
                         </li>
                     </ul>
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
-                            <div id="ampereElecDifferential" class="tab-pane fade in active show">
+                            <div id="die-A" class="tab-pane fade in active show">
                                 $$ \nabla \times \mathbf{E} = 0$$
                                 The curl of $\mathbf{E}$ is 0 because it is a conservative field. A conservative field can be described by a potential such that
                                 $\mathbf{E} = \nabla \phi$. The curl of the gradient of a scalar field ($\nabla \times \nabla \phi$) is 0. Hence, the curl of $\mathbf{E}$ is 0.      
                             </div>
-                            <div id="ampereElecIntegral" class="tab-pane fade">
+                            <div id="die-B" class="tab-pane fade">
+                                The electrostatic equation demonstrated in this visualisation is:
+                                $$\oint \mathbf {E} \cdot \mathrm {d} {\boldsymbol {l}} = 0$$
+                                As you can see from the visualisation on the right the net flux through a loop in an electric field is always zero,
+                                regardless of the positions of charges or even if there is some background field: as long as the background
+                                field has no curl!
+                                <br><br>
+                                Another way of thinking about this equation is by using Stokes' Law which states:<br><br>
+                                <center>$\displaystyle \oint_{l} \mathbf{A.dl} =$ $\displaystyle \iint_{S} \nabla \times \mathbf {A} \cdot d\mathbf{S}$</center>
+                                <br>
+                                From this it is clear that the first equation, and the fact that electric fields have no curl are identical.
+                                This also implies that electric fields are conservative, since the loop integral is always zero, and the field
+                                has no curl.
+                            </div>
+                        <div id="die-C" class="tab-pane fade">
                                 The electrostatic equation demonstrated in this visualisation is:
                                 $$\oint \mathbf {E} \cdot \mathrm {d} {\boldsymbol {l}} = 0$$
                                 As you can see from the visualisation on the right the net flux through a loop in an electric field is always zero,
