@@ -143,7 +143,7 @@ class plt_layouts {
             showlegend: false,
               margin: {
                 l: 20,
-                r: 10,
+                r: 20,
                 b: 20,
                 t: 40,
                 pad: 0
@@ -162,7 +162,7 @@ class plt_layouts {
             title:'Energy Transmission Coefficient of Individual Terms',
               margin: {
                 l: 20,
-                r: 10,
+                r: 20,
                 b: 20,
                 t: 30,
                 pad: 0

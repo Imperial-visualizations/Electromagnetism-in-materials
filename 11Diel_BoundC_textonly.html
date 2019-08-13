@@ -74,12 +74,72 @@
             <p>
                 This visualisation aims to explain a somewhat suprising property of waves incident on a dielectric boundary. More specifically, it will show that for any non-unity reflection coefficient, all of the energy of the incident wave can be made to transmit through the dielectric.
             </p>
+
     </div>
 
     <div id="main_text" class="divclass">
+
         <p>
-            To understand this, consider a wave normally incident on a dielectric of thickness $t$. Recall that a wave can both transmit through and be reflected by a dielectric boundary. Here we label the reflection coefficient and transmission coefficient as $r$ and $t$ respectively.
+            To understand this, consider a wave normally incident on a dielectric of thickness $d$. Recall that a wave can both transmit through and be reflected by a dielectric boundary.
+            Here we label the reflection coefficient and transmission coefficient as $r$ and $t$ respectively.
         </p>
 
+        <div id="phase_change" class="solidline">
+            <p>
+                Note that the magnitude of the reflection and transmission coefficients are the same going both from a vacuum to the dielectric and vice versa. There is, however, a $\pi$ phase change on reflection.
+            </p>
+        </div>
+
+        <p>
+            It therefore follows that for any non-unity reflection coefficient, we can have an infinite number of reflections within the dielectric, with some transmission at each stage.
+        </p>
+
+        <center>
+            <img src="images/11Infinite_Reflections_Diagram.png" alt="Infinite Reflections" style="width: 80%; height: 80%">
+        </center>
+
+        <p>
+                It can then be shown that the sum of the energies of an infinite series of transmitted waves is given by
+
+                $$E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i,$$
+    
+                where $\phi=k_2d$, $k_2$ is the wavevector in the dielectric and $E^i$ is the energy of the incident wave. Note also that the prime denotes the coefficient from the dielectric to the vacuum rather than from the vacuum to the dielectric.
+        </p>
+
+        <div id="E_tot_proof" class="solidline">
+            <h4>
+                Proof:
+            </h4>
+            <p>
+                Following wave $E$ on the above diagram, we can see that the transmitted waves on the right (waves $J$, $P$ onwards) vary only by two reflections each time. Thus, their energies follow a geometric progression of factor $(r'e^{i\phi})^2$.
+            </p>
+
+            <p>
+                Thus,
+                $$E_{tot}=E^it'te^{i\phi}\{1+(r'e^{i\phi})^2+[(r'e^{i\phi})^2]^2+...\}.$$
+
+                Therefore, using the formula for the sum of an infinite geometric progression, we arrive at
+                $$E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i.$$
+            </p>
+        </div>
+
+        <p>
+            We can now define the total energy transmission coefficient as $T_{layer}=|E_{tot}|^2/|E^i|^2$. Substituting our earlier expression for $E_{tot}$ we obtain
+            $$T_{layer}=\frac{(tt')^2}{1+r'^4-2r'^2\cos2\phi}.$$
+
+            We also note that the reflection coefficient $R=r^2=r'^2$, thus we have the final expresssion
+            $$T_{layer}=\left(1+\frac{4R}{(1-R)^2}\sin^2\phi\right).$$
+        </p>
+
+        <p>
+            Here we can see that regardless of the value of $R$, if the thickness of the dielectric is an integer multiple of half the wavelength, ie. $d=\frac{n\lambda}{2}$,
+            $\sin\phi$ will always be 0, thus all of the wave will transmit through the dielectric.
+        </p>
+
+        <p>
+            For a more physical understanding as to why this is consider a reflection coefficient of 0.99.
+            Under such conditions, 99% of the incident wave will be reflected at every boundary. However, due to the $pi$ phase changes upon reflection, over an infinite number of reflections,
+             the waves on the incident side of the dielectric sum to zero while the waves on the transmitted side add to the original amplitude. Thus, the net result is the entirety of the incident wave being trasmitted through the dielectric.
+        </p>
     </div>
 </body>
