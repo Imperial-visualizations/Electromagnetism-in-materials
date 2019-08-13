@@ -49,11 +49,17 @@
     <p>
         where $\omega_p = \sqrt{\frac{N_e e^2}{m_e \varepsilon_0}}$.
     </p>
+
+    <p>
+        Try varying the $N_e$ slider to in order to change $\omega_p$, the plasma frequency.  Move the $\omega$ slider to change the frequency of the wave.
+        Notice that when $\omega$ is less than $\omega_p$, the wavevector $k$ becomes imaginary, and the wave is completely attenuated by the 
+        plasma.
+    </p>
   
     <h6 style = "text-align:left">Derivation</h6>
 
     <p>
-        Start with Maxwell's equations.
+        To derive this dispersion relation, we start with Maxwell's equations.
     </p>
     <p style = "text-align:center">
         $\nabla\cdot\boldsymbol{E} = \frac{\rho_f}{\varepsilon}$
@@ -83,7 +89,7 @@
 
     </p>
     <p>
-        In a plasma we assume
+        In a plasma we assume that:
     </p>
     <p>
         $\rho_f \neq 0$<br/>
@@ -93,20 +99,24 @@
     </p>
 
     <p>
-        Taking the fourth Maxwell equation
+        We can now take the fourth equation, the Ampere-Maxwell equation, and substitute in our assumptions:
     </p>
     <p>
         $\begin{eqnarray}\boldsymbol{k} \times \boldsymbol{B} &=& -i\mu_0\Big(i\frac{N_e e^2}{m_e \omega}\boldsymbol{E}\Big) - \varepsilon_0 \mu_0 \omega \boldsymbol{E}\\
+        <br/>
         &=& \varepsilon_0 \mu_0 \omega \Big(\frac{N_e e^2}{m_e \varepsilon_0 \omega^2} - 1\Big)\boldsymbol{E}\\
+        <br/>
         &=& \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{E}\end{eqnarray}$
         
     </p>
     <p>
-        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e e^2}}$<br/>
+        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e e^2}}$.<br/>
     </p>
     <p>
         $\boldsymbol{k} \times (\boldsymbol{k} \times \boldsymbol{B}) = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{k}\times\boldsymbol{E}$<br/>
+        <br/>
         $-k^2\boldsymbol{B} = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\omega\boldsymbol{B} = \Big(\frac{\omega_p^2 - \omega^2}{c^2}\boldsymbol{B}\Big)$<br/>
+        <br/>
         $\Big(k^2 + \frac{\omega_p^2 - \omega^2}{c^2}\Big)\boldsymbol{B} = 0$<br/>
 
     </p>

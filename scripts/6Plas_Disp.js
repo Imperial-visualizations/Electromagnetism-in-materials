@@ -88,7 +88,7 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
         new_layout = {//layout of 3D graph
             //showlegend: false,
             //showscale: false,
-            uirevision: 'd',
+            uirevision: 'dataset',
             margin: {
                 l: 1, r: 1, b: 10, t: 1, pad: 0
             },
@@ -109,7 +109,7 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
 
                 camera: {
                     up: {x: 0, y: 0, z: 1},//sets which way is up
-                    eye: {x: -5, y: -5, z: 3}//adjust camera starting view
+                    eye: {x: 3.1, y: -6.2, z: 2}//adjust camera starting view
                 }
             },
         };
@@ -383,11 +383,12 @@ function GetNewInputs(){
     CurrentOmega = CurrentOmega*10**10;
 
     let Play = document.getElementById("PlayButton").value;
+    let PlaySpeed = document.getElementById("SpeedSlider").value;
 
-    return [Ne, CurrentOmega, Play];
+    return [Ne, CurrentOmega, Play, PlaySpeed];
 }
 
-function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play, Layout1){//adds time evolution
+function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//adds time evolution
     let EWaveVac = WaveList[0];
     let BWaveVac = WaveList[1];
     let EWavePlas = WaveList[2];
@@ -408,10 +409,11 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play, Layo
     let GraphData = GetWaveData(WaveList);
     //console.log(GraphData);
 
+    
     Plotly.animate("3DGraph",
         {
-            data: GraphData, 
-            layout: Layout1 
+            data: GraphData
+            
         },
         {
             fromcurrent: true,
@@ -421,21 +423,24 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play, Layo
         }
     );
 
+
     // let x_max = 0.05;
     // Plotly.react("3DGraph", GraphData, setLayout('x', 'y', 'z', 'Wave', x_max));
 
     Play = document.getElementById("PlayButton").value;
     if (Play == "true"){
-        ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play, Layout1);});
+        ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
         return;
     }
 }
 
 function Refresh(PlotNew = false){
+    window.cancelAnimationFrame(ID);
     let NewVariables = GetNewInputs();
     let Ne = NewVariables[0];
     let CurrentOmega = NewVariables[1];
     let Play = NewVariables[2];
+    let PlaySpeed = NewVariables[3];
 
     let Omega_min = 1000000000;//10**10;
     let Omega_max = 10**11;
@@ -478,11 +483,10 @@ function Refresh(PlotNew = false){
         UpdatePlots([DispersionData, WaveData], x_max, Omega_max);
     }
 
-    let TimeStep = 0.00000000001;
+    let TimeStep = 0.000000000005*(PlaySpeed);
 
     if (Play == "true"){
-        let Layout1 = setLayout("x", "y", "z", "Wave", x_max);
-        ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play, Layout1);});
+        ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
     }
 }
 
@@ -508,12 +512,22 @@ function Initialise() {
     $('#PlayButton').on("click", function(){
 
         if (document.getElementById("PlayButton").value == "false"){
+            $('#PlayButton').html("Pause");
             document.getElementById("PlayButton").value = "true";
             Refresh();
         }else{
+            $('#PlayButton').html("Play");
             window.cancelAnimationFrame(ID);
             document.getElementById("PlayButton").value = "false";
         }
+    });
+
+    $('#SpeedSlider').on("input", function(){
+        //update plots when value changed
+        //update slider text
+        $("#" + $(this).attr("id") + "Display").text($(this).val() + $("#" + $(this).attr("id") + "Display").attr("data-unit"));
+        //update graph
+        Refresh();
     });
 
     Refresh(PlotNew = true); //update plots upon setup.  This is the first time graphs are run upon opening the page
