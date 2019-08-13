@@ -38,14 +38,22 @@
             <h7>Wave graph</h7>
             <!--<div id='DispersionGraph' style="width:40vw; height:40vh;"></div>-->
             <div id='3DGraph' style="width:100%; float:center"></div>
-            <button id = "PlayButton" type="play-button" value = false>Play/Pause</button>
+            <button id = "PlayButton" type="play-button" value = false>Play</button>
+            <label class="sliderTitle" style="padding-bottom:20px;">Animation speed:
+                <span id="SpeedSliderDisplay" data-unit="">1</span>
+            </label>
+            <label style = "width:100%">
+                <span class="sliderMin">0.1</span>
+                <input id="SpeedSlider" class="inputs" type="range" value="1" min="0.1" max="2" step="0.01">
+                <span class="sliderMax">2</span>
+            </label> 
         </div>
         <div style = "width:50%; float:right">
             <h7>Dispersion Graph</h7>
             <!--<div id='DispersionGraph' style="width:40vw; height:40vh;"></div>-->
             <div id='DispersionGraph' style="width:100%; float:center"></div>
             <label class="sliderTitle" style="padding-bottom:20px;">$N_e$:
-                <span id="NeSliderDisplay" data-unit="">0.15</span>
+                <span id="NeSliderDisplay" data-unit="">1</span>
                 $\times 10^{17}$
             </label>
             <label style = "width:100%">
@@ -55,14 +63,15 @@
             </label> 
             <label class="sliderTitle" style="padding-bottom:20px;">$\omega_p$:<!--is that meant to be capital p on the omega?-->
                 <span id="OmegaPDisplay" data-unit=""></span>
+                $\times 10^{10}$
             </label>
             <label class="sliderTitle" style="padding-bottom:20px;">$\omega$:
-                <span id="OmegaSliderDisplay" data-unit="">0.15</span>
+                <span id="OmegaSliderDisplay" data-unit="">0.1</span>
                 $\times 10^{10}$
             </label>
             <label style = "width:100%">
-                <span class="sliderMin">1</span>
-                <input id="OmegaSlider" class="inputs" type="range" value="1" min="1" max="10" step="0.01">
+                <span class="sliderMin">0.1</span>
+                <input id="OmegaSlider" class="inputs" type="range" value="0.1" min="0.1" max="10" step="0.01">
                 <span class="sliderMax">10</span>
             </label> 
         </div>

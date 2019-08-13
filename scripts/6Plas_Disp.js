@@ -1,5 +1,6 @@
 /*jshint esversion: 7 */
 
+var ID;
 class Wave1D{
     constructor(A0, k, omega, Phase, Colour, name = "Wavey McWaveface"){
         this.A0 = A0;//Initial amplitude
@@ -50,6 +51,13 @@ class Wave1D{
         } 
     }
 
+    UpdateValues(NewA0, Newk, Newomega, NewPhase){
+        this.A0 = NewA0;
+        this.k = Newk;
+        this.omega = Newomega;
+        this.Phase = NewPhase;
+    }
+
     IncrementTime(TimeStep){
         this.time = this.time + TimeStep;
     }
@@ -72,12 +80,6 @@ class Wave1D{
         return WaveData;
     }
 }
-
-
-//Declare global variables:
-//let Play = false;
-//let time = 0;
-//end of global variables
 
 function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
     //set layout of graphs.  'Mode' sets what type of graph you want the layout for
@@ -107,7 +109,7 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
 
                 camera: {
                     up: {x: 0, y: 0, z: 1},//sets which way is up
-                    eye: {x: -5, y: -5, z: 3}//adjust camera starting view
+                    eye: {x: 3.1, y: -6.2, z: 2}//adjust camera starting view
                 }
             },
         };
@@ -125,7 +127,8 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
             },
             yaxis: {
                 //scaleanchor: "x",
-                range: [(10**10-5000000000), 10**11],
+                //range: [(10**10-5000000000), 10**11],
+                range: [0, 10**11],
                 //showticklabels: false,
                 title: sometitley
             },
@@ -215,7 +218,7 @@ function GetGraphData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas, WaveLis
     return [DispersionData, WaveData];
 }
 
-function GetDispersionData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas){
+function GetDispersionData(Omega, k, CurrentOmega, CurrentkPlas, OmegaVac, kVac){
     let Realk = [];
     let Imk = [];
 
@@ -225,6 +228,17 @@ function GetDispersionData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas){
     }
 
     let DispersionData = [];
+
+
+
+    DispersionData.push({
+        type: "scatter",
+        mode: "lines",
+        name: "Vacuum dispersion",
+        line: {color: "orange", width:3},
+        x: [kVac[0].re, kVac[1].re],
+        y: OmegaVac
+    });
 
     DispersionData.push({ //push real data
         type: 'scatter',
@@ -358,8 +372,8 @@ function GetOmegaP(Ne){
 }
 
 function UpdateOmegaP(OmegaP){
-    document.getElementById('OmegaPDisplay').innerHTML = OmegaP;
-    //$("#OmegaPDisplay").text($(this).val() + $("#" + $(this).attr("id") + "Display").attr("data-unit"));
+    OmegaP = OmegaP/10000000000;//account for this change in the html (x10**10)
+    document.getElementById('OmegaPDisplay').innerHTML = OmegaP.toFixed(2);
 }
 
 function GetNewInputs(){
@@ -369,18 +383,16 @@ function GetNewInputs(){
     CurrentOmega = CurrentOmega*10**10;
 
     let Play = document.getElementById("PlayButton").value;
+    let PlaySpeed = document.getElementById("SpeedSlider").value;
 
-    return [Ne, CurrentOmega, Play];
+    return [Ne, CurrentOmega, Play, PlaySpeed];
 }
 
-//function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//adds time evolution
 function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//adds time evolution
     let EWaveVac = WaveList[0];
     let BWaveVac = WaveList[1];
     let EWavePlas = WaveList[2];
     let BWavePlas = WaveList[3];
-
-    let GraphData;
 
     EWaveVac.IncrementTime(TimeStep);
     BWaveVac.IncrementTime(TimeStep);
@@ -393,11 +405,16 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//ad
     BWavePlas.Evaluate(PositivexValues, "x", "xz");
 
     WaveList = [EWaveVac, BWaveVac, EWavePlas, BWavePlas];
-    
-    GraphData = GetWaveData(WaveList);
 
+    let GraphData = GetWaveData(WaveList);
+    //console.log(GraphData);
+
+    
     Plotly.animate("3DGraph",
-        {data: GraphData},
+        {
+            data: GraphData
+            
+        },
         {
             fromcurrent: true,
             transition: {duration: 0},
@@ -405,28 +422,32 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//ad
             mode: "immediate"
         }
     );
-    
+
+
+    // let x_max = 0.05;
+    // Plotly.react("3DGraph", GraphData, setLayout('x', 'y', 'z', 'Wave', x_max));
+
     Play = document.getElementById("PlayButton").value;
     if (Play == "true"){
-        requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
+        ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
+        return;
     }
 }
 
-
-
-
-
 function Refresh(PlotNew = false){
+    window.cancelAnimationFrame(ID);
     let NewVariables = GetNewInputs();
     let Ne = NewVariables[0];
     let CurrentOmega = NewVariables[1];
     let Play = NewVariables[2];
+    let PlaySpeed = NewVariables[3];
 
-    let Omega_min = 10**10;
+    let Omega_min = 1000000000;//10**10;
     let Omega_max = 10**11;
     let PlotDensity = 2/900000000; //per 1 unit
     let n = (Omega_max - Omega_min)*PlotDensity;
 
+    let OmegaVac = [Omega_min, Omega_max];
     let Omega = numeric.linspace(Omega_min, Omega_max, n);
 
     let OmegaP = GetOmegaP(Ne);
@@ -435,6 +456,7 @@ function Refresh(PlotNew = false){
     let CurrentkVac = DispersionRelation([CurrentOmega], [0], "Vacuum")[0];
     let CurrentkPlas = DispersionRelation([CurrentOmega], [OmegaP], "Plasma")[0];
     let k = DispersionRelation(Omega, [OmegaP], "Plasma");
+    let kVac = DispersionRelation(OmegaVac, [0], "Vacuum");
 
     let x_max = 0.05;
 
@@ -452,8 +474,7 @@ function Refresh(PlotNew = false){
     
     let WaveList = GetWaves(NegativexValues, PositivexValues, CurrentkVac, CurrentkPlas, CurrentOmega);
     
-    //let GraphData = GetGraphData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas, WaveList);
-    let DispersionData = GetDispersionData(Omega, k, CurrentOmega, CurrentkVac, CurrentkPlas);
+    let DispersionData = GetDispersionData(Omega, k, CurrentOmega, CurrentkPlas, OmegaVac, kVac);
     let WaveData = GetWaveData(WaveList);
     
     if (PlotNew){
@@ -462,22 +483,11 @@ function Refresh(PlotNew = false){
         UpdatePlots([DispersionData, WaveData], x_max, Omega_max);
     }
 
-    let TimeStep = 0.000000000001;
+    let TimeStep = 0.000000000005*(PlaySpeed);
 
-    //if (Play == "true"){
-        //Evolve(WaveList, NegativexValues, PositivexValues, TimeStep);
-
-    // while(Play == "true"){
-    console.log("1");
-    //Evolve(WaveList, NegativexValues, PositivexValues, TimeStep);
     if (Play == "true"){
-        //requestAnimationFrame(Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play));
-        requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
+        ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
     }
-    console.log("2");
-    //Play = document.getElementById("PlayButton").value;
-    //}
-    //}
 }
 
 
@@ -502,11 +512,22 @@ function Initialise() {
     $('#PlayButton').on("click", function(){
 
         if (document.getElementById("PlayButton").value == "false"){
+            $('#PlayButton').html("Pause");
             document.getElementById("PlayButton").value = "true";
             Refresh();
         }else{
+            $('#PlayButton').html("Play");
+            window.cancelAnimationFrame(ID);
             document.getElementById("PlayButton").value = "false";
         }
+    });
+
+    $('#SpeedSlider').on("input", function(){
+        //update plots when value changed
+        //update slider text
+        $("#" + $(this).attr("id") + "Display").text($(this).val() + $("#" + $(this).attr("id") + "Display").attr("data-unit"));
+        //update graph
+        Refresh();
     });
 
     Refresh(PlotNew = true); //update plots upon setup.  This is the first time graphs are run upon opening the page
