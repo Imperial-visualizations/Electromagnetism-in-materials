@@ -156,7 +156,7 @@ let app = new Vue ({
         // Same as above but for subsections
         subScrollTo: function (section) {
             if (app.currentSection !== section) {
-                let scrollTarget = document.querySelectorAll("#sc" + section)[0];
+                let scrollTarget = document.querySelectorAll("#ph" + section)[0];
                 scrollTarget.scrollIntoView({behavior: "smooth"});
             }
         },
