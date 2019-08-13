@@ -68,34 +68,22 @@
 
 
 
-<div class="">
-     <div class="container">
-      <div class="row">
-       <div class="six columns flexyHold">
-        <div class="row">
-         <div class="flexy" id="graph">
-         </div>
-        </div>
-        <div class="row">
-            <p>
-                 Note: Reflected wave not included in visualisation due to overlap with incident wave. Furthermore,
-                 amplitudes of electric and magnetic fields are set to be equal. Magnetic field is discontinuous at
+<div style='height: 100vh; width: 100vw'>
+
+       <div class="six columns">
+        
+         <div id="graph" style='height:90%'></div>
+        <div class="row" style='margin-left: 3%; height:10%'>
+                Note: Reflected wave not included in visualisation due to overlap with incident wave. Furthermore,
+                amplitudes of electric and magnetic fields are set to be equal. Magnetic field is discontinuous at
                 boundary since boundary conditions are ignored.
-                </p>
-         <div class="three columns">
-
-
-         </div>
-
-
         </div>
        </div>
        <div class="six columns ">
-        <div id="graph_disp" style="height: 70vh; width: 30vw;">
-        </div>
-        <div id="graph_phi" style="height: 70vh; width: 30vw; display: none;"></div>
+        <div id="graph_disp" style="height: 50vh; width: 30vw;"></div>
+        <div id="graph_phi" style="height: 50vh; width: 30vw; display: none;"></div>
         <!--<p>Real part of refractive index has 1 subtracted, so the traces overlap.</p>-->
-        <div id="angular_frequency-slider">
+        <div id="angular_frequency-slider" style='margin-right: 5%; width: 35vw'>
          <label class="sliderTitle" for="angular_frequency">
           Relative Angular Frequency:
           <span id="angular_frequency-display">
@@ -123,9 +111,9 @@
              <button id="playButton" type="button">Play</button>
         </div>
 
-       </div>
+       
       </div>
-     </div>
+     
 
 </div>
 
