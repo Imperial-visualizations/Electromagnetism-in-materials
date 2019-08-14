@@ -1,90 +1,174 @@
-/*jshint esversion:6*/
-$(window).on('load', function() {//main
+var xPlus = [];
+var yPlus = [];
+var zPlus = [];
+var xMinus = [];
+var yMinus = [];
+var zMinus = [];
 
-    const
-    plt = {//layout of graph
-        layout : {
-            showlegend: false,
-            showscale: true,
-            scene: {
-                xaxis: {range: [-5, 5]},
-                yaxis: {range: [-1.5, 1.5]},
+var layout = {
+    scene:{
+        //prevents weird resizing of axes when animating
+        aspectmode:'cube',
 
-            },
-            fromcurrent: true,
-            transition: {duration: 0,},
-            frame: {duration: 0, redraw: false,},
+        xaxis: {
+            range: [-0.1,1.1],
+        },
+        yaxis: {
+            range: [-0.1,1.1],
+        },
+        zaxis: {
+            range:[-0.1,1.1],
+        },
+
+        //no margins on plot
+        margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 0,
         }
-    };
+}};
 
-    var n = 11;
-    var x = [], y = [], acc = [], E = [];
-    var v = [];
-    var t = 0, dt = 0.005;
+function createInitialPositions(){
+    let x = numeric.linspace(0.2,0.8,3);
+    let y = x;
+    let z = x;
 
-    for (i = 0; i < n; i++) {
-    x[i] = -4 + 0.8*i;
-    y[i] = 0;    
-    v[i] = 0;
-    acc[i] = 0;
-    E[i] = 0;
-    }
-
-    function initial(){
-        Plotly.plot('graph', 
-        [{  'name': 'displacement',
-            x: x,
-            y: y,
-            mode: 'markers'},
-        {   'name': 'acceleration',
-            x: x,
-            y: acc,
-            line: {simplify: true},},
-        {   'name': 'applied E',
-            x: x,
-            y: E,
-            line: {simplify: true},}], 
-        {
-        xaxis: {range: [-5, 5]},
-        yaxis: {range: [-1.5, 1.5]}
-        });
-    }
-
-    function computeData(){//produces the data for the animation
-        let omega = parseFloat($("input#omega").val());
-        let epsilon = parseFloat($("input#epsilon").val());
-        let sigma = parseFloat($("input#sigma").val());
-        let condition =  $("input[name = field-switch]:checked").val();
-        console.log(condition);
-        $("#omega-display").html($("input#omega").val().toString()+" rad./s");//update value of slider in html
-        $("#epsilon-display").html($("input#epsilon").val().toString());
-        $("#sigma-display").html($("input#sigma").val().toString());
-
-        t += dt;
-
-        for (var i = 0; i < n; i++) {
-            y[i] += v[i] * dt + 0.5 * acc[i] * Math.pow(dt, 2);
-            v[i] += acc[i] * dt;
-            if (omega == 0){
-                E[i] = 0;
-                acc[i] = 0;
-            } else {
-                E[i] = Math.sin(omega*t + x[i]);
-                acc[i] = (sigma/epsilon)*Math.sin(omega*t + x[i]);
+    //create regularly spaced positive ions
+    for(let i = 0; i < x.length; i++){
+        for(let j = 0; j < x.length; j++){
+            for(let k = 0; k < x.length; k++){
+                xPlus.push(x[i]);
+                yPlus.push(y[j]);
+                zPlus.push(z[k]);
             }
         }
     }
 
-    function update_graph () {
-        computeData();
-    
-        Plotly.animate('graph', {
-            data: [{x: x, y: y}, {x: x, y: acc}, {x: x, y: E}]
-        }, plt.layout);
-
-        requestAnimationFrame(update_graph);
+    let i = 0;
+    //create random positions for negative ions
+    while(i<xPlus.length){
+        xMinus.push(Math.random());
+        yMinus.push(Math.random());
+        zMinus.push(Math.random());
+        i++
     }
 
-    initial();//run the initial loading
-    update_graph();//keep graph updated and running
-});
+};
+
+function initialPlot(){
+    var Pos = {
+        x:xPlus, y: yPlus, z: zPlus,
+        mode: 'markers',
+        name: 'Positive ions',
+        marker: {
+            color: 'rgb(0, 255, 0)',
+            size: 12,
+            line: {
+            color: 'rgba(217, 217, 217, 0.14)',
+            width: 0.5},
+            opacity: 0.8},
+        type: 'scatter3d'
+    };
+
+    var Neg = {
+        x:xMinus, y: yMinus, z: zMinus,
+        mode: 'markers',
+        name: 'negative ions',
+        marker: {
+            color: 'rgb(255, 0, 0)',
+            size: 5,
+            symbol: 'circle',
+            line: {
+            color: 'rgb(204, 204, 204)',
+            width: 1},
+            opacity: 0.8},
+        type: 'scatter3d'
+    };
+
+    var data = [Pos, Neg];
+
+    Plotly.newPlot('plot', data, layout);
+}
+
+let t = 0;
+let xMinusAnimated = [];
+function oscillate(){
+
+    //create displacement for electrons (SHM)
+    disp = 0.05*Math.sin(0.1*t);
+    t++;
+    xMinusAnimated = [];
+
+    for(let i = 0; i < xMinus.length; i++){
+        xMinusAnimated.push(xMinus[i] + disp);
+    }
+
+    let Pos = {
+        x:xPlus, y: yPlus, z: zPlus,
+        mode: 'markers',
+        name: 'Positive ions',
+        marker: {
+            color: 'rgb(0, 255, 0)',
+            size: 12,
+            line: {
+            color: 'rgba(217, 217, 217, 0.14)',
+            width: 0.5},
+            opacity: 0.8},
+        type: 'scatter3d'
+    };
+
+    let Neg = {
+        x:xMinusAnimated, y: yMinus, z: zMinus,
+        mode: 'markers',
+        name: 'negative ions',
+        marker: {
+            color: 'rgb(255, 0, 0)',
+            size: 5,
+            symbol: 'circle',
+            line: {
+            color: 'rgb(204, 204, 204)',
+            width: 1},
+            opacity: 0.8},
+        type: 'scatter3d'
+    };
+
+    let data = [Pos, Neg];
+    return data;
+
+};
+
+function animatePlot(xMinusAnimated){
+    if(Animate === true){
+    Plotly.animate("plot",
+            {data: oscillate()},//updated data
+            {
+                fromcurrent: false,
+                transition: {duration: 0,},
+                frame: {duration: 0, redraw: true,},
+                mode: "immediate"
+            }
+        );
+
+    requestAnimationFrame(animatePlot);
+    }
+    return 0;
+}
+
+//Create initial plot and find positions
+createInitialPositions();
+initialPlot();
+
+let Animate = false;
+//If button pressed Animate Plot
+$('#buttonPlay').on('click', function() {
+    Animate = !Animate;
+
+    //update button text
+    if(Animate){$('#buttonPlay').html('Pause');}
+    else{$('#buttonPlay').html('Play');}
+
+    //start animation
+    animatePlot();
+
+})
