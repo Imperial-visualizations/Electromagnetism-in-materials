@@ -23,34 +23,9 @@ let app = new Vue ({
         n: "",
         journeyHeightOld: "",
         journeyHeightNew: "",
-        rightScripts: [
-            ["scripts/VC-scripts/0Intro.js"],
-            [],
-            [],
-            [],
-            [],
-        ],
         firstRunDone: false,
         subSection: [false,1,1,1,1,1,1,1],
         subSubSection: 1,
-        rightSubScripts: [
-            [
-                [],
-                [],
-            ],
-            [
-                [],
-                [],
-            ],
-            [
-                ["scripts/VC-scripts/2aDiv.js"],
-                ["scripts/VC-scripts/2bDiv.js"],
-            ],
-            [
-                ["scripts/VC-scripts/3aCurl.js"],
-                ["scripts/VC-scripts/3bCurl.js"],
-            ],
-        ],
     },
 
     methods: {
@@ -64,46 +39,7 @@ let app = new Vue ({
                 app.changeSec();
             }
         },
-        //Antoine draft/////////////////////////////////////////////////////////////
-        onClick: function () {
-            if (this.subSubSection === 1) {
-                this.subSubSection = 2;
-                document.getElementById("buttonExamples").innerHTML = 'Theory'
-                document.getElementById('ampereMagIntegral_1').style.display = 'none';
-                document.getElementById('circuitSelectList2').style.display = '';     
-                document.getElementById('CurrentLine').style.display = '';   
-                this.onChange();
-            } else {
-                this.subSubSection = 1;
-                document.getElementById("buttonExamples").innerHTML = 'Examples'
-                document.getElementById('circuitSelectList2').style.display = 'none';
-                document.getElementById('ampereMagIntegral_1').style.display = '';
-                document.getElementById('CurrentLine').style.display = 'none';
-                document.getElementById('solenoid').style.display = 'none';
-                document.getElementById('Toroid').style.display = 'none';
-                document.getElementById('subSecIframe').src = 'EM/4Amp_Mag_Integ_interactive.html'; 
-            }
-        },
-
-        onChange: function () {
-           if (document.getElementById('circuitSelectList2').value === '1') {
-                document.getElementById('CurrentLine').style.display = '';
-                document.getElementById('solenoid').style.display = 'none';
-                document.getElementById('Toroid').style.display = 'none';
-                document.getElementById('subSecIframe').src = 'EM/4Amp_Single-wire.html'; 
-            } else if (document.getElementById('circuitSelectList2').value === '2') {
-                document.getElementById('solenoid').style.display = '';
-                document.getElementById('CurrentLine').style.display = 'none';
-                document.getElementById('Toroid').style.display = 'none';
-                document.getElementById('subSecIframe').src = 'EM/4Amp_solenoid.html'; 
-          } else if (document.getElementById('circuitSelectList2').value === '3') {
-                document.getElementById('Toroid').style.display = '';
-                document.getElementById('CurrentLine').style.display = 'none';
-                document.getElementById('solenoid').style.display = 'none';
-                document.getElementById('subSecIframe').src = 'EM/4Amp_toroid.html'; 
-            }  
-        },
-        ////////////////////////////////////////////////////////////////////////////
+        
         handleElement: function (section) {
             // update currentSection variable if user scrolls past the top edge of its corresponding section on left side
             if (app.scrollPos >= app.sectionTops[section -1] && app.scrollPos < app.sectionBottoms[section -1]) {
