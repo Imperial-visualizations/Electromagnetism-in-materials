@@ -39,10 +39,12 @@ let app = new Vue ({
                 app.changeTitle();
                 app.changeSec();
                 app.innerchange=document.querySelectorAll("#innerchange")[0].offsetTop-document.querySelectorAll("#sc1")[0].offsetTop;
-                console.log("inner:"+app.innerchange)
+                //console.log("inner:"+app.innerchange)
                 if (app.scrollPos >= app.innerchange && app.scrollPos < app.sectionBottoms[0]){
                 app.subSection[0]=2;
-            }
+            } else {
+                    app.subSection[0]=1;
+                }
             }
         },
         
