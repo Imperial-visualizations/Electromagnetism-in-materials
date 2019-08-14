@@ -229,10 +229,10 @@
                     <!--    Sub-Section Tabs    -->
                     <ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[1] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
-                            <a data-toggle="tab" href="#E-field" @click="subScrollTo(2); subSection[1]=1; loadSubScripts(); $forceUpdate();">E-field</a>
+                            <a data-toggle="tab" href="#E-field" @click="subScrollTo(2); subSection[1]=1; loadSubScripts(); $forceUpdate();">D-field</a>
                         </li>
                         <li :class="[subSection[1] === 2 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#M-field" @click="subScrollTo(2); subSection[1]=2; loadSubScripts(); $forceUpdate();">M-field</a>
+                            <a data-toggle="tab" href="#M-field" @click="subScrollTo(2); subSection[1]=2; loadSubScripts(); $forceUpdate();">H-field</a>
                         </li>
                     </ul>
                     <!--    Sub-Section Text Containers    -->
@@ -417,8 +417,53 @@
       the visible part.
 
                         </div>
-                        <div id="con" class="tab-pane fade">
-                           <span style="font-weight: bold">Conductors - </span>
+                        <div id="con" class="tab-pane fade">                            
+                        <span style="font-weight: bold">The Drude Model - </span>
+                        The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
+                        (1) electric force from applied electric field, $\mathbf{F}_E$
+                        (2) force arises from the collisions among the electrons and between electrons and ions, $\mathbf{F}_c$
+                        so the coulombic forces between electrons and ions are neglected.
+                        <br><br>
+                        By Newton's second law of motion,
+                        $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
+                        So,
+                        $$ m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+                        where $\tau_c$ is the electron collision time.
+                        <br><br>
+                        We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
+                        or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
+                        where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+                        In this case, the solution to the equation is such that $\mathbf{v}_e \propto e^{-i \omega t}$.
+                        <br><br>
+                        Now we obtain
+                        $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+                        so
+                        $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
+                        Recall that the conduction current density is given by
+                        $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
+                        where N is the number density, subscript $i$ is for ions and $e$ for electrons.
+                        In general, $\mathbf{v}_e \gg \mathbf{v}_i$ given the same initial conditions for ions and electrons because ions are much heavier than electrons.
+                        We assume that the first term tends to zero so
+                        $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
+                        Taking the result for $\mathbf{v}_e$ from above, we get
+                        $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
+                        where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
+                        We can rewrite $\mathbf{J}_c$ in terms of complex exponential form:
+                        $$ \mathbf{J}_c = \frac{\sigma}{\sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E} $$
+                        The phase shift of $\mathbf{J}_c$ to $\mathbf{E}$ is given by $\tan^{-1} {(\omega \tau})$.
+                        An alternative way of looking at the phase shift between $\mathbf{J}_c$ and $\mathbf{E}$
+                        is that $\mathbf{J}_c$ is analogous to the velocity of the electrons and
+                        $\mathbf{E}$ is analogous to the acceleration of the electrons.
+                        (In fact, it is just a matter of scalling.)
+                        <br><br>
+                        This phase shift comes out of the fact that this is effectively a damped driven harmonic oscillation.
+                        The source of the driving force is the applied electric field while the source of the damping force is
+                        the collisions between electrons or electrons and ions.
+                        <br><br>
+                        In a damped driven harmonic oscillation, the phase shift of the steady state is due to
+                        the amount of time for the transient phase to decay away.
+                        <br><br>
+                        <span style="font-weight: bold">Conductors - </span>
     A conductor contains mobile free electrons.
     The positively charged ion left behind is usually fixed so we investigate only the behavior of the free electrons in an electric field.
     <br><br>
@@ -433,6 +478,20 @@
     <br><br>
     Derivation:
     <br>
+    Based on the Drude Model,
+    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
+    where $\mathbf{E}_{applied}$ is the applied electric field.
+    The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
+    <br><br>
+    We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
+    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+    <br><br>
+    In a conductor, the electron collision time $\tau_c$ is much smaller than
+    the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \ll T$ or $\frac{\tau_c}{T} \ll 1$ so $\omega \tau_c \ll 1$.
+    Taking the limits $\omega \tau_c + 1 \rightarrow 1$ and $\tan^{-1} {(\omega \tau}) \rightarrow 0$,
+    $$ \mathbf{J}_c = \sigma \mathbf{E} $$
+    This is Ohm's Law.
+    <br><br>
     Approximating the material to be linear, meaning that charges respond to electric fields by producing a current that is a linear
     function of the electric field they feel, we can use Ohm's law:
     $$ \mathbf{J}_c = \sigma \mathbf{E} $$
@@ -491,6 +550,7 @@
     to the field timescale (period). And so $$\frac{\omega \epsilon}{\sigma}$$ dictates whether the material is a good conductor
     for an EM field of that frequency.
     <br><br>
+    
     <span style="font-weight: bold">Skin Effect - </span>
     When an alternating current passes through a conductor, the alternating electric field produces an alternating magnetic field.
     This magnetic field in turn creates an electric field that opposes the original alternating current, known as the "back emf".
@@ -517,51 +577,7 @@
 
                         </div>
                         <div id="plas" class="tab-pane fade">
-                            <span style="font-weight: bold">The Drude Model - </span>
-    The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
-    (1) electric force from applied electric field, $\mathbf{F}_E$
-    (2) force arises from the collisions among the electrons and between electrons and ions, $\mathbf{F}_c$
-    so the coulombic forces between electrons and ions are neglected.
-    <br><br>
-    By Newton's second law of motion,
-    $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
-    So,
-    $$ m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
-    where $\tau_c$ is the electron collision time.
-    <br><br>
-    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
-    or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
-    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
-    In this case, the solution to the equation is such that $\mathbf{v}_e \propto e^{-i \omega t}$.
-    <br><br>
-    Now we obtain
-    $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
-    so
-    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
-    Recall that the conduction current density is given by
-    $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
-    where N is the number density, subscript $i$ is for ions and $e$ for electrons.
-    In general, $\mathbf{v}_e \gg \mathbf{v}_i$ given the same initial conditions for ions and electrons because ions are much heavier than electrons.
-    We assume that the first term tends to zero so
-    $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
-    Taking the result for $\mathbf{v}_e$ from above, we get
-    $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
-    where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
-    We can rewrite $\mathbf{J}_c$ in terms of complex exponential form:
-    $$ \mathbf{J}_c = \frac{\sigma}{\sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E} $$
-    The phase shift of $\mathbf{J}_c$ to $\mathbf{E}$ is given by $\tan^{-1} {(\omega \tau})$.
-    An alternative way of looking at the phase shift between $\mathbf{J}_c$ and $\mathbf{E}$
-    is that $\mathbf{J}_c$ is analogous to the velocity of the electrons and
-    $\mathbf{E}$ is analogous to the acceleration of the electrons.
-    (In fact, it is just a matter of scalling.)
-    <br><br>
-    This phase shift comes out of the fact that this is effectively a damped driven harmonic oscillation.
-    The source of the driving force is the applied electric field while the source of the damping force is
-    the collisions between electrons or electrons and ions.
-    <br><br>
-    In a damped driven harmonic oscillation, the phase shift of the steady state is due to
-    the amount of time for the transient phase to decay away.
-    <br><br>
+
 
     <span style="font-weight: bold">Plasmas in oscillatory electric field - </span>
     We shall only talk about <b>collisionless</b> plasmas.
