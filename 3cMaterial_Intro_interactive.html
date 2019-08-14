@@ -31,13 +31,11 @@
   <!--Text for left 1/3-->
   <div id="Vis_text" class="container_journey" style="height:100vh">
 
-    $$\mathbf{J}_c = -N_e e \mathbf{v}_e *$$
-
     <span style="font-weight: bold">The Drude Model - </span>
     The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
     (1) electric force from applied electric field, $\mathbf{F}_E$
-    (2) force arises from the collisions among the electrons $\mathbf{F}_c$
-    so the long range interactions between electrons and ions are neglected.
+    (2) force arises from the collisions among the electrons and between electrons and ions, $\mathbf{F}_c$
+    so the coulombic forces between electrons and ions are neglected.
     <br><br>
     By Newton's second law of motion,
     $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
@@ -48,35 +46,122 @@
     We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
     or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
     where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real. 
-    In this case, we also assume that $\mathbf{v}_e \propto e^{-i \omega t}$
+    In this case, the solution to the equation is such that $\mathbf{v}_e \propto e^{-i \omega t}$.
     <br><br>
     Now we obtain
     $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
     so
-    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
-    Recall that 
+    $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c} \mathbf{E}$$
+    Recall that the conduction current density is given by
+    $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
+    where N is the number density, subscript $i$ is for ions and $e$ for electrons.
+    In general, $\mathbf{v}_e \gg \mathbf{v}_i$ given the same initial conditions for ions and electrons because ions are much heavier than electrons.
+    We assume that the first term tends to zero so
     $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
-    so
+    Taking the result for $\mathbf{v}_e$ from above, we get
     $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
     where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
+    We can rewrite $\mathbf{J}_c$ in terms of complex exponential form:
+    $$ \mathbf{J}_c = \frac{\sigma}{\sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E} $$
+    The phase shift of $\mathbf{J}_c$ to $\mathbf{E}$ is given by $\tan^{-1} {(\omega \tau})$.
+    An alternative way of looking at the phase shift between $\mathbf{J}_c$ and $\mathbf{E}$
+    is that $\mathbf{J}_c$ is analogous to the velocity of the electrons and 
+    $\mathbf{E}$ is analogous to the acceleration of the electrons. 
+    (In fact, it is just a matter of scalling.)
+    <br><br>
+    This phase shift comes out of the fact that this is effectively a damped driven harmonic oscillation. 
+    The source of the driving force is the applied electric field while the source of the damping force is 
+    the collisions between electrons or electrons and ions.
+    <br><br>
+    In a damped driven harmonic oscillation, the phase shift of the steady state is due to 
+    the amount of time for the transient phase to decay away.
     <br><br>
 
-    <span style="font-weight: bold">Plasmas - </span>
+    <span style="font-weight: bold">Plasmas in oscillatory electric field - </span>
     We shall only talk about <b>collisionless</b> plasmas.
     Based on the Drude Model,
-    $$\mathbf{J}_c = \frac{1}{1 - i \omega \tau_c} \frac{N_e e^2 \tau_c}{m_e} \mathbf{E}$$
-    where $\mathbf{E}$ is the applied electric field.
-    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
-    or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
+    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
+    where $\mathbf{E}_{applied}$ is the applied electric field.
+    The <b>phase shift</b> between $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
+    <br><br>
+    We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
     where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real. 
     <br><br>
-    In a collisionless plasmas, $\omega \tau_c \gg 1$ so
-    $$\mathbf{J}_c \approx \frac{1}{- i \omega \tau_c} \frac{N_e e^2 \tau_c}{m_e} \mathbf{E} = \frac{N_e e^2 \tau_c}{m_e \omega} i\mathbf{E}$$
+    In collisionless plasmas, the electron collision time $\tau_c$ is much greater than
+    the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \gg T$ or $\frac{\tau_c}{T} \gg 1$ so $\omega \tau_c \gg 1$.
+    Taking the limits $\omega \tau_c + 1 \rightarrow \omega \tau_c$ and $\tan^{-1} {(\omega \tau}) \rightarrow \frac{\pi}{2}$, 
+    $$\mathbf{J}_c \approx \frac{N_e e^2 \tau_c}{m_e} e^{i \frac{\pi}{2}} \mathbf{E}_{applied} $$
+    $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.
     <br><br>
-    <span style="font-weight: bold">Is $\mathbf{J}_c$ imaginary? </span>
-    No. Since $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$, 
-    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \omega} e^{-i(\omega t - \frac{\pi}{2})} \mathbf{E}_0$$
-    $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.  
+
+    <span style="font-weight: bold">Plasmas oscillation - </span>
+    Consider a cloud of neutral plasma left alone to reach its equilibrium distribution in the absence of external electromagnetic field.
+    What happens if we displace one of the electrons in the plasma slightly?
+    (Hint: the keywords are <b>equilibrium</b> and <b>displace slightly</b>.)
+    <br><br>
+    The electron should be sitting at the bottom of the potential well initially. 
+    The small displacement will result in simple harmonic motion of the electron.
+    Since plasma is a cloud of free electrons and ions, this small displacement actually causes the entire cloud to oscillate
+    hence the collective behaviour of plasma oscillations.
+    <br><br>
+    It turns out that plasma oscillates at the plasma frequency:
+    $$\omega_p = \sqrt{\frac{N_e e^2}{m_e \epsilon_0}}$$
+    where $N_e$ is the number density of electrons, $e$ is the fundamental charge and $\epsilon_0$ is the permittivity of free space.
+    Notice how the plasma frequency here depends only on the characteristics of electron distribution.
+    This is due to the assumption that the electrons moving much faster than the positive ions in a neutral plasma.
+    <br><br>
+    How do we justify this assumption?
+    Consider the lightest element, hydrogen. Ignoring the heavier isotopes, the simplest hydrogen atom consists of a proton and an electron. 
+    The mass of a proton is roughly 1800 times greater than that of an electron. 
+    Given the same initial conditions, an electron would be accelerated much more than a proton in an electric field that is not too strong.
+    Therefore, in any plasmas, the positive ions are always much heavier than the electrons and so the movement of the positive ions can be ignored 
+    given that the electric field is not too strong.
+    <br><br>
+    Derivation:
+    Displacing an electron in a neutral plasma means that the number density of electron, $N_e$ depends on the position and time.
+    Let $N_e = N_0 + N_1 (x, t)$, where $N_0$ is the initial number density of electron and $x$ is the direction of perturbation.
+    Generally, the free charge density $\rho_f$ is given by $\rho_f = N_i e - N_e e$, where $N_i$ is the number density of positive ions.
+    In this case, $\rho_f = N_i e - (N_0 + N_1(x, t))e$ but $N_i e = N_0 e$ for a neutral plasma so 
+    $$\rho_f = -N_1(x, t)e$$
+    Also, in general, the conduction current density $\mathbf{J}_c$ is given by 
+    $$\mathbf{J}_c = N_i e \mathbf{v}_e - N_e e \mathbf{v}_e$$
+    Based on the assumption of small perturbation of electron such that the movements of positive ions can be ignored, the first term vanishes so
+    $\mathbf{J}_c = - N_e e \mathbf{v}_e = -(N_0 + N_1(x, t)) e \mathbf{v}_e$. Also based on the assumption of small perturbation, $N_0 \gg N_1$
+    so $$\mathbf{J}_c = - N_0 e \mathbf{v}_e$$
+    In a closed system, we require conservation of free charge,
+    $$\frac{\partial \rho_f}{\partial t} + \nabla \cdot \mathbf{J}_c = 0$$
+    so,
+    $$-e\frac{\partial N_1}{\partial t} - N_0 e \nabla \cdot \mathbf{v}_e = 0$$
+    Consider only in the direction of perturbation,
+    $$-e\frac{\partial N_1}{\partial t} - N_0 e \frac{\partial v_{e, x}}{\partial x} = 0$$
+    We can rewrite this as
+    $$\frac{\partial v_{e, x}}{\partial x} = -\frac{1}{N_0} \frac{\partial N_1}{\partial t}$$
+    Velocity must be continuous with respect to space and time (If it was not, it would mean we would be using 'infinite forces').
+    Given that its continuous, 
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = \frac{\partial^2 v_{e, x}}{\partial t \partial x}$$
+    We get (1):
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = -\frac{1}{N_0} \frac{\partial^2 N_1}{\partial t^2}$$
+    By Gauss' Law for electrostatics,
+    $$\nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
+    where $\rho = \rho_f + \rho_p$, $\rho_f$ is the free charge density while $\rho_p$ is the polarisation charge density.
+    In plasmas, $\rho_p = 0$ so 
+    $$\nabla \cdot \mathbf{E} = \frac{\rho_f}{\epsilon_0}$$
+    From the result above, $\rho_f = -N_1(x, t)e$ so
+    $$\nabla \cdot \mathbf{E} = -\frac{N_1 e}{\epsilon_0}$$
+    Consider only in the direction of perturbation,
+    $$\frac{\partial E_x}{\partial x} = -\frac{N_1 e}{\epsilon_0}$$
+    Now, by Newton's second law,
+    $$m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E}$$
+    Consider only in the direction of perturbation,
+    $$m_e \frac{\partial v_{e, x}}{\partial t} = -e E_x$$
+    So
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \frac{\partial E_x}{\partial x}$$
+    From the result for $\frac{\partial E_x}{\partial x}$ above, we obtain (2):
+    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \cdot -\frac{N_1 e}{\epsilon_0} = \frac{e^2}{m_e \epsilon_0} N_1 $$
+    Equating (1) and (2) and rearranging the result,
+    $$\frac{\partial^2 N_1}{\partial t^2} + \frac{N_0 e^2}{m_e \epsilon_0} N_1 = 0$$
+    This is the equation of simple harmonic motion for plasma, with a natural frequency of 
+    $$\omega_p = \sqrt{\frac{N_0 e^2}{m_e \epsilon_0}}$$
   </div>
 
   <!--Visualisation for right 2/3-->

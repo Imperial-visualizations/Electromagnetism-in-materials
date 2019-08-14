@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dispersion in Conductors - Imperial Visualisations</title>
+
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+
+        <script src="
+
+                https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.2.3/math.js"
+                ></script>
+
+
+
+        <script src="
+
+                https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"
+                ></script>
+
+
+
+        <script src="
+
+                https://cdn.plot.ly/plotly-1.47.4.min.js"
+                ></script>
+
+
+
+        <script src="
+
+                https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+                async></script>
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129658302-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-129658302-1');
+    </script>
+
+
+
+</head>
+<body>
+
+<div class="container_journey">
+    <center><h5>Dispersion in Conductors</h5></center>
+    <p>
+        In conductors Maxwell's equations are the same as in non-conducting media, except for the curl of B, which
+        becomes: <br>
+        $\displaystyle \nabla \times \mathbf{B} = \mu \epsilon \frac{\partial \mathbf{E}}{\partial t} + \mu \sigma \mathbf{E}$.
+        <br>
+        This reduces to the equation for nonconducting media in the case when $\sigma = 0$.
+        From this we can obtain plane wave solutions:<br><br>
+        $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0  e^{i(\tilde{k}z-\omega t)} $  ,
+        $\displaystyle \tilde{\textbf{B}}(z,t) = \tilde{\textbf{B}}_0  e^{i(\tilde{k}z-\omega t)} $ <br><br>
+
+        Where $\tilde{k}$ is the complex wavenumber, given by:<br>
+        $\displaystyle \tilde{k}^2 = \mu \epsilon \omega^2 + i \mu \sigma \omega$. <br><br>
+
+        The imaginary part of $\tilde{k}$ results in attenuation inside the conductor, as seen previously, but this time the
+        attenuation strength is dependent on the frequency of the wave and sigma; it is also significantly stronger than attenuation
+        in dielectrics. The attenuation is due to the fact that, in
+        a conductor, electrons move in such a way as to oppose any electric field. In a good conductor
+        the electrons can move faster to oppose the electric field and with a faster frequency of EM wave, it is easier for the
+        electrons to oppose the electric field.<br><br>
+
+        Furthermore, since $\tilde{k}$ can be expressed as $\tilde{k} = Ke^{i\phi}$ and
+        $\tilde{\textbf{B}}_0 = \frac{Ke^{i\phi}}{ \omega} \tilde{\textbf{E}}_0 $<br>
+        the B field is phase shifted, from E, by $\phi$ inside the conductor.
+
+
+    </p>
+
+</div>
+
+<!--Implement Scripts Here-->
+
+<script src="scripts/5Cond_Disp.js"></script>
+
+<!--  -->
+</body>
+</html>
