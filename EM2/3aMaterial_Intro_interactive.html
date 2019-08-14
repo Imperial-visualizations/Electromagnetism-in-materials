@@ -26,23 +26,29 @@
 
 <body style="overflow: scroll">
 
- 
+  
 
   <!--Visualisation-->
-  <div id="Vis_interactive" class="" style="position: relative; height: 100vh;">
-      <div id="plot"></div>
+  <div id="Vis_interactive" style="width: 100vw; height: 100vh; display: flex; flex-direction: column">
+    <div id="plot" style='flex-grow: 2; width: 100%'></div>
 
 
+    <div style="flex-grow: 1; display: flex; flex-direction: row; margin-left: 3%">
+        <div style="flex-grow: 1">
+            <button id="playButton">Play</button>
+        <label class="sliderTitle" for="angular_frequency">
+          Ratio of Angular frequencies \(\omega/\omega_0\) :
+          <span id="angular_frequency-display">
+          </span>
+        </label>
+        <input id="angular_frequency" max="1.5" min="0.5" name="angular_frequency" step="0.01" type="range" value="0.6" style="width:30vw;"/>
+            <label class="sliderTitle">Gamma</label>
+            <input id="gamma" max="0.5" min="0.01" name="angular_frequency" step="0.01" type="range" value="0.2" style="width:30vw;"/>
+        </div>
 
-    <div style="width:30vw; padding-left:2vw;">
-        <button id="playButton">Play</button>
-     <label class="sliderTitle" for="angular_frequency">
-      Ratio of Angular frequencies \(\omega/\omega_0\) :
-      <span id="angular_frequency-display">
-      </span>
-     </label>
-     <input id="angular_frequency" max="1.225" min="0.5" name="angular_frequency" step="0.01" type="range" value="0.9" style="width:30vw;"/>
+        <div id="phasePlot" style="flex-grow: 2; margin-right: 3%"></div>
     </div>
+
   </div>
 
 
