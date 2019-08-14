@@ -127,13 +127,20 @@
     </div>
     <div id="density">
         <h3 class="section-sub-head">Charge densities:</h3>
-        <div>
-            FURTHER EXPLAIN THESE
+        <span class="section-extra-head-container">
+            <button class="section-extra-head" data-toggle="collapse"  @click="hideShowToggle($event)"
+                    data-target="#furtherexplain"> Define Terms </button>
+            </span>
+            <div id="furtherexplain" class="collapse extra-content-container">
+                <div class="extra-content">
+                             FURTHER EXPLAIN THESE
             <p>$\rho_{sf}$: Free surface charge density, which is zero for a dielectric.</p>
             <p>$\rho_{f}$: Free charge density (within the material), which is zero for a dielectric.</p>
             <p>$\rho_{sp}$: Polarisation surface charge density, which is produced due to bound charges.</p>
             <p>$\rho_{p}$: Polarisation charge density (within the material), which is produced due to bound charges.</p>
-        </div>
+                        </div>
+                    </div>
+
         <p>Consider a small  element of a dielectric material. When an electric field is applied, atomic dipole moments are generated within atoms due to charge separation.
         The diagram shows a microscopic view of a dielectric and an applied electric field from left to right. As you can see, this results in specific ends of the dipoles sticking of the surface which is parallel
         to the electric field. This results in a charge being developed on these surfaces. The surface charge on Face 1 is </p>
@@ -171,13 +178,21 @@
     </div>
     <div id="current">
         <h3 class="section-sub-head">Current densities:</h3>
-        <div>
-            <p>$\textbf{J}_{c}$: Conduction current density which is due to movement of free charges</p>
+        <span class="section-extra-head-container">
+            <button class="section-extra-head" data-toggle="collapse"  @click="hideShowToggle($event)"
+                    data-target="#furtherexplain2"> Define Terms </button>
+            </span>
+            <div id="furtherexplain2" class="collapse extra-content-container">
+                <div class="extra-content">
+                    <p>$\textbf{J}_{c}$: Conduction current density which is due to movement of free charges</p>
             <p>$\textbf{J}_{sc}$: Surface conduction current density which is due to movement of free charges</p>
             <p>$\textbf{J}_{m}$: Magnetisation current density which is due to movement of bound charges</p>
             <p>$\textbf{J}_{sm}$: Surface magnetisation current density which is due to movement of bound charges</p>
             <p>$\textbf{J}_{p}$: Polarisation current density which is due to movement of bound charges</p>
-        </div>
+                        </div>
+                    </div>
+
+        
         <p>Consider a small  element of a dielectric material. Taking a layer of this element which is an atom thick, we can see that the net current is generated along the surface
         in a direction determined by the orientation of the current loops (look at the diagram); within the layer, the adjacent current loops act to oppose each other and cancel out. Hence, for the dielectric element, a
         current, $I_{element}$ is generated along the faces which are perpendicular to the direction of the magnetic moment of the element $\textbf{m}_{element}$.</p>
