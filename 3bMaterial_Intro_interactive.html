@@ -135,15 +135,25 @@
 
   <!--Visualisation for right 2/3-->
   <div id="Vis_interactive" class="container_vis" style="position: relative;">
-      <div id="plot" style="height: 90vh; width: 70vw"></div>
-      <button id="buttonPlay">Play</button>
+      <div id="plot" style="height: 80vh; width: 70vw"></div>
+      <div id="angular_frequency-slider" style="width:30vw;">
+         <label class="sliderTitle" >
+          Tau :
+          <span id="tau-display">
+            0.9
+          </span>
+         </label>
+         <span class="sliderMin">
+          0
+         </span>
+         <input id="Tau" max="2" min="0" name="Tau" step="0.01" type="range" value="0.9"/>
+         <span class="sliderMax">
+          2
+         </span>
+        </div>
+
   </div>
 
-
-    <div class="six columns">
-        <div id = "graph"></div>
-    </div>
-  </div>
 
 
 
