@@ -11,7 +11,6 @@ const layout = {//layout of refractive index plot
                     },
                     yaxis: {
                         showticklabels: false,
-                        title: "x"
                     },
                     margin: {
                        l: 50, r: 10, b: 50, t: 50, pad: 5
