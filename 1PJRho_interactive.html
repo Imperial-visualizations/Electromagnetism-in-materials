@@ -65,29 +65,29 @@
 
 <div class="widthclass">
     <div>
-        <button id="-XButton" onclick="move_X()" value="1">-X</button>
-        <button id="+XButton" onclick="movePlusX()" value="1">+X</button>
+        <button id="-XButton"  onclick="move_X()" value="1">-X</button>
+        <button id="+XButton" style="background: lightgreen" onclick="movePlusX()" value="1">+X</button>
     </div>
     <div>
         <button id="-YButton" onclick="move_Y()" value="1">-Y</button>
-        <button id="+YButton" onclick="movePlusY()" value="1">+Y</button>
+        <button id="+YButton" style="background: indianred" onclick="movePlusY()" value="1">+Y</button>
     </div>
     <div>
         <button id="-ZButton" onclick="move_Z()" value="1">-Z</button>
-        <button id="+ZButton" onclick="movePlusZ()" value="1">+Z</button>
+        <button id="+ZButton" style="background: lightblue" onclick="movePlusZ()" value="1">+Z</button>
     </div>
-    <button id="delete" onclick="deleteCube()" value="1">Delete!</button>
+    <p>Style People, please make this look better. Love you xoxo</p>
+    <button id="delete" onclick="deleteCube()" value="1">Reset!</button>
+    <button id="showN" onclick="showN()" value="1">Show the normal vector!</button>
 
     <div class="slidecontainer">
         <h5 id="hR"> Rotate:</h5>
-        <input type="range" min="0" max="360" value="0" step="1" class="slider" id="XRot">
-        <p id="XR">X angle: <span id="XRot_Val"></span> &deg</p>
 
-        <input type="range" min="0" max="360" value="0" step="1" class="slider" id="YRot">
-        <p id="YR">Y angle: <span id="YRot_Val"></span> &deg</p>
+        <input type="range" min="-180" max="180" value="0" step="1" class="slider" id="YRot">
+        <p id="YR"> &theta; : <span id="YRot_Val"></span> &deg; </p>
 
-        <input type="range" min="0" max="360" value="0" step="1" class="slider" id="ZRot">
-        <p id="ZR">Z angle: <span id="ZRot_Val"></span> &deg</p>
+        <input type="range" min="-180" max="180" value="0" step="1" class="slider" id="ZRot">
+        <p id="ZR"> &Phi; : <span id="ZRot_Val"></span> &deg; </p>
     </div>
 </div>
 

@@ -1,11 +1,11 @@
 //global constants
 const xMaxIncident = 20;
 const IncidentAmplitude = 3;
-const lamda = 12; //units???
-const omega = 2*Math.PI/lamda;
+const lamda = 50; //units???
+const omega = 0.5;
 
-const k1 = 1;
-const k2 = 1.5;
+const k1 =2*Math.PI/lamda;
+const k2 = k1*1.5;
 
 const xLayoutMin = -20;
 const xLayoutMax = 100;
@@ -148,7 +148,8 @@ class Waves {
          this.ReflectionCoeff = ReflectionCoeff;
          this.NumberOfReflections = NumberOfReflections;
 
-         //structure [ [incid], [refl, ...], [init_transm_in_diel], [transm_left, ...], [transm_right, ...] ]
+         //old structure [ [incid], [refl, ...], [init_transm_in_diel], [transm_left, ...], [transm_right, ...] ]
+         //new structure [ [incid], [refl_in_vac], [init_transm_in_diel], [transm_left, ...], [transm_right, ...] ]
          this.WavesArray = this.CreateWavesArray();
     }
 
@@ -156,15 +157,16 @@ class Waves {
         //type, dielectricWidth, amplitude, direction, offset
         //direction right = 1, left = -1
         //need IncidentWave in a nested array - doing this instead of having a separate property for incident (with wave at diff depth in array) saves having to write  code again and again with only slight differences
-        let TransmittedWaves = this.CreateTransmittedWaves()
-        return [[this.CreateIncidentWave()], this.CreateReflectedWaves(), TransmittedWaves[0], TransmittedWaves[1], TransmittedWaves[2]];
+        let TransmittedWaves = this.CreateTransmittedWaves();
+        let ReflectedWaves = this.CreateReflectedWaves();
+        return [[this.CreateIncidentWave()], ReflectedWaves[1], TransmittedWaves[0], TransmittedWaves[1], TransmittedWaves[2], ReflectedWaves[0]];
     }
 
     CreateIncidentWave(){
         let xMin = 0;
         let xMax = xMaxIncident;
         let direction = 1;
-        let offset = 16;
+        let offset = 16.5;
         let IncidentWave = new Wave("incident", IncidentAmplitude, direction, offset, xMin, xMax, k1);
         return IncidentWave;
     }
@@ -175,15 +177,17 @@ class Waves {
         let r = this.ReflectionCoeff/100;
         let t = 1 - r;
 
+        let ReflectedWaveInVacuum = new Wave("reflected", IncidentAmplitude*r, -1, 12, 0, xMaxIncident, k1);
+
         let ReflectedWaves = [];
         for (let i=0; i<this.NumberOfReflections; i++){
             let direction = (-1)**(i+1);
             let amplitude = (-1)**(i+1) * IncidentAmplitude * t * r**(i+1);
-            let offset = 7 - 6*i;
+            let offset = 7 - 4*i;
             let ReflectedWave = new Wave("reflected", amplitude, direction, offset, xMin, xMax, k2);
             ReflectedWaves.push(ReflectedWave);
         }
-        return ReflectedWaves;
+        return [[ ReflectedWaveInVacuum ], ReflectedWaves ];
     }
 
 
@@ -201,18 +205,20 @@ class Waves {
         let TransmittedWaves = [];
 
         //initial transmitted wave in dielectric so needs to be incl as edge case
-        let InitialTransmittedWave = new Wave("transmitted", IncidentAmplitude*t, 1, 13, xMaxIncident, xMaxIncident+this.DielectricWidth, k2);
+        let InitialTransmittedWave = new Wave("transmitted", IncidentAmplitude*t, 1, 12, xMaxIncident, xMaxIncident+this.DielectricWidth, k2);
         //TransmittedWaves.push(InitialTransmittedWave);
 
-        for (let i=0; i<this.NumberOfReflections; i++){
+        for (let i=0; i<this.NumberOfReflections; i+=2){
             //transmitted waves on the right
             xMin = xMaxIncident + this.DielectricWidth;
             xMax = xMin + xMaxIncident;
 
             //TODO - WRONG????
             amplitude = IncidentAmplitude * t**2 * r**i;
-            offset = 10 - 6*i;
-            let TransmittedWaveRight = new Wave("transmitted", amplitude, 1, offset, xMin, xMax, k1);
+            //amplitude = IncidentAmplitude
+
+            offset = 9 - 4*i;
+            let TransmittedWaveRight = new Wave("transmitted", amplitude, 1, offset, xMin, xMax, k2);
             TransmittedWavesRight.push(TransmittedWaveRight);
 
             //transmitted waves on the left
@@ -220,8 +226,9 @@ class Waves {
             xMax = xMaxIncident;
 
             amplitude = -1 * IncidentAmplitude * t**2 * r**(1 + i*2);
+            //amplitude = -1 * IncidentAmplitude //* t**2 * r**(1 + i*2);
 
-            offset = 5 - 6*i;
+            offset = 5 - 4*(i);
             let TransmittedWaveLeft = new Wave("transmitted", amplitude, -1, offset, xMin, xMax, k1);
             TransmittedWavesLeft.push(TransmittedWaveLeft);
         }
@@ -344,7 +351,9 @@ function update(waves) {
     Plotly.react(dielectricGraphDiv, DataLines, CreateLayout(waves.DielectricWidth));
 }
 
-function NextAnimationFrame(waves){
+function NextAnimationFrame(DielectricWidth, ReflectionCoeff, NumberOfReflections){
+    t += 0.2;
+    let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections)
 
     Plotly.animate(dielectricGraphDiv,
         {
@@ -451,8 +460,8 @@ function main() {
 
         // let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
 
-        //Uses newPlot - for debugging only
-        // initialPlot(waves)
+        // // Uses newPlot - for debugging only
+        // initialPlot(waves);
         });
     });
 }

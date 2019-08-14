@@ -37,8 +37,7 @@
     <h4 style = "text-align:center">Dispersion in Plasma</h4>
 
     <p>
-        The dependence of wave speed and index of refraction on wavelength is called dispersion. (Plagiarised)(is this the 
-        definition we want anyway?)
+        A dispersion relation relates a wave's angular frequency $\omega$ to its wavevector $k$.
     </p>
     <p>
         The dispersion relation for a plasma is given by
@@ -47,13 +46,27 @@
         $k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$,
     </p>
     <p>
-        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e \varepsilon_0}}$.
+        where $c$ is the speed of light, the plasma frequency $\omega_p = \sqrt{\frac{N_e e^2}{m_e \varepsilon_0}}$, $N_e$ is the plasma free electron number density, e is the electron
+        charge, $m_e$ is the mass of an electron and $\varepsilon_0$ is the vacuum permittivity.
+    </p>
+
+    <p>
+        Try varying the $N_e$ slider to in order to change $\omega_p$.  Move the $\omega$ slider to change the frequency of the wave.
+        Notice that when $\omega$ is less than $\omega_p$, the wavevector $k$ becomes imaginary, and the wave is completely attenuated by the 
+        plasma.
+    </p>
+    <p>
+        The dispersion relation for a vacuum is also shown in the graph.  As the number density of electrons in the plasma $N_e$ is decreased, 
+        it becomes more like a vacuum, so it makes sense that the plasma dispersion relation should tend to the vacuum relation.  Another way of thinking
+        about it is that increasing the frequency of the wave relative to the plasma frequency (the frequency of oscillation of the electrons within 
+        the plasma) means that the electrons cannot react quickly enough to affect the wave, so the effect of passing through the plasma becomes
+        negligible.
     </p>
   
     <h6 style = "text-align:left">Derivation</h6>
 
     <p>
-        Start with Maxwell's equations.
+        To derive this dispersion relation, we start with Maxwell's equations.
     </p>
     <p style = "text-align:center">
         $\nabla\cdot\boldsymbol{E} = \frac{\rho_f}{\varepsilon}$
@@ -65,9 +78,12 @@
         $\nabla \times \boldsymbol{E} = -\frac{\partial \boldsymbol{B}}{\partial t}$
         <br/>
         <br/>
-        $\nabla \times \boldsymbol{B} = \mu \boldsymbol{J}_c + \mu \varepsilon \frac{\partial \boldsymbol{E}}{\partial t}$
+        $\nabla \times \boldsymbol{B} = \mu \boldsymbol{J}_c + \mu \varepsilon \frac{\partial \boldsymbol{E}}{\partial t}$,
         
-
+    <p>
+        where $\boldsymbol{B}$ is the magnetic field, $\boldsymbol{E}$ is the electric field, $\mu$ is the permeability, 
+        $\varepsilon$ is the permittivity, $\rho_f$ is the free charge density and $J_c$ is the conduction current density.
+    </p>
     </p>
     
     <p>
@@ -79,43 +95,59 @@
         $\boldsymbol{k}\cdot\boldsymbol{B} = 0$<br/>
         $\boldsymbol{k} \times \boldsymbol{E} = \omega \boldsymbol{B}$<br/>
         $\boldsymbol{k} \times \boldsymbol{B} = -i \mu_0 \boldsymbol{J}_c - \mu_0 \varepsilon \omega \boldsymbol{E}$<br/>
-
-
     </p>
     <p>
-        In a plasma we assume
+        In a plasma we assume that:
     </p>
     <p>
-        $\rho_f \neq 0$<br/>
-        $\boldsymbol{J}_c = i \frac{N_e e^2}{m_e \omega}\boldsymbol{E}$<br/>
-        $\varepsilon = \varepsilon_0$<br/>
-            
+        <ul>
+            <li>$\rho_f \neq 0$<br/></li>
+            <ul>
+                <li>the free charge density is non zero because charge is free to move in the plasma.</li>
+            </ul>
+            <li>$\boldsymbol{J}_c = i \frac{N_e e^2}{m_e \omega}\boldsymbol{E}$<br/></li>
+    
+            <li>$\varepsilon = \varepsilon_0$<br/></li>
+            <ul>
+                <li>a plasma has no D or H fields, since a plasma is unable to be polarised.</li>
+            </ul>
+        </ul> 
     </p>
 
     <p>
-        Taking the fourth Maxwell equation
+        We can now take the fourth equation, the Ampere-Maxwell equation, and substitute in our assumptions:
     </p>
     <p>
         $\begin{eqnarray}\boldsymbol{k} \times \boldsymbol{B} &=& -i\mu_0\Big(i\frac{N_e e^2}{m_e \omega}\boldsymbol{E}\Big) - \varepsilon_0 \mu_0 \omega \boldsymbol{E}\\
+        <br/>
         &=& \varepsilon_0 \mu_0 \omega \Big(\frac{N_e e^2}{m_e \varepsilon_0 \omega^2} - 1\Big)\boldsymbol{E}\\
+        <br/>
         &=& \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{E}\end{eqnarray}$
         
     </p>
     <p>
-        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e e^2}}$<br/>
+        where $\omega_p = \sqrt{\frac{N_e e^2}{m_e e^2}}$.<br/>
     </p>
     <p>
         $\boldsymbol{k} \times (\boldsymbol{k} \times \boldsymbol{B}) = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{k}\times\boldsymbol{E}$<br/>
+        <br/>
+        Using an identity to rewrite the vector triple product on the left, we get<br/>
+        <br/>
+        $\boldsymbol{k}(\boldsymbol{k} \cdot \boldsymbol{B}) - \boldsymbol{B}(\boldsymbol{k} \cdot \boldsymbol{k})= \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\boldsymbol{k}\times\boldsymbol{E}$.<br/>
+        <br/>
+        The first term on the LHS becomes zero because $\boldsymbol{B}$ is perpendicular to $\boldsymbol{k}$, so this becomes<br/> 
+        <br/>
         $-k^2\boldsymbol{B} = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} - 1\Big)\omega\boldsymbol{B} = \Big(\frac{\omega_p^2 - \omega^2}{c^2}\boldsymbol{B}\Big)$<br/>
+        <br/>
         $\Big(k^2 + \frac{\omega_p^2 - \omega^2}{c^2}\Big)\boldsymbol{B} = 0$<br/>
 
     </p>
     <p>
-        Dispersion relation
+        Finally, we can rearrange to get our dispersion relation for a plasma.
     </p>
     <p>
-        $∴ k^2 = \frac{\omega^2 - \omega_p^2}{c^2}$<br/>
-        $∴ k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^\frac{1}{2}$</br>
+        $k^2 = \frac{\omega^2 - \omega_p^2}{c^2}$<br/>
+        $k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^\frac{1}{2}$</br>
     </p>
 </div>
 
