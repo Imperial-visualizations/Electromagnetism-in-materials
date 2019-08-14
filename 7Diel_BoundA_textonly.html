@@ -69,58 +69,79 @@
                 This visualisation explains the behaviour of electromagnetic waves incident on a dielectric boundary. More specifically, it focusses on the Fresnel coefficients, also known as the reflection and transmission coefficients.
             </p>
         </div>
+
         <div id="pillbox" class="divclass bigdropdown">
+
             <h4>Pill-box Volume</h4>
+
             <p>
-                    The Fresnel equations follow directly from Maxwell’s equations. To see why this is the case, consider the following pill-box volume.
+                The Fresnel equations follow directly from Maxwell’s equations. To see why this is the case, consider the following pill-box volume.
             </p>
-            <center><img src="images/7PillboxImage.png" alt="Pillbox Volume"
-            style = "width:80%; height: 80%"></center>
+
+            <center><img src="images/7PillboxImage.png" alt="Pillbox Volume" style = "width:80%; height: 80%"></center>
+
             <p>
                 Applying the 4-field form of Maxwell’s equations on this pill-box, we arrive at 4 general boundary conditions for an EM wave incident on a dielectric boundary. The conditions can be simplified for simple media by setting $\mu_r=1$.
             </p> 
+
         </div>
     
-    <div id="main_text" class="divclass">
-        <p>
-            Of the four boundary conditions obtained from Maxwell’s equations, only the continuity of the electric and magnetic fields at the boundary are needed to derive the Fresnel equations.
-        </p>
+        <div id="main_text" class="divclass">
 
-        <div id="intro_polarisation" class="divclass bigdropdown">
-            <h4>Introduction to Polarisation</h4>
-            Note here that the incident wave has two main modes of polarisation. The first mode is p-polarisation – here the electric field is parallel to the plane of incidence. The second is s-polarised – here the opposite is true in that the electric field is perpendicular to the plane of incidence. These two linear polarisations can then form any arbitrary polarisation.
+            <p>
+                Of the four boundary conditions obtained from Maxwell’s equations, only the continuity of the electric and magnetic fields at the boundary are needed to derive the Fresnel equations.
+            </p>
+
+            <div id="intro_polarisation" class="divclass bigdropdown">
+                <h4>Introduction to Polarisation</h4>
+                Note here that the incident wave has two main modes of polarisation. The first mode is p-polarisation – here the electric field is parallel to the plane of incidence. The second is s-polarised – here the opposite is true in that the electric field is perpendicular to the plane of incidence. These two linear polarisations can then form any arbitrary polarisation.
+            </div>
+
+            <p>
+                To avoid sign errors in our two boundary conditions, we must account for the polarisation of the incident wave. The right-hand rule should help you avoid any such errors. This is perhaps best shown in the following diagrams. Superscript $i$, $t$ and $r$ denote the incident, transmitted and reflected wave respectively. 
+            </p>
+
+            <center><img src="images/7P-Polarisation.png" alt="P-Polarisation" style = "width:80%; height:80%"></center>
+            <center><img src="images/7S-Polarisation.png" alt="S-Polarisation" style = "width:80%; height:80%"></center>
+            
+            <p>
+                Thus, for a p-polarised incident wave, we obtain the boundary conditions $E_0^i\cos\theta^i+E_0^r\cos\theta^i=E_0^t\cos\theta^t$ and $B_0^i-B_0^r=B_0^t$.
+                <br>
+                We can also make use of $B=\frac{\mu_0E_0}{Z}$, where $\mu_0$ is the vacuum permeability and $Z$ is the wave impedance, to write $B_0^i-B_0^r=B_0^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=\frac{E_0^t}{Z_2}.$
+            </p>
+
+            <p>
+                Similarly, for s-polarisation, we obtain the boundary conditions $E_0^i-E_0^r=E_0^t$ and $$-B_0^i\cos\theta^i+B_0^r\cos\theta^i=-B_0^t\cos\theta^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=-\frac{E_0^t}{Z_2}\cos\theta^t.$$
+            </p>
+
+            <p>
+                Finally, we make use of Snell’s law to obtain an expression for $\theta^t$ in terms of $\theta^i$, to arrive at the Fresnel equations
+                $$t_{p,s}=\frac{E_0^t}{E_0^i}=\frac{2\cos\theta^i}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}}$$
+                and
+                $$r_{p,s}=\frac{E_0^r}{E_0^i}=\frac{\cos\theta^{t,i}-(\frac{n_2}{n_1})\cos\theta^{i,t}}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}},$$
+                where $n$ denotes the refractive index of the medium.
+            </p>
+
+            <p>
+                We now define the Brewster angle to be the angle where $r_p=0$, thus $\theta_B=\arctan\frac{n_2}{n_1}$.
+            </p>
+
+            <p>
+                Also, recall that past the critical angle $θ_c=\arcsin\frac{n_2}{n_1}$, Snell’s law becomes invalid and we get total internal reflection.
+            </p>
+
+            <div id="guide" class="bigdropdown">
+                <h4>
+                    Guide:
+                </h4>
+                <p>
+                    Toggle between s and p polarisation - notice how the incident wave changes in response.
+                    <br>
+                    Also, notice how there is no Brewster angle when the incident wave is s-polarised. 
+                </p>
+            </div>
+            
         </div>
 
-        <p>
-            To avoid sign errors in our two boundary conditions, we must account for the polarisation of the incident wave. The right-hand rule should help you avoid any such errors. This is perhaps best shown in the following diagrams. Superscript $i$, $t$ and $r$ denote the incident, transmitted and reflected wave respectively. 
-        </p>
-
-        <center><img src="images/7P-Polarisation.png" alt="P-Polarisation"
-        style = "width:80%; height:80%"></center>
-        <center><img src="images/7S-Polarisation.png" alt="S-Polarisation"
-        style = "width:80%; height:80%"></center>
-        
-        <p>
-            Thus, for a p-polarised incident wave, we obtain the boundary conditions $E_0^i\cos\theta^i+E_0^r\cos\theta^i=E_0^t\cos\theta^t$ and $B_0^i-B_0^r=B_0^t$.
-            <br>
-            We can also make use of $B=\frac{\mu_0E_0}{Z}$, where $\mu_0$ is the vacuum permeability and $Z$ is the wave impedance, to write $B_0^i-B_0^r=B_0^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=\frac{E_0^t}{Z_2}$
-        </p>
-        <p>
-            Similarly, for s-polarisation, we obtain the boundary conditions $E_0^i-E_0^r=E_0^t$ and $-B_0^i\cos\theta^i+B_0^r\cos\theta^i=-B_0^t\cos\theta^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}$$=-\frac{E_0^t}{Z_2}\cos\theta^t$.
-        </p>
-        <p>
-            Finally, we make use of Snell’s law to obtain an expression for θ^t in terms of θ^i, to arrive at the Fresnel equations
-            $$t_{p,s}=\frac{E_0^t}{E_0^i}=\frac{2\cos\theta^i}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}}$$
-            and
-            $$r_{p,s}=\frac{E_0^r}{E_0^i}=\frac{\cos\theta^{t,i}-(\frac{n_2}{n_1})\cos\theta^{i,t}}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}},$$
-            where $n$ denotes the refractive index of the medium.
-        </p>
-        <p>
-            We now define the Brewster angle to be the angle where $r_p=0$, thus $\theta_B=\arctan\frac{n_2}{n_1}$.
-        </p>
-        <p>
-            Also, recall that past the critical angle $θ_c=\arcsin\frac{n_2}{n_1}$, Snell’s law breaks down and we get total internal reflection.
-        </p>
-    </div>
     </div>
 </body>
