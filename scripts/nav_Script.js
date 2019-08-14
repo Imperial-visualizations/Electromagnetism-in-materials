@@ -12,6 +12,7 @@ let app = new Vue ({
         currentSection: 0,
         sectionTops: [],
         sectionBottoms: [],
+        innerchange:[],
 
         sectionTitleLong: ["Introduction", "Materials","Fields",  "Dispersion", "Dielectric Boundary","Conductor Boundary","Plasma Boundary","Meta-material"],
 
@@ -24,7 +25,7 @@ let app = new Vue ({
         journeyHeightOld: "",
         journeyHeightNew: "",
         firstRunDone: false,
-        subSection: [false,1,1,1,1,1,1,1],
+        subSection: [1,1,1,1,1,1,1,1],
         subSubSection: 1,
     },
 
@@ -37,6 +38,11 @@ let app = new Vue ({
                 app.scrollPos = document.querySelectorAll(".journey")[0].scrollTop;
                 app.changeTitle();
                 app.changeSec();
+                app.innerchange=document.querySelectorAll("#innerchange")[0].offsetTop-document.querySelectorAll("#sc1")[0].offsetTop;
+                console.log("inner:"+app.innerchange)
+                if (app.scrollPos >= app.innerchange && app.scrollPos < app.sectionBottoms[0]){
+                app.subSection[0]=2;
+            }
             }
         },
         
@@ -45,6 +51,7 @@ let app = new Vue ({
             if (app.scrollPos >= app.sectionTops[section -1] && app.scrollPos < app.sectionBottoms[section -1]) {
                 app.currentTitle = section;
             }
+
         },
 
         changeTitle:  function () {
@@ -66,6 +73,8 @@ let app = new Vue ({
                 }
             }
         },
+
+
 
         // Function called every x seconds to check if section div sizes have changed and recalculate scroll positions if so
         // Div sizes may change if window re-sized or if a subsection is expanded/collapsed
@@ -102,9 +111,9 @@ let app = new Vue ({
         // Removes and adds scripts depending on which section and subsection is active
         loadSubScripts: debounce (function () {
             document.querySelectorAll('.rightSubScriptSpace')[0].innerHTML = "";
-            console.log("section " + app.currentSection + " recognised");
-            console.log("subsection " + app.subSection[app.currentSection - 1] + " recognised");
-            for (let k = 1; k <= app.rightSubScripts[app.currentSection - 1][app.subSection[app.currentSection - 1] - 1].length; k++) {
+            //console.log("section " + app.currentSection + " recognised");
+            //console.log("subsection " + app.subSection[app.currentSection - 1] + " recognised");
+            /*for (let k = 1; k <= app.rightSubScripts[app.currentSection - 1][app.subSection[app.currentSection - 1] - 1].length; k++) {
                 console.log("subScriptNo " + k + " recognised");
                 app.addScript = document.createElement("script");
                 app.addScript.id = "rightSubScriptS" + app.currentSection + "." + app.subSection[app.currentSection - 1] + "E" + k;
@@ -112,7 +121,7 @@ let app = new Vue ({
                 app.addScript.async = false;
                 document.querySelectorAll('.rightSubScriptSpace')[0].appendChild(app.addScript);
                 // Antoine: added this line to make MathJax load, don't know if there is a better way of doing this
-                MathJax.Hub.Queue(["Typeset", MathJax.Hub, 'right-container']);  }
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub, 'right-container']);  }*/
         }, 200),
 
         // Updates number of title being hovered over in nav/progress bar in data
@@ -155,7 +164,7 @@ let app = new Vue ({
         },
 
         // Removes and adds scripts depending on which section is at top of visible part of journey and which tab is open
-        currentSection: function (newValue, oldValue) {
+        /*currentSection: function (newValue, oldValue) {
 
             document.querySelectorAll('.rightScriptSpace')[0].innerHTML = "";
             for (let i=1; i<=app.rightScripts[newValue-1].length; i++) {
@@ -171,7 +180,7 @@ let app = new Vue ({
             } else {
                 document.querySelectorAll('.rightSubScriptSpace')[0].innerHTML = "";
             }
-        }
+        }*/
     },
 
     mounted () {

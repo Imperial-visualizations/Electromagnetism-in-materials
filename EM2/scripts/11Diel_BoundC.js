@@ -1,461 +1,550 @@
-//global constants
-const xMaxIncident = 20;
-const IncidentAmplitude = 3;
-const lamda = 12; //units???
-const omega = 2*Math.PI/lamda;
 
-const k1 = 1;
-const k2 = 1.5;
+const dom = {
+    tSlider: $("input#thickness"),//Thickness slider
+    rfSlider: $("input#refractive_index"),//refractive index slider
+    termsSlider: $("input#number_of_terms")
+};
 
-const xLayoutMin = -20;
-const xLayoutMax = 100;
+let spacing = 2;//spacing between terms on the individual terms graph
+let offset = 2;//offset of the first term from the incident wave
+let offset_reset = offset;
+let data_left = 0,data_center = 0,data_right = 0;
 
-const yLayoutMin = -20;
-const yLayoutMax = 20;
-
-const resolution = 250;
-
-const dielectricGraphDiv = "dielectricGraph";
-const leftSumGraphDiv = "leftSumGraph";
-const rightSumGraphDiv = "rightSumGraph";
-
-const xMinBoundary = Array(resolution).fill(xMaxIncident);
-const yBoundary = numeric.linspace(yLayoutMin, yLayoutMax, resolution)
-
-
-//TICKING CLOCK INIT AT GLOBAL LEVEL?!
+let size = 100;
 let t = 0;
+let isPlay = false;
+let t_ad = 1e9;
 
-let OldNumberOfReflections = parseInt($("#NumberOfReflections").val());
+let w_0 = 3e8;//gives properties of material
+let w = w_0;
+let c = 3e8; // Speed of light
 
-function CreateLayout(DielectricWidth){
+let n1 = 1;//material before dielectric
+let E_0 = 1;
+let width = 10;//width of the graph
 
-    let layout = {
-        showlegend: false,
-        shapes: [{
-            type: "rect",
-            xref: "x",
-            yref: "paper",
-            x0: xMaxIncident,
-            y0: 0,
-            x1: xMaxIncident + DielectricWidth,
-            y1: 1,
-            fillcolor: '#d3d3d3',
-            opacity: 0.4,
-            line: {
-                width: 0
-            }
-        }],
-        xaxis: {
+//let terms;
+let terms = 7;//number of terms shown , balance between accuracy of visulisation and not clarity and too many becomes confusing to look at
+
+let thickness = parseFloat($("input#thickness").val());//set value of thicknes of dielectric
+let n2 = parseFloat($("input#refractive_index").val());//set value of the refractive index of dielectric
+
+let offset_max = offset + spacing * terms;
+
+let k_1 = (w*n1)/c;
+let k_2 = (w*n2)/c;
+
+let mu_0 = 4*Math.PI*1e-7;
+let ep_0 = 8.85*1e-12;
+
+let Z_vac = math.sqrt(mu_0/ep_0)/n1;
+let Z_diel = math.sqrt(mu_0/ep_0)/n2;
+
+let rf_v_d = (1-(Z_vac/Z_diel))/(1+(Z_vac/Z_diel));//reflection ampitude coefficient of vacuum to dielectric
+let rf_d_v = (1-(Z_diel/Z_vac))/(1+(Z_diel/Z_vac));//reflection ampitude coefficient of dielectric to vacuum
+let tr_v_d = 2/(1+ Z_vac/Z_diel);//transmission ampitude coefficient of vacuum to dielectric
+let tr_d_v = 2/(1+ Z_diel/Z_vac);//transmission ampitude coefficient of dielectric to vacuum
+
+let x_data = numeric.linspace(0,width,size);
+let side = (width-thickness)/2;
+
+let x_data_left = numeric.linspace(0,side,size);//x data from edge to dielectric left hand side
+let x_data_center = numeric.linspace(side,side+thickness,size);
+let x_data_right = numeric.linspace(side+thickness,width,size);//x data from dielectric right hand side to edge
+
+function shade_dielectric(side, thickness){
+    let shapes = [{
+        type: "rect",
+        xref: "x",
+        yref: "paper",
+        x0: side,
+        y0: 0,
+        x1: side + thickness,
+        y1: 1,
+        fillcolor: '#d3d3d3',
+        opacity: 0.4,
+        line: {
+            width: 0
+        }
+    }]
+
+    return shapes;
+}
+
+class plt_layouts {
+    constructor(side, thickness){
+        this.side = side;
+        this.thickness = thickness;
+
+        this.layout_sum = this.create_layout_sum();
+        this.layout_individual = this.create_layout_individual();
+        this.layout_trans = this.create_layout_trans();
+        this.layout_amp = this.create_layout_amp();
+
+    }
+
+    create_layout_sum(){
+        return {
+            title: 'Sum of Individual Terms',
+            shapes: shade_dielectric(this.side, this.thickness),
+            showlegend: false,
+            margin: {
+                  l: 20,
+                  r: 10,
+                  b: 25,
+                  t: 40,
+                  pad: 0
+                },
+            xaxis: {
+              range: [ 0,width],
+              zeroline: false,
+              showgrid: false,
+              showticklabels: false
+            },
+            yaxis: {
+              range: [ -2.3, 2.3],
+              zeroline: false,
+              showgrid: false,
+              showticklabels: false
+            },
+          }
+    }
+
+    create_layout_individual(){
+        return {
+            title:'Individual Terms',
+            shapes: shade_dielectric(this.side, this.thickness),
+            showlegend: false,
+            margin: {
+                l: 20,
+                r: 10,
+                b: 20,
+                t: 25,
+                pad: 0
+              },
+          xaxis: {
+            range: [ 0, width],
             zeroline: false,
             showgrid: false,
-            constrain: "domain",
-            range: [xLayoutMin, xLayoutMax],
             showticklabels: false
-            
-        },
-        yaxis: {
+          },
+          yaxis: {
+            //range: [ -1.5, 1 + offset_max],
+            range: [-1.5, 17],
             zeroline: false,
             showgrid: false,
-            range: [yLayoutMin, yLayoutMax],
-            showline: false
-        },
-        margin: {
-            l: 0, r: 0, b:10, t: 10, pad: 2
+            showticklabels: false
+          },
         }
     }
 
-    return layout
-}
-
-const LeftSumGraphLayout = {
-    showlegend: false,
-
-    xaxis: {
-        zeroline: false,
-        showgrid: false,
-        constrain: "domain",
-        range: [0,20],
-        showline: false
-    },
-
-    yaxis: {
-        zeroline: false,
-        showgrid: false,
-        range: [-20,20],
-        showline: false
-    },
-
-    margin: {
-        l: 0, r: 0, b:0, t:0, pad:0
-    }
-}
-
-const RightSumGraphLayout = {
-    showlegend: false,
-
-    xaxis: {
-        zeroline: false,
-        showgrid: false,
-        constrain: "domain",
-        range: [0,20],
-        showline: false
-    },
-
-    yaxis: {
-        zeroline: false,
-        showgrid: false,
-        range: [-20,20],
-        showline: false
-    },
-
-    margin: {
-        l: 0, r: 30, b:0, t:0, pad:0
-    }
-}
-
-
-class Wave {
-
-    constructor(type, amplitude, direction, offset, xMin, xMax, k){
-        this.type = type;
-        this.amplitude = amplitude;
-        this.direction = direction;
-        this.offset = offset;
-        this.xMin = xMin;
-        this.xMax = xMax;
-        this.k = k;
-
-        this.Data = this.GenerateData();
+    create_layout_trans(){
+        return {
+            title:'Energy Transmission Coefficient vs Thickness',
+            showlegend: false,
+              margin: {
+                l: 20,
+                r: 20,
+                b: 20,
+                t: 40,
+                pad: 0
+              },
+          xaxis: {
+            range: [ 0,parseFloat($("#thickness").attr("max"))]
+          },
+          yaxis: {
+            range: [ 0, 1.35]
+          },
+          }
     }
 
-    GenerateData(){
-        let x = numeric.linspace(this.xMin, this.xMax, resolution);
-        //console.log("xMin", xMin);
-        let y = x.map(x1 => {
-            return this.amplitude * Math.cos(this.k*x1 - this.direction*omega*t) + this.offset;
-        });
-
-        return [x, y];
-    }
-
-}
-
-class Waves {
-
-    constructor(DielectricWidth, ReflectionCoeff, NumberOfReflections){
-         this.DielectricWidth = DielectricWidth;
-         this.ReflectionCoeff = ReflectionCoeff;
-         this.NumberOfReflections = NumberOfReflections;
-
-         //structure [ [incid], [refl, ...], [init_transm_in_diel], [transm_left, ...], [transm_right, ...] ]
-         this.WavesArray = this.CreateWavesArray();
-    }
-
-    CreateWavesArray(){
-        //type, dielectricWidth, amplitude, direction, offset
-        //direction right = 1, left = -1
-        //need IncidentWave in a nested array - doing this instead of having a separate property for incident (with wave at diff depth in array) saves having to write  code again and again with only slight differences
-        let TransmittedWaves = this.CreateTransmittedWaves()
-        return [[this.CreateIncidentWave()], this.CreateReflectedWaves(), TransmittedWaves[0], TransmittedWaves[1], TransmittedWaves[2]];
-    }
-
-    CreateIncidentWave(){
-        let xMin = 0;
-        let xMax = xMaxIncident;
-        let direction = 1;
-        let offset = 16;
-        let IncidentWave = new Wave("incident", IncidentAmplitude, direction, offset, xMin, xMax, k1);
-        return IncidentWave;
-    }
-
-    CreateReflectedWaves(){
-        let xMin = xMaxIncident;
-        let xMax = xMaxIncident + this.DielectricWidth;
-        let r = this.ReflectionCoeff/100;
-        let t = 1 - r;
-
-        let ReflectedWaves = [];
-        for (let i=0; i<this.NumberOfReflections; i++){
-            let direction = (-1)**(i+1);
-            let amplitude = (-1)**(i+1) * IncidentAmplitude * t * r**(i+1);
-            let offset = 7 - 6*i;
-            let ReflectedWave = new Wave("reflected", amplitude, direction, offset, xMin, xMax, k2);
-            ReflectedWaves.push(ReflectedWave);
+    create_layout_amp(){
+        return {
+            title:'Energy Transmission Coefficient of Individual Terms',
+              margin: {
+                l: 20,
+                r: 20,
+                b: 20,
+                t: 30,
+                pad: 0
+              },
+          xaxis: {
+            tick0:0,
+            dtick: 1,
+            range: [ 0, terms-1 ]
+          },
+          yaxis: {
+            range: [ 0, 1 ]
+          },
         }
-        return ReflectedWaves;
     }
 
 
-    CreateTransmittedWaves(){
-        let xMin;
-        let xMax;
-        let amplitude;
-        let offset;
-        let r = this.ReflectionCoeff/100;
-        let t = 1 - r;
+}
 
-        let TransmittedWavesLeft = [];
-        let TransmittedWavesRight = [];
+function wave_data_one(){//create incident, reflected and transmitted waves
+    let y_data_i = [],y_data_r=[],y_data_t=[];
+    for (let i = 0; i < x_data.length; i++) {
+        y_data_i.push(E_0 * Math.sin(k_1*x_data_left[i]+ (w*t/t_ad)))//add in time
+        y_data_r.push(offset + E_0 * rf_v_d * Math.sin(Math.PI + k_1*side + k_1 * -1 * x_data_left[x_data.length-i] + (w*t/t_ad)));
+        y_data_t.push(offset + E_0 * tr_v_d * Math.sin(k_1*side + k_2 * (x_data_center[i]) + (w*t/t_ad)))
+    }
+    data_left =  math.add(data_left,math.add(y_data_i,math.add(-offset,y_data_r)));
+    data_center = math.add(data_center,math.add(-offset,y_data_t));
+    offset = offset + spacing ;
+    return[[x_data_left,y_data_i],[x_data_left,y_data_r.reverse()],[x_data_center,y_data_t]]
+}
+
+function create_waves(){//creates the waves once they are inside the dielectric, hence can have as many terms as we like as only direction and amplitude of waves changes
+    let direction = 1;//moving to the right
+    let data = [];
+    let x_data_r,x_data_t;
+
+    for(let v = 0; v < terms; v++) {
+        let y_data_r = [];
+        let y_data_t = [];
+        let pos;
+        for (let i = 0; i < x_data.length; i++) {
+            if(direction === 1){
+                pos = x_data.length-i;
+            }else{
+                pos = i;
+            }
+            y_data_r.push(offset + E_0 * tr_v_d* Math.pow(rf_d_v,(v+1)) * Math.sin(Math.PI + k_1*side + (v+1)*k_2*thickness + k_2 *direction* x_data_center[pos]+ (w*t/t_ad)));
+            y_data_t.push(offset + E_0 *tr_v_d * Math.pow(rf_d_v,(v))* tr_d_v * Math.sin(k_1*side + (v+1)*k_2*thickness + k_1 * x_data_left[x_data.length-pos]+ (w*t/t_ad)))
+        }
+        x_data_r = x_data_center;
+        if(direction === 1){
+            x_data_t = x_data_right;
+            y_data_r = y_data_r.reverse();//reverse the data as it must be plotted from left to right (not calculated like this originally due to phase shift at origin of wave)
+            data_right = math.add(data_right,math.add(-offset,y_data_t));
+            data_center = math.add(data_center,math.add(-offset,y_data_r));
+        }else{
+            x_data_t = x_data_left;
+            y_data_t= y_data_t.reverse();
+            data_left =  math.add(data_left,math.add(-offset,y_data_t));
+            data_center = math.add(data_center,math.add(-offset,y_data_r));
+        }
+        direction = direction*-1; //flip the direction
+        offset = offset + spacing ;//add shift up to speparate out the individual terms
+        data.push([[x_data_r,y_data_r],[x_data_t,y_data_t]]);
+    }
+    return [data,[data_left,data_center,data_right]]
+}
+
+function plot_data() {//plot traces
+
+    let data_sum = [];
+    let data_individual = [];
+    let wave_one = wave_data_one();
+    let results = create_waves();
     
-        let TransmittedWaves = [];
-
-        //initial transmitted wave in dielectric so needs to be incl as edge case
-        let InitialTransmittedWave = new Wave("transmitted", IncidentAmplitude*t, 1, 13, xMaxIncident, xMaxIncident+this.DielectricWidth, k2);
-        //TransmittedWaves.push(InitialTransmittedWave);
-
-        for (let i=0; i<this.NumberOfReflections; i++){
-            //transmitted waves on the right
-            xMin = xMaxIncident + this.DielectricWidth;
-            xMax = xMin + xMaxIncident;
-
-            //TODO - WRONG????
-            amplitude = IncidentAmplitude * t**2 * r**i;
-            offset = 10 - 6*i;
-            let TransmittedWaveRight = new Wave("transmitted", amplitude, 1, offset, xMin, xMax, k1);
-            TransmittedWavesRight.push(TransmittedWaveRight);
-
-            //transmitted waves on the left
-            xMin = 0;
-            xMax = xMaxIncident;
-
-            amplitude = -1 * IncidentAmplitude * t**2 * r**(1 + i*2);
-
-            offset = 5 - 6*i;
-            let TransmittedWaveLeft = new Wave("transmitted", amplitude, -1, offset, xMin, xMax, k1);
-            TransmittedWavesLeft.push(TransmittedWaveLeft);
-        }
-
-        TransmittedWaves = [[InitialTransmittedWave], TransmittedWavesLeft, TransmittedWavesRight];
-
-        return TransmittedWaves;
-    }
-}
-
-function FindSumWaveData(waves){
-    let x = numeric.linspace(0,20,resolution);
-    let yLeft = waves.WavesArray[0][0].Data[1]; //incid data
-    let yRight = Array(resolution).fill(0); //initially zeros
-
-    for (let waveIndex=0; waveIndex<waves.WavesArray[2].length; waveIndex++){
-
-        let offsetLeft = waves.WavesArray[3][waveIndex].offset;
-        let offsetRight = waves.WavesArray[4][waveIndex].offset;
-
-        yLeft = yLeft.map(function(num, yindex){
-            return num + waves.WavesArray[3][waveIndex].Data[1][yindex] - offsetLeft - 16;
-        });
-
-        yRight = yRight.map(function(num, yindex){
-            return num + waves.WavesArray[4][waveIndex].Data[1][yindex] - offsetRight;
-        });
-        
-    }
-
-    //console.log("yLeft", yLeft);
-
-    //[left data, right data]
-    return [ [x, yLeft], [x, yRight] ];
-}
-
-function CreateDataLine(xData, yData, type) {
     let colour;
 
-    if (type === "incident"){
-        colour = "rgb(100,100,100)";
-    } else if (type === "reflected"){
-        colour = "rgb(200,0,0)";
-    } else if (type === "transmitted"){
-        colour = "rgb(0,0,200)";
-    } else if (type === "boundary"){
-        colour = "rgb(200,200,200)"
-    } else {
-        colour = "rgb(200,100,200)";
+    for (let v = 0;v<3;v++){//traces of first three waves
+        if(v === 0){
+            colour = "#A51900"
+        }else if(v === 1){
+            colour = "#0F8291"
+        }else{
+            colour = "#02893B"
+        }
+
+        data_individual.push({
+            type: "scatter",
+            mode: "lines",
+            x: wave_one[v][0],
+            y: wave_one[v][1],
+            opacity: 1,
+            line: {
+                width: 2,
+                color: colour,
+                reversescale: false}
+            })
     }
 
-    let line = {
-                x: xData,
-                y: yData,
+    for(let i = 0; i < terms;i++){//traces of reflections and tranmission from inside the dielectric
+        data_individual.push({
                 type: "scatter",
                 mode: "lines",
+                x: results[0][i][0][0],
+                y: results[0][i][0][1],
+                opacity: 1,
                 line: {
-                    color: colour,
-                    width: 2
-                },
-                showscale: true
-                };
-    
-    return line;
-}
-
-function CreateDataLines(waves){
-    let DataLines = [];
-
-    //Boundary Lines
-
-    // let MinBoundaryLine = CreateDataLine(xMinBoundary, yBoundary, "boundary");
-    // DataLines.push(MinBoundaryLine);
-
-    // let xMaxBoundary = Array(resolution).fill(xMaxIncident + waves.DielectricWidth);
-    // let MaxBoundaryLine = CreateDataLine(xMaxBoundary, yBoundary, "boundary");
-    // DataLines.push(MaxBoundaryLine);
-
-    waves.WavesArray.forEach(SetOfWaves => {
-        //console.log("SetOfWaves", SetOfWaves);
-        SetOfWaves.forEach(wave => {
-            //console.log(wave);
-            let DataLine = CreateDataLine(wave.Data[0], wave.Data[1], wave.type);
-            DataLines.push(DataLine);
-        });
-    });
-    return DataLines;
-}
-
-function initialPlot(waves){
-    console.log("called initialPlot");
-
-    let DataLines = CreateDataLines(waves)
-    Plotly.newPlot(dielectricGraphDiv, DataLines, CreateLayout(waves.DielectricWidth));
-
-    //Left Amplit Sum Graph
-
-    let SumWaveData = FindSumWaveData(waves);
-
-    let LeftDataLine = CreateDataLine(SumWaveData[0][0], SumWaveData[0][1], "sum");
-
-    console.log("LeftDataLine", LeftDataLine);
-    Plotly.newPlot(leftSumGraphDiv, [LeftDataLine], LeftSumGraphLayout);
-
-    //Right Amplit Sum Graph
-    //let RightSumWaveData = waves.SumOfWavesArray[1];
-    let RightDataLine = CreateDataLine(SumWaveData[1][0], SumWaveData[1][1], "sum");
-    
-    console.log("RightDataLine", RightDataLine);
-    Plotly.newPlot(rightSumGraphDiv, [RightDataLine], RightSumGraphLayout);
-
-    
-}
-
-function update(waves) {
-    console.log("called update");
-    
-    let DataLines = CreateDataLines(waves)
-
-    Plotly.react(dielectricGraphDiv, DataLines, CreateLayout(waves.DielectricWidth));
-}
-
-function NextAnimationFrame(waves){
-
-    Plotly.animate(dielectricGraphDiv,
-        {
-            data: CreateDataLines(waves),
-            layout: CreateLayout(waves.DielectricWidth)
-        },
-        {
-            fromcurrent: true,
-            transition: {duration: 0},
-            frame: {duration: 0, redraw: false},
-            mode: "immediate"
-        });
-    
-    let WaveData = FindSumWaveData(waves)
-    let LeftSumWaveData = WaveData[0];
-    let LeftSumDataLine = CreateDataLine(LeftSumWaveData[0], LeftSumWaveData[1], "sum");
-    //console.log("LeftSumDataLine", LeftSumDataLine);
-
-    Plotly.animate(leftSumGraphDiv,
-        {
-            data: [LeftSumDataLine],
-            layout: LeftSumGraphLayout
-        },
-        {
-            fromcurrent: true,
-            transition: {duration: 0},
-            frame: {duration: 0, redraw: false},
-            mode: "immediate"
-        });
-
-    let RightSumWaveData = WaveData[1];
-    let RightSumDataLine = CreateDataLine(RightSumWaveData[0], RightSumWaveData[1], "sum");
-    //console.log(RightSumDataLine);
-    Plotly.animate(rightSumGraphDiv,
-        {
-            data: [RightSumDataLine],
-            layout: RightSumGraphLayout
-        },
-        {
-            fromcurrent: true,
-            transition: {duration: 0},
-            frame: {duration: 0, redraw: false},
-            mode: "immediate"
-        });
-    
-    //FOR TESTING ONLY - do not use infinite call stack in final version!
-
-    AnimateAllGraphs(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-}
-
-function AnimateAllGraphs(){
-       //cannot pass these as arguments - need to avoid two contradictory infinite call stacks
-    let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
-    let DielectricWidth = parseFloat($("#DielectricWidth").val());
-    let NumberOfReflections = parseInt($("#NumberOfReflections").val());
-
-    t += 0.2;
-
-    let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
-
-    //only update if there has been a change
-    //don't use jquery on-change as its async and may cause problems
-    if (waves.WavesArray[1].length != OldNumberOfReflections) {
-        update(waves);
-        OldNumberOfReflections = NumberOfReflections;
-        window.requestAnimationFrame(function() {
-            NextAnimationFrame(waves);
-        });
-    } else {
-        window.requestAnimationFrame(function() {
-            NextAnimationFrame(waves);
-        });
+                    width: 2,
+                    color: "#0F8291",
+                    reversescale: false}
+                })
+        data_individual.push({
+                type: "scatter",
+                mode: "lines",
+                x: results[0][i][1][0],
+                y: results[0][i][1][1],
+                opacity: 1,
+                line: {
+                    width: 2,
+                    color: "#02893B",
+                    reversescale: false}
+                })
     }
+
+    data_sum.push({
+            type: "scatter",
+            mode: "lines",
+            x: x_data_left,
+            y: results[1][0],
+            opacity: 1,
+            line: {
+                width: 2,
+                color: "#960078",
+                reversescale: false}
+
+    });
+    data_sum.push({
+            type: "scatter",
+            mode: "lines",
+            x: x_data_center,
+            y: results[1][1],
+            opacity: 1,
+            line: {
+                width: 2,
+                color: "#960078",
+                reversescale: false}
+
+    });
+    data_sum.push({
+            type: "scatter",
+            mode: "lines",
+            x: x_data_right,
+            y: results[1][2],
+            opacity: 1,
+            line: {
+                width: 2,
+                color: "#960078",
+                reversescale: false}
+
+    });
+    offset = offset_reset;
+    data_left = 0;
+    data_center = 0;
+    data_right = 0;
+return [data_sum,data_individual]
 }
 
-function main() {
-    //initial
-    let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
-    let DielectricWidth = parseFloat($("#DielectricWidth").val());
-    let NumberOfReflections = parseInt($("#NumberOfReflections").val());
+function plot_data_transmission(){
+    let transmission = [];
+    let x_input = numeric.linspace(0,parseFloat($("#thickness").attr("max")),1000);
+    let R = Math.pow(rf_v_d,2);
+    $("#energy_reflection_coefficient-display").html(R.toFixed(2));//Display new value of R
 
-    $("#ReflectionCoeffDisplay").text(ReflectionCoeff);
-    $("#DielectricWidthDisplay").text(DielectricWidth);
-    $("#NumberOfReflectionsDisplay").text(NumberOfReflections);
+    for(let i = 0;i<x_input.length;i++){
+        transmission.push(1/(1+(Math.pow(Math.sin(x_input[i]*k_2),2)*((4*R))/((1-R)^2))));
+    }
 
-    let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    let T = 1/(1+(Math.pow(Math.sin(thickness*k_2),2)*(4*R))/((1-R)^2));
+    $("#energy_transmission_coefficient-display").html(T.toFixed(2));//Display new value of T
 
-    initialPlot(waves);
+    let transmission_line = {
+          x: x_input,
+          y: transmission,
+          type: 'scatter',
+          name: 'Energy Transmission Coefficient',
+    };
 
-    //Comment to disable animation
-    AnimateAllGraphs();
+    let marker = {//marks the current thickness selected
+            x: [thickness],
+            y: [T],
+            showlegend: false,
+            type: "scatter",
+            mode:"markers",
+            name: 'Energy Transmission Coefficient',
+            marker: {color: "#002147", size: 12}
+    };
+    return [transmission_line,marker]
+}
+
+function plot_data_amplitude(){//creates data for amplitude of individual transmitted waves, showing their rapid decay in magnitude
+    let amplitude = [];
+    let x_input = numeric.linspace(0,terms);
+    let even = [];
+    let odd = [];
+    for (let i = 0; i < 2*terms; i++){
+        if ((i % 2) == 0){
+            even.push(i)
+        }else{
+            odd.push(i)
+        }
+    }
+
+    for(let i = 0;i<x_input.length;i++){
+        amplitude.push(Math.abs(tr_v_d*tr_d_v*Math.pow(rf_d_v,even[i])*Math.cos(odd[i]*thickness*k_2)*E_0));
+    }
 
 
-   $("input[type=range]").each(function () {
-    $(this).on('input', function () {
-        $("#" + $(this).attr("id") + "Display").text($(this).val());
-        $("#TETCDisplay").text()
+    let amplitude_line = {
+          x: x_input,
+          y: amplitude,
+          type: 'scatter',
+          name: 'Ampltude of Transmission',
+    };
+    return [amplitude_line]
+}
 
-        //UNCOMMENT FOR STATIC BUT UPDATING PLOTS
+function AnimateAll(data, plt){
 
-        // let ReflectionCoeff = parseFloat($("#ReflectionCoeff").val());
-        // let DielectricWidth = parseFloat($("#DielectricWidth").val());
-        // let NumberOfReflections = parseInt($("#NumberOfReflections").val());
+    Plotly.animate("graph_sum",
+        {
+            data: data[0],
+            layout: plt.layout_sum
+        },//updated data
+        {
+            fromcurrent: true,
+            transition: {duration: 0,},
+            frame: {duration: 0, redraw: false,},
+            mode: "immediate"
+        }
+    );
 
-        // let waves = new Waves(DielectricWidth, ReflectionCoeff, NumberOfReflections);
+    Plotly.animate("graph_individual",
+        {
+            data: data[1],
+            layout: plt.layout_individual
+        },//updated data
+        {
+            fromcurrent: true,
+            transition: {duration: 0,},
+            frame: {duration: 0, redraw: false,},
+            mode: "immediate"
+        }
+    );
 
-        //Uses newPlot - for debugging only
-        // initialPlot(waves)
-        });
+    Plotly.animate("graph transmission",
+        {data: plot_data_transmission()},//updated data
+        {
+            fromcurrent: true,
+            transition: {duration: 0,},
+            frame: {duration: 0, redraw: false,},
+            mode: "immediate"
+        }
+    );
+
+    Plotly.animate("graph amplitude",
+        {data: plot_data_amplitude()},//updated data
+        {
+            fromcurrent: true,
+            transition: {duration: 0,},
+            frame: {duration: 0, redraw: false,},
+            mode: "immediate"
+        }
+    );
+    }
+
+
+function update_graphs(){//update animation
+    thickness = parseFloat($("input#thickness").val());
+    n2 = parseFloat($("input#refractive_index").val());
+    terms = parseInt($("input#number_of_terms").val());
+
+    $("#number_of_terms-display").html(terms);
+    $("#thickness-display").html(thickness);//update display
+    $("#refractive_index-display").html(n2);
+
+    offset_max = 2*spacing + spacing * terms;
+
+    k_2 = (w*n2)/c;
+    Z_diel = math.sqrt(mu_0/ep_0)/n2;
+
+    rf_v_d = (1-(Z_vac/Z_diel))/(1+(Z_vac/Z_diel));
+    rf_d_v = (1-(Z_diel/Z_vac))/(1+(Z_diel/Z_vac));
+    tr_v_d = 2/(1+ Z_vac/Z_diel);
+    tr_d_v = 2/(1+ Z_diel/Z_vac);
+
+    side = (width-thickness)/2;
+    x_data_left = numeric.linspace(0,side,size);
+    x_data_center = numeric.linspace(side,side+thickness,size);
+    x_data_right = numeric.linspace(side+thickness,width,size);
+
+    let data = plot_data();
+
+    let plt = new plt_layouts(side, thickness);
+
+    AnimateAll(data, plt);
+
+};
+
+function play_loop(){//adds in time to visulisation
+
+    if(isPlay === true) {
+
+        let data = plot_data();
+        t++;
+        Plotly.animate("graph_sum",
+            {data: data[0]},
+            {
+                fromcurrent: true,
+                transition: {duration: 0,},
+                frame: {duration: 0, redraw: false,},
+                mode: "immediate"
+            });
+        Plotly.animate("graph_individual",
+            {data: data[1]},
+            {
+                fromcurrent: true,
+                transition: {duration: 0,},
+                frame: {duration: 0, redraw: false,},
+                mode: "immediate"
+            });
+
+        requestAnimationFrame(play_loop);//loads next frame
+    }
+    return 0;
+};
+
+
+function initial() {
+    thickness = $("input#thickness").val();
+    terms = $("input#number_of_terms").val();
+    n2 = $("input#refractive_index").val();
+
+    $("#number_of_terms-display").html(terms);//update display
+    $("#thickness-display").html(thickness);//update display
+    $("#refractive_index-display").html(n2);
+
+    let plt = new plt_layouts(side, thickness);
+
+    let data = plot_data();
+
+    Plotly.purge("graph_sum");
+    Plotly.newPlot('graph_sum', data[0],plt.layout_sum);//create animation
+
+    Plotly.purge("graph_individual");
+    Plotly.newPlot('graph_individual', data[1],plt.layout_individual);//create animation
+
+    Plotly.purge("graph transmission");
+    Plotly.newPlot('graph transmission', plot_data_transmission(), plt.layout_trans);//create animation
+
+    Plotly.purge("graph amplitude");
+    Plotly.newPlot('graph amplitude', plot_data_amplitude(),plt.layout_amp);//create animation
+
+    dom.tSlider.on("input", update_graphs);
+    dom.rfSlider.on("input", update_graphs);
+    dom.termsSlider.on("input", update_graphs);
+
+    $('#playButton').on('click', function() {
+        document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
+        isPlay = !isPlay;
+        t = 0;//reset time
+        requestAnimationFrame(play_loop);
     });
 }
 
 
-$(window).on("load", main);
+//main
+function main(){
+    initial();
+    //dirty fix - see why dielectric not being drawn properly with just initial
+    update_graphs();
+}
+
+
+$(window).on('load', main);

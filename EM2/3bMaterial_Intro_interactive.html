@@ -11,7 +11,9 @@
     <!--Required JS resources-->
     <script src="scripts/plotly-1.47.4.min.js"></script>
     <script src="scripts/p5.min.js"></script>
-
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     <script language="javascript" type="text/javascript" src="scripts/p5.dom.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="scripts/numeric/src/numeric.js"></script>
@@ -21,75 +23,34 @@
           tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
         });
     </script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 
 
 <body style="overflow: scroll">
-<h2></h2>
+
   
+
   <!--Visualisation-->
-  <div id="Vis_interactive" class="" style="position: relative; width: 98vw;display: flex;flex-direction: row">
-
-    <div class="six columns" style="margin-left: 2vw;">
-        <div class="row">
-            <div id="omega-slider">
-                <label for="omega" class="sliderTitle">$\omega$:
-                    <span id="omega-display"></span>
-                </label><span class="sliderMin">0</span>
-                <input type="range" id="omega" name="omega" min="0" max="30" value="15">
-                <span class="sliderMax">30</span>
-            </div>
-    
-            <div id="epsilon-slider">
-                <label for="epsilon" class="sliderTitle">$\epsilon_r$:
-                    <span id="epsilon-display"></span>
-                </label><span class="sliderMin">1</span>
-                <input type="range" id="epsilon" name="epsilon" step= "0.1" min="1" max="5" value="3">
-                <span class="sliderMax">5</span>
-            </div>
-    
-            <div id="sigma-slider">
-                <label for="sigma" class="sliderTitle">$\sigma$:
-                    <span id="sigma-display"></span>
-                </label><span class="sliderMin">0.1</span>
-                <input type="range" id="sigma" name="sigma" step = "0.1" min="0.1" max="1" value="0.5">
-                <span class="sliderMax">1</span>
-            </div>
-
-            <!--buttons to switch between fields-->
-            <div class = "four columns">
-                <div id="field-switch" name = "field-switch" class="switch">
-
-                <label>
-                    <input type="radio" id="appliedE" name="field-switch" checked="checked">
-                    <span>Applied E</span>
-                </label>
-
-
-                <label>
-                    <input type="radio" id="chargesE" name="field-switch">
-                    <span>Charges E</span>
-                </label>
-
-                <label>
-                    <input type="radio" id="totalE" name="field-switch">
-                    <span>Total E</span>
-                </label>
-
-                </div>
-            </div>
+  <div id="Vis_interactive" style="width: 100vw; height: 100vh">
+      <div id="plot" style="height: 90%; width: 100%"></div>
+      <div id="angular_frequency-slider" style="width:100vw; height: 10%; margin-left: 3%">
+         <label class="sliderTitle" >
+          Tau :
+          <span id="tau-display">
+            0.9
+          </span>
+         </label>
+         <span class="sliderMin">
+          0
+         </span>
+         <input id="Tau" max="2" min="0" name="Tau" step="0.01" type="range" value="0.9"/>
+         <span class="sliderMax">
+          2
+         </span>
         </div>
-    </div>
 
-
-    <div class="six columns">
-        <div id = "graph"></div>
-    </div>
   </div>
+
 
 
 

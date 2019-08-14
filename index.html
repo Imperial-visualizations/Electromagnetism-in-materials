@@ -1239,7 +1239,16 @@
             </div>
             </div>
             <div class="rightload text odd" id='loadout1' key="loadout1" v-if="currentSection === 1">
-                <iframe style="width: 67vw; height: 96vh" src="EM2/1PJRho_interactive.html"></iframe>
+                <div class="rightload text" id='loadout1sub1' key="loadout2sub1"
+                         v-if="subSection[0] === 1">
+                        <!-- Graph -->
+
+                        <iframe style="width: 67vw; height: 96vh" src="EM2/1PJRho_interactive.html"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout1sub2' key="loadout2sub2" v-else>
+                        <iframe src="EM2/1-interactive2.html" style="width: 67vw; height: 96vh"></iframe>
+                    </div>
+
             </div>
             
             <div class="rightload text odd" id='loadout2' key="loadout2" v-if="currentSection === 2">
@@ -1256,7 +1265,7 @@
                         <iframe src="EM2/3bMaterial_Intro_interactive.html" style="width: 67vw; height: 96vh"></iframe>
                     </div>
                 <div class="rightload text" id='loadout2sub3' key="loadout2sub3" v-else-if="subSection[1] === 3">
-                        <iframe src="EM2/3bMaterial_Intro_interactive_XK.html" style="width: 67vw; height: 96vh"></iframe>
+                        <iframe src="EM2/3cMaterial_Intro_interactive.html" style="width: 67vw; height: 96vh"></iframe>
                     </div>
 
             </div>
