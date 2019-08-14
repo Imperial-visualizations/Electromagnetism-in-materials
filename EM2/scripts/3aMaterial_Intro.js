@@ -21,6 +21,7 @@ const layout = {//layout of refractive index plot
                    }
               }
 
+let buttonText = 'Play';
 let omega = 1;
 let k = 4;
 let t = 1;
@@ -154,6 +155,8 @@ function playAnimation() {
 
 $('#playButton').on('click', function() {
     playing = !playing;
+    buttonText = (playing) ? 'Stop':'Play';
+    document.getElementById('playButton').innerHTML = buttonText;
     playAnimation();
 
 })
