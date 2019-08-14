@@ -1,90 +1,77 @@
-/*jshint esversion:6*/
-$(window).on('load', function() {//main
+$(window).on('load', function() {
+    const dom = {//assigning switches and sliders
+        wSlider:$("input#Tau"),
+    }
 
-    const
-    plt = {//layout of graph
-        layout : {
-            showlegend: false,
-            showscale: true,
-            scene: {
-                xaxis: {range: [-5, 5]},
-                yaxis: {range: [-1.5, 1.5]},
+var xPlus = [];
+var yPlus = [];
+var zPlus = [];
+var xMinus = [];
+var yMinus = [];
+var zMinus = [];
 
-            },
+var layout = {
+xaxis: {
+    title: "Time"
+},
+yaxis: {
+    title: "Relative Amplitude"
+}
+};
+
+let omega = 1;
+let sigma = 1;
+let tau = 0.9;
+
+function getData(tau){
+console.log(tau);
+let t = numeric.linspace(0,20,200);
+let E = [];
+let J = [];
+
+for(let i = 0; i < t.length; i++){
+    E.push(Math.cos(omega*t[i]));
+
+    let Jmag = (Math.pow((sigma*sigma)/(1+Math.pow(omega*tau,2)),(1/2)));
+    J.push(Jmag*Math.cos(omega*t[i] + Math.atan(omega*tau)));
+}
+
+let trace1 = {
+      x: t,
+      y: E,
+      type: 'scatter',
+      name: 'E',
+};
+
+let trace2 = {
+      x: t,
+      y: J,
+      type: 'scatter',
+      name: 'J',
+};
+
+let data = [trace1 , trace2];
+return data;
+}
+
+function updateGraph() {
+let tau = parseFloat($("input#Tau").val());
+//Update slider display value
+$("#tau-display").html($("input#Tau").val().toString());
+
+Plotly.animate("plot",
+        {data: getData(tau)},//updated data
+        {
             fromcurrent: true,
             transition: {duration: 0,},
             frame: {duration: 0, redraw: false,},
+            mode: "immediate"
         }
-    };
+    );
+}
 
-    var n = 11;
-    var x = [], y = [], acc = [], E = [];
-    var v = [];
-    var t = 0, dt = 0.005;
 
-    for (i = 0; i < n; i++) {
-    x[i] = -4 + 0.8*i;
-    y[i] = 0;    
-    v[i] = 0;
-    acc[i] = 0;
-    E[i] = 0;
-    }
 
-    function initial(){
-        Plotly.plot('graph', 
-        [{  'name': 'displacement',
-            x: x,
-            y: y,
-            mode: 'markers'},
-        {   'name': 'acceleration',
-            x: x,
-            y: acc,
-            line: {simplify: true},},
-        {   'name': 'applied E',
-            x: x,
-            y: E,
-            line: {simplify: true},}], 
-        {
-        xaxis: {range: [-5, 5]},
-        yaxis: {range: [-1.5, 1.5]}
-        });
-    }
-
-    function computeData(){//produces the data for the animation
-        let omega = parseFloat($("input#omega").val());
-        let epsilon = parseFloat($("input#epsilon").val());
-        let sigma = parseFloat($("input#sigma").val());
-        let condition =  $("input[name = field-switch]:checked").val();
-        console.log(condition);
-        $("#omega-display").html($("input#omega").val().toString()+" rad./s");//update value of slider in html
-        $("#epsilon-display").html($("input#epsilon").val().toString());
-        $("#sigma-display").html($("input#sigma").val().toString());
-
-        t += dt;
-
-        for (var i = 0; i < n; i++) {
-            y[i] += v[i] * dt + 0.5 * acc[i] * Math.pow(dt, 2);
-            v[i] += acc[i] * dt;
-            if (omega == 0){
-                E[i] = 0;
-                acc[i] = 0;
-            } else {
-                E[i] = Math.sin(omega*t + x[i]);
-                acc[i] = (sigma/epsilon)*Math.sin(omega*t + x[i]);
-            }
-        }
-    }
-
-    function update_graph () {
-        computeData();
-    
-        Plotly.animate('graph', {
-            data: [{x: x, y: y}, {x: x, y: acc}, {x: x, y: E}]
-        }, plt.layout);
-
-        requestAnimationFrame(update_graph);
-    }
-
-    initial();//run the initial loading
-    update_graph();//keep graph updated and running
+Plotly.newPlot('plot', getData(tau), layout);
+dom.wSlider.on("input",updateGraph);
 });
