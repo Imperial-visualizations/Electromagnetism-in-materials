@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <!--Page Info-->
+    <title>Metamaterials</title>
+    <!--css link-->
+    <link rel="stylesheet"
+          href="styles/skeleton.css">
+    <link rel="stylesheet"
+          href="styles/style.css">
+    <!--Required JS resources-->
+    <!--NB: better to have resources before the main body but still works even if they are not-->
+    <script src="scripts/plotly-1.47.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+
+    </script>
+    <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
+    </script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+    <div style="width:35%; float:left;">
+         <center><h4>Metamaterials</h4></center>
+        The behaviour of electromagnetic radiations in the various materials as discussed above assumes that all the medium are homogeneous, isotropic and linear.
+        However, some materials that do not have HIL properties can exhibit very interesting and mind
+        (and light) - bending behaviour that is the focus of many cutting-edge research.
+        <br>
+        Click on the right to look at two applications of metamaterials in the manipulation of electromagnetic wave.
+
+        <h5>Negative Index Metamaterials (NIMs)</h5>
+        NIMs are materials that have negative refractive indices for electromagnetic waves over certain frequency ranges.
+        NIM is a composite material made from repeating unit cells stacked together.
+        The first experimentally investigated NIM used wires and dielectrics for its unit cell.
+        <br>
+        One property that NIMs can exhibit is reverse propagation.
+        This allows for the resolution of image below the diffraction limit feasible.
+        On top of that, the permittivity and permeability of the NIM can also be tuned by means of how the unit cells are stacked etc.
+        Negative permittivity and permeability are also achievable in NIMs.
+
+        <h5>Metamaterial Cloaking</h5>
+        The manufacturing of invisibility cloaks using metamaterials that react to electromagnetic radiation in a way that conceal themselves is a focus of transformation optics.
+        By controlling the properties of these metamaterials, light can be refracted in a way such that an "invisibility" effect can be achieved theoretically.
+        Electromagnetic waves are typically bent around the object, and the behaviour is frequency dependent (dispersion relation). If the range of operable frequency of the material
+        encompasses the visible spectrum, cloaking is achieved.
+        In principle, an inhomogeneous composite metamaterial can be engineered with the permittivity and permeability or any part varied at will,
+        where they conserve the electric field vector $\mathbf{D}$, magnetic field intensity $\mathbf{B}$ and the Poynting vector $\mathbf{S}$.
+        Such a material can concentrate electromagnetic fields in a given direction and be made to avoid or surround objects, returning to their original path without pertubation.
+        This is consistent with the Maxwell's equations and in principle, is application to all frequencies.
+
+    </div>
+
+</body>
