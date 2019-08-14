@@ -13,7 +13,7 @@ let app = new Vue ({
         sectionTops: [],
         sectionBottoms: [],
 
-        sectionTitleLong: ["Introduction", "Fields","Materials",  "Dispersion", "Dielectric Boundary","Conductor Boundary","Plasma Boundary","Meta-material"],
+        sectionTitleLong: ["Introduction", "Materials","Fields",  "Dispersion", "Dielectric Boundary","Conductor Boundary","Plasma Boundary","Meta-material"],
 
         sectionTitleShort: ["1","2","3","4","5","6","7","8"],
         sectionTitle: [],
