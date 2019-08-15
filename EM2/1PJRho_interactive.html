@@ -16,6 +16,21 @@
             margin-top: 5vh;
             margin-left: 1vw;
         }
+        #plusXButton:hover, #plusYButton:hover, #plusZButton:hover{
+            color: white;
+            border-color: #0091D4;
+            background-color: #0091D4;
+        }
+        #plusXButton{
+            background-color: #fcf7de
+        }
+        #plusYButton{
+            background-color: #defde0
+        }
+        #plusZButton{
+            background-color: #def3fd
+        }
+        
     </style>
 
     <link rel="stylesheet" href="styles/skeleton.css">
@@ -60,15 +75,15 @@
 <div class="widthclass">
     <div>
         <button id="-XButton"  onclick="move_X()" value="1">-X</button>
-        <button id="+XButton" style="background-color: #fcf7de" onclick="movePlusX()" value="1">+X</button>
+        <button id="plusXButton" onclick="movePlusX()" value="1">+X</button>
     </div>
     <div>
         <button id="-YButton" onclick="move_Y()" value="1">-Y</button>
-        <button id="+YButton" style="background-color: #defde0" onclick="movePlusY()" value="1">+Y</button>
+        <button id="plusYButton" onclick="movePlusY()" value="1">+Y</button>
     </div>
     <div>
         <button id="-ZButton" onclick="move_Z()" value="1">-Z</button>
-        <button id="+ZButton" style="background-color: #def3fd" onclick="movePlusZ()" value="1">+Z</button>
+        <button id="plusZButton" onclick="movePlusZ()" value="1">+Z</button>
     </div>
 
     <button id="delete" onclick="deleteCube()" value="1">Reset!</button>
