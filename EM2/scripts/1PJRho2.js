@@ -4,7 +4,7 @@ let cubeList = [];
 let cubeFace = [];
 let onValue = 1;
 let EMag = 100;
-let sN=1;
+let sN = 1;
 
 //sliders input and display:
 
@@ -31,7 +31,7 @@ Z_slider.oninput = function () {
 };
 
 function setup() {
-    let C = createCanvas(windowWidth / 1.7, windowWidth / 1.7, WEBGL);
+    let C = createCanvas(windowWidth / 2.5, windowWidth / 2.5, WEBGL);
     C.parent('sketch-holder');
     frameRate(60);
 }
@@ -67,7 +67,7 @@ class EFieldLine {
     DrawLine() {
         push();
         //strokeWeight(5);
-        stroke('rgba(17, 161, 238, 0.45)');
+        stroke('rgba(147, 236, 59, 0.7)');
         //rotateX(this.Rx);
         //rotateY(this.Ry);
         //rotateZ(this.Rz);
@@ -75,7 +75,7 @@ class EFieldLine {
         pop();
         push();
         noStroke();
-        fill('rgba(17, 161, 238, 0.7)');
+        fill('rgba(147, 236, 59, 0.7)');
         translate(this.x + EMag * Math.sin(this.Ry) * Math.cos(this.Rz), this.y + EMag * Math.sin(this.Ry) * Math.sin(this.Rz), this.z + EMag * Math.cos(this.Ry));
         //sphere(3);
         //cone(10,10);
@@ -83,7 +83,6 @@ class EFieldLine {
         rotateZ(this.Rz);
         rotateY(this.Ry);
         rotateZ(-this.Rz);
-
 
 
         beginShape();
@@ -158,46 +157,48 @@ class element {
 
     drawFace() {
         for (let i = 0; i < cubeFace.length; i++) {
-            let n = [0,0,0];
+            let n = [0, 0, 0];
             push();
-            stroke("blue");
+            stroke("green");
             //fill("red");
             //console.log(cubeFace[i]);
             translate(cubeFace[i][0], cubeFace[i][1], cubeFace[i][2]);
-            if (cubeFace[i][3] === "right") {
-                n = [0,0,1];
+            if (cubeFace[i][3] === "left") {
+                n = [0, 0, 1];
+                //rotateZ(-Math.pi)
+            } else if (cubeFace[i][3] === "right") {
+                n = [0, 0, -1];
                 //rotateZ(0)
-            } else if (cubeFace[i][3] === "left") {
-                n = [0,0,-1];
-                //rotateZ(0)
-            } else if (cubeFace[i][3] === "front") {
-                n = [1,0,0];
-                //rotateY(Math.PI / 2)
             } else if (cubeFace[i][3] === "back") {
-                n = [-1,0,0];
+                n = [1, 0, 0];
                 //rotateY(Math.PI / 2)
-            } else if (cubeFace[i][3] === "top") {
-                n = [0,1,0];
+            } else if (cubeFace[i][3] === "front") {
+                n = [-1, 0, 0];
+                //rotateY(-Math.PI / 2)
+            } else if (cubeFace[i][3] === "bottom") {
+                n = [0, 1, 0];
                 //rotateX(Math.PI / 2)
             } else {
-                n = [0,-1,0];
-                //rotateX(Math.PI / 2)
+                n = [0, -1, 0];
+                //rotateX(-Math.PI / 2)
             }
 
-            let M=[Math.sin(YsliderVal* (Math.PI / 180)) * Math.cos(ZsliderVal* (Math.PI / 180)),Math.sin(YsliderVal* (Math.PI / 180)) * Math.sin(ZsliderVal* (Math.PI / 180)),Math.cos(YsliderVal* (Math.PI / 180))];
-            let J=[(M[1]*n[2]-M[2]*n[1]),-(M[0]*n[2]-M[2]*n[0]),(M[0]*n[1]-M[1]*n[0])];
+            let M = [Math.sin(YsliderVal * (Math.PI / 180)) * Math.cos(ZsliderVal * (Math.PI / 180)), Math.sin(YsliderVal * (Math.PI / 180)) * Math.sin(ZsliderVal * (Math.PI / 180)), Math.cos(YsliderVal * (Math.PI / 180))];
+            let J = [(M[1] * n[2] - M[2] * n[1]), -(M[0] * n[2] - M[2] * n[0]), (M[0] * n[1] - M[1] * n[0])];
 
 
+            line(-J[0]*20,-J[1]*20,-J[2]*20,J[0]*20,J[1]*20,J[2]*20);
 
-            line(0,0,0,J[0]*20,J[1]*20,J[2]*20);
             push();
             stroke("red");
-            line(-J[0]*20,-J[1]*20,-J[2]*20,0,0,0);
+            //strokeWeight(5)
+            line(J[0]*20,J[1]*20,J[2]*20,(J[0]+J[0]/3)*20,(J[1]+J[1]/3)*20,(J[2]+J[2]/3)*20);
             pop();
             //console.log(J);
             pop();
 
-            if (sN==0) {
+
+            if (sN == 0) {
                 push();
                 stroke("black");
                 translate(cubeFace[i][0], cubeFace[i][1], cubeFace[i][2]);
@@ -224,12 +225,13 @@ class element {
 }
 
 function showN() {
-    if (sN==1) {
+    if (sN == 1) {
         sN = 0;
     } else {
-        sN=1
+        sN = 1
     }
 }
+
 function move_X() {
     let a = prePos[prePos.length - 1][0] - (cubeSize + 2);
     let b = prePos[prePos.length - 1][1];
