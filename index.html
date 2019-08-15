@@ -166,7 +166,7 @@
         $$ \rho_{p}=-\nabla \cdot \textbf{P}.$$
     </div>
     <div id="magnetisation">
-        <h3 class="section-sub-head">Magnetization:</h3>
+        <h3 class="section-sub-head" id="innerchange">Magnetization</h3>
         <p> Due to electron's intrinsic property of spin and electric charge, a magnetic dipole moment is generated.
         It is easy to visualise the magnetic dipole moment as the orbital motion of the electron resulting in a current loop around the atom.
         The magnetic dipole moment is defined as</p>
@@ -229,113 +229,315 @@
                     <!--    Sub-Section Tabs    -->
                     <ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[1] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
-                            <a data-toggle="tab" href="#E-field" @click="subScrollTo(2); subSection[1]=1; loadSubScripts(); $forceUpdate();">D-field</a>
+                            <a data-toggle="tab" href="#die" @click="subScrollTo(2); subSection[1]=1; loadSubScripts(); $forceUpdate();">Dielectric</a>
                         </li>
                         <li :class="[subSection[1] === 2 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#M-field" @click="subScrollTo(2); subSection[1]=2; loadSubScripts(); $forceUpdate();">H-field</a>
+                            <a data-toggle="tab" href="#con" @click="subScrollTo(2); subSection[1]=2; loadSubScripts(); $forceUpdate();">Conductor</a>
+                        </li>
+                        <li :class="[subSection[1] === 3 ? 'shaded' : '', 'tabRight']">
+                            <a data-toggle="tab" href="#plas" @click="subScrollTo(2); subSection[1]=3; loadSubScripts(); $forceUpdate();">Plasma</a>
                         </li>
                     </ul>
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
-                        <div id="E-field" class="tab-pane fade in active show">
-                            <span style="font-weight: bold">The key idea behind D field - </span>
-    <br>
-    Consider an ideal dielectric (perfect insulator) that stretches to infinity.
-    Placing it in a uniform electric field $\mathbf{E}_{applied}$ will induce a <span style ="color:#D24000;font-weight:bold">polarisation
-    field</span> $\mathbf{P}$ in it.
-    This will give rise to a <span style="color:#02893B; font-weight:bold">total electric field </span> $\mathbf{E}_{total}$ within the dielectric.
-    <br><br>
-    In general, $ \nabla \cdot \mathbf{P} = -\rho_p $, where $\rho_p$ is the polarisation charge density.
-    However, $ \nabla \times \mathbf{P} $ depends on the material.
-    <br><br>
-    Define the <span style="color:#9F004E;font-weight:bold">electric displacement field</span>, $\mathbf{D}$ as
-    $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $.
-    In general, $ \nabla \cdot \mathbf{D} = \rho_f $, where $\rho_f$ is the free charge density.
-    <br><br>
-    In true vacuum, where there is no dipole by definition,
-    $$ \mathbf{P} = 0 $$
-    so,
-    $$ \mathbf{D}_{vacuum} = \epsilon_{0}\mathbf{E}_{applied} $$
-    $$ \nabla \cdot \mathbf{D}_{vacuum} = \nabla \cdot (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
-    $$ \nabla \times \mathbf{D}_{vacuum} = \nabla \times (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
-    <br>
-    In a homogenous, isotropic and linear dielectric (HIL),
-    $$ \mathbf{P} = \chi_{e}\epsilon_{0}\mathbf{E}_{total} $$
-    where the electric susceptibility $\chi_{e}$ is a constant of proportionality, or
-    $$ \mathbf{P} = \epsilon_{r}\mathbf{E}_{total} $$
-    where $\epsilon_r = \chi_{e}\epsilon_{0}$.
-    So,
-    $$ \mathbf{D}_{dielectric} = \epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total} $$
-    $$ = \epsilon_{0}\mathbf{E}_{applied} $$
-    $$ = \mathbf{D}_{vacuum} $$
-    $$ \nabla \cdot \mathbf{D}_{dielectric} = \nabla \cdot [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
-    $$ = 0 $$
-    $$ \nabla \times \mathbf{D}_{dielectric} = \nabla \times [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
-    $$ = 0 $$
-    <br>
-    <p>Note: The units of the E-field are different to those of the P and D fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
+                        <div id="die" class="tab-pane fade in active show">
+                            <strong>Dielectrics -</strong> contain electrons bonded at an equilibrium separation from their respective nuclei.
+                            To model the behaviour of dielectrics we treat the electrons as particles attached to their respective nuclei by a spring:
+                            this is a simplified classical model, but it accounts for the behaviour relatively well.
+                            <br><br>
 
-    <span style="font-weight: bold">The subtlety - </span>
-    <br>
-    You might notice that the <span style="color:#02893B; font-weight:bold"> total E field </span> is weaker in a dielectric than in vacuum but
-    the <span style="color:#9F004E;font-weight:bold">D field</span> remains <b>constant</b>.
-    <br><br>
-    A polarised material indeed weakens the <span style="color:#02893B; font-weight:bold">total E field </span>.
-    However, the <span style="color:#9F004E;font-weight:bold">D field</span> remains constant because:
-    <br>
-    (1) $ \nabla \cdot \mathbf{D} = \rho_f $ and $\rho_f$ is 0 in both the vacuum and the ideal dielectric here,
-    <br>
-    (2) $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $ is defined in terms of the <b>total</b> <span style="color:#02893B; font-weight:bold">E field </span> everywhere, so
-      the reduction in <span style="color:#02893B; font-weight:bold">total E field </span> is complemented by the presence of <span style ="color:#D24000;font-weight:bold">P field</span>
-      to keep the <span style="color:#9F004E;font-weight:bold">D field</span> constant.
-    <br><br>
-    Also note that $\mathbf{D}_{vacuum} = \mathbf{D}_{dielectric}$ in the derivation above.
-    <br><br>
+                            <strong>Binding force -</strong> The actual forces between electrons and their nuclei can be complicated but we
+                            approximate it as: <br> $F_{binding} = -k_{spring} x = -m \omega_0^2 x$. <br>
+                            This is for small displacements, since you can expand the potential energy with a Taylor series about the
+                            equilibrium position, giving: <br> $U(x) = U(0) + x U'(0) + \frac{1}{2} x^2 U''(0) + ...$<br>
+                            The first term is a constant potential offset which can be ignored, and the second term can be aproximated as zero
+                            around the equilibrium position. This leaves the third term which can be differentiated to give the expression for
+                            force we saw earlier, where<br> $k_{spring} = U''(0)$.
+                            <br><br>
 
-    <span style="font-weight: bold">Time variant D field - </span>
-    Before we talk about H field, we want to consider time variant D field.
-    Similar to time variant E field gives rise to curl in B field, time variant D field gives rise to curl in H field.
-    More importantly, changing this electric displacement field gives rise to displacement current density, i.e.
-    $$\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$$
-                        </div>
-                        <div id="M-field" class="tab-pane fade">
-                            <span style="font-weight: bold">The key idea behind H field - </span>
-    <br>
-    Consider a magnetic material that stretches to infinity.
-    Placing it in a uniform magnetic field $\mathbf{B}_{applied}$ will induce a
-    <span style ="color:#D24000;font-weight:bold">magnetisation field</span> $\mathbf{M}$ in it.
-    This will give rise to a <span style="color:#0281d6; font-weight:bold">total magnetic field </span> $\mathbf{B}_{total}$.
-    <br><br>
-    In general, $ \nabla \times \mathbf{M} = \mathbf{J}_m $, where $\mathbf{J}_m $ is the magnetisation current density.
-    However, $ \nabla \cdot \mathbf{M} $ depends on the material.
-    <br><br>
-    Define the <span style="color:#9F004E;font-weight:bold">magnetising field</span>, $\mathbf{H}$ as
-    $ \mathbf{H} = \frac{1}{\mu_0}\mathbf{B}_{total} - \mathbf{M} $, where $\mu_0$ is the permeability of free space.
-    In general, $ \nabla \cdot \mathbf{H} = - \nabla \cdot \mathbf{M} $ and
-    $ \nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t} $, where $\mathbf{J}_c$ is the conduction current density.
-    (Note: $\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$ - displacement current density.)
-    <br><br>
-    In a magnetic material, $\mathbf{M} = \chi_m \mathbf{H}$,
-    where $\chi_m$ is the magnetic susceptibility of the material.
-    So, $ \mathbf{H} = \frac{1}{\mu_0\mu_r}\mathbf{B}_{total} $,
-    where $\mu_r = 1 + \chi_m$.
-    <br><br>
-    <p>Note: The units of the B-field are different to those of the M and H fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
+                            <strong>Damping force -</strong> As well as the restoring force there is a damping force which is partially caused
+                            by radiation emitted by the electrons. For simplicity we say that this force is opposite in direction to the velocity.
+                            It is given by:<br>
+                            $F_{damping} = -m \gamma \frac{dx}{dt}$<br>
+                            where m is the mass of the electron and gamma is a proportionality constant.
+                            <br><br>
 
-    <span style="font-weight: bold">The subtlety - </span>
-    <br>
-    You might notice that the <span style="color:#0281d6; font-weight:bold">total magnetic field </span> remaining <b>constant</b> when $\mu_r$ is varied.
-    The logic behind is similar to that of D field remains constant with varying $\epsilon_r$.
-    The change in <span style="color:#0281d6; font-weight:bold">total magnetic field </span> is complemented by
-    the change in <span style ="color:#D24000;font-weight:bold">magnetisation field</span>
-    to keep the <span style="color:#0281d6; font-weight:bold">total magnetic field </span> constant.
-    <br><br>
-    Now let us state the Maxwell's equations (differential) in matter:
-    $$\nabla \cdot \mathbf{D} = \rho_f$$
-    $$\nabla \cdot \mathbf{B} = 0$$
-    $$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$
-    $$\nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t}$$
-    We shall use these equations to study dielectrics, conductors and plasmas in the following visualisations.
+                            <strong>Driving force -</strong> The E field from an electromagnetic wave can drive the electrons, with a force
+                            of<br> $F_{driving} = q E_0 cos(\omega t)$<br>
+                            where $\omega$ is the angular frequency of the light.
+
+                            <strong>Solving for x - </strong> Putting all these forces into Newton's second law gives a forced oscillator
+                            equation, with complex solutions.<br>
+                            $\displaystyle \tilde{x}(t) = \frac{q/m}{\omega_0^2 - \omega^2 - i \gamma \omega} E_0 e^{-i \omega t}$
+                            <br><br>
+
+                            <strong>Electric Field in Dielectric - </strong> The dipole moment of each electron nucleus pair, is given by
+                            $\tilde{p}(t) = q \tilde{x}(t)$. By summing these dipole moments over a volume element, we can find the polarisation
+                            of the material. <br>
+                            $\displaystyle \tilde{\mathbf{P}} = \frac{N q^2}{m} \left(\sum_j \frac{f_i}{\omega_j^2 - \omega^2 - i \gamma_j \omega}\right) \tilde{\mathbf{E}}$ <br>
+                            The electric field is related to the polarisation by $\displaystyle \tilde{\mathbf{P}} = \epsilon_0 \tilde{\chi}_e \tilde{\mathbf{E}}$.
+                            From this we can find plane wave solutions of the E field inside the dielectric. These are:<br>
+                            $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0  e^{i(\tilde{k}z-\omega t)}$ <br>
+                            where $\tilde{k}$ is the complex wave number. This can be rearranged to: <br>
+                            $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0(z,t) e^{-\kappa z} e^{i(kz-\omega t)}$ <br>
+                            where $\kappa$ is the complex part of $\tilde{k}$ and $k$ is the real part.
+                            <br><br>
+
+                            <strong>Attenuation -</strong> From the previous equation it is clear that the imaginary component of $\tilde{k}$
+                            will cause an exponential decay in the amplitude of the EM wave. Normally in a dielectric the imaginary component
+                            is very small, however when the frequency of the EM wave approaches the natural frequency of the electron oscillators,
+                            resonance occurs and the oscillators absorb much more energy from the wave, meaning the material becomes opaque and
+                            the imaginary component of $\tilde{k}$ becomes significant. Most dielectrics have electron oscillators in several
+                            different environments, each having it's own natural frequency, meaning the material is opaque over a range of
+                            frequencies. Transparent materials normally have resonances in the ultraviolet part of the spectrum, rather than
+                            the visible part.
+
+                                                </div>
+
+                                <div id="con" class="tab-pane fade">                            
+                                        <span style="font-weight: bold">The Drude Model - </span>
+                                        The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
+                                        (1) electric force from applied electric field, $\mathbf{F}_E$
+                                        (2) force arises from the collisions among the electrons and between electrons and ions, $\mathbf{F}_c$
+                                        so the coulombic forces between electrons and ions are neglected.
+                                        <br><br>
+                                        By Newton's second law of motion,
+                                        $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
+                                        So,
+                                        $$ m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+                                        where $\tau_c$ is the electron collision time.
+                                        <br><br>
+                                        We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
+                                        or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
+                                        where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+                                        In this case, the solution to the equation is such that $\mathbf{v}_e \propto e^{-i \omega t}$.
+                                        <br><br>
+                                        Now we obtain
+                                        $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
+                                        so
+                                        $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
+                                        Recall that the conduction current density is given by
+                                        $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
+                                        where N is the number density, subscript $i$ is for ions and $e$ for electrons.
+                                        In general, $\mathbf{v}_e \gg \mathbf{v}_i$ given the same initial conditions for ions and electrons because ions are much heavier than electrons.
+                                        We assume that the first term tends to zero so
+                                        $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
+                                        Taking the result for $\mathbf{v}_e$ from above, we get
+                                        $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
+                                        where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
+                                        We can rewrite $\mathbf{J}_c$ in terms of complex exponential form:
+                                        $$ \mathbf{J}_c = \frac{\sigma}{\sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E} $$
+                                        The phase shift of $\mathbf{J}_c$ to $\mathbf{E}$ is given by $\tan^{-1} {(\omega \tau})$.
+                                        An alternative way of looking at the phase shift between $\mathbf{J}_c$ and $\mathbf{E}$
+                                        is that $\mathbf{J}_c$ is analogous to the velocity of the electrons and
+                                        $\mathbf{E}$ is analogous to the acceleration of the electrons.
+                                        (In fact, it is just a matter of scalling.)
+                                        <br><br>
+                                        This phase shift comes out of the fact that this is effectively a damped driven harmonic oscillation.
+                                        The source of the driving force is the applied electric field while the source of the damping force is
+                                        the collisions between electrons or electrons and ions.
+                                        <br><br>
+                                        In a damped driven harmonic oscillation, the phase shift of the steady state is due to
+                                        the amount of time for the transient phase to decay away.
+                                        <br><br>
+                        <span style="font-weight: bold">Conductors - </span>
+                            A conductor contains mobile free electrons.
+                            The positively charged ion left behind is usually fixed so we investigate only the behavior of the free electrons in an electric field.
+                            <br><br>
+
+                            <span style="font-weight: bold">Charge rearrangement time - </span>
+                            Given some arbitrary electric field, the free electrons would rearrange themselves until the total electric field inside the conductor is 0.
+                            This arrangement happens within the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, where $\epsilon = \epsilon_0\epsilon_r$,
+                            $\epsilon_0$ is the permittivity of free space, $\epsilon_r$ and $\sigma$ are the relative permittivity and the conductivity of the material respectively.
+                            A physical insight to $\tau^{\star}$ is that $\epsilon$ is 'a measurement of how much the material dampens the electric field felt by the charges'
+                            while $\sigma$ is 'a measurement as to how ready is the charge to move given some electric field'.
+                            So the charge rearrangement time $\tau^{\star}$ is a characteristic of the conductor.
+                            <br><br>
+                            Derivation:
+                            <br>
+                            Based on the Drude Model,
+                            $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
+                            where $\mathbf{E}_{applied}$ is the applied electric field.
+                            The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
+                            <br><br>
+                            We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
+                            where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+                            <br><br>
+                            In a conductor, the electron collision time $\tau_c$ is much smaller than
+                            the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \ll T$ or $\frac{\tau_c}{T} \ll 1$ so $\omega \tau_c \ll 1$.
+                            Taking the limits $\omega \tau_c + 1 \rightarrow 1$ and $\tan^{-1} {(\omega \tau}) \rightarrow 0$,
+                            $$ \mathbf{J}_c = \sigma \mathbf{E} $$
+                            This is Ohm's Law.
+                            <br><br>
+                            Approximating the material to be linear, meaning that charges respond to electric fields by producing a current that is a linear
+                            function of the electric field they feel, we can use Ohm's law:
+                            $$ \mathbf{J}_c = \sigma \mathbf{E} $$
+                            where $\sigma$ is a constant (not a function position because we take the material to be homogenous)
+                            scalar (not a tensor because we take the material to be isotropic).
+                            <br><br>
+                            Conservation of free charge requires
+                            $$ \frac{\partial \rho_f}{\partial t} = - \nabla \cdot \mathbf{J}_c $$
+                            Substituting Ohm's Law for the electric field,
+                            $$ \frac{\partial \rho_f}{\partial t} = - \sigma \nabla \cdot \mathbf{E} $$
+                            $$ = - \sigma \frac{\rho_f}{\epsilon} = - \frac{\sigma}{\epsilon} \rho_f$$
+                            So,
+                            $$ \rho_f = \rho_{f, initial} e^{-\frac{t}{\tau^{\star}}} $$
+                            where $\tau^{\star} = \frac{\epsilon}{\sigma}$.
+                            <br><br>
+                            <span style="font-weight: bold">Good or poor conductor ? </span>
+                            Not to be confused with electrical conductivity, the conductivity we are talking about here is how responsive the material is to any changes in the electric field applied to it.
+                            We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$,
+                            where $\omega = \frac{2\pi}{T}$ is the angular frequency of the field.
+                            <br><br>
+                            <b>Now we ask the question: Are the free electrons rearranging themselves fast enough to 'cancel out' $\mathbf{E}_{applied}$?</b>
+                            In other words, we want to know if the timescale of electron movement is small enough relative to the timescale of the electric field
+                            changing in order for $\mathbf{E}_{applied}$ to be cancelled out. And so an important quantity for us
+                            is the ratio of timescales $\frac{\tau^{\star}}{T}$.
+                            That ratio turns out to be $\frac{\tau^{\star}}{T} = \frac{1}{2\pi} \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} $,
+                            or $\omega \tau^{\star} = \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} $, which is shown later.
+                            <br><br>
+                            If the <b>free electrons take much less time </b> than the wave period to rearrange, i.e. $\omega \tau^{\star} \ll 1$,
+                            then we expect the material to be a <b>good conductor</b>, as they can move quickly enough to
+                            cancel out the applied field.
+                            The 'good conductor' criterion depends on $\omega$ and $\tau^{\star}$ so it depends on both the material <b>and the applied electric field</b>.
+                            <br><br>
+                            The conduction current density is
+                            $$ \mathbf{J}_c = \sigma \mathbf{E}_{applied}, $$
+                            (This is the same from the Ohm's law approximation as above)
+                            <br>
+                            $ \mathbf{J}_c $ is a current density due to electrons experiencing a <b>non-zero electric field</b>.
+                            Notice $\sigma$ is a property of the material, which relates the electric field to the observed conduction current.
+                            <br><br>
+                            The displacement current density is
+                            $$ \mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t} = \frac{\partial }{\partial t} (\epsilon \mathbf{E}_{applied})$$
+                            $ \mathbf{J}_d $ is an apparent current density due to <b>the rate of change of the electric field</b>.
+                            Notice $\epsilon$ is a property of the material, which relates the electric field to the observed displacement current.
+                            Notice that both the conduction current density and the displacement current density are linearly proportional to
+                            the amplitude of the applied electric field (if the field amplitude is doubled, the rate of change of the field value
+                            is also doubled).
+                            In this case, $E_{applied} \propto e^{-i \omega t}$, and so
+                            $$ \mathbf{J}_d = -i \omega \epsilon \mathbf{E}_{applied} $$
+                            We only care about how quickly the field is changing and the material properties in order to classify a good or a poor conductor, not about
+                            the value of the field itself. We can achieve such a quantity by dividing the magnitudes of the two currents, as both are only linearly
+                            proportional to the electric field amplitude.
+
+                            $$ \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} = \frac{\omega \epsilon}{\sigma} $$
+                            Using the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, we see
+                            $$ \frac{\omega \epsilon}{\sigma} = \omega \tau^{\star} = 2\pi \frac{\tau^{\star}}{T} $$ which is the ratio of electron movement timescale
+                            to the field timescale (period). And so $$\frac{\omega \epsilon}{\sigma}$$ dictates whether the material is a good conductor
+                            for an EM field of that frequency.
+                            <br><br>
+                            <span style="font-weight: bold">Skin Effect - </span>
+                            When an alternating current passes through a conductor, the alternating electric field produces an alternating magnetic field.
+                            This magnetic field in turn creates an electric field that opposes the original alternating current, known as the "back emf".
+                            The back emf is the strongest at the centre of a conductor, pushing the current to the surface of the conductor.
+                            <br>
+                            The current diffusion equation is given by
+                            $$ \nabla^2 \mathbf{J}_c = \mu_0 \sigma \frac{\partial \mathbf{J}_c}{\partial t}$$
+                            where $\mathbf{J}_c$ is the conduction current density in the conductor.
+                            The LHS of the above above equation gives the gradient field of the flow of current density in the conductor.
+                            The current density of an alternating current in a cylindrical wire can be written as
+                            $\mathbf{J}_c = \widetilde{J}_c (r) e^{-i \omega t} \mathbf{\hat{z}}$, which gives
+                            $$\nabla^2 \widetilde{J}_c = -\kappa ^2 \widetilde{J}_c $$
+                            where $\kappa^2 = i \omega \mu_0 \sigma$.
+                            This is a Helmholtz Equation, where $\kappa$ provides a measure of the wavenumber.
+                            Hence,
+                            $$\kappa = \sqrt{\mu_0 \omega \sigma} \, i^{\frac{1}{2}} = \frac{1+i}{\delta}$$
+                            where $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$ is the skin depth, a current diffusion lengthscale.
+                            This means that $J_c$ reduces by a factor of $\frac{1}{e}$ after travelling for one $\delta$.
+                            <br>
+                            Let $a$ be the radius of a wire. If the AC frequency $( \omega )$ is low, $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} } \gg a$
+                            and $\mathbf{J}_c$ is roughly uniform throughout the wire. However, if $\omega$ is high, $\delta \ll a$ and $\mathbf{J}_c$ is
+                            confined within the layer of width $\approx \delta$ on the surface on the wire.
+
+
+                                                </div>
+                                                <div id="plas" class="tab-pane fade">
+
+                            <span style="font-weight: bold">Plasmas in oscillatory electric field - </span>
+                            We shall only talk about <b>collisionless</b> plasmas.
+                            Based on the Drude Model,
+                            $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
+                            where $\mathbf{E}_{applied}$ is the applied electric field.
+                            The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
+                            <br><br>
+                            We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
+                            where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
+                            <br><br>
+                            In collisionless plasmas, the electron collision time $\tau_c$ is much greater than
+                            the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \gg T$ or $\frac{\tau_c}{T} \gg 1$ so $\omega \tau_c \gg 1$.
+                            Taking the limits $\omega \tau_c + 1 \rightarrow \omega \tau_c$ and $\tan^{-1} {(\omega \tau}) \rightarrow \frac{\pi}{2}$,
+                            $$\mathbf{J}_c \approx \frac{N_e e^2 \tau_c}{m_e} e^{i \frac{\pi}{2}} \mathbf{E}_{applied} $$
+                            $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.
+                            <br><br>
+
+                            <span style="font-weight: bold">Plasmas oscillation - </span>
+                            Consider a cloud of neutral plasma left alone to reach its equilibrium distribution in the absence of external electromagnetic field.
+                            What happens if we displace one of the electrons in the plasma slightly?
+                            (Hint: the keywords are <b>equilibrium</b> and <b>displace slightly</b>.)
+                            <br><br>
+                            The electron should be sitting at the bottom of the potential well initially.
+                            The small displacement will result in simple harmonic motion of the electron.
+                            Since plasma is a cloud of free electrons and ions, this small displacement actually causes the entire cloud to oscillate
+                            hence the collective behaviour of plasma oscillations.
+                            <br><br>
+                            It turns out that plasma oscillates at the plasma frequency:
+                            $$\omega_p = \sqrt{\frac{N_e e^2}{m_e \epsilon_0}}$$
+                            where $N_e$ is the number density of electrons, $e$ is the fundamental charge and $\epsilon_0$ is the permittivity of free space.
+                            Notice how the plasma frequency here depends only on the characteristics of electron distribution.
+                            This is due to the assumption that the electrons moving much faster than the positive ions in a neutral plasma.
+                            <br><br>
+                            How do we justify this assumption?
+                            Consider the lightest element, hydrogen. Ignoring the heavier isotopes, the simplest hydrogen atom consists of a proton and an electron.
+                            The mass of a proton is roughly 1800 times greater than that of an electron.
+                            Given the same initial conditions, an electron would be accelerated much more than a proton in an electric field that is not too strong.
+                            Therefore, in any plasmas, the positive ions are always much heavier than the electrons and so the movement of the positive ions can be ignored
+                            given that the electric field is not too strong.
+                            <br><br>
+                            Derivation:
+                            Displacing an electron in a neutral plasma means that the number density of electron, $N_e$ depends on the position and time.
+                            Let $N_e = N_0 + N_1 (x, t)$, where $N_0$ is the initial number density of electron and $x$ is the direction of perturbation.
+                            Generally, the free charge density $\rho_f$ is given by $\rho_f = N_i e - N_e e$, where $N_i$ is the number density of positive ions.
+                            In this case, $\rho_f = N_i e - (N_0 + N_1(x, t))e$ but $N_i e = N_0 e$ for a neutral plasma so
+                            $$\rho_f = -N_1(x, t)e$$
+                            Also, in general, the conduction current density $\mathbf{J}_c$ is given by
+                            $$\mathbf{J}_c = N_i e \mathbf{v}_e - N_e e \mathbf{v}_e$$
+                            Based on the assumption of small perturbation of electron such that the movements of positive ions can be ignored, the first term vanishes so
+                            $\mathbf{J}_c = - N_e e \mathbf{v}_e = -(N_0 + N_1(x, t)) e \mathbf{v}_e$. Also based on the assumption of small perturbation, $N_0 \gg N_1$
+                            so $$\mathbf{J}_c = - N_0 e \mathbf{v}_e$$
+                            In a closed system, we require conservation of free charge,
+                            $$\frac{\partial \rho_f}{\partial t} + \nabla \cdot \mathbf{J}_c = 0$$
+                            so,
+                            $$-e\frac{\partial N_1}{\partial t} - N_0 e \nabla \cdot \mathbf{v}_e = 0$$
+                            Consider only in the direction of perturbation,
+                            $$-e\frac{\partial N_1}{\partial t} - N_0 e \frac{\partial v_{e, x}}{\partial x} = 0$$
+                            We can rewrite this as
+                            $$\frac{\partial v_{e, x}}{\partial x} = -\frac{1}{N_0} \frac{\partial N_1}{\partial t}$$
+                            Assuming that
+                            $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = \frac{\partial^2 v_{e, x}}{\partial t \partial x}$$
+                            We get (1):
+                            $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = -\frac{1}{N_0} \frac{\partial^2 N_1}{\partial t^2}$$
+                            By Gauss' Law for electrostatics,
+                            $$\nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
+                            where $\rho = \rho_f + \rho_p$, $\rho_f$ is the free charge density while $\rho_p$ is the polarisation charge density.
+                            In plasmas, $\rho_p = 0$ so
+                            $$\nabla \cdot \mathbf{E} = \frac{\rho_f}{\epsilon_0}$$
+                            From the result above, $\rho_f = -N_1(x, t)e$ so
+                            $$\nabla \cdot \mathbf{E} = -\frac{N_1 e}{\epsilon_0}$$
+                            Consider only in the direction of perturbation,
+                            $$\frac{\partial E_x}{\partial x} = -\frac{N_1 e}{\epsilon_0}$$
+                            Now, by Newton's second law,
+                            $$m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E}$$
+                            Consider only in the direction of perturbation,
+                            $$m_e \frac{\partial v_{e, x}}{\partial t} = -e E_x$$
+                            So
+                            $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \frac{\partial E_x}{\partial x}$$
+                            From the result for $\frac{\partial E_x}{\partial x}$ above, we obtain (2):
+                            $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \cdot -\frac{N_1 e}{\epsilon_0} = \frac{e^2}{m_e \epsilon_0} N_1 $$
+                            Equating (1) and (2) and rearranging the result,
+                            $$\frac{\partial^2 N_1}{\partial t^2} + \frac{N_0 e^2}{m_e \epsilon_0} N_1 = 0$$
+                            This is the equation of simple harmonic motion for plasma, with a natural frequency of
+                            $$\omega_p = \sqrt{\frac{N_0 e^2}{m_e \epsilon_0}}$$
                         </div>
                     </div>
                 </div>
@@ -353,320 +555,119 @@
                     <!--    Sub-Section Tabs    -->
                     <ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[2] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
-                            <a data-toggle="tab" href="#die" @click="subScrollTo(3); subSection[2]=1; loadSubScripts(); $forceUpdate();">Dielectric</a>
+                            <a data-toggle="tab" href="#E-field" @click="subScrollTo(3); subSection[2]=1; loadSubScripts(); $forceUpdate();">D-field</a>
                         </li>
                         <li :class="[subSection[2] === 2 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#con" @click="subScrollTo(3); subSection[2]=2; loadSubScripts(); $forceUpdate();">Conductor</a>
-                        </li>
-                        <li :class="[subSection[2] === 3 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#plas" @click="subScrollTo(3); subSection[2]=3; loadSubScripts(); $forceUpdate();">Plasma</a>
+                            <a data-toggle="tab" href="#M-field" @click="subScrollTo(3); subSection[2]=2; loadSubScripts(); $forceUpdate();">H-field</a>
                         </li>
                     </ul>
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
-                        <div id="die" class="tab-pane fade in active show">
-                            <strong>Dielectrics -</strong> contain electrons bonded at an equilibrium separation from their respective nuclei.
-      To model the behaviour of dielectrics we treat the electrons as particles attached to their respective nuclei by a spring:
-      this is a simplified classical model, but it accounts for the behaviour relatively well.
-      <br><br>
+                        <div id="E-field" class="tab-pane fade in active show">
+                            <span style="font-weight: bold">The key idea behind D field - </span>
+                            <br>
+                            Consider an ideal dielectric (perfect insulator) that stretches to infinity.
+                            Placing it in a uniform electric field $\mathbf{E}_{applied}$ will induce a <span style ="color:#D24000;font-weight:bold">polarisation
+                            field</span> $\mathbf{P}$ in it.
+                            This will give rise to a <span style="color:#02893B; font-weight:bold">total electric field </span> $\mathbf{E}_{total}$ within the dielectric.
+                            <br><br>
+                            In general, $ \nabla \cdot \mathbf{P} = -\rho_p $, where $\rho_p$ is the polarisation charge density.
+                            However, $ \nabla \times \mathbf{P} $ depends on the material.
+                            <br><br>
+                            Define the <span style="color:#9F004E;font-weight:bold">electric displacement field</span>, $\mathbf{D}$ as
+                            $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $.
+                            In general, $ \nabla \cdot \mathbf{D} = \rho_f $, where $\rho_f$ is the free charge density.
+                            <br><br>
+                            In true vacuum, where there is no dipole by definition,
+                            $$ \mathbf{P} = 0 $$
+                            so,
+                            $$ \mathbf{D}_{vacuum} = \epsilon_{0}\mathbf{E}_{applied} $$
+                            $$ \nabla \cdot \mathbf{D}_{vacuum} = \nabla \cdot (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
+                            $$ \nabla \times \mathbf{D}_{vacuum} = \nabla \times (\epsilon_{0}\mathbf{E}_{applied}) = 0 $$
+                            <br>
+                            In a homogenous, isotropic and linear dielectric (HIL),
+                            $$ \mathbf{P} = \chi_{e}\epsilon_{0}\mathbf{E}_{total} $$
+                            where the electric susceptibility $\chi_{e}$ is a constant of proportionality, or
+                            $$ \mathbf{P} = \epsilon_{r}\mathbf{E}_{total} $$
+                            where $\epsilon_r = \chi_{e}\epsilon_{0}$.
+                            So,
+                            $$ \mathbf{D}_{dielectric} = \epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total} $$
+                            $$ = \epsilon_{0}\mathbf{E}_{applied} $$
+                            $$ = \mathbf{D}_{vacuum} $$
+                            $$ \nabla \cdot \mathbf{D}_{dielectric} = \nabla \cdot [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
+                            $$ = 0 $$
+                            $$ \nabla \times \mathbf{D}_{dielectric} = \nabla \times [\epsilon_{0}(1 + \chi_{e})\mathbf{E}_{total}] $$
+                            $$ = 0 $$
+                            <br>
+                            <p>Note: The units of the E-field are different to those of the P and D fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
 
-      <strong>Binding force -</strong> The actual forces between electrons and their nuclei can be complicated but we
-      approximate it as: <br> $F_{binding} = -k_{spring} x = -m \omega_0^2 x$. <br>
-      This is for small displacements, since you can expand the potential energy with a Taylor series about the
-      equilibrium position, giving: <br> $U(x) = U(0) + x U'(0) + \frac{1}{2} x^2 U''(0) + ...$<br>
-      The first term is a constant potential offset which can be ignored, and the second term can be aproximated as zero
-      around the equilibrium position. This leaves the third term which can be differentiated to give the expression for
-      force we saw earlier, where<br> $k_{spring} = U''(0)$.
-      <br><br>
+                            <span style="font-weight: bold">The subtlety - </span>
+                            <br>
+                            You might notice that the <span style="color:#02893B; font-weight:bold"> total E field </span> is weaker in a dielectric than in vacuum but
+                            the <span style="color:#9F004E;font-weight:bold">D field</span> remains <b>constant</b>.
+                            <br><br>
+                            A polarised material indeed weakens the <span style="color:#02893B; font-weight:bold">total E field </span>.
+                            However, the <span style="color:#9F004E;font-weight:bold">D field</span> remains constant because:
+                            <br>
+                            (1) $ \nabla \cdot \mathbf{D} = \rho_f $ and $\rho_f$ is 0 in both the vacuum and the ideal dielectric here,
+                            <br>
+                            (2) $ \mathbf{D} = \epsilon_{0}\mathbf{E}_{total} + \mathbf{P} $ is defined in terms of the <b>total</b> <span style="color:#02893B; font-weight:bold">E field </span> everywhere, so
+                            the reduction in <span style="color:#02893B; font-weight:bold">total E field </span> is complemented by the presence of <span style ="color:#D24000;font-weight:bold">P field</span>
+                            to keep the <span style="color:#9F004E;font-weight:bold">D field</span> constant.
+                            <br><br>
+                            Also note that $\mathbf{D}_{vacuum} = \mathbf{D}_{dielectric}$ in the derivation above.
+                            <br><br>
 
-      <strong>Damping force -</strong> As well as the restoring force there is a damping force which is partially caused
-      by radiation emitted by the electrons. For simplicity we say that this force is opposite in direction to the velocity.
-      It is given by:<br>
-      $F_{damping} = -m \gamma \frac{dx}{dt}$<br>
-      where m is the mass of the electron and gamma is a proportionality constant.
-      <br><br>
+                            <span style="font-weight: bold">Time variant D field - </span>
+                            Before we talk about H field, we want to consider time variant D field.
+                            Similar to time variant E field gives rise to curl in B field, time variant D field gives rise to curl in H field.
+                            More importantly, changing this electric displacement field gives rise to displacement current density, i.e.
+                            $$\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$$
+                                                </div>
+                                                <div id="M-field" class="tab-pane fade">
+                                                    <span style="font-weight: bold">The key idea behind H field - </span>
+                            <br>
+                            Consider a magnetic material that stretches to infinity.
+                            Placing it in a uniform magnetic field $\mathbf{B}_{applied}$ will induce a
+                            <span style ="color:#D24000;font-weight:bold">magnetisation field</span> $\mathbf{M}$ in it.
+                            This will give rise to a <span style="color:#0281d6; font-weight:bold">total magnetic field </span> $\mathbf{B}_{total}$.
+                            <br><br>
+                            In general, $ \nabla \times \mathbf{M} = \mathbf{J}_m $, where $\mathbf{J}_m $ is the magnetisation current density.
+                            However, $ \nabla \cdot \mathbf{M} $ depends on the material.
+                            <br><br>
+                            Define the <span style="color:#9F004E;font-weight:bold">magnetising field</span>, $\mathbf{H}$ as
+                            $ \mathbf{H} = \frac{1}{\mu_0}\mathbf{B}_{total} - \mathbf{M} $, where $\mu_0$ is the permeability of free space.
+                            In general, $ \nabla \cdot \mathbf{H} = - \nabla \cdot \mathbf{M} $ and
+                            $ \nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t} $, where $\mathbf{J}_c$ is the conduction current density.
+                            (Note: $\frac{\partial \mathbf{D}}{\partial t} = \mathbf{J}_d$ - displacement current density.)
+                            <br><br>
+                            In a magnetic material, $\mathbf{M} = \chi_m \mathbf{H}$,
+                            where $\chi_m$ is the magnetic susceptibility of the material.
+                            So, $ \mathbf{H} = \frac{1}{\mu_0\mu_r}\mathbf{B}_{total} $,
+                            where $\mu_r = 1 + \chi_m$.
+                            <br><br>
+                            <p>Note: The units of the B-field are different to those of the M and H fields, hence field line density in this visualisation only provides a qualitative representation of field strength</p>
 
-      <strong>Driving force -</strong> The E field from an electromagnetic wave can drive the electrons, with a force
-      of<br> $F_{driving} = q E_0 cos(\omega t)$<br>
-      where $\omega$ is the angular frequency of the light.
-
-      <strong>Solving for x - </strong> Putting all these forces into Newton's second law gives a forced oscillator
-      equation, with complex solutions.<br>
-      $\displaystyle \tilde{x}(t) = \frac{q/m}{\omega_0^2 - \omega^2 - i \gamma \omega} E_0 e^{-i \omega t}$
-      <br><br>
-
-      <strong>Electric Field in Dielectric - </strong> The dipole moment of each electron nucleus pair, is given by
-      $\tilde{p}(t) = q \tilde{x}(t)$. By summing these dipole moments over a volume element, we can find the polarisation
-      of the material. <br>
-      $\displaystyle \tilde{\mathbf{P}} = \frac{N q^2}{m} \left(\sum_j \frac{f_i}{\omega_j^2 - \omega^2 - i \gamma_j \omega}\right) \tilde{\mathbf{E}}$ <br>
-      The electric field is related to the polarisation by $\displaystyle \tilde{\mathbf{P}} = \epsilon_0 \tilde{\chi}_e \tilde{\mathbf{E}}$.
-      From this we can find plane wave solutions of the E field inside the dielectric. These are:<br>
-      $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0  e^{i(\tilde{k}z-\omega t)}$ <br>
-      where $\tilde{k}$ is the complex wave number. This can be rearranged to: <br>
-      $\displaystyle \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0(z,t) e^{-\kappa z} e^{i(kz-\omega t)}$ <br>
-      where $\kappa$ is the complex part of $\tilde{k}$ and $k$ is the real part.
-      <br><br>
-
-      <strong>Attenuation -</strong> From the previous equation it is clear that the imaginary component of $\tilde{k}$
-      will cause an exponential decay in the amplitude of the EM wave. Normally in a dielectric the imaginary component
-      is very small, however when the frequency of the EM wave approaches the natural frequency of the electron oscillators,
-      resonance occurs and the oscillators absorb much more energy from the wave, meaning the material becomes opaque and
-      the imaginary component of $\tilde{k}$ becomes significant. Most dielectrics have electron oscillators in several
-      different environments, each having it's own natural frequency, meaning the material is opaque over a range of
-      frequencies. Transparent materials normally have resonances in the ultraviolet part of the spectrum, rather than
-      the visible part.
-
-                        </div>
-                        <div id="con" class="tab-pane fade">                            
-                        <span style="font-weight: bold">The Drude Model - </span>
-                        The Drude Model studies the motion of electrons in material by assuming that there are only two forces on the electrons,
-                        (1) electric force from applied electric field, $\mathbf{F}_E$
-                        (2) force arises from the collisions among the electrons and between electrons and ions, $\mathbf{F}_c$
-                        so the coulombic forces between electrons and ions are neglected.
-                        <br><br>
-                        By Newton's second law of motion,
-                        $$ m \mathbf{a} = \mathbf{F}_{total} = \mathbf{F}_E + \mathbf{F}_c $$
-                        So,
-                        $$ m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
-                        where $\tau_c$ is the electron collision time.
-                        <br><br>
-                        We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$
-                        or $\mathbf{E} = \mathbf{E}_0 e^{-i \omega t}$,
-                        where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
-                        In this case, the solution to the equation is such that $\mathbf{v}_e \propto e^{-i \omega t}$.
-                        <br><br>
-                        Now we obtain
-                        $$-i \omega t m_e \mathbf{v}_e = -e \mathbf{E} - \frac{m_e \mathbf{v}_e}{\tau_c} $$
-                        so
-                        $$ \mathbf{v}_e = -\frac{e}{m_e} \frac{\tau_c}{1-i \omega \tau_c}$$
-                        Recall that the conduction current density is given by
-                        $$\mathbf{J}_c = N_i e \mathbf{v}_i - N_e e \mathbf{v}_e$$
-                        where N is the number density, subscript $i$ is for ions and $e$ for electrons.
-                        In general, $\mathbf{v}_e \gg \mathbf{v}_i$ given the same initial conditions for ions and electrons because ions are much heavier than electrons.
-                        We assume that the first term tends to zero so
-                        $$\mathbf{J}_c = - N_e e \mathbf{v}_e$$
-                        Taking the result for $\mathbf{v}_e$ from above, we get
-                        $$\mathbf{J}_c = \frac{\sigma \mathbf{E}}{1 - i \omega \tau_c}$$
-                        where $\sigma = \frac{N_e e^2 \tau_c}{m_e}$.
-                        We can rewrite $\mathbf{J}_c$ in terms of complex exponential form:
-                        $$ \mathbf{J}_c = \frac{\sigma}{\sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E} $$
-                        The phase shift of $\mathbf{J}_c$ to $\mathbf{E}$ is given by $\tan^{-1} {(\omega \tau})$.
-                        An alternative way of looking at the phase shift between $\mathbf{J}_c$ and $\mathbf{E}$
-                        is that $\mathbf{J}_c$ is analogous to the velocity of the electrons and
-                        $\mathbf{E}$ is analogous to the acceleration of the electrons.
-                        (In fact, it is just a matter of scalling.)
-                        <br><br>
-                        This phase shift comes out of the fact that this is effectively a damped driven harmonic oscillation.
-                        The source of the driving force is the applied electric field while the source of the damping force is
-                        the collisions between electrons or electrons and ions.
-                        <br><br>
-                        In a damped driven harmonic oscillation, the phase shift of the steady state is due to
-                        the amount of time for the transient phase to decay away.
-                        <br><br>
-                        <span style="font-weight: bold">Conductors - </span>
-    A conductor contains mobile free electrons.
-    The positively charged ion left behind is usually fixed so we investigate only the behavior of the free electrons in an electric field.
-    <br><br>
-
-    <span style="font-weight: bold">Charge rearrangement time - </span>
-    Given some arbitrary electric field, the free electrons would rearrange themselves until the total electric field inside the conductor is 0.
-    This arrangement happens within the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, where $\epsilon = \epsilon_0\epsilon_r$,
-    $\epsilon_0$ is the permittivity of free space, $\epsilon_r$ and $\sigma$ are the relative permittivity and the conductivity of the material respectively.
-    A physical insight to $\tau^{\star}$ is that $\epsilon$ is 'a measurement of how much the material dampens the electric field felt by the charges'
-    while $\sigma$ is 'a measurement as to how ready is the charge to move given some electric field'.
-    So the charge rearrangement time $\tau^{\star}$ is a characteristic of the conductor.
-    <br><br>
-    Derivation:
-    <br>
-    Based on the Drude Model,
-    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
-    where $\mathbf{E}_{applied}$ is the applied electric field.
-    The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
-    <br><br>
-    We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
-    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
-    <br><br>
-    In a conductor, the electron collision time $\tau_c$ is much smaller than
-    the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \ll T$ or $\frac{\tau_c}{T} \ll 1$ so $\omega \tau_c \ll 1$.
-    Taking the limits $\omega \tau_c + 1 \rightarrow 1$ and $\tan^{-1} {(\omega \tau}) \rightarrow 0$,
-    $$ \mathbf{J}_c = \sigma \mathbf{E} $$
-    This is Ohm's Law.
-    <br><br>
-    Approximating the material to be linear, meaning that charges respond to electric fields by producing a current that is a linear
-    function of the electric field they feel, we can use Ohm's law:
-    $$ \mathbf{J}_c = \sigma \mathbf{E} $$
-    where $\sigma$ is a constant (not a function position because we take the material to be homogenous)
-    scalar (not a tensor because we take the material to be isotropic).
-    <br><br>
-    Conservation of free charge requires
-    $$ \frac{\partial \rho_f}{\partial t} = - \nabla \cdot \mathbf{J}_c $$
-    Substituting Ohm's Law for the electric field,
-    $$ \frac{\partial \rho_f}{\partial t} = - \sigma \nabla \cdot \mathbf{E} $$
-    $$ = - \sigma \frac{\rho_f}{\epsilon} = - \frac{\sigma}{\epsilon} \rho_f$$
-    So,
-    $$ \rho_f = \rho_{f, initial} e^{-\frac{t}{\tau^{\star}}} $$
-    where $\tau^{\star} = \frac{\epsilon}{\sigma}$.
-    <br><br>
-    <span style="font-weight: bold">Good or poor conductor ? </span>
-    Not to be confused with electrical conductivity, the conductivity we are talking about here is how responsive the material is to any changes in the electric field applied to it.
-    We consider only oscillatory electric fields (or alternating current) to test the material so $E_{applied} \propto e^{-i \omega t}$,
-    where $\omega = \frac{2\pi}{T}$ is the angular frequency of the field.
-    <br><br>
-    <b>Now we ask the question: Are the free electrons rearranging themselves fast enough to 'cancel out' $\mathbf{E}_{applied}$?</b>
-    In other words, we want to know if the timescale of electron movement is small enough relative to the timescale of the electric field
-    changing in order for $\mathbf{E}_{applied}$ to be cancelled out. And so an important quantity for us
-    is the ratio of timescales $\frac{\tau^{\star}}{T}$.
-    That ratio turns out to be $\frac{\tau^{\star}}{T} = \frac{1}{2\pi} \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} $,
-    or $\omega \tau^{\star} = \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} $, which is shown later.
-    <br><br>
-    If the <b>free electrons take much less time </b> than the wave period to rearrange, i.e. $\omega \tau^{\star} \ll 1$,
-    then we expect the material to be a <b>good conductor</b>, as they can move quickly enough to
-    cancel out the applied field.
-    The 'good conductor' criterion depends on $\omega$ and $\tau^{\star}$ so it depends on both the material <b>and the applied electric field</b>.
-    <br><br>
-    The conduction current density is
-    $$ \mathbf{J}_c = \sigma \mathbf{E}_{applied}, $$
-    (This is the same from the Ohm's law approximation as above)
-    <br>
-    $ \mathbf{J}_c $ is a current density due to electrons experiencing a <b>non-zero electric field</b>.
-    Notice $\sigma$ is a property of the material, which relates the electric field to the observed conduction current.
-    <br><br>
-    The displacement current density is
-    $$ \mathbf{J}_d = \frac{\partial \mathbf{D}}{\partial t} = \frac{\partial }{\partial t} (\epsilon \mathbf{E}_{applied})$$
-    $ \mathbf{J}_d $ is an apparent current density due to <b>the rate of change of the electric field</b>.
-    Notice $\epsilon$ is a property of the material, which relates the electric field to the observed displacement current.
-    Notice that both the conduction current density and the displacement current density are linearly proportional to
-    the amplitude of the applied electric field (if the field amplitude is doubled, the rate of change of the field value
-    is also doubled).
-    In this case, $E_{applied} \propto e^{-i \omega t}$, and so
-    $$ \mathbf{J}_d = -i \omega \epsilon \mathbf{E}_{applied} $$
-    We only care about how quickly the field is changing and the material properties in order to classify a good or a poor conductor, not about
-    the value of the field itself. We can achieve such a quantity by dividing the magnitudes of the two currents, as both are only linearly
-    proportional to the electric field amplitude.
-
-    $$ \frac{\mid \mathbf{J}_d \mid}{\mid \mathbf{J}_c \mid} = \frac{\omega \epsilon}{\sigma} $$
-    Using the charge rearrangement time $\tau^{\star} = \frac{\epsilon}{\sigma}$, we see
-    $$ \frac{\omega \epsilon}{\sigma} = \omega \tau^{\star} = 2\pi \frac{\tau^{\star}}{T} $$ which is the ratio of electron movement timescale
-    to the field timescale (period). And so $$\frac{\omega \epsilon}{\sigma}$$ dictates whether the material is a good conductor
-    for an EM field of that frequency.
-    <br><br>
-    
-    <span style="font-weight: bold">Skin Effect - </span>
-    When an alternating current passes through a conductor, the alternating electric field produces an alternating magnetic field.
-    This magnetic field in turn creates an electric field that opposes the original alternating current, known as the "back emf".
-    The back emf is the strongest at the centre of a conductor, pushing the current to the surface of the conductor.
-    <br>
-      The current diffusion equation is given by
-      $$ \nabla^2 \mathbf{J}_c = \mu_0 \sigma \frac{\partial \mathbf{J}_c}{\partial t}$$
-      where $\mathbf{J}_c$ is the conduction current density in the conductor.
-      The LHS of the above above equation gives the gradient field of the flow of current density in the conductor.
-      The current density of an alternating current in a cylindrical wire can be written as
-      $\mathbf{J}_c = \widetilde{J}_c (r) e^{-i \omega t} \mathbf{\hat{z}}$, which gives
-      $$\nabla^2 \widetilde{J}_c = -\kappa ^2 \widetilde{J}_c $$
-      where $\kappa^2 = i \omega \mu_0 \sigma$.
-      This is a Helmholtz Equation, where $\kappa$ provides a measure of the wavenumber.
-      Hence,
-      $$\kappa = \sqrt{\mu_0 \omega \sigma} \, i^{\frac{1}{2}} = \frac{1+i}{\delta}$$
-      where $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} }$ is the skin depth, a current diffusion lengthscale.
-      This means that $J_c$ reduces by a factor of $\frac{1}{e}$ after travelling for one $\delta$.
-    <br>
-      Let $a$ be the radius of a wire. If the AC frequency $( \omega )$ is low, $\delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} } \gg a$
-      and $\mathbf{J}_c$ is roughly uniform throughout the wire. However, if $\omega$ is high, $\delta \ll a$ and $\mathbf{J}_c$ is
-      confined within the layer of width $\approx \delta$ on the surface on the wire.
-
-
-                        </div>
-                        <div id="plas" class="tab-pane fade">
-
-
-    <span style="font-weight: bold">Plasmas in oscillatory electric field - </span>
-    We shall only talk about <b>collisionless</b> plasmas.
-    Based on the Drude Model,
-    $$\mathbf{J}_c = \frac{N_e e^2 \tau_c}{m_e \sqrt{1+\omega^2 \tau^2}} e^{i\tan^{-1} {(\omega \tau})} \mathbf{E}_{applied}$$
-    where $\mathbf{E}_{applied}$ is the applied electric field.
-    The <b>phase shift</b> of $\mathbf{J}_c$ to $\mathbf{E}_{applied}$ is given by $\tan^{-1} {(\omega \tau})$.
-    <br><br>
-    We consider only oscillatory electric fields (or alternating current) to test the material so $\mathbf{E}_{applied} = \mathbf{E}_0 e^{-i \omega t}$,
-    where $\omega$ is the angular frequency of the field and $\mathbf{E}_0$ is real.
-    <br><br>
-    In collisionless plasmas, the electron collision time $\tau_c$ is much greater than
-    the 'field timescale' $T = \frac{2\pi}{\omega}$, i.e. $\tau_c \gg T$ or $\frac{\tau_c}{T} \gg 1$ so $\omega \tau_c \gg 1$.
-    Taking the limits $\omega \tau_c + 1 \rightarrow \omega \tau_c$ and $\tan^{-1} {(\omega \tau}) \rightarrow \frac{\pi}{2}$,
-    $$\mathbf{J}_c \approx \frac{N_e e^2 \tau_c}{m_e} e^{i \frac{\pi}{2}} \mathbf{E}_{applied} $$
-    $E^{real}$ and $J^{real}_c$ are out of phase by $\frac{\pi}{2}$.
-    <br><br>
-
-    <span style="font-weight: bold">Plasmas oscillation - </span>
-    Consider a cloud of neutral plasma left alone to reach its equilibrium distribution in the absence of external electromagnetic field.
-    What happens if we displace one of the electrons in the plasma slightly?
-    (Hint: the keywords are <b>equilibrium</b> and <b>displace slightly</b>.)
-    <br><br>
-    The electron should be sitting at the bottom of the potential well initially.
-    The small displacement will result in simple harmonic motion of the electron.
-    Since plasma is a cloud of free electrons and ions, this small displacement actually causes the entire cloud to oscillate
-    hence the collective behaviour of plasma oscillations.
-    <br><br>
-    It turns out that plasma oscillates at the plasma frequency:
-    $$\omega_p = \sqrt{\frac{N_e e^2}{m_e \epsilon_0}}$$
-    where $N_e$ is the number density of electrons, $e$ is the fundamental charge and $\epsilon_0$ is the permittivity of free space.
-    Notice how the plasma frequency here depends only on the characteristics of electron distribution.
-    This is due to the assumption that the electrons moving much faster than the positive ions in a neutral plasma.
-    <br><br>
-    How do we justify this assumption?
-    Consider the lightest element, hydrogen. Ignoring the heavier isotopes, the simplest hydrogen atom consists of a proton and an electron.
-    The mass of a proton is roughly 1800 times greater than that of an electron.
-    Given the same initial conditions, an electron would be accelerated much more than a proton in an electric field that is not too strong.
-    Therefore, in any plasmas, the positive ions are always much heavier than the electrons and so the movement of the positive ions can be ignored
-    given that the electric field is not too strong.
-    <br><br>
-    Derivation:
-    Displacing an electron in a neutral plasma means that the number density of electron, $N_e$ depends on the position and time.
-    Let $N_e = N_0 + N_1 (x, t)$, where $N_0$ is the initial number density of electron and $x$ is the direction of perturbation.
-    Generally, the free charge density $\rho_f$ is given by $\rho_f = N_i e - N_e e$, where $N_i$ is the number density of positive ions.
-    In this case, $\rho_f = N_i e - (N_0 + N_1(x, t))e$ but $N_i e = N_0 e$ for a neutral plasma so
-    $$\rho_f = -N_1(x, t)e$$
-    Also, in general, the conduction current density $\mathbf{J}_c$ is given by
-    $$\mathbf{J}_c = N_i e \mathbf{v}_e - N_e e \mathbf{v}_e$$
-    Based on the assumption of small perturbation of electron such that the movements of positive ions can be ignored, the first term vanishes so
-    $\mathbf{J}_c = - N_e e \mathbf{v}_e = -(N_0 + N_1(x, t)) e \mathbf{v}_e$. Also based on the assumption of small perturbation, $N_0 \gg N_1$
-    so $$\mathbf{J}_c = - N_0 e \mathbf{v}_e$$
-    In a closed system, we require conservation of free charge,
-    $$\frac{\partial \rho_f}{\partial t} + \nabla \cdot \mathbf{J}_c = 0$$
-    so,
-    $$-e\frac{\partial N_1}{\partial t} - N_0 e \nabla \cdot \mathbf{v}_e = 0$$
-    Consider only in the direction of perturbation,
-    $$-e\frac{\partial N_1}{\partial t} - N_0 e \frac{\partial v_{e, x}}{\partial x} = 0$$
-    We can rewrite this as
-    $$\frac{\partial v_{e, x}}{\partial x} = -\frac{1}{N_0} \frac{\partial N_1}{\partial t}$$
-    Assuming that
-    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = \frac{\partial^2 v_{e, x}}{\partial t \partial x}$$
-    We get (1):
-    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = -\frac{1}{N_0} \frac{\partial^2 N_1}{\partial t^2}$$
-    By Gauss' Law for electrostatics,
-    $$\nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}$$
-    where $\rho = \rho_f + \rho_p$, $\rho_f$ is the free charge density while $\rho_p$ is the polarisation charge density.
-    In plasmas, $\rho_p = 0$ so
-    $$\nabla \cdot \mathbf{E} = \frac{\rho_f}{\epsilon_0}$$
-    From the result above, $\rho_f = -N_1(x, t)e$ so
-    $$\nabla \cdot \mathbf{E} = -\frac{N_1 e}{\epsilon_0}$$
-    Consider only in the direction of perturbation,
-    $$\frac{\partial E_x}{\partial x} = -\frac{N_1 e}{\epsilon_0}$$
-    Now, by Newton's second law,
-    $$m_e \frac{\partial \mathbf{v}_e}{\partial t} = -e \mathbf{E}$$
-    Consider only in the direction of perturbation,
-    $$m_e \frac{\partial v_{e, x}}{\partial t} = -e E_x$$
-    So
-    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \frac{\partial E_x}{\partial x}$$
-    From the result for $\frac{\partial E_x}{\partial x}$ above, we obtain (2):
-    $$\frac{\partial^2 v_{e, x}}{\partial x \partial t} = - \frac{e}{m_e} \cdot -\frac{N_1 e}{\epsilon_0} = \frac{e^2}{m_e \epsilon_0} N_1 $$
-    Equating (1) and (2) and rearranging the result,
-    $$\frac{\partial^2 N_1}{\partial t^2} + \frac{N_0 e^2}{m_e \epsilon_0} N_1 = 0$$
-    This is the equation of simple harmonic motion for plasma, with a natural frequency of
-    $$\omega_p = \sqrt{\frac{N_0 e^2}{m_e \epsilon_0}}$$
+                            <span style="font-weight: bold">The subtlety - </span>
+                            <br>
+                            You might notice that the <span style="color:#0281d6; font-weight:bold">total magnetic field </span> remaining <b>constant</b> when $\mu_r$ is varied.
+                            The logic behind is similar to that of D field remains constant with varying $\epsilon_r$.
+                            The change in <span style="color:#0281d6; font-weight:bold">total magnetic field </span> is complemented by
+                            the change in <span style ="color:#D24000;font-weight:bold">magnetisation field</span>
+                            to keep the <span style="color:#0281d6; font-weight:bold">total magnetic field </span> constant.
+                            <br><br>
+                            Now let us state the Maxwell's equations (differential) in matter:
+                            $$\nabla \cdot \mathbf{D} = \rho_f$$
+                            $$\nabla \cdot \mathbf{B} = 0$$
+                            $$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$
+                            $$\nabla \times \mathbf{H} = \mathbf{J}_c + \frac{\partial \mathbf{D}}{\partial t}$$
+                            We shall use these equations to study dielectrics, conductors and plasmas in the following visualisations.
                         </div>
                     </div>
                 </div>
             </div>
+
+            
 
             <div class="section-container" id="sc4">
                 <div class="placeholder" id="ph4">
@@ -1177,26 +1178,38 @@
                     <hr>
                 </div>
                 <div class="text section-body odd" id="p8">
+
                     <!--    Sub-Section Tabs    -->
-                    <ul class="nav nav-tabs nav-justified">
-                        <li :class="[subSection[7] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
-                            <a data-toggle="tab" href="#elecPotential" @click="subScrollTo(8); subSection[7]=1; loadSubScripts(); $forceUpdate();">Field</a>
-                        </li>
-                        <li :class="[subSection[7] === 2 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#elecField" @click="subScrollTo(8); subSection[7]=2; loadSubScripts(); $forceUpdate();">Potential</a>
-                        </li>
-                    </ul>
+
                     <!--    Sub-Section Text Containers    -->
-                    <div class="tab-content">
-                            <div id="elecPotential" class="tab-pane fade in active show">
 
-                            </div>
-                            <div id="elecField" class="tab-pane fade">
+        The behaviour of electromagnetic radiations in the various materials as discussed above assumes that all the medium are homogeneous, isotropic and linear.
+        However, some materials that do not have HIL properties can exhibit very interesting and mind
+        (and light) - bending behaviour that is the focus of many cutting-edge research.
+        <br>
+        Click on the right to look at two applications of metamaterials in the manipulation of electromagnetic wave.
+
+        <h3 class="section-sub-head">Negative Index Metamaterials (NIMs)</h3>
+        NIMs are materials that have negative refractive indices for electromagnetic waves over certain frequency ranges.
+        NIM is a composite material made from repeating unit cells stacked together.
+        The first experimentally investigated NIM used wires and dielectrics for its unit cell.
+        <br>
+        One property that NIMs can exhibit is reverse propagation.
+        This allows for the resolution of image below the diffraction limit feasible.
+        On top of that, the permittivity and permeability of the NIM can also be tuned by means of how the unit cells are stacked etc.
+        Negative permittivity and permeability are also achievable in NIMs.
+
+        <h3 class="section-sub-head">Metamaterial Cloaking</h3>
+        The manufacturing of invisibility cloaks using metamaterials that react to electromagnetic radiation in a way that conceal themselves is a focus of transformation optics.
+        By controlling the properties of these metamaterials, light can be refracted in a way such that an "invisibility" effect can be achieved theoretically.
+        Electromagnetic waves are typically bent around the object, and the behaviour is frequency dependent (dispersion relation). If the range of operable frequency of the material
+        encompasses the visible spectrum, cloaking is achieved.
+        In principle, an inhomogeneous composite metamaterial can be engineered with the permittivity and permeability or any part varied at will,
+        where they conserve the electric field vector $\mathbf{D}$, magnetic field intensity $\mathbf{B}$ and the Poynting vector $\mathbf{S}$.
+        Such a material can concentrate electromagnetic fields in a given direction and be made to avoid or surround objects, returning to their original path without pertubation.
+        This is consistent with the Maxwell's equations and in principle, is application to all frequencies.
 
 
-                            </div>
-
-                    </div>
                 </div>
             </div>
 
@@ -1226,47 +1239,59 @@
             </div>
             </div>
             <div class="rightload text odd" id='loadout1' key="loadout1" v-if="currentSection === 1">
-                <iframe style="width: 67vw; height: 96vh" src="EM2/1PJRho_interactive.html"></iframe>
+                <div class="rightload text" id='loadout1sub1' key="loadout2sub1"
+                         v-if="subSection[0] === 1">
+                        <!-- Graph -->
+
+                        <iframe style="width: 67vw; height: 96vh" src="EM2/1PJRho_interactive.html"></iframe>
+                    </div>
+                    <div class="rightload text" id='loadout1sub2' key="loadout2sub2" v-else>
+                        <iframe src="EM2/1-interactive2.html" style="width: 67vw; height: 96vh"></iframe>
+                    </div>
+
             </div>
-            <div class="rightload text even" id='loadout2' key="loadout2" v-if="currentSection === 2">
+            
+            <div class="rightload text odd" id='loadout2' key="loadout2" v-if="currentSection === 2">
+
 
                     <!--Interactive Zone Sub Containers-->
                     <div class="rightload text" id='loadout2sub1' key="loadout2sub1"
                          v-if="subSection[1] === 1">
-
-                        <iframe src="EM2/2aFour_Field_interactive.html" style='width: 100%; height: 100%'></iframe>
-
-                        <!--Buttons/Sliders-->
-                        <!--        <div class="one-third column" style="padding-left: 50px;">-->
-
-                        <!--Main body contents-->
-
-
-                    </div>
-                    <div class="rightload text" id='loadout2sub2' key="loadout2sub2" v-else-if="subSection[1] === 2">
-                        <iframe src="EM2/2bFour_Field_interactive.html" style="width: 67vw; height: 96vh"></iframe>
-                    </div>
-
-
-            </div>
-            <div class="rightload text odd" id='loadout3' key="loadout3" v-if="currentSection === 3">
-
-
-                    <!--Interactive Zone Sub Containers-->
-                    <div class="rightload text" id='loadout3sub1' key="loadout3sub1"
-                         v-if="subSection[2] === 1">
                         <!-- Graph -->
 
                         <iframe src="EM2/3aMaterial_Intro_interactive.html" style="width: 67vw; height: 96vh"></iframe>
                     </div>
-                    <div class="rightload text" id='loadout3sub2' key="loadout3sub2" v-else-if="subSection[2] === 2">
+                    <div class="rightload text" id='loadout2sub2' key="loadout2sub2" v-else-if="subSection[1] === 2">
                         <iframe src="EM2/3bMaterial_Intro_interactive.html" style="width: 67vw; height: 96vh"></iframe>
                     </div>
-                <div class="rightload text" id='loadout3sub3' key="loadout3sub3" v-else-if="subSection[2] === 3">
-                        <iframe src="EM2/3bMaterial_Intro_interactive_XK.html" style="width: 67vw; height: 96vh"></iframe>
+                <div class="rightload text" id='loadout2sub3' key="loadout2sub3" v-else-if="subSection[1] === 3">
+                        <iframe src="EM2/3cMaterial_Intro_interactive.html" style="width: 67vw; height: 96vh"></iframe>
                     </div>
 
             </div>
+
+            <div class="rightload text even" id='loadout3' key="loadout3" v-if="currentSection === 3">
+
+                <!--Interactive Zone Sub Containers-->
+                <div class="rightload text" id='loadout3sub1' key="loadout3sub1"
+                     v-if="subSection[2] === 1">
+
+                    <iframe src="EM2/2aFour_Field_interactive.html" style='width: 100%; height: 100%'></iframe>
+
+                    <!--Buttons/Sliders-->
+                    <!--        <div class="one-third column" style="padding-left: 50px;">-->
+
+                    <!--Main body contents-->
+
+
+                </div>
+                <div class="rightload text" id='loadout3sub2' key="loadout3sub2" v-else-if="subSection[2] === 2">
+                    <iframe src="EM2/2bFour_Field_interactive.html" style="width: 67vw; height: 96vh"></iframe>
+                </div>
+
+
+            </div>
+
             <div class="rightload text even" id='loadout4' key="loadout4" v-if="currentSection === 4">
 
                     <!--Interactive Zone Sub Containers-->
@@ -1319,13 +1344,10 @@
             <div class="rightload text even" id='loadout8' key="loadout8" v-if="currentSection === 8">
                 <transition name="fade">
                     <!--Interactive Zone Sub Containers-->
-                    <div class="rightload text" id='loadout8sub1' key="loadout8sub1"
-                         v-if="subSection[7] === 1">
-                        <iframe src="EM/7Electric_Potential_Interactive.html" style="width: 67vw; height: 96vh"></iframe>
-                    </div>
-                    <div class="rightload text" id='loadout8sub2' key="loadout8sub2" v-else>
-                        <iframe src="EM/7Electric_Field_Interactive.html" style="width: 67vw; height: 96vh"></iframe>
-                    </div>
+
+                        <iframe src="EM2/12Outro_interactive.html" style="width: 67vw; height: 96vh"></iframe>
+
+
                 </transition>
             </div>
 

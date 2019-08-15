@@ -32,7 +32,7 @@
 </head>
 <body>
 
-<div style="width:95%; float:right;">
+<div style="width: 100vw; height: 100vh">
     <h2></h2>
     <div style = "width:100%">
         <div style = "width:50%; float:left">
@@ -53,18 +53,16 @@
             <h5 style="font-weight: bold">Dispersion Graph</h5>
             <!--<div id='DispersionGraph' style="width:40vw; height:40vh;"></div>-->
             <div id='DispersionGraph' style="width:100%; float:center"></div>
-            <label class="sliderTitle" style="padding-bottom:20px;">$N_e$:
-                <span id="NeSliderDisplay" data-unit="">0.15</span>
-                $\times 10^{17}$
-            </label>
+            <div style='display: flex; flex-direction: row'>
+                <div style='flex-grow: 1'>$N_e$:<span id="NeSliderDisplay" data-unit="">0.15</span>$\times 10^{17}$</div>
+                <div style='flex-grow: 1'>$\omega_p$:<span id="OmegaPDisplay" data-unit=""></span></div>
+            </div>
             <label style = "width:100%">
                 <span class="sliderMin">1</span>
                 <input id="NeSlider" class="inputs" type="range" value="1" min="1" max="10" step="0.01">
                 <span class="sliderMax">10</span>
             </label> 
-            <label class="sliderTitle" style="padding-bottom:20px;">$\omega_p$:<!--is that meant to be capital p on the omega?-->
-                <span id="OmegaPDisplay" data-unit=""></span>
-            </label>
+            
             <label class="sliderTitle" style="padding-bottom:20px;">$\omega$:
                 <span id="OmegaSliderDisplay" data-unit="">0.15</span>
                 $\times 10^{10}$

@@ -1,4 +1,4 @@
-let cubeSize = 30;
+let cubeSize = 70;
 let prePos = [[0, 0, 0]];
 let cubeList = [];
 let cubeFace = [];
@@ -158,42 +158,43 @@ class element {
 
     drawFace() {
         for (let i = 0; i < cubeFace.length; i++) {
-            let p = 0;
+            let n = [0,0,0];
             push();
-            noStroke();
+            stroke("blue");
             //fill("red");
             //console.log(cubeFace[i]);
             translate(cubeFace[i][0], cubeFace[i][1], cubeFace[i][2]);
             if (cubeFace[i][3] === "right") {
-                p = EMag * Math.cos(YsliderVal * (Math.PI / 180));
-                rotateZ(0)
+                n = [0,0,1];
+                //rotateZ(0)
             } else if (cubeFace[i][3] === "left") {
-                p = -EMag * Math.cos(YsliderVal * (Math.PI / 180));
-                rotateZ(0)
+                n = [0,0,-1];
+                //rotateZ(0)
             } else if (cubeFace[i][3] === "front") {
-                p = EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.cos(ZsliderVal * (Math.PI / 180));
-                rotateY(Math.PI / 2)
+                n = [1,0,0];
+                //rotateY(Math.PI / 2)
             } else if (cubeFace[i][3] === "back") {
-                p = -EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.cos(ZsliderVal * (Math.PI / 180));
-                rotateY(Math.PI / 2)
+                n = [-1,0,0];
+                //rotateY(Math.PI / 2)
             } else if (cubeFace[i][3] === "top") {
-                p = EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.sin(ZsliderVal * (Math.PI / 180));
-                rotateX(Math.PI / 2)
+                n = [0,1,0];
+                //rotateX(Math.PI / 2)
             } else {
-                p = -EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.sin(ZsliderVal * (Math.PI / 180));
-                rotateX(Math.PI / 2)
-            }
-            let str1 = 'rgba(255, 20, 20,';
-            let str2 = 'rgba(20, 20, 255,';
-            let str3 = String(Math.round(abs(p)) / 100) + ')';
-
-            if (0 >= p) {
-                fill(str1.concat(str3));
-            } else {
-                fill(str2.concat(str3));
+                n = [0,-1,0];
+                //rotateX(Math.PI / 2)
             }
 
-            plane(cubeSize - 2, cubeSize - 2);
+            let M=[Math.sin(YsliderVal* (Math.PI / 180)) * Math.cos(ZsliderVal* (Math.PI / 180)),Math.sin(YsliderVal* (Math.PI / 180)) * Math.sin(ZsliderVal* (Math.PI / 180)),Math.cos(YsliderVal* (Math.PI / 180))];
+            let J=[(M[1]*n[2]-M[2]*n[1]),-(M[0]*n[2]-M[2]*n[0]),(M[0]*n[1]-M[1]*n[0])];
+
+
+
+            line(0,0,0,J[0]*20,J[1]*20,J[2]*20);
+            push();
+            stroke("red");
+            line(-J[0]*20,-J[1]*20,-J[2]*20,0,0,0);
+            pop();
+            //console.log(J);
             pop();
 
             if (sN==0) {
@@ -344,6 +345,7 @@ function draw() {
         cubeList[i].drawElement();
         cubeList[i].drawFace();
     }
+
     for (let i = 0; i < linePos.length; i++) {
         let line = new EFieldLine(linePos[i][0], linePos[i][1], linePos[i][2], YsliderVal * (Math.PI / 180), ZsliderVal * (Math.PI / 180));
         line.DrawLine();
