@@ -107,7 +107,7 @@ function updatePlot() {
     //data = compute_xy(alpha,beta,omega);
     data = compute_xy(alpha,beta,omega).concat(colourgrad(alpha));
     console.log(data);
-    Plotly.animate(
+    Plotly.react(
         'graph',
         {data: data},
         {
