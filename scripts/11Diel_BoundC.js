@@ -23,10 +23,13 @@ let E_0 = 1;
 let width = 10;//width of the graph
 
 //let terms;
-let terms = 7;//number of terms shown , balance between accuracy of visulisation and not clarity and too many becomes confusing to look at
+let terms = parseInt(dom.termsSlider.val());//number of terms shown , balance between accuracy of visulisation and not clarity and too many becomes confusing to look at
 
-let thickness = parseFloat($("input#thickness").val());//set value of thicknes of dielectric
-let n2 = parseFloat($("input#refractive_index").val());//set value of the refractive index of dielectric
+//used to update static graph and change number of traces in 'individual' graph
+let old_terms = parseInt(dom.termsSlider.val());
+
+let thickness = parseFloat(dom.tSlider.val());//set value of thicknes of dielectric
+let n2 = parseFloat(dom.rfSlider.val());//set value of the refractive index of dielectric
 
 let offset_max = offset + spacing * terms;
 
@@ -466,6 +469,11 @@ function update_graphs(){//update animation
     let data = plot_data();
 
     let plt = new plt_layouts(side, thickness);
+
+    if (terms != old_terms){
+        Plotly.react('graph_individual', data[1], plt.layout_individual);
+        old_terms = terms;
+    }
 
     AnimateAll(data, plt);
 

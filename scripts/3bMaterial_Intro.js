@@ -1,3 +1,8 @@
+$(window).on('load', function() {
+        const dom = {//assigning switches and sliders
+            wSlider:$("input#Tau"),
+        }
+
 var xPlus = [];
 var yPlus = [];
 var zPlus = [];
@@ -6,169 +11,67 @@ var yMinus = [];
 var zMinus = [];
 
 var layout = {
-    scene:{
-        //prevents weird resizing of axes when animating
-        aspectmode:'cube',
-
-        xaxis: {
-            range: [-0.1,1.1],
-        },
-        yaxis: {
-            range: [-0.1,1.1],
-        },
-        zaxis: {
-            range:[-0.1,1.1],
-        },
-
-        //no margins on plot
-        margin: {
-        l: 0,
-        r: 0,
-        b: 0,
-        t: 0,
-        }
-}};
-
-function createInitialPositions(){
-    let x = numeric.linspace(0.2,0.8,3);
-    let y = x;
-    let z = x;
-
-    //create regularly spaced positive ions
-    for(let i = 0; i < x.length; i++){
-        for(let j = 0; j < x.length; j++){
-            for(let k = 0; k < x.length; k++){
-                xPlus.push(x[i]);
-                yPlus.push(y[j]);
-                zPlus.push(z[k]);
-            }
-        }
+    xaxis: {
+        title: "Time"
+    },
+    yaxis: {
+        title: "Relative Amplitude"
     }
-
-    let i = 0;
-    //create random positions for negative ions
-    while(i<xPlus.length){
-        xMinus.push(Math.random());
-        yMinus.push(Math.random());
-        zMinus.push(Math.random());
-        i++
-    }
-
 };
 
-function initialPlot(){
-    var Pos = {
-        x:xPlus, y: yPlus, z: zPlus,
-        mode: 'markers',
-        name: 'Positive ions',
-        marker: {
-            color: 'rgb(0, 255, 0)',
-            size: 12,
-            line: {
-            color: 'rgba(217, 217, 217, 0.14)',
-            width: 0.5},
-            opacity: 0.8},
-        type: 'scatter3d'
+let omega = 1;
+let sigma = 1;
+let tau = 0.9;
+
+function getData(tau){
+    console.log(tau);
+    let t = numeric.linspace(0,20,200);
+    let E = [];
+    let J = [];
+
+    for(let i = 0; i < t.length; i++){
+        E.push(Math.cos(omega*t[i]));
+
+        let Jmag = (Math.pow((sigma*sigma)/(1+Math.pow(omega*tau,2)),(1/2)));
+        J.push(Jmag*Math.cos(omega*t[i] + Math.atan(omega*tau)));
+    }
+
+    let trace1 = {
+          x: t,
+          y: E,
+          type: 'scatter',
+          name: 'E',
     };
 
-    var Neg = {
-        x:xMinus, y: yMinus, z: zMinus,
-        mode: 'markers',
-        name: 'negative ions',
-        marker: {
-            color: 'rgb(255, 0, 0)',
-            size: 5,
-            symbol: 'circle',
-            line: {
-            color: 'rgb(204, 204, 204)',
-            width: 1},
-            opacity: 0.8},
-        type: 'scatter3d'
+    let trace2 = {
+          x: t,
+          y: J,
+          type: 'scatter',
+          name: 'J',
     };
 
-    var data = [Pos, Neg];
-
-    Plotly.newPlot('plot', data, layout);
+    let data = [trace1 , trace2];
+    return data;
 }
 
-let t = 0;
-let xMinusAnimated = [];
-function oscillate(){
+function updateGraph() {
+   let tau = parseFloat($("input#Tau").val());
+   //Update slider display value
+   $("#tau-display").html($("input#Tau").val().toString());
 
-    //create displacement for electrons (SHM)
-    disp = 0.05*Math.sin(0.1*t);
-    t++;
-    xMinusAnimated = [];
-
-    for(let i = 0; i < xMinus.length; i++){
-        xMinusAnimated.push(xMinus[i] + disp);
-    }
-
-    let Pos = {
-        x:xPlus, y: yPlus, z: zPlus,
-        mode: 'markers',
-        name: 'Positive ions',
-        marker: {
-            color: 'rgb(0, 255, 0)',
-            size: 12,
-            line: {
-            color: 'rgba(217, 217, 217, 0.14)',
-            width: 0.5},
-            opacity: 0.8},
-        type: 'scatter3d'
-    };
-
-    let Neg = {
-        x:xMinusAnimated, y: yMinus, z: zMinus,
-        mode: 'markers',
-        name: 'negative ions',
-        marker: {
-            color: 'rgb(255, 0, 0)',
-            size: 5,
-            symbol: 'circle',
-            line: {
-            color: 'rgb(204, 204, 204)',
-            width: 1},
-            opacity: 0.8},
-        type: 'scatter3d'
-    };
-
-    let data = [Pos, Neg];
-    return data;
-
-};
-
-function animatePlot(xMinusAnimated){
-    if(Animate === true){
-    Plotly.animate("plot",
-            {data: oscillate()},//updated data
+   Plotly.animate("plot",
+            {data: getData(tau)},//updated data
             {
-                fromcurrent: false,
+                fromcurrent: true,
                 transition: {duration: 0,},
-                frame: {duration: 0, redraw: true,},
+                frame: {duration: 0, redraw: false,},
                 mode: "immediate"
             }
         );
-
-    requestAnimationFrame(animatePlot);
-    }
-    return 0;
 }
 
-//Create initial plot and find positions
-createInitialPositions();
-initialPlot();
 
-let Animate = false;
-//If button pressed Animate Plot
-$('#buttonPlay').on('click', function() {
-    Animate = !Animate;
 
-    //update button text
-    if(Animate){$('#buttonPlay').html('Pause');}
-    else{$('#buttonPlay').html('Play');}
-
-    //start animation
-    animatePlot();
-
-})
+Plotly.newPlot('plot', getData(tau), layout);
+dom.wSlider.on("input",updateGraph);
+});
