@@ -666,9 +666,7 @@
                     </div>
                 </div>
             </div>
-
-            
-
+    
             <div class="section-container" id="sc4">
                 <div class="placeholder" id="ph4">
                     <hr>
@@ -906,7 +904,7 @@
                             <a data-toggle="tab" href="#die-A" @click="subScrollTo(5); subSection[4]=1; loadSubScripts(); $forceUpdate();">Fresnel Equations</a>
                         </li>
                         <li :class="[subSection[4] === 2 ? 'shaded' : '', 'tabRight']">
-                            <a data-toggle="tab" href="#die-B" @click="subScrollTo(5); subSection[4]=2; loadSubScripts(); $forceUpdate();">B</a>
+                            <a data-toggle="tab" href="#die-B" @click="subScrollTo(5); subSection[4]=2; loadSubScripts(); $forceUpdate();">Evanescent Waves</a>
                         </li>
                         <li :class="[subSection[4] === 3 ? 'shaded' : '', 'tabRight']">
                             <a data-toggle="tab" href="#die-C" @click="subScrollTo(5); subSection[4]=3; loadSubScripts(); $forceUpdate();">Transmission in Dielectrics</a>
@@ -1000,7 +998,35 @@
     </div>
                         </div>
                         <div id="die-B" class="tab-pane fade">
-                                text needed
+                           <h5>Evanescent Waves</h5>
+                            <p>
+                                When an electromagnetic wave is incident on a dielectric boundary, some of the wave is reflected and some is transmitted. 
+                                When the medium containing the incident wave has a greater refractive index than the other medium, there exists a critical angle
+                                $sin^{-1}(\frac{n2}{n1})$. If the wave is incident at greater than the critical angle, then classically, total internal reflection 
+                                takes place. But in reality, in a process that is analogous to quantum tunnelling, some of the wave does enter the second medium
+                                and propagates in a direction parallel to the boundary, but decays in intensity as you move perpendicularly away from the boundary. 
+                                This is an evanescent wave. (The refractive index of the material is a function of intrinsic properties of the material and the frequency 
+                                of the electromagnetic wave, but we will not describe those formulae here.)
+                            </p>
+                        
+                            <p>
+                                Similar to tunnelling between two potential wells in quantum mechanics, let's say there existed a material 2 of refractive index $n_2$,
+                                but we introduced a small gap inside of refractive index $n_1$. When a wave travelling in medium 2 strikes medium 1 at greater than 
+                                the critical angle, total internal reflection takes place, and the transmitted wave in medium 1 decays as you move
+                                away from the boundary. But once this decaying wave hits medium 2 again, it continues propagating but with a smaller 
+                                amplitude governed by how much it decayed.
+                            </p>
+                        
+                            <p>
+                                The underlying maths of quantum tunnelling and the phenomenon of evanescent waves is exactly the same.
+                            </p>
+                        
+                            <h5>How to use the visualisation</h5>
+                            <p>The wave is propagating from left to right. The sliders can be varied to observe the behaviour of the incident, reflected, 
+                            their combination, and the transmitted waves. Doing this, Snell's Law can be observed.</p>
+                            <p>To observe the phenomenon of evanescent waves, the angular frequency ratio slider should be varied until $n2 > n1$,
+                                and then the incident angle slider should be taken to an angle greater than the critical angle.</p> 
+                        
                         </div>
                         <div id="die-C" class="tab-pane fade">
                             <div id="intro" class="divclass">
