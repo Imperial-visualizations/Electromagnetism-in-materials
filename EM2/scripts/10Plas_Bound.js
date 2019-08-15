@@ -2,28 +2,10 @@
 const e = 2.718281828459045235360287471352662497757247093699959574966967627724076630353;
 const pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
 
-let plt = {
-    layout: {
-        showlegend: false,
-        showscale: false,
-        /*shapes: [
-        {
-            type: 'rect',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the plot paper [0,1]
-            yref: 'y',
-            x0: -50,
-            y0: 0,
-            x1: 50,
-            y1: 20,
-            fillcolor: 'blue',
-            opacity: 0.5,
-            line: {
-            width: 0
-            }
-        }
-    ],*/
+
+let layout= {
+    showlegend: false,
+    showscale: false,
     xaxis: {
         range: [-25,25]
         //x axis attributes here
@@ -34,8 +16,8 @@ let plt = {
     },
     height: 500,
     width: 500
-    }
 };
+
 //when you make the new plot, you need to name the div or the id of the div that youre drawing onto
 //second thing you parse in is the variable with all the data innit. A function should return this variable
 //the third thing you parse in is plt.layout
@@ -61,6 +43,10 @@ function compute_xy(alpha,beta,omega) {
         type: 'scatter',
         name: '',
         showlegend: true,
+        line: {
+            color: "rgb(0,200,0)",
+            width: 5,
+        },
     };
     return [y_input];
 }
@@ -89,14 +75,14 @@ function initslide() {
     let initTheta = pi/2;
 
     //x = parseFloat(document.getElementById('DensityController').value) * 2;
-    theta = parseFloat(document.getElementById('Initial_Angle').value);
+    let theta = parseFloat(document.getElementById('Initial_Angle').value);
 
     let alpha = parseFloat(document.getElementById('DensityController').value);
     let beta = parseFloat(document.getElementById('Initial_Angle').value);
     let omega = parseFloat(document.getElementById('OmegaController').value);
 
     let plot_data = compute_xy(alpha,beta,omega).concat(colourgrad(alpha));
-    Plotly.newPlot("graph", plot_data);
+    Plotly.newPlot("graph", plot_data, layout);
 }
 function updatePlot() {
     let data = [];
@@ -107,17 +93,7 @@ function updatePlot() {
     //data = compute_xy(alpha,beta,omega);
     data = compute_xy(alpha,beta,omega).concat(colourgrad(alpha));
     console.log(data);
-    Plotly.animate(
-        'graph',
-        {data: data},
-        {
-            fromcurrent: true,
-            layout: plt.layout,
-            transition: {duration: 0,},
-            frame: {duration: 0, redraw: false,},
-            mode: "immediate"
-        }
-    );
+    Plotly.react('graph', data, layout);
 }
 
 function main() {

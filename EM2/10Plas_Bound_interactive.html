@@ -34,15 +34,15 @@
     <div style="margin-top: 15vh;margin-left: 2vw;float: left; width: 30vw">
         <!-- DENSITY SLIDER -->
         <label >
-            <span> Relative Plasma Density, $ \rho $: =  <output id="x" for="DensityController">0.5</output></span>
+            <span> Relative Plasma Density, $ \rho $: =  <output id="x" for="DensityController">0.09</output></span>
             <br>
-            <input id="DensityController" class="inputs" type="range" value="1" min="0" max="0.5" step="0.01" oninput="x.value=DensityController.value"/></input>
+            <input id="DensityController" class="inputs" type="range" value="0.09" min="0" max="0.5" step="0.01" oninput="x.value=DensityController.value"/></input>
         </label>
         <!-- INITIAL ANGLE SLIDER -->
         <label >
-            <span> Angle of Incidence, $ \theta $: =  <output id="theta" for="Initial_Angle">1</output></span>
+            <span> Angle of Incidence, $ \theta $: =  <output id="beta" for="Initial_Angle">1</output></span>
             <br>
-            <input id="Initial_Angle" class="inputs" type="range" value="1" min="0.01" max="1.5" step="0.01" oninput="theta.value=Initial_Angle.value"/></input>
+            <input id="Initial_Angle" class="inputs" type="range" value="1" min="0.01" max="1.5" step="0.01" oninput="beta.value=Initial_Angle.value"/></input>
         </label>
         <!-- PHOTON FREQUENCY CONTROLLER -->
         <label >
@@ -52,7 +52,7 @@
         </label>
 
     </div>
-<div id="graph" style="height:80vh;width:68vw;float: right;"></div>
+<div id="graph" style="height:90vh;width:68vw;float: right;"></div>
 <!--THE BRAINS-->
 <script src="scripts/10Plas_Bound.js"></script>
 </body>
