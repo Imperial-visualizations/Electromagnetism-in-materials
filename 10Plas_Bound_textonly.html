@@ -5,9 +5,9 @@
     <title>10Plasmas&boundaries</title>
     <!--css link-->
     <link rel="stylesheet"
-          href="styles/skeleton.css">
+        href="styles/skeleton.css">
     <link rel="stylesheet"
-          href="styles/style.css">
+        href="styles/style.css">
     <!--Required JS resources-->
     <!--NB: better to have resources before the main body but still works even if they are not-->
     <script src="scripts/plotly-1.47.4.min.js"></script>
@@ -15,17 +15,16 @@
     <script src="scripts/numeric/src/numeric.js"></script>
     <script src="scripts/math.min.js"></script>
     <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { fonts: ["TeX"] }
-  });
-
+        MathJax.Hub.Config({
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                processEscapes: true
+            },
+            "HTML-CSS": { fonts: ["TeX"] }
+        });
     </script>
     <script type="text/javascript" src="scripts/MathJax-master/MathJax.js">
     </script>
@@ -33,70 +32,196 @@
 </head>
 <body>
     <div class="container_journey">
-        <p style="text-align: left; -webkit-user-select: none; -moz-user-select: none; user-select: none;-ms-user-select: none;">
-            The behavior of waves in plasmas is characterised by Maxwell's Equations in 2 field form;
-            <br>
-            $\displaystyle \nabla \cdot \mathbf{E} = \frac{\rho_f}{\epsilon}
-            $
-            <br>
-            $\displaystyle \nabla\cdot \mathbf{B} = 0
-            $
-            <br>
-            $\displaystyle \nabla x \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}
-            $
-            <br>
-            $\displaystyle \nabla x \mathbf{B} = u\mathbf{J}_c + $ $\displaystyle  u\epsilon \frac{\partial \mathbf{E}}{\partial t}
-            $
-            <br>
-            For mathematical ease, we also assume the wave to be complex since this drastically reduces computation via the following;
-            <br>
-            $\displaystyle \nabla \rightarrow i \mathbf{k}
-            $
-            <br>
-            $\displaystyle \frac{\partial}{\partial t} \rightarrow i \omega
-            $
-            <br>
-            We now consider a monochromatic plane wave, characterised by;
-            <br>
-            $\displaystyle \mathbf{E} (\mathbf{r} , t) = $
-            $\displaystyle \mathbf{E}_0 \exp{ i ( \mathbf{k \cdot r} - \omega t) }$
-            <br> <!-- not sure why but mathjax isnt reading these two equations specifically? I can't seem to find the typo anywhere? -->
-            $\displaystyle \mathbf{B} (\mathbf{r} , t) = $ $\displaystyle \mathbf{B}_0 \exp{ i ( \mathbf{k \cdot r} - \omega t) } $
-            <br>
-            where the physical fields are given by the real parts.
-            <br>
-            When we consider waves in plasmas, we assume that the plasma is collisionless and unmagnetized. For a plane electromagntic wave,
-            Maxwells equations can be expressed as;
-            <br>
-            $\displaystyle EQ1 $
-            $\displaystyle EQ2 $
-            $\displaystyle EQ3 $
-            $\displaystyle EQ4 $
-            <br>
-            ***ALL OF THE ABOVE POSSIBLY TO BE SCRAPPED (peak innit)***
-            Consider an EM wave propagating through a collosionless, unmagnetized plasma of variable density $\displaystyle N_e(y) = \alpha y $ . The path
-            of the wave is characterised by the differential equation;
-            <br>
-            $\displaystyle \frac{ d^2 y }{d x^2 } = \frac{n}{\Omega^2} \frac{dn}{dy} $
-            <br>
-            where $\displaystyle n $ is the refractive index, y is the depth, x is the displacement of the wave tangential to the plasma boundary and
-            $\displaystyle \Omega = n(y_0) cos(\theta) $ (theta is the incident angle).
-            <br>
-            The dispersion relation of the plasma is given by;
-            $\displaystyle k = \frac{\omega}{\Omega} ( 1 - \frac{\omega_p ^2}{\omega^2} ) ^ { \frac{1}{2} } $
-            <br>
-            Using
-            <br>
-            $\displaystyle k = \frac{\omega n }{\Omega} $,
-            <br>
-            we can eliminate $\displaystyle k $, giving
-            $\displaystyle n = ( 1 - \frac{\omega_p ^2 }{\omega ^ 2}) ^ { \frac{1}{2} } $ .
-            <br>
-            We observe that $\displaystyle \omega_p < \omega $ so $\displaystyle n $ is between 0 and 1. With some manipulation we see that
-            <br>
-            $\displaystyle n = \frac{1}{\omega}( \omega ^ 2 - \frac{e^2 N_e}{M_e \epsilon_0} ) ^ { \frac{1}{2} }$
+		<h6 style = "text-align: center">
+			Plasma Critical Density
+		</h6>
+		<p>
+			We wish to derive the equation that represents the path taken by a light ray through a plasma with 
+			an electron density and refractive index that varies with $y$.
+		</p>
+		<p>
+			First, we start with Snell's Law:
+		</p>
+		<p style = "text-align: center">
+			$n_1\sin\alpha_1 = n_2\sin\alpha_2$,
+		</p>
+		<p>
+			with the symbols defined as shown in the image.
+		</p>
+		<img style="width:28vw" src="Snell1.png"/>
+		<p>
+			We can rewrite this in terms of $\theta$ as
+		</p>
+		<p style = "text-align: center">
+			$n_1\cos\theta_1 = n_2\cos\theta_2$,
+		</p>
+		<p>
+			and then rearrange it to get
+		</p>
+		<p style = "text-align: center">
+			$n_1\cos\theta_1 - n_2\cos\theta_2 = 0$.
+		</p>
+		<p>
+			We can rewrite the LHS of the above equation as the <i>change</i> in $n\cos\theta$, as follows:
+		</p>
+		<p style = "text-align: center">
+			$\delta(n\cos\theta) = 0$.
+		</p>
+		<p>
+			Note that $n$ = $n(y)$.
+		</p>
+		<p>
+			If the change in $n\cos\theta$ is zero, then its value is constant, which we can call $C$.
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			n(y)\cos\theta &= C\\
+			& = n(y_0)\cos\theta_0,\\
+			\end{align}
+		</p>
+		<p>
+			where $y_0$ and $\theta_0$ are the initial values of $y$ and $\theta$.
+		</p>
+		<p>
+			Rearranging this equation, it is trivial to see that
+		</p>
+		<p style = "text-align: center">
+			$n(y) = C\sec\theta$,
+		</p>
+		<p>
+			and therefore
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			\frac{dn}{d\theta}& = \frac{d}{d\theta}(C\sec\theta)\\
+			& = C\frac{d}{d\theta}(\sec\theta)\\
+			& = C\sec\theta\tan\theta\\
+			& = n(y)tan\theta.\\
+			\end{align}
+		</p>
+		<p>
+			This can be rewritten as 
+		</p>
+		<p style = "text-align: center">
+			$\frac{d\theta}{dn} = \frac{1}{n\tan\theta}$.
+		</p>
+		<p>
+			Using the fact that the gradient can be written as $\frac{dy}{dx} = \tan\theta$, we can write
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			\frac{d^2y}{dx^2} & = \frac{d}{dx}(\tan\theta)\\
+			& = \frac{d}{dx}(\frac{1}{n}\frac{dn}{d\theta})\\
+			& = \frac{d}{dx}\bigg(\frac{1}{n}\bigg)\frac{dn}{d\theta} + \frac{1}{n}\frac{d}{dx}\bigg(\frac{dn}{d\theta}\bigg).\\
+			\end{align}
+		</p>
+		<p>
+			Since $n$ is a function of $y$ only, this becomes
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{1}{n}\frac{d}{dx}\Big(\frac{dn}{d\theta}\Big)$,
+		</p>
+		<p>
+			which, with the help of the chain rule, becomes
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			\frac{d^2y}{dx^2} & = \frac{1}{n}\frac{d}{dx}\bigg(\frac{dn}{dy}\frac{dy}{d\theta}\bigg)\\
+			& = \frac{1}{n}\frac{dn}{dy}\frac{d}{dx}\bigg(\frac{dy}{dx}\bigg).\\
+			\end{align}
+		</p>
+		<p>
+			Since $\frac{dy}{dx} = \tan\theta$, it follows that
+		</p>
+		<p style = "text-align: center">
+			$y = x\tan\theta + k$,
+		</p>
+		<p>
+			and therefore
+		</p>
+		<p style = "text-align: center">
+			$\frac{dy}{d\theta} = x\sec^2\theta$.
+		</p>
+		<p>
+			We can now write
+		</p>
+		<p style = "text-align: center">
+			\begin{align}\frac{d^2y}{dx^2} & = \frac{1}{n}\frac{dn}{dy}\frac{d}{dx}\big(x\sec^2\theta\big)\\
+											& = \frac{1}{n}\frac{dn}{dy}\sec^2\theta.\\
+			\end{align}
+		</p>
+		<p>
+			Using Snell's Law again, we know that $\sec\theta = \frac{n}{C}$, so
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{1}{n}\frac{dn}{dy}\frac{n^2}{C^2}$
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{n}{C^2}\frac{dn}{dy}$
+		</p>
+		<p>
+			But what is $n$ for a plasma?  We must use the result:
 
-
-        </p>
-    </div>
+		</p>
+		<p style = "text-align: center">
+			$k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$
+		</p>
+		<p>
+			The definition of a refractive index $n$ is $k = \frac{\omega}{c}n$, so 
+		</p>
+		<p style = "text-align: center">
+			$n = \Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$.
+		</p>
+		<p>
+			Given that $\omega_p^2 = \frac{N_ee^2}{m_e\varepsilon_0}$,
+			we can impose a spatial gradient on the free electron density:
+		</p>
+		<p style = "text-align: center">
+			Let $N_e = \gamma y$
+		</p>
+		<p>
+			Now, 
+		</p>
+		<p style = "text-align: center">
+			$n = \Big(1 - \frac{e^2\gamma y}{m_e\varepsilon_0\omega^2}\Big)^{\frac{1}{2}}$.
+		</p>
+		<p>
+			We can take the derivative of this with respect to $y$:
+		</p>
+		<p style = "text-align: center">
+			$\frac{dn}{dy} = -\frac{1}{2}\Big(1 - \frac{e^2\gamma y}{m_e \varepsilon_0 \omega^2}\Big)^{\frac{1}{2}}\frac{e^2}{m_e\varepsilon_0 \omega^2}$
+		</p>
+		<p>
+			Multiplying $n$ and $\frac{dn}{dy}$ together gives
+		</p>
+		<p style = "text-align: center">
+			$n\frac{dn}{dy} = -\frac{e^2 \gamma}{2m_e \varepsilon_0 \omega^2}$
+		</p>
+		<p>
+			So, using an earlier result for $\frac{d^2y}{dx^2}$, we can now write
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{e^2\gamma}{2m_e \varepsilon_0 (C \omega)^2}$
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}$
+		</p>
+		<p>
+			This is a constant!  So we know that the equation for $y$ must be 
+		</p>
+		<p style = "text-align: center">
+			$y(x) = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}x^2 + k_1x + k_2$.
+		</p>
+		<p>
+			$\frac{dy}{dx}\Big|_{x = 0} = \tan\theta$, so $k_1 = \tan\theta$.
+		</p>
+		<p>
+			We can also set the coordinate origin position such that $y(0) = 0$, meaning that $k_2 = 0$, so we 
+			get the final result:
+		</p>
+		<p style = "text-align: center">
+			$y(x) = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}x^2 + \tan\theta_0 x$
+		</p>
+        
+	</div>
 </body>
