@@ -13,42 +13,42 @@ let plt = {
             //y axis attributes here
     },
     }
-}
+};
 //when you make the new plot, you need to name the div or the id of the div that youre drawing onto
 //second thing you parse in is the variable with all the data innit. A function should return this variable
 //the third thing you parse in is plt.layout
 //data should be specified like so:
 
-//to get the graph to update, talk to rob tomorrow.
-
-
-function compute_xy(alpha,beta) {
+function compute_xy(alpha,beta,omega) {
     //calculations done inside the function means that you don't need to parse anything in.
     let x = numeric.linspace(-25, 25, 1000);
     let y = [];
+    console.log('cut off should be' , (omega ** 2) * (Math.cos(beta) ** 2) *(Math.tan(beta) / alpha));
     for (let i = 0; i < x.length; i++) {
         //logic statement(s)
-        if (x[i] < - (Math.tan(beta)/alpha)) {
-            y.push(-(( 2 * Math.tan(beta))/(Math.cos(beta)) ^ 2 ) * x[i] - ( 2 * (Math.tan(beta)) ^ 2)/(((Math.cos(beta))^2) * alpha));
-            console.log('x is less than lower intercept');
+        if (x[i] >  ( omega **2 ) *(Math.cos(beta) ** 2) *(Math.tan(beta))/alpha) {
+            y.push( - x[i] * Math.tan(beta) +(omega ** 2) * ((Math.cos(beta)**2) * (Math.tan(beta)**2))/alpha );
+        } else if (  (omega ** 2) * (Math.cos(beta) ** 2) *(Math.tan(beta) / alpha) >= x[i] && x[i] > 0) {
+            y.push( - (alpha / ((omega ** 2) *(Math.cos(beta)) ** 2)) * (x[i]) ** 2 + Math.tan(beta) * x[i]);
+        } else if (x[i] <= 0) {
+            y.push(Math.tan(beta) * x[i]);
+        } else{
+          console.log('well what the fuck is x then', x[i])
         }
-        else if (- (Math.tan(beta)/alpha) < x[i] && x[i] <  0) {
-            y.push((1/Math.cos(beta) ^ 2) * alpha * (x[i]) ** 2 + Math.tan(beta) * x[i]);
-            console.log('x is quadratic');
-        }
-        else {
-            y.push(Math.tan(beta) * x[i] );
-            console.log('x is greater than 0');
-        }
+    }
     let y_input = {
-             x: x, //these to be switched once the above loop works
-             y: y,
-             type: 'scatter',
-             name: 'Imaginary k',
-             showlegend:true,
-       };
-    return [y_input,y];
-}}
+        x: x, //these to be switched once the above loop works
+        y: y,
+        type: 'scatter',
+        name: 'Imaginary k',
+        showlegend: true,};
+
+    return [y_input, y];
+}
+
+
+//to get the graph to update, talk to rob tomorrow.
+
 
 Plotly.newPlot('graph',compute_xy(),plt.layout);
 
@@ -64,20 +64,19 @@ function initslide() {
     $('#Initial_Angle').val(initTheta);
     $('#initial_AngleDisplay').val(initTheta);
 
-    x = parseFloat(document.getElementById('DensityController').value);
+    //x = parseFloat(document.getElementById('DensityController').value);
     theta = parseFloat(document.getElementById('Initial_Angle').value);
 
     Plotly.newPlot("graph", compute_xy(initX), plt);
-    return;
 }
 //works up to here 15:40 07/08/19.
 function updatePlot() {
     let data = [];
     let alpha = parseFloat(document.getElementById('DensityController').value);
     let beta = parseFloat(document.getElementById('Initial_Angle').value);
+    let omega = parseFloat(document.getElementById('OmegaController').value);
 
-
-    data = compute_xy(alpha,beta);
+    data = compute_xy(alpha,beta,omega);
 
     Plotly.animate(
         'graph',
@@ -140,6 +139,3 @@ function main() {
     }
 
 $(document).ready(main);
-
-
-
