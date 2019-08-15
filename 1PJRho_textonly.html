@@ -35,11 +35,11 @@
             in the generation of an
             atomic dipole moment:</p>
         $$ \textbf{p}=q \textbf{d}, $$
-        <p>where $q$ is the charge in the dipole and $\textbf{d}$ is the charge separation vector [defined from the
+        <p>where $q$ is the charge in the dipole and $\textbf{d}$ is the charge separation vector (defined from the
             negative end of the dipole to the
-            positive end{NEED TO CHECK THIS}]. Hence, polarisation $\textbf{P}$ is defined as</p>
+            positive end). Hence, polarisation $\textbf{P}$ is defined as</p>
         $$ \textbf{P}=N\textbf{p},$$
-        <p>where $N$ is the number density of the atoms. In a homogeneous, isotropic and linear (HIL) {dielectric}
+        <p>where $N$ is the number density of the atoms. In a homogeneous, isotropic and linear (HIL) dielectric
             material, polarisation is
             also defined as</p>
         $$ \textbf{P}= \chi_e \epsilon_0 \textbf{E},$$
@@ -48,10 +48,9 @@
     <div id="density">
         <h4>Charge densities:</h4>
         <div>
-            FURTHER EXPLAIN THESE
-            <p>$\rho_{sf}$: Free surface charge density, which is zero for a dielectric.</p>
+            <p>$\rho_{sf}$: Free surface charge density, due to free charges on the surface of the material, which is zero for a dielectric.</p>
             <p>$\rho_{f}$: Free charge density (within the material), which is zero for a dielectric.</p>
-            <p>$\rho_{sp}$: Polarisation surface charge density, which is produced due to bound charges.</p>
+            <p>$\rho_{sp}$: Polarisation surface charge density, due to polarised bound charges on the surface of the material.</p>
             <p>$\rho_{p}$: Polarisation charge density (within the material), which is produced due to bound charges.</p>
         </div>
         <p>Consider a small  element of a dielectric material. When an electric field is applied, atomic dipole moments are generated within atoms due to charge separation.
@@ -77,6 +76,13 @@
         $$Q_{inside}=\int \rho_{p} dV,$$
         <p> where $\rho_{p}$ is the polarisation charge density. Hence,</p>
         $$ \rho_{p}=-\nabla \cdot \textbf{P}.$$
+        <h5>How to use the visualisation:</h5>
+        <p> The visualisation on the right allows you to construct an arbitrary shape using small dielectric element. Press the directional buttons,
+        the first six buttons, to add elements in specific direction. Note that you cannot overlap the elements. The surface colour shows $\rho_{sp}$: Red
+        means positive surface charge, hence positive $\rho_{sp}$, and blue means negative surface charge, hence negative $\rho_{sp}$. The opacity of each of the colours
+        shows the magnitude of $\rho_{sp}$. The "RESET!" button resets the number of elements to one, and "SHOW THE NORMAL VECTOR!" shows the normals vectors of each of the
+        faces, represented by a black line. Finally, you can rotate the direction of the electric field, based in spherical polar coordinate system, by using the sliders. Note
+        the z-axis.</p>
     </div>
     <div id="magnetisation">
         <h4>Magnetization:</h4>
@@ -92,11 +98,11 @@
     <div id="current">
         <h4>Current densities:</h4>
         <div>
-            <p>$\textbf{J}_{c}$: Conduction current density which is due to movement of free charges</p>
-            <p>$\textbf{J}_{sc}$: Surface conduction current density which is due to movement of free charges</p>
-            <p>$\textbf{J}_{m}$: Magnetisation current density which is due to movement of bound charges</p>
-            <p>$\textbf{J}_{sm}$: Surface magnetisation current density which is due to movement of bound charges</p>
-            <p>$\textbf{J}_{p}$: Polarisation current density which is due to movement of bound charges</p>
+            <p>$\textbf{J}_{c}$: Conduction current density which is due to movement of free charges within the material, which is zero for a dielectric. </p>
+            <p>$\textbf{J}_{sc}$: Surface conduction current density which is due to movement of free charges, which is zero for a dielectric.</p>
+            <p>$\textbf{J}_{m}$: Magnetisation current density which is due to movement of bound charges within the material.</p>
+            <p>$\textbf{J}_{sm}$: Surface magnetisation current density which is due to movement of bound charges on the surface of the material</p>
+            <p>$\textbf{J}_{p}$: Polarisation current density which is due to movement of bound charges due to polarisation within the material.</p>
         </div>
         <p>Consider a small  element of a dielectric material. Taking a layer of this element which is an atom thick, we can see that the net current is generated along the surface
         in a direction determined by the orientation of the current loops (look at the diagram); within the layer, the adjacent current loops act to oppose each other and cancel out. Hence, for the dielectric element, a
@@ -113,6 +119,12 @@
         <p>Returning to polarisation, polarisation current density can be determined by considering the time variation of $\textbf{P}$:</p>
         $$\textbf{J}_{p}=\frac{\partial \textbf{P}}{\partial t}=Nq\frac{\partial \textbf{d}}{\partial t}=Nq\textbf{v}.$$
         <p>This suggest that there is a variation in the dipole separation over time. Hence, the bound charges move, which produces a current density.</p>
+        <h6>How to use the visualisation:</h6>
+        <p> The visualisation on the right allows you to construct an arbitrary shape using small dielectric element. Press the directional buttons,
+        the first six buttons, to add elements in specific direction. Note that you cannot overlap the elements. The surface arrows shows $\textbf{J}_{sm}$. The arrow head is
+            represented by a red line. The "RESET!" button resets the number of elements to one, and "SHOW THE NORMAL VECTOR!" shows the normals vectors of each of the
+        faces, represented by a black line. Finally, you can rotate the direction of uniform magnetization, based in spherical polar coordinate system, by using the sliders. Note
+        the z-axis. Enjoy!</p>
 
     </div>
 

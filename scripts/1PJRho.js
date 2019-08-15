@@ -188,9 +188,9 @@ class element {
             let str3 = String(Math.round(abs(p)) / 100) + ')';
 
             if (0 >= p) {
-                fill(str1.concat(str3));
-            } else {
                 fill(str2.concat(str3));
+            } else {
+                fill(str1.concat(str3));
             }
 
             plane(cubeSize - 2, cubeSize - 2);
