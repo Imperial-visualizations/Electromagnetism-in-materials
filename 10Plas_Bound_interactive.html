@@ -45,6 +45,12 @@
             <br>
             <span> Angle of Incidence, $ \theta $: =  <output id="theta" for="Initial_Angle">1</output></span>
         </label>
+        <!-- PHOTON FREQUENCY CONTROLLER -->
+        <label style="position: fixed; left: 25vw ; width: 25%; top: 150px;">
+            <input id="OmegaController" class="inputs" type="range" value="1" min="0" max="2" step="0.01" oninput="omega.value=OmegaController.value"/></input>
+            <br>
+            <span> Electromagnetic Wave Frequency $ \omega $ : =  <output id="omega" for="OmegaController">1</output></span>
+        </label>
 
     </div>
 <div id="graph" style="height:70vh; width: 50vw; position: fixed; left: 50vw"></div>

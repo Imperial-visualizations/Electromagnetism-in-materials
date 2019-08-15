@@ -19,17 +19,17 @@ let plt = {
 //the third thing you parse in is plt.layout
 //data should be specified like so:
 
-function compute_xy(alpha,beta) {
+function compute_xy(alpha,beta,omega) {
     //calculations done inside the function means that you don't need to parse anything in.
     let x = numeric.linspace(-25, 25, 1000);
     let y = [];
-    console.log('cut off should be' , 2 *(Math.cos(beta) ** 2) *(Math.tan(beta) / alpha));
+    console.log('cut off should be' , (omega ** 2) * (Math.cos(beta) ** 2) *(Math.tan(beta) / alpha));
     for (let i = 0; i < x.length; i++) {
         //logic statement(s)
-        if (x[i] >  (Math.cos(beta) ** 2) *(Math.tan(beta))/alpha) {
-            y.push( - x[i] * Math.tan(beta) + ((Math.cos(beta)**2) * (Math.tan(beta)**2))/alpha );
-        } else if (  (Math.cos(beta) ** 2) *(Math.tan(beta) / alpha) >= x[i] && x[i] > 0) {
-            y.push( - (alpha / (Math.cos(beta)) ** 2) * (x[i]) ** 2 + Math.tan(beta) * x[i]);
+        if (x[i] >  ( omega **2 ) *(Math.cos(beta) ** 2) *(Math.tan(beta))/alpha) {
+            y.push( - x[i] * Math.tan(beta) +(omega ** 2) * ((Math.cos(beta)**2) * (Math.tan(beta)**2))/alpha );
+        } else if (  (omega ** 2) * (Math.cos(beta) ** 2) *(Math.tan(beta) / alpha) >= x[i] && x[i] > 0) {
+            y.push( - (alpha / ((omega ** 2) *(Math.cos(beta)) ** 2)) * (x[i]) ** 2 + Math.tan(beta) * x[i]);
         } else if (x[i] <= 0) {
             y.push(Math.tan(beta) * x[i]);
         } else{
@@ -74,9 +74,9 @@ function updatePlot() {
     let data = [];
     let alpha = parseFloat(document.getElementById('DensityController').value);
     let beta = parseFloat(document.getElementById('Initial_Angle').value);
+    let omega = parseFloat(document.getElementById('OmegaController').value);
 
-
-    data = compute_xy(alpha,beta);
+    data = compute_xy(alpha,beta,omega);
 
     Plotly.animate(
         'graph',
