@@ -914,7 +914,7 @@
                     </ul>
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
-                            <div id="die-A" class="tab-pane fade in active show">
+                        <div id="die-A" class="tab-pane fade in active show">
                                 <div id="intro" class="divclass">
             <center><h5>The Fresnel Equations</h5></center>
             <p>
@@ -998,10 +998,10 @@
             Also, recall that past the critical angle $θ_c=\arcsin\frac{n_2}{n_1}$, Snell’s law breaks down and we get total internal reflection.
         </p>
     </div>
-                            </div>
-                            <div id="die-B" class="tab-pane fade">
+                        </div>
+                        <div id="die-B" class="tab-pane fade">
                                 text needed
-                            </div>
+                        </div>
                         <div id="die-C" class="tab-pane fade">
                             <div id="intro" class="divclass">
                                 <center>
@@ -1044,23 +1044,29 @@
                         
                                     where $\phi=k_2d$, $k_2$ is the wavevector in the dielectric and $E^i$ is the energy of the incident wave. Note also that the prime denotes the coefficient from the dielectric to the vacuum rather than from the vacuum to the dielectric.
                             </p>
-                    
-                            <div id="E_tot_proof" class="solidline">
-                                <h4>
-                                    Proof:
-                                </h4>
-                                <p>
-                                    Following wave $E$ on the above diagram, we can see that the transmitted waves on the right (waves $J$, $P$ onwards) vary only by two reflections each time. Thus, their energies follow a geometric progression of factor $(r'e^{i\phi})^2$.
-                                </p>
-                    
-                                <p>
-                                    Thus,
-                                    $$E_{tot}=E^it'te^{i\phi}\{1+(r'e^{i\phi})^2+[(r'e^{i\phi})^2]^2+...\}.$$
-                    
-                                    Therefore, using the formula for the sum of an infinite geometric progression, we arrive at
-                                    $$E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i.$$
-                                </p>
+                            
+                            <span class="section-extra-head-container">
+                                <button class="section-extra-head" data-toggle="collapse"  @click="hideShowToggle($event)"
+                                        data-target="#proof"> Proof </button>
+                            </span>
+                        <div id="proof" class="collapse extra-content-container" >
+                            <div class="extra-content" style="background-color: white; !important;">
+                                    <h5>Proof:</h5>
+                                    <p>
+                                        Following wave $E$ on the above diagram, we can see that the transmitted waves on the right (waves $J$, $P$ onwards) vary only by two reflections each time. Thus, their energies follow a geometric progression of factor $(r'e^{i\phi})^2$.
+                                    </p>
+                        
+                                    <p>
+                                        Thus,
+                                        $$E_{tot}=E^it'te^{i\phi}\{1+(r'e^{i\phi})^2+[(r'e^{i\phi})^2]^2+...\}.$$
+                        
+                                        Therefore, using the formula for the sum of an infinite geometric progression, we arrive at
+                                        $$E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i.$$
+                                    </p>
                             </div>
+                        </div>
+
+                            
                     
                             <p>
                                 We can now define the total energy transmission coefficient as $T_{layer}=|E_{tot}|^2/|E^i|^2$. Substituting our earlier expression for $E_{tot}$ we obtain
@@ -1085,7 +1091,8 @@
                         </div>
                 </div>
             </div>
-        </div>
+            </div>
+
             <div class="section-container" id="sc6">
                 <div class="placeholder" id="ph6">
                     <hr>
@@ -1209,9 +1216,7 @@
                 $$ P_{rad} = 2 N \Delta p = 2 N \hbar k = 2 N \hbar  \frac{\omega}{c} .$$
         </p>
                     </div>
-                </div>
-
-
+            </div>
 
             <div class="section-container" id="sc7">
                 <div class="placeholder" id="ph7">
