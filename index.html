@@ -915,7 +915,7 @@
                     </ul>
                     <!--    Sub-Section Text Containers    -->
                     <div class="tab-content">
-                            <div id="die-A" class="tab-pane fade in active show">
+                        <div id="die-A" class="tab-pane fade in active show">
                                 <div id="intro" class="divclass">
             <center><h5>The Fresnel Equations</h5></center>
             <p>
@@ -986,7 +986,7 @@
             $$\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=-\frac{E_0^t}{Z_2}\cos\theta^t$$.
         </p>
         <p>
-            Finally, we make use of Snell’s law to obtain an expression for θ^t in terms of θ^i, to arrive at the Fresnel equations
+            Finally, we make use of Snell’s law to obtain an expression for $\theta^t$ in terms of $\theta^i$, to arrive at the Fresnel equations
             $$t_{p,s}=\frac{E_0^t}{E_0^i}=\frac{2\cos\theta^i}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}}$$
             and
             $$r_{p,s}=\frac{E_0^r}{E_0^i}=\frac{\cos\theta^{t,i}-(\frac{n_2}{n_1})\cos\theta^{i,t}}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}},$$
@@ -999,10 +999,10 @@
             Also, recall that past the critical angle $θ_c=\arcsin\frac{n_2}{n_1}$, Snell’s law breaks down and we get total internal reflection.
         </p>
     </div>
-                            </div>
-                            <div id="die-B" class="tab-pane fade">
+                        </div>
+                        <div id="die-B" class="tab-pane fade">
                                 text needed
-                            </div>
+                        </div>
                         <div id="die-C" class="tab-pane fade">
                             <div id="intro" class="divclass">
                                 <center>
@@ -1045,23 +1045,29 @@
                         
                                     where $\phi=k_2d$, $k_2$ is the wavevector in the dielectric and $E^i$ is the energy of the incident wave. Note also that the prime denotes the coefficient from the dielectric to the vacuum rather than from the vacuum to the dielectric.
                             </p>
-                    
-                            <div id="E_tot_proof" class="solidline">
-                                <h4>
-                                    Proof:
-                                </h4>
-                                <p>
-                                    Following wave $E$ on the above diagram, we can see that the transmitted waves on the right (waves $J$, $P$ onwards) vary only by two reflections each time. Thus, their energies follow a geometric progression of factor $(r'e^{i\phi})^2$.
-                                </p>
-                    
-                                <p>
-                                    Thus,
-                                    $$E_{tot}=E^it'te^{i\phi}\{1+(r'e^{i\phi})^2+[(r'e^{i\phi})^2]^2+...\}.$$
-                    
-                                    Therefore, using the formula for the sum of an infinite geometric progression, we arrive at
-                                    $$E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i.$$
-                                </p>
+                            
+                            <span class="section-extra-head-container">
+                                <button class="section-extra-head" data-toggle="collapse"  @click="hideShowToggle($event)"
+                                        data-target="#proof"> Proof </button>
+                            </span>
+                        <div id="proof" class="collapse extra-content-container" >
+                            <div class="extra-content" style="background-color: white; !important;">
+                                    <h5>Proof:</h5>
+                                    <p>
+                                        Following wave $E$ on the above diagram, we can see that the transmitted waves on the right (waves $J$, $P$ onwards) vary only by two reflections each time. Thus, their energies follow a geometric progression of factor $(r'e^{i\phi})^2$.
+                                    </p>
+                        
+                                    <p>
+                                        Thus,
+                                        $$E_{tot}=E^it'te^{i\phi}\{1+(r'e^{i\phi})^2+[(r'e^{i\phi})^2]^2+...\}.$$
+                        
+                                        Therefore, using the formula for the sum of an infinite geometric progression, we arrive at
+                                        $$E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i.$$
+                                    </p>
                             </div>
+                        </div>
+
+                            
                     
                             <p>
                                 We can now define the total energy transmission coefficient as $T_{layer}=|E_{tot}|^2/|E^i|^2$. Substituting our earlier expression for $E_{tot}$ we obtain
@@ -1086,7 +1092,8 @@
                         </div>
                 </div>
             </div>
-        </div>
+            </div>
+
             <div class="section-container" id="sc6">
                 <div class="placeholder" id="ph6">
                     <hr>
@@ -1210,9 +1217,7 @@
                 $$ P_{rad} = 2 N \Delta p = 2 N \hbar k = 2 N \hbar  \frac{\omega}{c} .$$
         </p>
                     </div>
-                </div>
-
-
+            </div>
 
             <div class="section-container" id="sc7">
                 <div class="placeholder" id="ph7">
@@ -1223,7 +1228,197 @@
                     <hr>
                 </div>
                 <div class="text section-body odd" id="p7">
-                    Text Needed
+                        <h3 class="section-sub-head">Plasma Critical Density</h3>
+
+		<p>
+			We wish to derive the equation that represents the path taken by a light ray through a plasma with
+			an electron density and refractive index that varies with $y$.
+		</p>
+		<p>
+			First, we start with Snell's Law:
+		</p>
+		<p style = "text-align: center">
+			$n_1\sin\alpha_1 = n_2\sin\alpha_2$,
+		</p>
+		<p>
+			with the symbols defined as shown in the image.
+		</p>
+		<img style="width:28vw" src="EM2/images/Snell1.png"/>
+		<p>
+			We can rewrite this in terms of $\theta$ as
+		</p>
+		<p style = "text-align: center">
+			$n_1\cos\theta_1 = n_2\cos\theta_2$,
+		</p>
+		<p>
+			and then rearrange it to get
+		</p>
+		<p style = "text-align: center">
+			$n_1\cos\theta_1 - n_2\cos\theta_2 = 0$.
+		</p>
+		<p>
+			We can rewrite the LHS of the above equation as the <i>change</i> in $n\cos\theta$, as follows:
+		</p>
+		<p style = "text-align: center">
+			$\delta(n\cos\theta) = 0$.
+		</p>
+		<p>
+			Note that $n$ = $n(y)$.
+		</p>
+		<p>
+			If the change in $n\cos\theta$ is zero, then its value is constant, which we can call $C$.
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			n(y)\cos\theta &= C\\
+			& = n(y_0)\cos\theta_0,\\
+			\end{align}
+		</p>
+		<p>
+			where $y_0$ and $\theta_0$ are the initial values of $y$ and $\theta$.
+		</p>
+		<p>
+			Rearranging this equation, it is trivial to see that
+		</p>
+		<p style = "text-align: center">
+			$n(y) = C\sec\theta$,
+		</p>
+		<p>
+			and therefore
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			\frac{dn}{d\theta}& = \frac{d}{d\theta}(C\sec\theta)\\
+			& = C\frac{d}{d\theta}(\sec\theta)\\
+			& = C\sec\theta\tan\theta\\
+			& = n(y)tan\theta.\\
+			\end{align}
+		</p>
+		<p>
+			This can be rewritten as
+		</p>
+		<p style = "text-align: center">
+			$\frac{d\theta}{dn} = \frac{1}{n\tan\theta}$.
+		</p>
+		<p>
+			Using the fact that the gradient can be written as $\frac{dy}{dx} = \tan\theta$, we can write
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			\frac{d^2y}{dx^2} & = \frac{d}{dx}(\tan\theta)\\
+			& = \frac{d}{dx}(\frac{1}{n}\frac{dn}{d\theta})\\
+			& = \frac{d}{dx}\bigg(\frac{1}{n}\bigg)\frac{dn}{d\theta} + \frac{1}{n}\frac{d}{dx}\bigg(\frac{dn}{d\theta}\bigg).\\
+			\end{align}
+		</p>
+		<p>
+			Since $n$ is a function of $y$ only, this becomes
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{1}{n}\frac{d}{dx}\Big(\frac{dn}{d\theta}\Big)$,
+		</p>
+		<p>
+			which, with the help of the chain rule, becomes
+		</p>
+		<p style = "text-align: center">
+			\begin{align}
+			\frac{d^2y}{dx^2} & = \frac{1}{n}\frac{d}{dx}\bigg(\frac{dn}{dy}\frac{dy}{d\theta}\bigg)\\
+			& = \frac{1}{n}\frac{dn}{dy}\frac{d}{dx}\bigg(\frac{dy}{dx}\bigg).\\
+			\end{align}
+		</p>
+		<p>
+			Since $\frac{dy}{dx} = \tan\theta$, it follows that
+		</p>
+		<p style = "text-align: center">
+			$y = x\tan\theta + k$,
+		</p>
+		<p>
+			and therefore
+		</p>
+		<p style = "text-align: center">
+			$\frac{dy}{d\theta} = x\sec^2\theta$.
+		</p>
+		<p>
+			We can now write
+		</p>
+		<p style = "text-align: center">
+			\begin{align}\frac{d^2y}{dx^2} & = \frac{1}{n}\frac{dn}{dy}\frac{d}{dx}\big(x\sec^2\theta\big)\\
+											& = \frac{1}{n}\frac{dn}{dy}\sec^2\theta.\\
+			\end{align}
+		</p>
+		<p>
+			Using Snell's Law again, we know that $\sec\theta = \frac{n}{C}$, so
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{1}{n}\frac{dn}{dy}\frac{n^2}{C^2}$
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{n}{C^2}\frac{dn}{dy}$
+		</p>
+		<p>
+			But what is $n$ for a plasma?  We must use the result:
+
+		</p>
+		<p style = "text-align: center">
+			$k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$
+		</p>
+		<p>
+			The definition of a refractive index $n$ is $k = \frac{\omega}{c}n$, so
+		</p>
+		<p style = "text-align: center">
+			$n = \Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}$.
+		</p>
+		<p>
+			Given that $\omega_p^2 = \frac{N_ee^2}{m_e\varepsilon_0}$,
+			we can impose a spatial gradient on the free electron density:
+		</p>
+		<p style = "text-align: center">
+			Let $N_e = \gamma y$
+		</p>
+		<p>
+			Now,
+		</p>
+		<p style = "text-align: center">
+			$n = \Big(1 - \frac{e^2\gamma y}{m_e\varepsilon_0\omega^2}\Big)^{\frac{1}{2}}$.
+		</p>
+		<p>
+			We can take the derivative of this with respect to $y$:
+		</p>
+		<p style = "text-align: center">
+			$\frac{dn}{dy} = -\frac{1}{2}\Big(1 - \frac{e^2\gamma y}{m_e \varepsilon_0 \omega^2}\Big)^{\frac{1}{2}}\frac{e^2}{m_e\varepsilon_0 \omega^2}$
+		</p>
+		<p>
+			Multiplying $n$ and $\frac{dn}{dy}$ together gives
+		</p>
+		<p style = "text-align: center">
+			$n\frac{dn}{dy} = -\frac{e^2 \gamma}{2m_e \varepsilon_0 \omega^2}$
+		</p>
+		<p>
+			So, using an earlier result for $\frac{d^2y}{dx^2}$, we can now write
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{e^2\gamma}{2m_e \varepsilon_0 (C \omega)^2}$
+		</p>
+		<p style = "text-align: center">
+			$\frac{d^2y}{dx^2} = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}$
+		</p>
+		<p>
+			This is a constant!  So we know that the equation for $y$ must be
+		</p>
+		<p style = "text-align: center">
+			$y(x) = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}x^2 + k_1x + k_2$.
+		</p>
+		<p>
+			$\frac{dy}{dx}\Big|_{x = 0} = \tan\theta$, so $k_1 = \tan\theta$.
+		</p>
+		<p>
+			We can also set the coordinate origin position such that $y(0) = 0$, meaning that $k_2 = 0$, so we
+			get the final result:
+		</p>
+		<p style = "text-align: center">
+			$y(x) = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}x^2 + \tan\theta_0 x$
+		</p>
+
+
                     <!--    Sub-Section Tabs    -->
                     <!--<ul class="nav nav-tabs nav-justified">
                         <li :class="[subSection[6] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
