@@ -35,11 +35,6 @@ $(window).on('load', function() {//main
     let relative_p = parseFloat($("input#relative_permeability").val());
     let dielectric_h = parseFloat($("input#dielectric_height").val());
 
-    let old_material = $("input[name = 'material-switch']:checked").val();//track the value of the material before change
-    let old_field = $("input[name = 'field-switch']:checked").val();//track the value of the field before change
-    let old_relative_p = parseFloat($("input#relative_permeability").val());
-    let old_dielectric_h = parseFloat($("input#dielectric_height").val());
-
     function make_arrows(pointsx, pointsy, pointsz) {//return data required to construct field line arrows
         /** Returns an arrowhead based on an inputted line */
         var x = pointsx[1],
@@ -201,8 +196,11 @@ $(window).on('load', function() {//main
             mid_bottom_of_arrow = -dielectric_h+0.2;
             top_of_arrow_below = -dielectric_h;
             bottom_of_arrow_below = -0.75;
-            number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,0.4));
-
+            if (Math.round(number_of_arrows*Math.pow(relative_p,-0.8)) < 1 && number_of_arrows > 0) {
+                number_of_arrows_reduced = 1;
+            } else {
+                number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,-0.8));
+            }
             let extra_space_mod = 1/number_of_arrows_reduced;
             for (let i = 0; i < number_of_arrows_reduced; i++) {
                 for (let q = 0; q < number_of_arrows_reduced; q++) {
@@ -316,7 +314,6 @@ $(window).on('load', function() {//main
         relative_p = parseFloat($("input#relative_permeability").val());
         dielectric_h = parseFloat($("input#dielectric_height").val());
 
-        //if ((Math.abs(new_number_of_arrows - old_arrow_number) >= 1) || (c_material != old_material) ||(c_field != old_material)) {//will only calculate new graph if the conditions actually change, as discrete field lines only specific Bs produce different number of field lines
         let new_trace = computeData();
 
         Plotly.animate("graph",
@@ -329,25 +326,18 @@ $(window).on('load', function() {//main
             }
         );
 
-        //old_arrow_number = Math.round(parseFloat($("input#B").val())/10);//track the value of the number of field lines before change
-        old_material = $("input[name = 'material-switch']:checked").val();//track the value of the material before change
-        old_field = $("input[name = 'field-switch']:checked").val();//track the value of the field before change
-        old_relative_p = parseFloat($("input#relative_permeability").val());
-        old_dielectric_h = parseFloat($("input#dielectric_height").val());
-
     }
 
     function initial() {//produces initial plot seen on load
 
-        Plotly.purge("graph");
         Plotly.newPlot('graph', computeData(), plt.layout);
 
-        dom.mSwitch.on("change", update_graph);//on any change the graph will update
-        dom.fSwitch.on("change", update_graph);
-        dom.vSlider.on("input", update_graph);
-        dom.rSlider.on("input", update_graph);
-        dom.hSlider.on("input", update_graph);
     }
-    initial();//run the initial loading
 
+    initial();//run the initial loading
+    dom.mSwitch.on("change", update_graph);//on any change the graph will update
+    dom.fSwitch.on("change", update_graph);
+    dom.vSlider.on("input", update_graph);
+    dom.rSlider.on("input", update_graph);
+    dom.hSlider.on("input", update_graph);
 });

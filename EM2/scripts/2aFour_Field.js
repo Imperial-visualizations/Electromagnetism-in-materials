@@ -1,3 +1,4 @@
+/*jshint esversion:6*/
 $(window).on('load', function() {//main
     const
     dom = {//assigning switches and slider
@@ -200,7 +201,11 @@ $(window).on('load', function() {//main
             mid_bottom_of_arrow = -dielectric_h+0.2;
             top_of_arrow_below = -dielectric_h;
             bottom_of_arrow_below = -0.75;
-            number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,-0.8));
+            if (Math.round(number_of_arrows*Math.pow(relative_p,-0.8)) < 1 && number_of_arrows > 0) {
+                number_of_arrows_reduced = 1;
+            } else {
+                number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,-0.8));
+            }
             let extra_space_mod = 1/number_of_arrows_reduced;
             for (let i = 0; i < number_of_arrows_reduced; i++) {
                 for (let q = 0; q < number_of_arrows_reduced; q++) {

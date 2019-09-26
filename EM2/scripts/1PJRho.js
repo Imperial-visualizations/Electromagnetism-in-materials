@@ -1,3 +1,4 @@
+/*jshint esversion:6*/
 let cubeSize = 30;
 let prePos = [[0, 0, 0]];
 let cubeList = [];
