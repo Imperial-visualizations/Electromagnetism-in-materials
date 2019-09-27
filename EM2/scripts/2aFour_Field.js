@@ -29,12 +29,6 @@ $(window).on('load', function() {//main
         }
     };
 
-    let c_material   = $("input[name = 'material-switch']:checked").val();
-    let c_field      = $("input[name = 'field-switch']:checked").val();
-    let voltage     = parseFloat($("input#voltage").val());
-    let relative_p = parseFloat($("input#relative_permitivity").val());
-    let dielectric_h = parseFloat($("input#dielectric_height").val());
-
     function make_arrows(pointsx, pointsy, pointsz) {//return data required to construct field line arrows
         /** Returns an arrowhead based on an inputted line */
         var x = pointsx[1],
@@ -47,6 +41,12 @@ $(window).on('load', function() {//main
     }
 
     function computeData(){//produces the data for the animation
+
+        let c_material   = $("input[name = 'material-switch']:checked").val();
+        let c_field      = $("input[name = 'field-switch']:checked").val();
+        let voltage     = parseFloat($("input#voltage").val());
+        let relative_p = parseFloat($("input#relative_permitivity").val());
+        let dielectric_h = parseFloat($("input#dielectric_height").val());
 
         $("#voltage-display").html($("input#voltage").val().toString()+"V");//update value of slider in html
         $("#relative_permitivity-display").html($("input#relative_permitivity").val().toString());
@@ -318,12 +318,6 @@ $(window).on('load', function() {//main
     initial();//run the initial loading
 
     function update_graph() {
-
-        c_material   = $("input[name = 'material-switch']:checked").val();
-        c_field      = $("input[name = 'field-switch']:checked").val();
-        voltage     = parseFloat($("input#voltage").val());
-        relative_p = parseFloat($("input#relative_permitivity").val());
-        dielectric_h = parseFloat($("input#dielectric_height").val());
 
         let new_trace = computeData();
 

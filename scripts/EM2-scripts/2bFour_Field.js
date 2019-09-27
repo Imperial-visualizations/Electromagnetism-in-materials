@@ -29,12 +29,6 @@ $(window).on('load', function() {//main
         }
     };
 
-    let c_material   = $("input[name = 'material-switch']:checked").val();
-    let c_field      = $("input[name = 'field-switch']:checked").val();
-    let B     = parseFloat($("input#B").val());
-    let relative_p = parseFloat($("input#relative_permeability").val());
-    let dielectric_h = parseFloat($("input#dielectric_height").val());
-
     function make_arrows(pointsx, pointsy, pointsz) {//return data required to construct field line arrows
         /** Returns an arrowhead based on an inputted line */
         var x = pointsx[1],
@@ -47,6 +41,12 @@ $(window).on('load', function() {//main
     }
 
     function computeData(){//produces the data for the animation
+
+        let c_material   = $("input[name = 'material-switch']:checked").val();
+        let c_field      = $("input[name = 'field-switch']:checked").val();
+        let B     = parseFloat($("input#B").val());
+        let relative_p = parseFloat($("input#relative_permeability").val());
+        let dielectric_h = parseFloat($("input#dielectric_height").val());
 
         $("#B-display").html($("input#B").val().toString()+"T");//update value of slider in html
         $("#relative_permeability-display").html($("input#relative_permeability").val().toString());
@@ -306,13 +306,13 @@ $(window).on('load', function() {//main
         return data;
     }
 
-    function update_graph() {
+    function initial() {//produces initial plot seen on load
+        Plotly.newPlot('graph', computeData(), plt.layout);
+    }
 
-        c_material   = $("input[name = 'material-switch']:checked").val();
-        c_field      = $("input[name = 'field-switch']:checked").val();
-        B     = parseFloat($("input#B").val());
-        relative_p = parseFloat($("input#relative_permeability").val());
-        dielectric_h = parseFloat($("input#dielectric_height").val());
+    initial();//run the initial loading
+    
+    function update_graph() {
 
         let new_trace = computeData();
 
@@ -328,13 +328,6 @@ $(window).on('load', function() {//main
 
     }
 
-    function initial() {//produces initial plot seen on load
-
-        Plotly.newPlot('graph', computeData(), plt.layout);
-
-    }
-
-    initial();//run the initial loading
     dom.mSwitch.on("change", update_graph);//on any change the graph will update
     dom.fSwitch.on("change", update_graph);
     dom.vSlider.on("input", update_graph);

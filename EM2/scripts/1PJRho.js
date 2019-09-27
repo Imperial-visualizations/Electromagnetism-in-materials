@@ -5,7 +5,7 @@ let cubeList = [];
 let cubeFace = [];
 let onValue = 1;
 let EMag = 100;
-let sN=1;
+let sN = 1;
 
 //sliders input and display:
 
@@ -108,7 +108,7 @@ class EFieldLine {
         vertex(5, 5, 0);
         endShape();
 
-        pop()
+        pop();
     }
 }
 
@@ -167,22 +167,22 @@ class element {
             translate(cubeFace[i][0], cubeFace[i][1], cubeFace[i][2]);
             if (cubeFace[i][3] === "right") {
                 p = EMag * Math.cos(YsliderVal * (Math.PI / 180));
-                rotateZ(0)
+                rotateZ(0);
             } else if (cubeFace[i][3] === "left") {
                 p = -EMag * Math.cos(YsliderVal * (Math.PI / 180));
-                rotateZ(0)
+                rotateZ(0);
             } else if (cubeFace[i][3] === "front") {
                 p = EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.cos(ZsliderVal * (Math.PI / 180));
-                rotateY(Math.PI / 2)
+                rotateY(Math.PI / 2);
             } else if (cubeFace[i][3] === "back") {
                 p = -EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.cos(ZsliderVal * (Math.PI / 180));
-                rotateY(Math.PI / 2)
+                rotateY(Math.PI / 2);
             } else if (cubeFace[i][3] === "top") {
                 p = EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.sin(ZsliderVal * (Math.PI / 180));
-                rotateX(Math.PI / 2)
+                rotateX(Math.PI / 2);
             } else {
                 p = -EMag * Math.sin(YsliderVal * (Math.PI / 180)) * Math.sin(ZsliderVal * (Math.PI / 180));
-                rotateX(Math.PI / 2)
+                rotateX(Math.PI / 2);
             }
             let str1 = 'rgba(255, 20, 20,';
             let str2 = 'rgba(20, 20, 255,';
@@ -214,7 +214,7 @@ class element {
                 } else {
                     line(0, 0, 0, 0, -10, 0);
                 }
-                pop()
+                pop();
             }
         }
         //console.log(cubeFace)
@@ -227,7 +227,7 @@ function showN() {
     if (sN==1) {
         sN = 0;
     } else {
-        sN=1
+        sN=1;
     }
 }
 function move_X() {
