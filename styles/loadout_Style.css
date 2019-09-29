@@ -20,93 +20,103 @@
 
 /* SECTION 1 */
 
-#loadout1 {
+#loadout1sub1 {
+    overflow-y: hidden;
 }
 
-#loadout1 #graph1Sec1 {
-    width: 60%;
-    height: 80%;
+#loadout1sub1 #sketch-holder {
+    background: #ffffff;
+    width: 60vw;
+    height: 60vw;
     position: absolute;
-    left: 3%;
-    top: 3%;
+    left: 3vw;
+    top: 7.5vh;
     padding: 1%;
 }
 
-#loadout1 .overall-sliders-container {
+#loadout1sub1 .overall-sliders-container {
     display: flex;
     flex-direction: column;
     position: absolute;
-    right: 1vh;
+    right: 3vw;
     top: 5vh;
-    width: 30%;
-    height: 100%;
+    width: 30vw;
+    height: 45vh;
 }
 
-#loadout1 .partial-sliders-container {
+#loadout1sub1 .partial-sliders-container {
     display: flex;
     flex-direction: column;
-    flex-basis: 0;
-    flex-grow: 1;
+    flex: 1 1 0;
 }
 
-#loadout1 .slider {
-    /*position: absolute;*/
-    /*right:50px;*/
-    /*width: 20vw;*/
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
+#loadout1sub1 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
 }
 
-#loadout1 .slider-label {
-    /*position: absolute;*/
-    /*right: 50px;*/
-    /*height: 10vh;*/
-    /*width: 15vw;*/
-    font-size: 20pt;
+#loadout1sub1 .sliderMin, #loadout1sub1 .sliderMax {
+    margin-top: 30px;
+    width: 60px;
+    flex: 0 0 60px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout1sub1 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout1sub1 .slider-label {
+    display: flex;
+    font-size: calc(12px + 1vw);
     text-align: left;
     padding-left: 8px;
     margin: 0;
     padding-top: 0;
-    flex-basis: 0;
-    flex-grow: 0.5;
-    flex-shrink: 1;
+    flex: 0.5 1 0;
 }
 
-#loadout1 .graphcolor1 {
-    border-left: solid 5px rgb(213,0,50);
-    color: rgb(213,0,50);
+#loadout1sub1 #innerLabel {
+    flex: 1 0 auto;
 }
 
-#loadout1 .graphcolor2 {
-    border-left: solid 5px rgb(0,0,255);
-    color: rgb(0,0,255);
+#loadout1sub1 #YR, #loadout1sub1 #ZR {
+    flex: 0.5 0 auto;
 }
 
-#loadout1 .graphcolor3 {
-    border-left: solid 5px rgb(0, 128, 0);
-    color: rgb(0, 128, 0);
-}
-
-#loadout1 #vectorComponentsCustom {
-    width: 60%;
+#loadout1sub1 .overall-buttons-container {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    left: 3%;
-    bottom: 6%;
-    padding: 1%;
-    text-align: center;
-    font-size: 14pt;
+    right: 3vw;
+    bottom: 5vh;
+    width: 30vw;
+    height: 45vh;
 }
 
-#loadout1 #popup1 {
-    width: 60%;
-    position: absolute;
-    left: 3%;
-    bottom: 6%;
-    padding: 1%;
+#loadout1sub1 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 0;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+#loadout1sub1 button {
     text-align: center;
-    color: white;
-    background-color: #D50032;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout1sub1 button:hover {
+    background-color: #eaf2ff;
 }
 
 /* SECTION 2 */

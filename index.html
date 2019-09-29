@@ -35,6 +35,7 @@
     "HTML-CSS": { fonts: ["TeX"] }
   });
 
+
     </script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
@@ -126,13 +127,13 @@
                 <div class="text section-body odd" id="p1">
                     <!--    Sub-Section Tabs    -->
                     <ul class="nav nav-tabs nav-justified">
-                        <li :class="[subSection[1] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
+                        <li :class="[subSection[0] === 1 ? 'shaded' : '', 'active', 'tabLeft']">
                             <a data-toggle="tab" href="#introPol"
-                               @click="subScrollTo(1); subSection[1]=1; $forceUpdate();">Polarisation</a>
+                               @click="subScrollTo(1); subSection[0]=1; $forceUpdate();">Polarisation</a>
                         </li>
-                        <li :class="[subSection[1] === 2 ? 'shaded' : '', 'tabRight']">
+                        <li :class="[subSection[0] === 2 ? 'shaded' : '', 'tabRight']">
                             <a data-toggle="tab" href="#introMag"
-                               @click="subScrollTo(1); subSection[1]=2; $forceUpdate();">Magnetisation</a>
+                               @click="subScrollTo(1); subSection[0]=2; $forceUpdate();">Magnetisation</a>
                         </li>
                     </ul>
                     <!--    Sub-Section Text Containers    -->
@@ -1251,7 +1252,8 @@
                                 $$ \nabla \times \mathbf{B} = \mu \epsilon \frac{\partial \mathbf{E}}{\partial
                                 t} + \mu \sigma \mathbf{E}. $$
                             </span>
-                            This reduces to the equation for nonconducting media in the case when <span class="mathJaxInline">$ \sigma = 0. $</span>
+                            This reduces to the equation for nonconducting media in the case when <span
+                                class="mathJaxInline">$ \sigma = 0. $</span>
                             From this we can obtain plane wave solutions:
                             <span class="mathJaxDisplay">
                                 $$ \tilde{\textbf{E}}(z,t) = \tilde{\textbf{E}}_0 e^{i(\tilde{k}z-\omega t)}, $$
@@ -1261,7 +1263,8 @@
                             <span class="mathJaxDisplay">
                                 $$ \tilde{k}^2 = \mu \epsilon \omega^2 + i \mu \sigma \omega. $$
                             </span>
-                            The imaginary part of <span class="mathJaxInline">$ \tilde{k} $</span> results in attenuation inside the conductor, as seen
+                            The imaginary part of <span class="mathJaxInline">$ \tilde{k} $</span> results in
+                            attenuation inside the conductor, as seen
                             previously, but this time the
                             attenuation strength is dependent on the frequency of the wave and sigma; it is also
                             significantly stronger than attenuation
@@ -1272,10 +1275,12 @@
                             wave, it is easier for the
                             electrons to oppose the electric field.
                             <br><br>
-                            Furthermore, since <span class="mathJaxInline">$ \tilde{k} $</span> can be expressed as <span class="mathJaxInline">$ \tilde{k} = Ke^{i\phi} $</span> and
+                            Furthermore, since <span class="mathJaxInline">$ \tilde{k} $</span> can be expressed as
+                            <span class="mathJaxInline">$ \tilde{k} = Ke^{i\phi} $</span> and
                             <span class="mathJaxInline">$ \tilde{\textbf{B}}_0 = \frac{Ke^{i\phi}}{ \omega} \tilde{\textbf{E}}_0. $</span>
                             <br><br>
-                            the B field is phase shifted, from E, by <span class="mathJaxInline">$ \phi $</span> inside the conductor.
+                            the B field is phase shifted, from E, by <span class="mathJaxInline">$ \phi $</span> inside
+                            the conductor.
                         </div>
                         <div id="dispersionPla" class="tab-pane fade">
                             A dispersion relation relates a wave's angular frequency $\omega$ to its wavevector $k$.
@@ -1315,12 +1320,16 @@
                                 $$ \nabla \times \boldsymbol{B} = \mu \boldsymbol{J}_c + \mu \varepsilon \frac{\partial
                                 \boldsymbol{E}}{\partial t} $$,
                             </span>
-                            where <span class="mathJaxInline">$ \boldsymbol{B} $</span> is the magnetic field, <span class="mathJaxInline">$ \boldsymbol{E} $</span> is the electric field,
+                            where <span class="mathJaxInline">$ \boldsymbol{B} $</span> is the magnetic field, <span
+                                class="mathJaxInline">$ \boldsymbol{E} $</span> is the electric field,
                             <span class="mathJaxInline">$ \mu $</span> is the permeability,
-                            <span class="mathJaxInline">$ \varepsilon $</span> is the permittivity, <span class="mathJaxInline">$ \rho_f $</span> is the free charge density and <span class="mathJaxInline">$ J_c $</span> is the
+                            <span class="mathJaxInline">$ \varepsilon $</span> is the permittivity, <span
+                                class="mathJaxInline">$ \rho_f $</span> is the free charge density and <span
+                                class="mathJaxInline">$ J_c $</span> is the
                             conduction current density.
                             <br><br>
-                            For a plane wave, <span class="mathJaxInline">$ \nabla $</span> becomes <span class="mathJaxInline">$ i\boldsymbol{k} $</span> and <span class="mathJaxInline">$ \frac{\partial}{\partial t} $</span>
+                            For a plane wave, <span class="mathJaxInline">$ \nabla $</span> becomes <span
+                                class="mathJaxInline">$ i\boldsymbol{k} $</span> and <span class="mathJaxInline">$ \frac{\partial}{\partial t} $</span>
                             becomes <span class="mathJaxInline">$ -i\omega. $</span> Therefore
                             <br><br>
                             Maxwell's equations become:
@@ -1380,7 +1389,8 @@
                                 \cdot \boldsymbol{k})= \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} -
                                 1\Big)\boldsymbol{k}\times\boldsymbol{E}. $$
                             </span>
-                            The first term on the LHS becomes zero because <span class="mathJaxInline">$ \boldsymbol{B} $</span> is perpendicular to <span class="mathJaxInline">$ \boldsymbol{k}, $</span> so this becomes
+                            The first term on the LHS becomes zero because <span class="mathJaxInline">$ \boldsymbol{B} $</span>
+                            is perpendicular to <span class="mathJaxInline">$ \boldsymbol{k}, $</span> so this becomes
                             <span class="mathJaxDisplay">
                                 $$ -k^2\boldsymbol{B} = \frac{\omega}{c^2}\Big(\frac{\omega_p^2}{\omega^2} -
                                 1\Big)\omega\boldsymbol{B} = \Big(\frac{\omega_p^2 -
@@ -1440,7 +1450,8 @@
                                     <br><br>
                                     Applying the 4-field form of Maxwell’s equations on this pill-box, we arrive at
                                     4 general boundary conditions for an EM wave incident on a dielectric boundary.
-                                    The conditions can be simplified for simple media by setting <span class="mathJaxInline">$ \mu_r=1. $</span>
+                                    The conditions can be simplified for simple media by setting <span
+                                        class="mathJaxInline">$ \mu_r=1. $</span>
                                 </div>
                             </div>
                             Of the four boundary conditions obtained from Maxwell’s equations, only the
@@ -1465,8 +1476,10 @@
                             </div>
                             To avoid sign errors in our two boundary conditions, we must account for the
                             polarisation of the incident wave. The right-hand rule should help you avoid any
-                            such errors. This is perhaps best shown in the following diagrams. Superscript <span class="mathJaxInline">$ i $</span>,
-                            <span class="mathJaxInline">$ t $</span> and <span class="mathJaxInline">$ r $</span> denote the incident, transmitted and reflected wave respectively.
+                            such errors. This is perhaps best shown in the following diagrams. Superscript <span
+                                class="mathJaxInline">$ i $</span>,
+                            <span class="mathJaxInline">$ t $</span> and <span class="mathJaxInline">$ r $</span> denote
+                            the incident, transmitted and reflected wave respectively.
                             <br>
                             <img class="journeyImage" src="EM2/images/7P-Polarisation.png" alt="P-Polarisation">
                             <br>
@@ -1484,7 +1497,8 @@
                             <span class="mathJaxDisplay">
                                 $$ B=\frac{\mu_0E_0}{Z}, $$
                             </span>
-                            where <span class="mathJaxInline">$ \mu_0 $</span> is the vacuum permeability and <span class="mathJaxInline">$ Z $</span> is the wave impedance, to write
+                            where <span class="mathJaxInline">$ \mu_0 $</span> is the vacuum permeability and <span
+                                class="mathJaxInline">$ Z $</span> is the wave impedance, to write
                             <span class="mathJaxDisplay">
                                 $$ B_0^i-B_0^r=B_0^t\Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=\frac{E_0^t}{Z_2} $$
                             </span>
@@ -1497,7 +1511,8 @@
                                 $$ -B_0^i\cos\theta^i+B_0^r\cos\theta^i=-B_0^t\cos\theta^t $$
                                 $$ \Rightarrow\frac{E_0^i}{Z_1}-\frac{E_0^r}{Z_1}=-\frac{E_0^t}{Z_2}\cos\theta^t. $$
                             </span>
-                            Finally, we make use of Snell’s law to obtain an expression for <span class="mathJaxInline">$ \theta^t $</span> in terms
+                            Finally, we make use of Snell’s law to obtain an expression for <span class="mathJaxInline">$ \theta^t $</span>
+                            in terms
                             of <span class="mathJaxInline">$ \theta^i, $</span> to arrive at the Fresnel equations
                             <span class="mathJaxDisplay">
                                 $$ t_{p,s}=\frac{E_0^t}{E_0^i}=\frac{2\cos\theta^i}{\cos\theta^{t,i}+(\frac{n_2}{n_1})\cos\theta^{i,t}} $$
@@ -1508,10 +1523,12 @@
                             </span>
                             where <span class="mathJaxInline">$ n $</span> denotes the refractive index of the medium.
                             <br><br>
-                            We now define the Brewster angle to be the angle where <span class="mathJaxInline">$ r_p=0, $</span> thus
+                            We now define the Brewster angle to be the angle where <span class="mathJaxInline">$ r_p=0, $</span>
+                            thus
                             <span class="mathJaxInline">$ \theta_B=\arctan\frac{n_2}{n_1}. $</span>
                             <br><br>
-                            Also, recall that past the critical angle <span class="mathJaxInline">$ θ_c=\arcsin\frac{n_2}{n_1}, $</span> Snell’s law
+                            Also, recall that past the critical angle <span class="mathJaxInline">$ θ_c=\arcsin\frac{n_2}{n_1}, $</span>
+                            Snell’s law
                             breaks down and we get total internal reflection.
                         </div>
                         <div id="dielectricEvan" class="tab-pane fade">
@@ -1532,7 +1549,8 @@
                             <br><br>
                             Similar to tunnelling between two potential wells in quantum mechanics, let's say there
                             existed a material 2 of refractive index <span class="mathJaxInline">$ n_2, $</span>
-                            but we introduced a small gap inside of refractive index <span class="mathJaxInline">$ n_1. $</span> When a wave travelling
+                            but we introduced a small gap inside of refractive index <span class="mathJaxInline">$ n_1. $</span>
+                            When a wave travelling
                             in medium 2 strikes medium 1 at greater than
                             the critical angle, total internal reflection takes place, and the transmitted wave in
                             medium 1 decays as you move
@@ -1562,9 +1580,11 @@
                             transmit through the dielectric.
                             <br><br>
                             To understand this, consider a wave normally incident on a dielectric of thickness
-                            <span class="mathJaxInline">$ d. $</span> Recall that a wave can both transmit through and be reflected by a dielectric
+                            <span class="mathJaxInline">$ d. $</span> Recall that a wave can both transmit through and
+                            be reflected by a dielectric
                             boundary.
-                            Here we label the reflection coefficient and transmission coefficient as <span class="mathJaxInline">$ r $</span> and <span class="mathJaxInline">$ t $</span>
+                            Here we label the reflection coefficient and transmission coefficient as <span
+                                class="mathJaxInline">$ r $</span> and <span class="mathJaxInline">$ t $</span>
                             respectively.
                             <br><br>
                             Note that the magnitude of the reflection and transmission coefficients are the
@@ -1575,15 +1595,19 @@
                             infinite number of reflections within the dielectric, with some transmission at each
                             stage.
                             <br>
-                            <img class="journeyImage" src="EM2/images/11Infinite_Reflections_Diagram.png" alt="Infinite Reflections">
+                            <img class="journeyImage" src="EM2/images/11Infinite_Reflections_Diagram.png"
+                                 alt="Infinite Reflections">
                             <br><br>
                             It can then be shown that the sum of the energies of an infinite series of
                             transmitted waves is given by
                             <span class="mathJaxDisplay">
                                 $$ E_{tot} = \frac{t'te^{i\phi}}{1-r'^2e^{2i\phi}}E^i, $$
                             </span>
-                            where <span class="mathJaxInline">$ \phi=k_2d, $</span> <span class="mathJaxInline">$ k_2 $</span> is the wave vector in the dielectric and <span class="mathJaxInline">$ E^i $</span> is the energy
-                            of the incident wave. Note also that the prime denotes the coefficient from the dielectric to the vacuum rather than from the vacuum to the dielectric.
+                            where <span class="mathJaxInline">$ \phi=k_2d, $</span> <span
+                                class="mathJaxInline">$ k_2 $</span> is the wave vector in the dielectric and <span
+                                class="mathJaxInline">$ E^i $</span> is the energy
+                            of the incident wave. Note also that the prime denotes the coefficient from the dielectric
+                            to the vacuum rather than from the vacuum to the dielectric.
                             <span class="section-extra-head-container">
                                 <button class="section-extra-head innerButton" data-toggle="collapse"
                                         @click="hideShowToggle($event)"
@@ -1591,8 +1615,10 @@
                             </span>
                             <div id="dielectricTranProof" class="collapse extra-content-container">
                                 <div class="extra-content innerECC">
-                                    Following wave <span class="mathJaxInline">$ E $</span> on the above diagram, we can see that the transmitted
-                                    waves on the right (waves <span class="mathJaxInline">$ J, $</span> <span class="mathJaxInline">$ P $</span> onwards) vary only by two reflections
+                                    Following wave <span class="mathJaxInline">$ E $</span> on the above diagram, we can
+                                    see that the transmitted
+                                    waves on the right (waves <span class="mathJaxInline">$ J, $</span> <span
+                                        class="mathJaxInline">$ P $</span> onwards) vary only by two reflections
                                     each time. Thus, their energies follow a geometric progression of factor
                                     <span class="mathJaxInline">$ (r'e^{i\phi})^2. $</span>
                                     <br><br>
@@ -1608,27 +1634,32 @@
                                 </div>
                             </div>
                             We can now define the total energy transmission coefficient as
-                            <span class="mathJaxInline">$ T_{layer}=|E_{tot}|^2/|E^i|^2. $</span> Substituting our earlier expression for <span class="mathJaxInline">$ E_{tot} $</span>
+                            <span class="mathJaxInline">$ T_{layer}=|E_{tot}|^2/|E^i|^2. $</span> Substituting our
+                            earlier expression for <span class="mathJaxInline">$ E_{tot} $</span>
                             we obtain
                             <span class="mathJaxDisplay">
                                 $$ T_{layer}=\frac{(tt')^2}{1+r'^4-2r'^2\cos2\phi}. $$
                             </span>
-                            We also note that the reflection coefficient <span class="mathJaxInline">$ R=r^2=r'^2, $</span> thus we have the final
+                            We also note that the reflection coefficient <span
+                                class="mathJaxInline">$ R=r^2=r'^2, $</span> thus we have the final
                             expression.
                             <span class="mathJaxDisplay">
                                 $$ T_{layer}=\left(1+\frac{4R}{(1-R)^2}\sin^2\phi\right). $$
                             </span>
-                            Here we can see that regardless of the value of <span class="mathJaxInline">$ R, $</span> if the thickness of the
+                            Here we can see that regardless of the value of <span class="mathJaxInline">$ R, $</span> if
+                            the thickness of the
                             dielectric is an integer multiple of half the wavelength, ie.
                             <span class="mathJaxInline">$ d=\frac{n\lambda}{2}, $</span>
-                            <span class="mathJaxInline">$ \sin\phi $</span> will always be 0, thus all of the wave will transmit through the
+                            <span class="mathJaxInline">$ \sin\phi $</span> will always be 0, thus all of the wave will
+                            transmit through the
                             dielectric.
                             <br><br>
                             For a more physical understanding as to why this is consider a reflection
                             coefficient of 0.99.
                             Under such conditions, 99% of the incident wave will be reflected at every boundary.
                             <br><br>
-                            However, due to the <span class="mathJaxInline">$ \pi $</span> phase changes upon reflection,
+                            However, due to the <span class="mathJaxInline">$ \pi $</span> phase changes upon
+                            reflection,
                             over an infinite number of reflections,
                             the waves on the incident side of the dielectric sum to zero while the waves on the
                             transmitted side add to the original amplitude. Thus, the net result is the entirety
@@ -1650,21 +1681,25 @@
                     incident wave is reflected.
                     This is because the electric field amplitude decays away rapidly
                     inside a good conductor due to the skin effect.
-                    The length in which current density falls to <span class="mathJaxInline">$ \frac {1}{e} $</span> compared to its value near the
+                    The length in which current density falls to <span class="mathJaxInline">$ \frac {1}{e} $</span>
+                    compared to its value near the
                     surface is known as the skin depth, <span class="mathJaxInline">$ \delta. $</span> It is given by
                     <span class="mathJaxDisplay">
                         $$ \delta = \sqrt{ \frac{2}{\mu_0 \sigma \omega} } $$
                     </span>
-                    where <span class="mathJaxInline">$ \omega $</span> is the angular frequency of incident electromagnetic wave and <span class="mathJaxInline">$ \sigma $</span> is the
+                    where <span class="mathJaxInline">$ \omega $</span> is the angular frequency of incident
+                    electromagnetic wave and <span class="mathJaxInline">$ \sigma $</span> is the
                     conductivity of the medium.
                     <br>
                     The transmitted electromagnetic wave inside the conductor drives a conduction current in the
-                    conductor due to Ohm's Law <span class="mathJaxInline">$ (\mathbf{J}_c = \sigma \mathbf{E}^t). $</span>
+                    conductor due to Ohm's Law <span
+                        class="mathJaxInline">$ (\mathbf{J}_c = \sigma \mathbf{E}^t). $</span>
                     This conduction current experiences a force due to the magnetic field of the transmitted
                     electromagnetic wave.
                     This force acts in the same direction as the incident wave, as if the electromagnetic radiation
                     is exerting a force on the conductor.
-                    This creates a radiation pressure by the electromagnetic radiation on the conductor, <span class="mathJaxInline">$ P_{rad}. $</span>
+                    This creates a radiation pressure by the electromagnetic radiation on the conductor, <span
+                        class="mathJaxInline">$ P_{rad}. $</span>
                     In a good conductor, <span class="mathJaxInline">$ \frac{ \epsilon_0 \omega}{\sigma} \ll 1 $</span>
                     and radiation pressure is given by
                     <span class="mathJaxDisplay">
@@ -1676,9 +1711,11 @@
                     </span>
                     and <span class="mathJaxInline">$ E $</span> is the incident electric field amplitude.
                     <br><br>
-                    As <span class="mathJaxInline">$ \sigma \rightarrow \infty, $</span> <span class="mathJaxInline">$ \delta \rightarrow 0 $</span> and <span class="mathJaxInline">$ \sqrt{ \frac{8 \epsilon_0
+                    As <span class="mathJaxInline">$ \sigma \rightarrow \infty, $</span> <span class="mathJaxInline">$ \delta \rightarrow 0 $</span>
+                    and <span class="mathJaxInline">$ \sqrt{ \frac{8 \epsilon_0
                     \omega}{\sigma} } \rightarrow 0. $</span>
-                    Therefore, in a perfect conductor, <span class="mathJaxInline">$ P_{rad} = \frac{2}{c} < S^i >. $</span>
+                    Therefore, in a perfect conductor, <span
+                        class="mathJaxInline">$ P_{rad} = \frac{2}{c} < S^i >. $</span>
                     <h3 class="section-sub-head">
                         Visualisation Guide
                     </h3>
@@ -1686,7 +1723,8 @@
                         <ol>
                             <li>
                                 <p>
-                                    On the right, we visualise a scenario where an electromagnetic wave, travelling from left to
+                                    On the right, we visualise a scenario where an electromagnetic wave, travelling from
+                                    left to
                                     right, is incident on a conductor.
                                     Click "Play" to begin the visualisation.
                                 </p>
@@ -1698,19 +1736,23 @@
                             </li>
                             <li>
                                 <p>
-                                    There are 3 parameters you can change: the angular frequency of the electromagnetic wave
+                                    There are 3 parameters you can change: the angular frequency of the electromagnetic
+                                    wave
                                     <span class="mathJaxInline">$ \omega, $</span>
-                                    the amplitude of the electric field <span class="mathJaxInline">$ E $</span> and the conductivity of the medium <span class="mathJaxInline">$ \sigma. $</span>
+                                    the amplitude of the electric field <span class="mathJaxInline">$ E $</span> and the
+                                    conductivity of the medium <span class="mathJaxInline">$ \sigma. $</span>
                                     Look at their effects on the skin depth, radiation pressure and the reflected wave
                                     amplitude.
                                 </p>
                             </li>
                             <li>
                                 <p>
-                                    There are certain combination of values where the reflected wave would not display. This is
+                                    There are certain combination of values where the reflected wave would not display.
+                                    This is
                                     because the medium is no longer a good conductor
                                     <span class="mathJaxInline">$ \Big( \frac{ \epsilon_0 \omega}{\sigma} \not\ll 1 \Big). $</span>
-                                    Hence, <span class="mathJaxInline">$ R \approx 1 - \sqrt{ \frac{8\epsilon_0 \omega}{\sigma} } $</span> (Hagen-Rubens Relation)
+                                    Hence, <span class="mathJaxInline">$ R \approx 1 - \sqrt{ \frac{8\epsilon_0 \omega}{\sigma} } $</span>
+                                    (Hagen-Rubens Relation)
                                     is no longer applicable.
                                 </p>
                             </li>
@@ -1720,19 +1762,24 @@
                     <h3 class="section-sub-head">
                         A Quantum Approach
                     </h3>
-                    In a wave approach, the intensity <span class="mathJaxInline">$ < S^i > $</span> is only dependent on the electric field amplitude of the
+                    In a wave approach, the intensity <span class="mathJaxInline">$ < S^i > $</span> is only dependent
+                    on the electric field amplitude of the
                     wave.
-                    However, in a quantum perspective, <span class="mathJaxInline">$ < S^i > = N E_{photon} $</span> where <span class="mathJaxInline">$ N $</span> is the number of photons
+                    However, in a quantum perspective, <span class="mathJaxInline">$ < S^i > = N E_{photon} $</span>
+                    where <span class="mathJaxInline">$ N $</span> is the number of photons
                     incident on the medium per unit time per unit area and
                     <span class="mathJaxInline">$ E_{photon} = \hbar \omega $</span> is the energy of a single photon.
                     Hence,
                     <span class="mathJaxDisplay">
                         $$ < S^i > = N \hbar \omega. $$
                     </span>
-                    Note that <span class="mathJaxInline">$ < S^i > $</span> is dependent on both <span class="mathJaxInline">$ N $</span> and <span class="mathJaxInline">$ \omega. $</span>
+                    Note that <span class="mathJaxInline">$ < S^i > $</span> is dependent on both <span
+                        class="mathJaxInline">$ N $</span> and <span class="mathJaxInline">$ \omega. $</span>
                     In this visualisation, we took a purely wave approach:
-                    increasing <span class="mathJaxInline">$ \omega $</span> does not increase the radiation pressure, as <span class="mathJaxInline">$ E $</span> remains unchanged.
-                    From a quantum perspective, even though the energy of each photon increases, <span class="mathJaxInline">$ N $</span> decreases such that
+                    increasing <span class="mathJaxInline">$ \omega $</span> does not increase the radiation pressure,
+                    as <span class="mathJaxInline">$ E $</span> remains unchanged.
+                    From a quantum perspective, even though the energy of each photon increases, <span
+                        class="mathJaxInline">$ N $</span> decreases such that
                     intensity remains constant.
                     <br><br>
                     Radiation pressure can be understood as the force exerted by the photons on the surface due to the
@@ -1774,20 +1821,23 @@
                     <span class="mathJaxDisplay">
                         $$ n_1\cos\theta_1 - n_2\cos\theta_2 = 0. $$
                     </span>
-                    We can rewrite the LHS of the above equation as the <i>change</i> in <span class="mathJaxInline">$ n\cos\theta, $</span> as follows:
+                    We can rewrite the LHS of the above equation as the <i>change</i> in <span class="mathJaxInline">$ n\cos\theta, $</span>
+                    as follows:
                     <span class="mathJaxDisplay">
                         $$ \delta(n\cos\theta) = 0. $$
                     </span>
                     Note that <span class="mathJaxInline">$ n = n(y). $</span>
                     <br><br>
-                    If the change in <span class="mathJaxInline">$ n\cos\theta $</span> is zero, then its value is constant, which we can call <span class="mathJaxInline">$ C. $</span>
+                    If the change in <span class="mathJaxInline">$ n\cos\theta $</span> is zero, then its value is
+                    constant, which we can call <span class="mathJaxInline">$ C. $</span>
                     <span class="mathJaxDisplay">
                         \begin{align}
                         n(y)\cos\theta & = C \\
                         n(y_0)\cos\theta_0 & = C, \\
                         \end{align}
                     </span>
-                    where <span class="mathJaxInline">$ y_0 $</span> and <span class="mathJaxInline">$ \theta_0 $</span> are the initial values of <span class="mathJaxInline">$ y $</span> and <span class="mathJaxInline">$ \theta. $</span>
+                    where <span class="mathJaxInline">$ y_0 $</span> and <span class="mathJaxInline">$ \theta_0 $</span>
+                    are the initial values of <span class="mathJaxInline">$ y $</span> and <span class="mathJaxInline">$ \theta. $</span>
                     <br><br>
                     Rearranging this equation, it is trivial to see that
                     <span class="mathJaxDisplay">
@@ -1806,7 +1856,8 @@
                     <span class="mathJaxDisplay">
                         $$ \frac{d\theta}{dn} = \frac{1}{n\tan\theta}. $$
                     </span>
-                    Using the fact that the gradient can be written as <span class="mathJaxInline">$ \frac{dy}{dx} = \tan\theta, $</span> we can write
+                    Using the fact that the gradient can be written as <span class="mathJaxInline">$ \frac{dy}{dx} = \tan\theta, $</span>
+                    we can write
                     <span class="mathJaxDisplay">
                         \begin{align}
                         \frac{d^2y}{dx^2} & = \frac{d}{dx}(\tan\theta)\\
@@ -1815,7 +1866,8 @@
                         \frac{1}{n}\frac{d}{dx}\bigg(\frac{dn}{d\theta}\bigg).\\
                         \end{align}
                     </span>
-                    Since <span class="mathJaxInline">$ n $</span> is a function of <span class="mathJaxInline">$ y $</span> only, this becomes
+                    Since <span class="mathJaxInline">$ n $</span> is a function of <span
+                        class="mathJaxInline">$ y $</span> only, this becomes
                     <span class="mathJaxDisplay">
                         $$ \frac{d^2y}{dx^2} = \frac{1}{n}\frac{d}{dx}\Big(\frac{dn}{d\theta}\Big), $$
                     </span>
@@ -1841,7 +1893,8 @@
                         & = \frac{1}{n}\frac{dn}{dy}\sec^2\theta.\\
                         \end{align}
                     </span>
-                    Using Snell's Law again, we know that <span class="mathJaxInline">$ \sec\theta = \frac{n}{C}, $</span> so
+                    Using Snell's Law again, we know that <span
+                        class="mathJaxInline">$ \sec\theta = \frac{n}{C}, $</span> so
                     <span class="mathJaxDisplay">
                         $$ \frac{d^2y}{dx^2} = \frac{1}{n}\frac{dn}{dy}\frac{n^2}{C^2} $$
                         $$ \frac{d^2y}{dx^2} = \frac{n}{C^2}\frac{dn}{dy} $$
@@ -1850,7 +1903,8 @@
                     <span class="mathJaxDisplay">
                         $$ k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}} $$
                     </span>
-                    The definition of a refractive index <span class="mathJaxInline">$ n $</span> is <span class="mathJaxInline">$ k = \frac{\omega}{c}n, $</span> so
+                    The definition of a refractive index <span class="mathJaxInline">$ n $</span> is <span
+                        class="mathJaxInline">$ k = \frac{\omega}{c}n, $</span> so
                     <span class="mathJaxDisplay">
                         $$ n = \Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}. $$
                     </span>
@@ -1866,21 +1920,27 @@
                         $$ \frac{dn}{dy} = -\frac{1}{2}\Big(1 - \frac{e^2\gamma y}{m_e \varepsilon_0
                         \omega^2}\Big)^{\frac{1}{2}}\frac{e^2}{m_e\varepsilon_0 \omega^2} $$
                     </span>
-                    Multiplying <span class="mathJaxInline">$ n $</span> and <span class="mathJaxInline">$ \frac{dn}{dy} $</span> together gives
+                    Multiplying <span class="mathJaxInline">$ n $</span> and <span class="mathJaxInline">$ \frac{dn}{dy} $</span>
+                    together gives
                     <span class="mathJaxDisplay">
                         $$ n\frac{dn}{dy} = -\frac{e^2 \gamma}{2m_e \varepsilon_0 \omega^2} $$
                     </span>
-                    So, using an earlier result for <span class="mathJaxInline">$ \frac{d^2y}{dx^2}, $</span> we can now write
+                    So, using an earlier result for <span class="mathJaxInline">$ \frac{d^2y}{dx^2}, $</span> we can now
+                    write
                     <span class="mathJaxDisplay">
                         $$ \frac{d^2y}{dx^2} = \frac{e^2\gamma}{2m_e \varepsilon_0 (C \omega)^2} $$
                         $$ \frac{d^2y}{dx^2} = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2} $$
                     </span>
-                    This is a constant! So we know that the equation for <span class="mathJaxInline">$ y $</span> must be
+                    This is a constant! So we know that the equation for <span class="mathJaxInline">$ y $</span> must
+                    be
                     <span class="mathJaxDisplay">
                         $$ y(x) = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}x^2 + k_1x + k_2. $$
                     </span>
-                    <span class="mathJaxInline">$ \frac{dy}{dx}\Big|_{x = 0} = \tan\theta, $</span> so <span class="mathJaxInline">$ k_1 = \tan\theta. $</span>
-                    We can also set the coordinate origin position such that <span class="mathJaxInline">$ y(0) = 0, $</span> meaning that <span class="mathJaxInline">$ k_2 = 0, $</span> so
+                    <span class="mathJaxInline">$ \frac{dy}{dx}\Big|_{x = 0} = \tan\theta, $</span> so <span
+                        class="mathJaxInline">$ k_1 = \tan\theta. $</span>
+                    We can also set the coordinate origin position such that <span
+                        class="mathJaxInline">$ y(0) = 0, $</span> meaning that <span
+                        class="mathJaxInline">$ k_2 = 0, $</span> so
                     we get the final result:
                     <span class="mathJaxDisplay">
                         $$ y(x) = \frac{e^2}{2m_e \varepsilon_0}\frac{\gamma}{(\omega n(y_0)\cos\theta_0)^2}x^2 +
@@ -1920,7 +1980,8 @@
                     <h3 class="section-sub-head">
                         Meta-Material Cloaking
                     </h3>
-                    The manufacturing of invisibility cloaks using meta-materials that react to electromagnetic radiation
+                    The manufacturing of invisibility cloaks using meta-materials that react to electromagnetic
+                    radiation
                     in a way that conceal themselves is a focus of transformation optics.
                     By controlling the properties of these meta-materials, light can be refracted in a way such that an
                     "invisibility" effect can be achieved theoretically.
@@ -1964,7 +2025,7 @@
                 <div class="rightload text odd" id='loadout1' key="loadout1" v-if="currentSection === 1">
                     <div class="rightload text" id='loadout1sub1' key="loadout2sub1"
                          v-if="subSection[0] === 1">
-                        <!--                        <iframe style="width: 67vw; height: 96vh" src="EM2/1PJRho_interactive.html"></iframe>-->
+                        <iframe src="right-1aIntroPol.html"></iframe>
                     </div>
                     <div class="rightload text" id='loadout1sub2' key="loadout2sub2" v-else>
                         <!--                        <iframe src="EM2/1-interactive2.html" style="width: 67vw; height: 96vh"></iframe>-->
