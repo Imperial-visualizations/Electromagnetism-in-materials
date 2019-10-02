@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-3aFieldD</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="scripts/plotly-1.47.4.min.js"></script> <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout3sub1">
+<!--Graph-->
+<div id='graph-holder'>
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!--Buttons/Sliders-->
+<div class="overall-radio-container">
+    <div id="material-switch" name="material-switch" class="partial-radio-container">
+        <label class="radio-label">Material</label>
+        <label for="vacuum" class="radio">
+            <input type="radio" id="vacuum" value="vacuum" name="material-switch" checked="checked">
+            <span>Vacuum</span>
+        </label>
+        <label for="dielectric" class="radio">
+            <input type="radio" id="dielectric" value="dielectric" name="material-switch">
+            <span>HIL Dielectric</span>
+        </label>
+    </div>
+    <div id="field-switch" name="field-switch" class="partial-radio-container">
+        <label class="radio-label">Field Type</label>
+        <label for="e-field" class="radio">
+            <input type="radio" id="e-field" value="e-field" name="field-switch" checked="checked">
+            <span style="color:#02893B; font-weight:bold"> E field </span>
+        </label>
+        <label for="p-field" class="radio">
+            <input type="radio" id="p-field" value="p-field" name="field-switch">
+            <span style ="color:#D24000;font-weight:bold">P field</span>
+        </label>
+        <label for="d-field" class="radio">
+            <input type="radio" id="d-field" value="d-field" name="field-switch">
+            <span style="color:#9F004E;font-weight:bold">D field</span>
+        </label>
+    </div>
+</div>
+<div class="overall-sliders-container">
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="voltage" class="slider-label">
+            Applied Voltage:
+            <span id="voltage-display"></span>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0V</span>
+            <input type="range" id="voltage" class="inputs" name="voltage" min="0" max="50" value="25">
+            <span class="sliderMax">50V</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="relative_permitivity" class="slider-label">
+            Relative Permittivity:
+            $\epsilon_r$=<span id="relative_permitivity-display"></span>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">2</span>
+            <input type="range" id="relative_permitivity" class="inputs" name="relative_permitivity" step= "0.1" min="2" max="5" value="3.5">
+            <span class="sliderMax">5</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="dielectric_height" class="slider-label">
+            Dielectric Width:
+            <span id="dielectric_height-display"></span>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0.2</span>
+            <input type="range" id="dielectric_height" class="inputs" name="dielectric_height" step = "0.1" min="0.2" max="0.7" value="0.4">
+            <span class="sliderMax">0.7</span>
+        </label>
+        <!--END Slider-->
+    </div>
+</div>
+</body>
+<script src="scripts/EM2-scripts/2aFour_Field.js"></script>
+</html>

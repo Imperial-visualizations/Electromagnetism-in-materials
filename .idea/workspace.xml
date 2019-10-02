@@ -4,7 +4,13 @@
     <list default="true" id="8653b744-eba4-413c-994f-e31853d2cdf1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/1PJRho.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/1PJRho.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/right-1aIntroPol.html" beforeDir="false" afterPath="$PROJECT_DIR$/right-1aIntroPol.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/1PJRho2.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/1PJRho2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/2aFour_Field.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/2aFour_Field.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/2bFour_Field.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/2bFour_Field.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/3aMaterial_Intro.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/3aMaterial_Intro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/3bMaterial_Intro.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/3bMaterial_Intro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EM2-scripts/3cMaterial_Intro.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EM2-scripts/3cMaterial_Intro.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/loadout_Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/loadout_Style.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,10 +26,9 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="144">
-                  <caret line="1441" column="70" selection-start-line="1441" selection-start-column="64" selection-end-line="1441" selection-end-column="70" />
+                <state relative-caret-position="170">
+                  <caret line="24" column="58" lean-forward="true" selection-start-line="24" selection-start-column="58" selection-end-line="24" selection-end-column="58" />
                   <folding>
-                    <element signature="n#head#0;n#html#0;n#!!top" />
                     <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
                     <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
                     <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
@@ -47,6 +52,7 @@
                     <element signature="n#meter#5;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#meter#6;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#meter#7;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#h2#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -224,8 +230,10 @@
                     <element signature="n#span#16;n#div#2;n#div#0;n#div#1;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#span#19;n#div#2;n#div#0;n#div#1;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#span#20;n#div#2;n#div#0;n#div#1;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#h2#0;n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#li#0;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#a#0;n#li#0;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -233,6 +241,7 @@
                     <element signature="n#a#0;n#li#1;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#li#2;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#a#0;n#li#2;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -304,42 +313,25 @@
                     <element signature="n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#h1#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#a#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#0;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#0;n#div#0;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#0;n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#1;n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#2;n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#3;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#0;n#div#3;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#1;n#div#3;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+                    <element signature="n#div#1;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#0;n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#1;n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#2;n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#0;n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#1;n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#2;n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#6;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#transition#0;n#div#6;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#div#7;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                     <element signature="n#transition#0;n#div#7;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#div#8;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-                    <element signature="n#transition#0;n#div#8;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/right-1aIntroPol.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="192">
-                  <caret line="81" column="10" lean-forward="true" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
+                <state relative-caret-position="254">
+                  <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
                   <folding>
-                    <element signature="n#head#0;n#html#0;n#!!top" />
                     <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
                     <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
                     <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
@@ -350,37 +342,119 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/1PJRho.js">
+            <entry file="file://$PROJECT_DIR$/right-1bIntroMag.html">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="306">
-                  <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+                  <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+                  <folding>
+                    <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/styles/index_Style.css">
+            <entry file="file://$PROJECT_DIR$/right-2aMaterialsDie.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="144">
-                  <caret line="431" column="22" selection-start-line="431" selection-start-column="22" selection-end-line="431" selection-end-column="22" />
+                <state relative-caret-position="255">
+                  <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+                  <folding>
+                    <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/styles/loadout_Style.css">
+            <entry file="file://$PROJECT_DIR$/right-2bMaterialsCon.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-447">
-                  <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+                <state relative-caret-position="306">
+                  <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+                  <folding>
+                    <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/nav_Script.js">
+            <entry file="file://$PROJECT_DIR$/right-2cMaterialsPla.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="130" column="10" lean-forward="true" selection-start-line="130" selection-start-column="10" selection-end-line="130" selection-end-column="10" />
+                <state relative-caret-position="204">
+                  <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+                  <folding>
+                    <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/right-3aFieldD.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="21" column="153" lean-forward="true" selection-start-line="19" selection-start-column="98" selection-end-line="21" selection-end-column="153" />
+                  <folding>
+                    <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#style#0;n#span#0;n#label#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#0;n#label#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#0;n#label#3;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/right-3bFieldH.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="357">
+                  <caret line="24" column="47" lean-forward="true" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="47" />
+                  <folding>
+                    <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#style#0;n#span#0;n#label#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#0;n#label#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#0;n#label#3;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/2aFour_Field.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="215">
+                  <caret line="329" column="33" lean-forward="true" selection-start-line="329" selection-start-column="33" selection-end-line="329" selection-end-column="33" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/2bFour_Field.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="117">
+                  <caret line="329" column="66" lean-forward="true" selection-start-line="329" selection-start-column="66" selection-end-line="329" selection-end-column="66" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -389,47 +463,75 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/EM2/2aFour_Field_interactive.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="14" column="47" lean-forward="true" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+                  <folding>
+                    <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/EM2/2bFour_Field_interactive.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-986">
+                  <caret line="44" column="53" lean-forward="true" selection-start-line="44" selection-start-column="53" selection-end-line="44" selection-end-column="53" />
+                  <folding>
+                    <element signature="n#head#0;n#html#0;n#!!top" />
+                    <element signature="n#style#0;n#span#0;n#label#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#0;n#label#2;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#span#0;n#label#3;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Fourier-Series/Upload-Ready/Right-Sec4-PowerSpectrum.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <folding>
+                    <element signature="n#head#0;n#html#0;n#!!top" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/EM2/1PJRho_interactive.html">
+            <entry file="file://$PROJECT_DIR$/EM2/scripts/2aFour_Field.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="103" column="39" selection-start-line="102" selection-end-line="103" selection-end-column="39" />
+                <state relative-caret-position="90">
+                  <caret line="322" lean-forward="true" selection-end-line="341" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/EM2/scripts/1PJRho.js">
+            <entry file="file://$PROJECT_DIR$/EM2/scripts/2bFour_Field.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="629">
-                  <caret line="37" selection-start-line="37" selection-end-line="37" />
+                <state relative-caret-position="51">
+                  <caret line="3" column="42" selection-end-line="340" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../Fourier-Series/iFrame-Version/styles/index_Style.css">
+            <entry file="file://$PROJECT_DIR$/../Fourier-Series/Upload-Ready/styles/loadout_Style.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="5780">
-                  <caret line="340" column="40" selection-start-line="340" selection-start-column="40" selection-end-line="340" selection-end-column="40" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../Fourier-Series/iFrame-Version/styles/loadout_Style.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1139">
-                  <caret line="67" column="17" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="17" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../Vector-Calculus-Concepts/Upload-Ready/styles/loadout_Style.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3026">
-                  <caret line="178" selection-start-line="178" selection-end-line="185" selection-end-column="1" />
+                <state relative-caret-position="8143">
+                  <caret line="479" column="1" selection-start-line="437" selection-end-line="479" selection-end-column="1" />
                 </state>
               </provider>
             </entry>
@@ -448,22 +550,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>inner</find>
-      <find>subsub</find>
-      <find>subSe</find>
-      <find>subsec</find>
-      <find>button</find>
-      <find>extra</find>
-      <find>extra-content</find>
-      <find>visual</find>
-      <find>section-extra-head</find>
-      <find>show</find>
-      <find>extra-content-container show</find>
-      <find>subScrollTo</find>
-      <find>loadSubScripts();</find>
-      <find>tabLef</find>
-      <find>extra-c</find>
-      <find>br</find>
       <find>li</find>
       <find>definitions</find>
       <find>\begin{align}</find>
@@ -478,12 +564,37 @@
       <find>loadout1</find>
       <find>subSection</find>
       <find>hideshow</find>
+      <find>loadout1sub1</find>
+      <find>wind</find>
+      <find>window</find>
+      <find>lege</find>
+      <find>&quot;plot&quot;</find>
+      <find>phasePlot</find>
+      <find>loadout1sub2</find>
+      <find>layout</find>
+      <find>plot</find>
+      <find>buttonPlay</find>
+      <find>loadout4</find>
+      <find>loadout3sub1</find>
+      <find>new_tra</find>
+      <find>field-switch</find>
+      <find>computeData</find>
+      <find>graph</find>
     </findStrings>
     <replaceStrings>
       <replace>section-extra-head innerButton</replace>
       <replace>extra-content-container</replace>
       <replace>meta-</replace>
       <replace>loadout1sub1</replace>
+      <replace>loadout1sub2</replace>
+      <replace>graph-holder1</replace>
+      <replace>loadout2sub1</replace>
+      <replace>graph-holder2</replace>
+      <replace>loadout2sub2</replace>
+      <replace>playButton</replace>
+      <replace>loadout3sub1</replace>
+      <replace>loadout3sub2</replace>
+      <replace>graph-holder</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -519,10 +630,23 @@
         <option value="$PROJECT_DIR$/styles/index_Style.css" />
         <option value="$PROJECT_DIR$/../Vector-Calculus-Concepts/iFrame-Version/index.html" />
         <option value="$PROJECT_DIR$/../Vector-Calculus-Concepts/iFrame-Version/right-2aDiv.html" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/styles/loadout_Style.css" />
         <option value="$PROJECT_DIR$/scripts/EM2-scripts/1PJRho.js" />
+        <option value="$PROJECT_DIR$/scripts/EM2-scripts/1PJRho2.js" />
+        <option value="$PROJECT_DIR$/EM2/3aMaterial_Intro_interactive.html" />
+        <option value="$PROJECT_DIR$/scripts/EM2-scripts/3aMaterial_Intro.js" />
+        <option value="$PROJECT_DIR$/scripts/EM2-scripts/3bMaterial_Intro.js" />
+        <option value="$PROJECT_DIR$/scripts/EM2-scripts/3cMaterial_Intro.js" />
+        <option value="$PROJECT_DIR$/styles/loadout_Style.css" />
+        <option value="$PROJECT_DIR$/scripts/EM2-scripts/2bFour_Field.js" />
+        <option value="$PROJECT_DIR$/right-3aFieldD.html" />
         <option value="$PROJECT_DIR$/right-1aIntroPol.html" />
+        <option value="$PROJECT_DIR$/right-1bIntroMag.html" />
+        <option value="$PROJECT_DIR$/right-2aMaterialsDie.html" />
+        <option value="$PROJECT_DIR$/right-2bMaterialsCon.html" />
+        <option value="$PROJECT_DIR$/right-2cMaterialsPla.html" />
+        <option value="$PROJECT_DIR$/right-3bFieldH.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/scripts/EM2-scripts/2aFour_Field.js" />
       </list>
     </option>
   </component>
@@ -537,6 +661,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -570,7 +695,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -623,16 +747,18 @@
       <workItem from="1569417104760" duration="636000" />
       <workItem from="1569679155252" duration="14210000" />
       <workItem from="1569771092455" duration="13313000" />
-      <workItem from="1569784746923" duration="949000" />
+      <workItem from="1569784746923" duration="1193000" />
+      <workItem from="1569849971471" duration="11087000" />
+      <workItem from="1569943033648" duration="12940000" />
+      <workItem from="1570030633159" duration="5040000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58290000" />
+    <option name="totallyTimeSpent" value="87601000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.101685986" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -663,151 +789,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/EM2/7Diel_BoundA_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="49" column="63" selection-start-line="49" selection-start-column="63" selection-end-line="49" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/4Diel_Disp_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/3cMaterial_Intro_textonly.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/3cMaterial_Intro_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2831">
-          <caret line="161" column="74" lean-forward="true" selection-start-line="161" selection-start-column="74" selection-end-line="161" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/3bMaterial_Intro_interactive_XK.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="105" column="137" selection-start-line="105" selection-start-column="128" selection-end-line="105" selection-end-column="137" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/3bMaterial_Intro_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../vis-frame/Fourier-Series/index.html" />
-    <entry file="file://$PROJECT_DIR$/../../vis-frame/Fourier-Series/scripts/nav_Script.js" />
-    <entry file="file://$PROJECT_DIR$/EM2/2bFour_Field_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="116" selection-start-line="116" selection-end-line="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/9Cond_Bound_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="125" column="60" selection-start-line="125" selection-start-column="60" selection-end-line="125" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/12Outro_textonly.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="61" lean-forward="true" selection-start-line="35" selection-start-column="9" selection-end-line="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/11Diel_BoundC_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="42" column="23" selection-start-line="42" selection-start-column="23" selection-end-line="42" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../vis-frame/Fourier-Series/iFrame-Version/scripts/nav_Script.js" />
-    <entry file="file://$PROJECT_DIR$/EM2/11Diel_BoundC_textonly.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/1-interactive2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1330">
-          <caret line="70" column="56" selection-start-line="70" selection-start-column="56" selection-end-line="70" selection-end-column="56" />
-          <folding>
-            <element signature="n#style#0;n#button#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/styles/skeleton.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4009">
-          <caret line="211" column="13" selection-start-line="211" selection-start-column="8" selection-end-line="211" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/scripts/1PJRho2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/styles/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="483" column="12" selection-start-line="483" selection-start-column="7" selection-end-line="483" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/scripts/6Plas_Disp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9690">
-          <caret line="510" lean-forward="true" selection-start-line="510" selection-end-line="510" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../vis-frame/Fourier-Series/iFrame-Version/index.html" />
-    <entry file="file://$PROJECT_DIR$/EM2/12Outro_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/scripts/11Diel_BoundC.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/5Cond_Disp_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="101" column="74" selection-start-line="101" selection-start-column="74" selection-end-line="101" selection-end-column="74" />
-          <folding>
-            <element signature="n#style#0;n#span#2;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#3;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EM2/scripts/8Diel_BoundB.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="759">
@@ -1066,18 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/2aFour_Field_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Vector-Calculus-Concepts/iFrame-Version/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
@@ -1176,41 +1145,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Vector-Calculus-Concepts/iFrame-Version/right-2aDiv.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="50" column="41" lean-forward="true" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="41" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Vector-Calculus-Concepts/styles/loadout_Style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1462">
           <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/1PJRho_interactive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="103" column="39" selection-start-line="102" selection-end-line="103" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EM2/scripts/1PJRho.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Fourier-Series/iFrame-Version/styles/index_Style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5780">
-          <caret line="340" column="40" selection-start-line="340" selection-start-column="40" selection-end-line="340" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1228,26 +1166,203 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/styles/loadout_Style.css">
+    <entry file="file://$PROJECT_DIR$/../Fourier-Series/iFrame-Version/styles/index_Style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-447">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+        <state relative-caret-position="77">
+          <caret line="340" column="40" selection-start-line="340" selection-start-column="40" selection-end-line="340" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/scripts/1PJRho.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/1PJRho_interactive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="104" column="7" lean-forward="true" selection-start-line="104" selection-start-column="7" selection-end-line="104" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/1PJRho.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="41" column="29" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/1-interactive2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="88" column="40" lean-forward="true" selection-start-line="87" selection-end-line="88" selection-end-column="40" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#button#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/1PJRho2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/nav_Script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2091">
+          <caret line="123" column="42" selection-start-line="123" selection-start-column="42" selection-end-line="123" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/3aMaterial_Intro_interactive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="40" column="47" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/scripts/3aMaterial_Intro.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/3cMaterial_Intro_interactive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="32" column="22" lean-forward="true" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/3bMaterial_Intro.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="26" column="6" lean-forward="true" selection-start-line="21" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/3cMaterial_Intro.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/3bMaterial_Intro_interactive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="59" column="51" lean-forward="true" selection-start-line="58" selection-start-column="17" selection-end-line="59" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Vector-Calculus-Concepts/iFrame-Version/styles/loadout_Style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="470" column="17" lean-forward="true" selection-start-line="470" selection-start-column="17" selection-end-line="470" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/3aMaterial_Intro.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Vector-Calculus-Concepts/iFrame-Version/right-2aDiv.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="49" selection-start-line="49" selection-end-line="62" selection-end-column="10" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/styles/index_Style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
+        <state relative-caret-position="7327">
           <caret line="431" column="22" selection-start-line="431" selection-start-column="22" selection-end-line="431" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styles/loadout_Style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10455">
+          <caret line="615" column="1" selection-start-line="615" selection-start-column="1" selection-end-line="615" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Fourier-Series/Upload-Ready/Right-Sec4-PowerSpectrum.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Fourier-Series/Upload-Ready/styles/loadout_Style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8143">
+          <caret line="479" column="1" selection-start-line="437" selection-end-line="479" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/2bFour_Field_interactive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-986">
+          <caret line="44" column="53" lean-forward="true" selection-start-line="44" selection-start-column="53" selection-end-line="44" selection-end-column="53" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#span#0;n#label#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#2;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#3;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/2aFour_Field_interactive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="14" column="47" lean-forward="true" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="1441" column="70" selection-start-line="1441" selection-start-column="64" selection-end-line="1441" selection-end-column="70" />
+        <state relative-caret-position="170">
+          <caret line="24" column="58" lean-forward="true" selection-start-line="24" selection-start-column="58" selection-end-line="24" selection-end-column="58" />
           <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" />
             <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
             <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
             <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
@@ -1271,6 +1386,7 @@
             <element signature="n#meter#5;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#meter#6;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#meter#7;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#h2#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -1448,8 +1564,10 @@
             <element signature="n#span#16;n#div#2;n#div#0;n#div#1;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#span#19;n#div#2;n#div#0;n#div#1;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#span#20;n#div#2;n#div#0;n#div#1;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#h2#0;n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#li#0;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#a#0;n#li#0;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -1457,6 +1575,7 @@
             <element signature="n#a#0;n#li#1;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#li#2;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#a#0;n#li#2;n#ul#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -1528,58 +1647,149 @@
             <element signature="n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#h1#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#a#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#2;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#3;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#3;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#1;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#4;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#transition#0;n#div#5;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#6;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#transition#0;n#div#6;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#7;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#transition#0;n#div#7;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#8;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#transition#0;n#div#8;n#transition-group#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/nav_Script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="130" column="10" lean-forward="true" selection-start-line="130" selection-start-column="10" selection-end-line="130" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/1PJRho.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/right-1aIntroPol.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="81" column="10" lean-forward="true" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
+        <state relative-caret-position="254">
+          <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
           <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" />
             <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
             <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
             <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
             <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/right-1bIntroMag.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+          <folding>
+            <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/right-2aMaterialsDie.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+          <folding>
+            <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/right-2bMaterialsCon.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+          <folding>
+            <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/right-2cMaterialsPla.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="21" column="153" selection-start-line="21" selection-start-column="153" selection-end-line="21" selection-end-column="153" />
+          <folding>
+            <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/right-3aFieldD.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="21" column="153" lean-forward="true" selection-start-line="19" selection-start-column="98" selection-end-line="21" selection-end-column="153" />
+          <folding>
+            <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#span#0;n#label#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#3;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/right-3bFieldH.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="47" lean-forward="true" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="47" />
+          <folding>
+            <element signature="n#link#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#link#1;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#8;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#script#9;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#span#0;n#label#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#3;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/scripts/2bFour_Field.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="42" selection-end-line="340" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/2bFour_Field.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="329" column="66" lean-forward="true" selection-start-line="329" selection-start-column="66" selection-end-line="329" selection-end-column="66" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EM2/scripts/2aFour_Field.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="322" lean-forward="true" selection-end-line="341" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EM2-scripts/2aFour_Field.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="329" column="33" lean-forward="true" selection-start-line="329" selection-start-column="33" selection-end-line="329" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>

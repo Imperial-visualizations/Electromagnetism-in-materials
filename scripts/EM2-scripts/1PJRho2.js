@@ -30,8 +30,16 @@ Z_slider.oninput = function () {
     ZsliderVal = this.value;
 };
 
+function toggleButtonText() {
+    if (document.querySelectorAll('#showN-text')[0].innerHTML === 'Show') {
+        document.querySelectorAll('#showN-text')[0].innerHTML = 'Hide';
+    } else {
+        document.querySelectorAll('#showN-text')[0].innerHTML = 'Show';
+    }
+}
+
 function setup() {
-    let C = createCanvas(windowWidth / 2.5, windowWidth / 2.5, WEBGL);
+    let C = createCanvas(windowWidth / 1.7, windowWidth / 1.7, WEBGL);
     C.parent('sketch-holder');
     frameRate(60);
 }

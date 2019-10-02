@@ -29,6 +29,12 @@ $(window).on('load', function() {//main
         }
     };
 
+    let c_material   = $("input[name = 'material-switch']:checked").val();
+    let c_field      = $("input[name = 'field-switch']:checked").val();
+    let B     = parseFloat($("input#B").val());
+    let relative_p = parseFloat($("input#relative_permeability").val());
+    let dielectric_h = parseFloat($("input#dielectric_height").val());
+
     function make_arrows(pointsx, pointsy, pointsz) {//return data required to construct field line arrows
         /** Returns an arrowhead based on an inputted line */
         var x = pointsx[1],
@@ -41,12 +47,6 @@ $(window).on('load', function() {//main
     }
 
     function computeData(){//produces the data for the animation
-
-        let c_material   = $("input[name = 'material-switch']:checked").val();
-        let c_field      = $("input[name = 'field-switch']:checked").val();
-        let B     = parseFloat($("input#B").val());
-        let relative_p = parseFloat($("input#relative_permeability").val());
-        let dielectric_h = parseFloat($("input#dielectric_height").val());
 
         $("#B-display").html($("input#B").val().toString()+"T");//update value of slider in html
         $("#relative_permeability-display").html($("input#relative_permeability").val().toString());
@@ -196,11 +196,8 @@ $(window).on('load', function() {//main
             mid_bottom_of_arrow = -dielectric_h+0.2;
             top_of_arrow_below = -dielectric_h;
             bottom_of_arrow_below = -0.75;
-            if (Math.round(number_of_arrows*Math.pow(relative_p,-0.8)) < 1 && number_of_arrows > 0) {
-                number_of_arrows_reduced = 1;
-            } else {
-                number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,-0.8));
-            }
+            number_of_arrows_reduced = Math.round(number_of_arrows*Math.pow(relative_p,0.4));
+
             let extra_space_mod = 1/number_of_arrows_reduced;
             for (let i = 0; i < number_of_arrows_reduced; i++) {
                 for (let q = 0; q < number_of_arrows_reduced; q++) {
@@ -306,17 +303,17 @@ $(window).on('load', function() {//main
         return data;
     }
 
-    function initial() {//produces initial plot seen on load
-        Plotly.newPlot('graph', computeData(), plt.layout);
-    }
-
-    initial();//run the initial loading
-    
     function update_graph() {
+
+        c_material   = $("input[name = 'material-switch']:checked").val();
+        c_field      = $("input[name = 'field-switch']:checked").val();
+        B     = parseFloat($("input#B").val());
+        relative_p = parseFloat($("input#relative_permeability").val());
+        dielectric_h = parseFloat($("input#dielectric_height").val());
 
         let new_trace = computeData();
 
-        Plotly.animate("graph",
+        Plotly.animate("graph-holder",
             {data: new_trace},//updated data
             {
                 fromcurrent: true,
@@ -327,6 +324,13 @@ $(window).on('load', function() {//main
         );
 
     }
+
+    function initial() {//produces initial plot seen on load
+
+        Plotly.newPlot('graph-holder', computeData(), plt.layout);
+
+    }
+    initial();//run the initial loading
 
     dom.mSwitch.on("change", update_graph);//on any change the graph will update
     dom.fSwitch.on("change", update_graph);

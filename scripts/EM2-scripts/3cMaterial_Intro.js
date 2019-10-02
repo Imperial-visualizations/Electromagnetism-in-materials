@@ -20,15 +20,27 @@ var layout = {
         zaxis: {
             range:[-0.1,1.1],
         },
-
+        showlegend: true,
+        legend: {
+            x: 0,
+            y: 0
+        },
         //no margins on plot
         margin: {
         l: 0,
         r: 0,
         b: 0,
-        t: 0,
+        t: -20,
         }
 }};
+
+function toggleButtonText() {
+    if (document.querySelectorAll('#playButton')[0].innerHTML === 'Play') {
+        document.querySelectorAll('#playButton')[0].innerHTML = 'Pause';
+    } else {
+        document.querySelectorAll('#playButton')[0].innerHTML = 'Play';
+    }
+};
 
 function createInitialPositions(){
     let i = 0;
@@ -78,7 +90,7 @@ function initialPlot(){
 
     var data = [Pos, Neg];
 
-    Plotly.newPlot('plot', data, layout);
+    Plotly.newPlot('graph-holder', data, layout);
 }
 
 let t = 0;
@@ -130,7 +142,7 @@ function oscillate(){
 
 function animatePlot(xMinusAnimated){
     if(Animate === true){
-    Plotly.animate("plot",
+    Plotly.animate("graph-holder",
             {data: oscillate()},//updated data
             {
                 fromcurrent: false,
@@ -151,12 +163,12 @@ initialPlot();
 
 let Animate = false;
 //If button pressed Animate Plot
-$('#buttonPlay').on('click', function() {
+$('#playButton').on('click', function() {
     Animate = !Animate;
 
     //update button text
-    if(Animate){$('#buttonPlay').html('Pause');}
-    else{$('#buttonPlay').html('Play');}
+    if(Animate){$('#playButton').html('Pause');}
+    else{$('#playButton').html('Play');}
 
     //start animation
     animatePlot();

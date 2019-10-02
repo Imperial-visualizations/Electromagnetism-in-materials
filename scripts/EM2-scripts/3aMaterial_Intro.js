@@ -1,25 +1,38 @@
+function toggleButtonText() {
+    if (document.querySelectorAll('#playButton')[0].innerHTML === 'Play') {
+        document.querySelectorAll('#playButton')[0].innerHTML = 'Pause';
+    } else {
+        document.querySelectorAll('#playButton')[0].innerHTML = 'Play';
+    }
+}
+
 $(window).on('load', function() {
     const dom = {//assigning switches and sliders]
         wSlider:$("input#angular_frequency"),
         gammaSlider:$("input#gamma"),
-    }
+    };
 
 const layout = {//layout of refractive index plot
-                autosize: true,
-                xaxis: {
-                    showticklabels: false,
-                },
-                yaxis: {
-                    showticklabels: false,
-                },
-                margin: {
-                   l: 50, r: 10, b: 50, t: 50, pad: 5
-               },
-               font: {
-                   family: "Fira Sans",
-                   size: 16
-               }
-          }
+    autosize: true,
+    xaxis: {
+        showticklabels: false,
+    },
+    yaxis: {
+        showticklabels: false,
+    },
+    margin: {
+       l: 0, r: 0, b: 0, t: 0, pad: 5
+    },
+    font: {
+       family: "Fira Sans",
+       size: 16
+    },
+    showlegend: true,
+    legend: {
+        x: 0.88,
+        y: 1
+    },
+}
 
 const layoutPhase = {//layout of refractive index plot
                 autosize: true,
@@ -30,7 +43,7 @@ const layoutPhase = {//layout of refractive index plot
                     title: "Phase Shift /Radians"
                 },
                 margin: {
-                   l: 50, r: 10, b: 50, t: 50, pad: 5
+                   l: 50, r: 10, b: 50, t: 0, pad: 5
                },
                font: {
                    family: "Fira Sans",
@@ -187,7 +200,7 @@ return [trace1, marker]
 }
 
 function updateGraph(){//update animation
-Plotly.animate("plot",
+Plotly.animate("graph-holder1",
     {data: computeData()},//updated data
     {
         fromcurrent: true,
@@ -197,7 +210,7 @@ Plotly.animate("plot",
     }
 );
 
-Plotly.animate("phasePlot",
+Plotly.animate("graph-holder2",
     {data: computePhase()},//updated data
     {
         fromcurrent: true,
@@ -213,7 +226,7 @@ function playAnimation() {
 if(playing){
 t = t + Math.PI/20;
 if(omega*t > Math.Pi*8){t = 0;}
-Plotly.animate("plot",
+Plotly.animate("graph-holder1",
     {data: computeData()},
     {
         fromcurrent: true,
@@ -234,11 +247,11 @@ playAnimation();
 })
 
 //Initial Plot
-Plotly.purge("plot");
-Plotly.newPlot('plot', computeData(), layout);
+Plotly.purge("graph-holder1");
+Plotly.newPlot('graph-holder1', computeData(), layout);
 
-Plotly.purge("phasePlot");
-Plotly.newPlot('phasePlot', computePhase(), layoutPhase);
+Plotly.purge("graph-holder2");
+Plotly.newPlot('graph-holder2', computePhase(), layoutPhase);
 
 dom.wSlider.on("input",updateGraph);
 dom.gammaSlider.on("input",updateGraph);

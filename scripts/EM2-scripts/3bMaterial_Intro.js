@@ -11,12 +11,20 @@ var yMinus = [];
 var zMinus = [];
 
 var layout = {
-xaxis: {
-    title: "Time"
-},
-yaxis: {
-    title: "Relative Amplitude"
-}
+    xaxis: {
+        title: "Time"
+    },
+    yaxis: {
+        title: "Relative Amplitude"
+    },
+    margin: {
+        l: 50, r: 10, b: 50, t: 10, pad: 5
+    },
+    showlegend: true,
+    legend: {
+        x: 0.98,
+        y: 0.05
+    },
 };
 
 let omega = 1;
@@ -59,7 +67,7 @@ let tau = parseFloat($("input#Tau").val());
 //Update slider display value
 $("#tau-display").html($("input#Tau").val().toString());
 
-Plotly.animate("plot",
+Plotly.animate("graph-holder",
         {data: getData(tau)},//updated data
         {
             fromcurrent: true,
@@ -72,6 +80,6 @@ Plotly.animate("plot",
 
 
 
-Plotly.newPlot('plot', getData(tau), layout);
+Plotly.newPlot('graph-holder', getData(tau), layout);
 dom.wSlider.on("input",updateGraph);
 });

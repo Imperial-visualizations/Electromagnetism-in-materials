@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!--Title-->
-    <title>right-1aIntroPol</title>
+    <title>right-2aMaterialsDie</title>
     <!--css links-->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -40,51 +40,44 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
 </head>
-<body id="loadout1sub1">
-<!--p5 Canvas-->
-<div id="sketch-holder">
+<body id="loadout2sub1">
+<!--Graph 1-->
+<div id="graph-holder1">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!--Graph 2-->
+<div id="graph-holder2">
     <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
 <!--Buttons/Sliders-->
-<div class="overall-sliders-container">
-    <label class="slider-label">
-        <span class="innerLabel">Rotate:</span>
-        <span id="YR"> &theta; = <span id="YRot_Val"></span> &deg; </span>
-        <span id="ZR"> &Phi; = <span id="ZRot_Val"></span> &deg; </span>
-    </label>
-    <label class="slider">
-        <span class="sliderMin">-180 &deg;</span>
-        <input type="range" min="-180" max="180" value="0" step="1" class="slider" id="YRot">
-        <span class="sliderMax">+180 &deg;</span>
-    </label>
-    <label class="slider">
-        <span class="sliderMin">-180 &deg;</span>
-        <input type="range" min="-180" max="180" value="0" step="1" class="slider" id="ZRot">
-        <span class="sliderMax">+180 &deg;</span>
-    </label>
+<div class="partial-buttons-container">
+    <button id="playButton" onclick="toggleButtonText();">Play</button>
 </div>
-<div class="overall-buttons-container">
-    <div class="partial-buttons-container">
-        <button id="-XButton"  onclick="move_X()" value="1">-X</button>
-        <button id="plusXButton" onclick="movePlusX()" value="1">+X</button>
-    </div>
-    <div class="partial-buttons-container">
-        <button id="-YButton" onclick="move_Y()" value="1">-Y</button>
-        <button id="plusYButton" onclick="movePlusY()" value="1">+Y</button>
-    </div>
-    <div class="partial-buttons-container">
-        <button id="-ZButton" onclick="move_Z()" value="1">-Z</button>
-        <button id="plusZButton" onclick="movePlusZ()" value="1">+Z</button>
-    </div>
-    <div class="partial-buttons-container">
-        <button id="delete" onclick="deleteCube()" value="1">Reset!</button>
-    </div>
-    <div class="partial-buttons-container">
-        <button id="showN" onclick="showN(); toggleButtonText();" value="1"> <span id="showN-text">Show</span> Normal Vector!</button>
-    </div>
+<div class="overall-sliders-container">
+    <label class="slider-label" for="angular_frequency">
+        <span class="innerLabel">Ratio of Angular frequencies \(\omega/\omega_0\):
+            <span id="angular_frequency-display"></span>
+        </span>
+    </label>
+    <label class="slider">
+        <span class="sliderMin">0.5</span>
+        <input id="angular_frequency" max="1.5" min="0.5" name="angular_frequency" step="0.01" type="range" value="0.6"/>
+        <span class="sliderMax">1.5</span>
+    </label>
+    <label class="slider-label" for="gamma">
+        <span class="innerLabel">Gamma:</span>
+        <span id="gamma-display"></span>
+    </label>
+    <label class="slider">
+        <span class="sliderMin">0.0</span>
+        <input id="gamma" max="0.5" min="0.01" name="gamma" step="0.01" type="range" value="0.2"/>
+        <span class="sliderMax">0.5</span>
+    </label>
 </div>
 </body>
-<script src=scripts/EM2-scripts/1PJRho.js></script>
+<script src="scripts/EM2-scripts/3aMaterial_Intro.js"></script>
 </html>

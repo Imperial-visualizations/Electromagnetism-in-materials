@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-3bFieldH</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="scripts/plotly-1.47.4.min.js"></script> <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout3sub2">
+<!--Graph-->
+<div id='graph-holder'>
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!--Buttons/Sliders-->
+<div class="overall-radio-container">
+    <div id="material-switch" name="material-switch" class="partial-radio-container">
+        <label class="radio-label">Material</label>
+        <label for="vacuum" class="radio">
+            <input type="radio" id="vacuum" value="vacuum" name="material-switch" checked="checked">
+            <span>Vacuum</span>
+        </label>
+        <label for="dielectric" class="radio">
+            <input type="radio" id="dielectric" value="dielectric" name="material-switch">
+            <span>Magnetic</span>
+        </label>
+    </div>
+    <div id="field-switch" name="field-switch" class="partial-radio-container">
+        <label class="radio-label">Field Type</label>
+        <label for="b-field" class="radio">
+            <input type="radio" id="b-field" value="b-field" name="field-switch" checked="checked">
+            <span style="color:#0281d6; font-weight:bold">B field</span>
+        </label>
+        <label for="m-field" class="radio">
+            <input type="radio" id="m-field" value="m-field" name="field-switch">
+            <span style ="color:#D24000; font-weight:bold">M field</span>
+        </label>
+        <label for="h-field" class="radio">
+            <input type="radio" id="h-field" value="h-field" name="field-switch">
+            <span style="color:#9F004E; font-weight:bold">H field</span>
+        </label>
+    </div>
+</div>
+<div class="overall-sliders-container">
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="B" class="slider-label">
+            Applied B field:
+            <span id="B-display"></span>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0T</span>
+            <input type="range" id="B" class="inputs" name="B" min="0" max="30" value="15">
+            <span class="sliderMax">30T</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="relative_permeability" class="slider-label">
+            Relative Permeability:
+            $\mu_r$=<span id="relative_permeability-display"></span>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0</span>
+            <input type="range" id="relative_permeability" class="inputs" name="relative_permeability" step= "0.1" min="0" max="5" value="2.5">
+            <span class="sliderMax">5</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="dielectric_height" class="slider-label">
+            Material Width:
+            <span id="dielectric_height-display"></span>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0.2</span>
+            <input type="range" id="dielectric_height" class="inputs" name="dielectric_height" step = "0.1" min="0.2" max="0.7" value="0.4">
+            <span class="sliderMax">0.7</span>
+        </label>
+        <!--END Slider-->
+    </div>
+</div>
+</body>
+<script src="scripts/EM2-scripts/2bFour_Field.js"></script>
+</html>

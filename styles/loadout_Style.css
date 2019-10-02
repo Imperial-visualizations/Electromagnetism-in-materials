@@ -80,7 +80,7 @@
     flex: 0.5 1 0;
 }
 
-#loadout1sub1 #innerLabel {
+#loadout1sub1 .innerLabel {
     flex: 1 0 auto;
 }
 
@@ -119,216 +119,500 @@
     background-color: #eaf2ff;
 }
 
+#loadout1sub2 {
+    overflow-y: hidden;
+}
+
+#loadout1sub2 #sketch-holder {
+    background: #ffffff;
+    width: 60vw;
+    height: 60vw;
+    position: absolute;
+    left: 3vw;
+    top: 7.5vh;
+    padding: 1%;
+}
+
+#loadout1sub2 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 3vw;
+    top: 5vh;
+    width: 30vw;
+    height: 45vh;
+}
+
+#loadout1sub2 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+}
+
+#loadout1sub2 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+}
+
+#loadout1sub2 .sliderMin, #loadout1sub2 .sliderMax {
+    margin-top: 30px;
+    width: 60px;
+    flex: 0 0 60px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout1sub2 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout1sub2 .slider-label {
+    display: flex;
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+}
+
+#loadout1sub2 .innerLabel {
+    flex: 1 0 auto;
+}
+
+#loadout1sub2 #YR, #loadout1sub2 #ZR {
+    flex: 0.5 0 auto;
+}
+
+#loadout1sub2 .overall-buttons-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 3vw;
+    bottom: 5vh;
+    width: 30vw;
+    height: 45vh;
+}
+
+#loadout1sub2 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 0;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+#loadout1sub2 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout1sub2 button:hover {
+    background-color: #eaf2ff;
+}
+
 /* SECTION 2 */
 
-#loadout2 {
+#loadout2sub1 {
+    overflow-y: hidden;
 }
 
-#loadout2 #graph0Sec2 {
-    width: 94%;
-    height: 60%;
+#loadout2sub1 #graph-holder1 {
+    background: #ffffff;
+    width: 90vw;
+    height: 50vh;
     position: absolute;
-    left: 3%;
-    top: 50px;
+    left: 5vw;
+    top: 10vh;
+    padding: 1%;
 }
 
-#loadout2 #scrollSec2Sub1 {
-    width: 100%;
-    height: 10%;
+#loadout2sub1 #graph-holder2 {
+    background: #ffffff;
+    width: 45vw;
+    height: 30vh;
     position: absolute;
-    top: 20px;
-    display: table;
-    margin: 0 auto;
+    right: 5vw;
+    bottom: 5vh;
+    padding: 1%;
 }
 
-#loadout2 .scroll_down {
-    display: table;
-    margin: 0 auto;
-}
-
-#loadout2 #loadout2sub0 #subSecTitle {
-    display: none;
-    width: inherit;
+#loadout2sub1 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top:20px;
+    left: 5vw;
+    bottom: 5vh;
+    width: 45vw;
+    height: 25vh;
+}
+
+#loadout2sub1 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+}
+
+#loadout2sub1 .sliderMin, #loadout2sub1 .sliderMax {
+    margin-top: 30px;
+    width: 60px;
+    flex: 0 0 60px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout2sub1 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout2sub1 .slider-label {
+    display: flex;
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+}
+
+#loadout2sub1 .innerLabel {
+    flex: 1 0 auto;
+}
+
+#loadout2sub1 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 0;
+    align-items: stretch;
+    justify-content: space-around;
+    position: absolute;
+    left: 5vw;
+    top: 5vh;
+    width: 90vw;
+    height: 5vh;
+}
+
+#loadout2sub1 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout2sub1 button:hover {
+    background-color: #eaf2ff;
+}
+
+
+#loadout2sub2 {
+    overflow: hidden;
+}
+
+#loadout2sub2 #graph-holder {
+    width: 95vw;
+    height: 75vh;
+    position: absolute;
+    left: 2.5vw;
+    top: 5vh;
+}
+
+#loadout2sub2 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 4vh;
+    left: 2.5vw;
+    width: 95vw;
+    height: 10vh;
+}
+
+#loadout2sub2 .partial-sliders-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+#loadout2sub2 .slider-label {
+    font-size: calc(10px + 0.8vw);
+    flex-basis: auto;
+    flex-grow: 0.3;
+    flex-shrink: 1;
+    margin: 0;
+    padding: 0;
     text-align: center;
 }
 
-#loadout2 #loadout2sub0 .overall-sliders-container {
-   /* display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 50px;
-    bottom: 0;
-    width: 60vw;
-    height: 25vh;*/
+#loadout2sub2 .slider {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
 }
 
-#loadout2 #loadout2sub0 .partial-sliders-container {
+#loadout2sub2 .sliderMin, #loadout2sub2 .sliderMax {
+    margin-top: 30px;
+    width: 40px;
+    flex: 0 0 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout2sub2 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout2sub3 {
+    overflow-y: hidden;
+}
+
+#loadout2sub3 #graph-holder {
+    background: #ffffff;
+    width: 70vw;
+    height: 100vh;
+    position: absolute;
+    left: 15vw;
+    top: 0;
+    padding: 1%;
+}
+
+#loadout2sub3 .partial-buttons-container {
     display: flex;
     flex-direction: row;
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
-#loadout2 #loadout2sub0 .slider-label {
-    font-size: 14pt;
-    text-align: left;
-    padding-left: 8px;
-    margin: 0;
-    padding-top: 0;
-    flex-basis: 0;
-    flex-grow: 0.5;
-    flex-shrink: 1;
-}
-
-#loadout2 #loadout2sub0 .slider {
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
-#loadout2 #graph1Sec2 {
-    width: 35vw;
-    height: 22.5vw;
+    flex: 1 1 0;
+    align-items: stretch;
+    justify-content: space-around;
     position: absolute;
-    left: 50px;
-    top: 20px;
+    left: 5vw;
+    top: 5vh;
+    width: 90vw;
+    height: 5vh;
 }
 
-#loadout2 #graph2Sec2 {
-    width: 35vw;
-    height: 22.5vw;
-    position: absolute;
-    left: 50px;
-    bottom: 20px;
+#loadout2sub3 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
 }
 
-#loadout2 #loadout2sub3 .overall-sliders-container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 50px;
-    top: 50px;
-    width: 20vw;
-    height: 90vh;
-}
-
-#loadout2 #loadout2sub3 .slider-label {
-    font-size: 20pt;
-    text-align: left;
-    padding-left: 8px;
-    margin: 0;
-    padding-top: 0;
-    flex-basis: 0;
-    flex-grow: 0.5;
-    flex-shrink: 1;
-}
-
-#loadout2 #loadout2sub3 .slider {
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
-/*
-
-#loadout2 #loadout2sub1 #Scalar_Graph_1a {
-    width:40vw; 
-    height:40vh;
-}
-
-#loadout2 #loadout2sub1 #Vector_Graph_1a {
-    width:40vw; 
-    height:40vh;
-}
-*/
-#graphContainer {
-    width:60%; 
-    float:left;
+#loadout2sub3 button:hover {
+    background-color: #eaf2ff;
 }
 
 /* SECTION 3 */
 
-#loadout3 {
-}
-
-#loadout3 #graph1Sec3 {
-    width: 94%;
-    height: 60%;
+#loadout3sub1 #graph-holder {
+    background: #ffffff;
+    width: 60vw;
+    height: 85vh;
     position: absolute;
-    left: 3%;
-    top: 10%;
+    left: 3vw;
+    top: 0;
+    padding: 1%;
 }
 
-#loadout3 #scrollSec3 {
-    width: 100%;
-    height: 10%;
-    position: absolute;
-    top: 20px;
-    display: table;
-    margin: 0 auto;
-}
-
-#loadout3 .scroll_down {
-    display: table;
-    margin: 0 auto;
-}
-
-#loadout3 .overall-sliders-container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 5%;
-    bottom: 0;
-    width: 45%;
-    height: 25%;
-}
-
-#loadout3 .partial-sliders-container {
+#loadout3sub1 .overall-radio-container {
     display: flex;
     flex-direction: row;
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
+    width: 30vw;
+    height: 30vh;
+    position: absolute;
+    top: 5vh;
+    right: 3vw;
 }
 
-#loadout3 .slider-label {
-    font-size: 14pt;
+#loadout3sub1 .partial-radio-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout3sub1 .radio-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0 0 4vh;
+    padding-top: 0;
+    flex: 0 0 auto;
+    left: 0;
+}
+
+#loadout3sub1 .radio {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-bottom: 2vh;
+    margin-left: 1vw;
+    font-size: calc(10px + 0.8vw);
+}
+
+#loadout3sub1 .radio input {
+    margin: 0 30px 0 0;
+}
+
+#loadout3sub1 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 60vh;
+    position: absolute;
+    bottom: 5vh;
+    right: 3vw;
+}
+
+#loadout3sub1 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout3sub1 .slider-label {
+    font-size: calc(12px + 1vw);
     text-align: left;
     padding-left: 8px;
     margin: 0;
     padding-top: 0;
-    flex-basis: 0;
-    flex-grow: 0.5;
-    flex-shrink: 1;
+    flex: 0.5 1 0;
+    left: 0;
 }
 
-#loadout3 .slider {
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
+#loadout3sub1 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
 }
 
-#loadout3 #equationSpace {
+#loadout3sub1 .sliderMin, #loadout3sub1 .sliderMax {
+    margin-top: 30px;
+    width: 40px;
+    flex: 0 0 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout3sub1 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout3sub2 #graph-holder {
+    background: #ffffff;
+    width: 60vw;
+    height: 85vh;
     position: absolute;
-    right: 5%;
-    bottom: 3%;
-    width: 45%;
-    height: 22%;
-    font-size: calc(3px + 0.95vw);
+    left: 3vw;
+    top: 0;
+    padding: 1%;
 }
 
-#loadout3 .equationContainer {
+#loadout3sub2 .overall-radio-container {
+    display: flex;
+    flex-direction: row;
+    width: 30vw;
+    height: 30vh;
+    position: absolute;
+    top: 5vh;
+    right: 3vw;
+}
+
+#loadout3sub2 .partial-radio-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100%;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1 1 0;
 }
 
-#loadout3 img {
-    height: 100%;
+#loadout3sub2 .radio-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0 0 4vh;
+    padding-top: 0;
+    flex: 0 0 auto;
+    left: 0;
+}
+
+#loadout3sub2 .radio {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-bottom: 2vh;
+    margin-left: 1vw;
+    font-size: calc(10px + 0.8vw);
+}
+
+#loadout3sub2 .radio input {
+    margin: 0 30px 0 0;
+}
+
+#loadout3sub2 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 60vh;
+    position: absolute;
+    bottom: 5vh;
+    right: 3vw;
+}
+
+#loadout3sub2 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout3sub2 .slider-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+    left: 0;
+}
+
+#loadout3sub2 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+#loadout3sub2 .sliderMin, #loadout3sub2 .sliderMax {
+    margin-top: 30px;
+    width: 40px;
+    flex: 0 0 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout3sub2 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
 }
 
 /* SECTION 4 */
