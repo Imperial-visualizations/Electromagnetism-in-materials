@@ -8,7 +8,7 @@ $(window).on('load', function() {
             showlegend: false,
             showscale: false,
             margin: {
-                l: 10, r: 10, b: 10, t: 1, pad: 5
+                l: 0, r: 0, b: 0, t: 0, pad: 5
             },
             dragmode: 'orbit',
             scene: {
@@ -33,7 +33,7 @@ $(window).on('load', function() {
                     range: [-0.06,0.14],
                 },
                 margin: {
-                   l: 50, r: 10, b: 50, t: 50, pad: 5
+                   l: 50, r: 50, b: 50, t: 50, pad: 1
                },
                legend: {
                    traceorder: 'normal',
@@ -63,7 +63,7 @@ $(window).on('load', function() {
                     title:"Relative Angular Frequency"
                 },
                 margin: {
-                   l: 50, r: 10, b: 50, t: 50, pad: 5
+                   l: 50, r: 50, b: 50, t: 50, pad: 5
                },
                legend: {
                    x: 0, y: 10,
@@ -466,7 +466,7 @@ class Wave{//wave object used to produce em wave
 
     function update_graph_n(){//update refractive index graph
 
-        Plotly.animate("graph_n",
+        Plotly.animate("graph_n-holder",
             {data: compute_data_n()},//updated data
             {
                 fromcurrent: true,
@@ -476,7 +476,7 @@ class Wave{//wave object used to produce em wave
             }
         );
 
-        Plotly.animate("graph_disp",
+        Plotly.animate("graph_disp-holder",
             {data: compute_data_disp()},//updated data
             {
                 fromcurrent: true,
@@ -489,7 +489,7 @@ class Wave{//wave object used to produce em wave
     }
 
     function update_graph(){//update animation
-        Plotly.animate("graph",
+        Plotly.animate("graph-holder",
             {data: computeData()},//updated data
             {
                 fromcurrent: true,
@@ -503,7 +503,7 @@ class Wave{//wave object used to produce em wave
     function play_loop(){
         if(isPlay === true) {
             t++;
-            Plotly.animate("graph",
+            Plotly.animate("graph-holder",
                 {data: computeData()},
                 {
                     fromcurrent: true,
@@ -551,14 +551,14 @@ class Wave{//wave object used to produce em wave
     };
 
     function initial(){
-        Plotly.purge("graph");
-        Plotly.newPlot('graph', computeData(),plt.layout);//create animation plot
+        Plotly.purge("graph-holder");
+        Plotly.newPlot('graph-holder', computeData(),plt.layout);//create animation plot
 
-        Plotly.purge("graph_n");
-        Plotly.newPlot('graph_n', compute_data_n(),plt.layout_real);//create real refractive index graph
+        Plotly.purge("graph_n-holder");
+        Plotly.newPlot('graph_n-holder', compute_data_n(),plt.layout_real);//create real refractive index graph
 
-        Plotly.purge("graph_disp");
-        Plotly.newPlot('graph_disp', compute_data_disp(), plt.layout_disp);
+        Plotly.purge("graph_disp-holder");
+        Plotly.newPlot('graph_disp-holder', compute_data_disp(), plt.layout_disp);
 
         dom.pswitch.on("change", update_graph);//update graph animation
         dom.wSlider.on("input",update_graph);
@@ -568,12 +568,12 @@ class Wave{//wave object used to produce em wave
             nPlot = !nPlot;
 
             if(nPlot){
-                $('#graph_n').show();
-                $('#graph_disp').hide();
+                $('#graph_n-holder').show();
+                $('#graph_disp-holder').hide();
                 $('#graphChangeButton').html('Dispersion Relation');
             } else {
-                $('#graph_n').hide();
-                $('#graph_disp').show();
+                $('#graph_n-holder').hide();
+                $('#graph_disp-holder').show();
                 $('#graphChangeButton').html('Refractive Index');
             }
         });

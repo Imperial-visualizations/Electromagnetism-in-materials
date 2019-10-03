@@ -1284,25 +1284,25 @@
                             the conductor.
                         </div>
                         <div id="dispersionPla" class="tab-pane fade">
-                            A dispersion relation relates a wave's angular frequency $\omega$ to its wavevector $k$.
+                            A dispersion relation relates a wave's angular frequency <span class="mathJaxInline">$ \omega $</span> to its wavevector <span class="mathJaxInline">$ k $</span>.
                             <br><br>
                             The dispersion relation for a plasma is given by
                             <span class="mathJaxDisplay">
-                                $$ k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}} $$,
+                                $$ k = \frac{\omega}{c}\Big(1 - \frac{\omega_p^2}{\omega^2}\Big)^{\frac{1}{2}}, $$
                             </span>
-                            where $c$ is the speed of light, the plasma frequency $\omega_p = \sqrt{\frac{N_e
-                            e^2}{m_e \varepsilon_0}}$, $N_e$ is the plasma free electron number density, e is the
+                            where <span class="mathJaxInline">$ c $</span> is the speed of light, the plasma frequency <span class="mathJaxInline">$ \omega_p = \sqrt{\frac{N_e
+                            e^2}{m_e \varepsilon_0}} $</span>, <span class="mathJaxInline">$ N_e $</span> is the plasma free electron number density, e is the
                             electron
-                            charge, $m_e$ is the mass of an electron and $\varepsilon_0$ is the vacuum permittivity.
+                            charge, <span class="mathJaxInline">$ m_e $</span> is the mass of an electron and <span class="mathJaxInline">$ \varepsilon_0 $</span> is the vacuum permittivity.
                             <br><br>
-                            Try varying the $N_e$ slider to in order to change $\omega_p$. Move the $\omega$ slider
+                            Try varying the <span class="mathJaxInline">$ N_e $</span> slider to in order to change <span class="mathJaxInline">$ \omega_p $</span>. Move the <span class="mathJaxInline">$ \omega $</span> slider
                             to change the frequency of the wave.
-                            Notice that when $\omega$ is less than $\omega_p$, the wavevector $k$ becomes imaginary,
+                            Notice that when <span class="mathJaxInline">$ \omega $</span> is less than <span class="mathJaxInline">$ \omega_p $</span>, the wavevector <span class="mathJaxInline">$ k $</span> becomes imaginary,
                             and the wave is completely attenuated by the
                             plasma.
                             <br><br>
                             The dispersion relation for a vacuum is also shown in the graph. As the number density
-                            of electrons in the plasma $N_e$ is decreased,
+                            of electrons in the plasma <span class="mathJaxInline">$ N_e $</span> is decreased,
                             it becomes more like a vacuum, so it makes sense that the plasma dispersion relation
                             should tend to the vacuum relation. Another way of thinking
                             about it is that increasing the frequency of the wave relative to the plasma frequency
@@ -2054,13 +2054,13 @@
                     <!--Interactive Zone Sub Containers-->
                     <div class="rightload text" id='loadout4sub1' key="loadout4sub1"
                          v-if="subSection[3] === 1">
-                        <!--                        <iframe src="EM2/4Diel_Disp_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                        <iframe src="right-4aDispersionDie.html"></iframe>
                     </div>
                     <div class="rightload text" id='loadout4sub2' key="loadout4sub2" v-else-if="subSection[3]===2">
-                        <!--                        <iframe src="EM2/5Cond_Disp_interactive.html" id='subSecIframe' height="800px" width="950px"></iframe>-->
+                        <iframe src="right-4bDispersionCon.html"></iframe>
                     </div>
                     <div class="rightload text" id='loadout4sub3' key="loadout4sub3" v-else-if="subSection[3] === 3">
-                        <!--                        <iframe src="EM2/6Plas_Disp_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                        <iframe src="right-4cDispersionPla.html"></iframe>
                     </div>
                 </div>
                 <div class="rightload text even" id='loadout5' key="loadout5" v-if="currentSection === 5">

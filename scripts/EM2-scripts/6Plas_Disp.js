@@ -87,6 +87,9 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
     if (Mode == "Wave"){
         new_layout = {//layout of 3D graph
             //showlegend: false,
+            legend: {
+                x: 0.8, y: 0.8,
+                },
             //showscale: false,
             uirevision: 'dataset',
             margin: {
@@ -117,6 +120,12 @@ function setLayout(sometitlex, sometitley, sometitlez, Mode, max_axis){
         new_layout = {
             //autosize: true,
             //showlegend: false,
+            legend: {
+                x: 0.7, y: 0.1,
+            },
+            margin: {
+                l: 50, r: 5, b: 50, t: 5, pad: 1
+            },
             xaxis: {
                 //constrain: "domain",
                 //range: [0, 0.00000001],
@@ -311,15 +320,15 @@ function GetWaveData(WaveList){
 
 function UpdatePlots(Data, x_max, Omega_max){
     //update plots using react - should be faster than doing newPlot
-    Plotly.react('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
-    Plotly.react('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
+    Plotly.react('dispersion-graph-holder', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
+    Plotly.react('threeD-graph-holder', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
 
 function NewPlots(Data, x_max, Omega_max){
     //create plots using newPlot
-    Plotly.newPlot('DispersionGraph', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
-    Plotly.newPlot('3DGraph', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
+    Plotly.newPlot('dispersion-graph-holder', Data[0], setLayout('k', 'Omega', '', 'Dispersion', Omega_max));
+    Plotly.newPlot('threeD-graph-holder', Data[1], setLayout('x', 'y', 'z', 'Wave', x_max));
 }
 
 function GetWaves(NegativexValues, PositivexValues, kVac, kPlas, omega){
@@ -382,7 +391,7 @@ function GetNewInputs(){
     let CurrentOmega = document.getElementById("OmegaSlider").value;
     CurrentOmega = CurrentOmega*10**10;
 
-    let Play = document.getElementById("PlayButton").value;
+    let Play = document.getElementById("playButton").value;
     let PlaySpeed = document.getElementById("SpeedSlider").value;
 
     return [Ne, CurrentOmega, Play, PlaySpeed];
@@ -410,7 +419,7 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//ad
     //console.log(GraphData);
 
 
-    Plotly.animate("3DGraph",
+    Plotly.animate("threeD-graph-holder",
         {
             data: GraphData
 
@@ -425,9 +434,9 @@ function Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play){//ad
 
 
     // let x_max = 0.05;
-    // Plotly.react("3DGraph", GraphData, setLayout('x', 'y', 'z', 'Wave', x_max));
+    // Plotly.react("threeD-graph-holder", GraphData, setLayout('x', 'y', 'z', 'Wave', x_max));
 
-    Play = document.getElementById("PlayButton").value;
+    Play = document.getElementById("playButton").value;
     if (Play == "true"){
         ID = window.requestAnimationFrame(function(){Evolve(WaveList, NegativexValues, PositivexValues, TimeStep, Play);});
         return;
@@ -509,16 +518,16 @@ function Initialise() {
         Refresh();
     });
 
-    $('#PlayButton').on("click", function(){
+    $('#playButton').on("click", function(){
 
-        if (document.getElementById("PlayButton").value == "false"){
-            $('#PlayButton').html("Pause");
-            document.getElementById("PlayButton").value = "true";
+        if (document.getElementById("playButton").value == "false"){
+            $('#playButton').html("Pause");
+            document.getElementById("playButton").value = "true";
             Refresh();
         }else{
-            $('#PlayButton').html("Play");
+            $('#playButton').html("Play");
             window.cancelAnimationFrame(ID);
-            document.getElementById("PlayButton").value = "false";
+            document.getElementById("playButton").value = "false";
         }
     });
 

@@ -39,7 +39,7 @@ $(window).on('load', function() {
                },
                legend: {
                    traceorder: 'normal',
-                   x: 0.05, y: 1.05,
+                   x: 0.6, y: 0.1,
                    font: {
                       family: 'sans-serif',
                       size: 14,
@@ -48,7 +48,7 @@ $(window).on('load', function() {
                     //bgcolor: '#E2E2E2',
                     //bordercolor: '#ff0000',
                     //borderwidth: 2
-                   orientation: "h"
+                    //orientation: "h"
                },
                font: {
                    family: "Fira Sans",
@@ -446,7 +446,7 @@ class Wave{//wave object used to produce em wave
 
     function update_graph_n(){//update dispersion
 
-        Plotly.animate("graph_disp",
+        Plotly.animate("graph_disp-holder",
             {data: compute_data_disp()},//updated data
             {
                 fromcurrent: true,
@@ -456,7 +456,7 @@ class Wave{//wave object used to produce em wave
             }
         );
 
-        Plotly.animate("graph_phi",
+        Plotly.animate("graph_phi-holder",
             {data: compute_data_phi()},//updated data
             {
                 fromcurrent: true,
@@ -469,7 +469,7 @@ class Wave{//wave object used to produce em wave
     }
 
     function update_graph(){//update animation
-        Plotly.animate("graph",
+        Plotly.animate("graph-holder",
             {data: computeData()},//updated data
             {
                 fromcurrent: true,
@@ -483,7 +483,7 @@ class Wave{//wave object used to produce em wave
     function play_loop(){
         if(isPlay === true) {
             t++;
-            Plotly.animate("graph",
+            Plotly.animate("graph-holder",
                 {data: computeData()},
                 {
                     fromcurrent: true,
@@ -499,14 +499,14 @@ class Wave{//wave object used to produce em wave
 
 
     function initial(){
-        Plotly.purge("graph");
-        Plotly.newPlot('graph', computeData(),plt.layout);//create animation plot
+        Plotly.purge("graph-holder");
+        Plotly.newPlot('graph-holder', computeData(),plt.layout);//create animation plot
 
-        Plotly.purge("graph_disp");
-        Plotly.newPlot('graph_disp', compute_data_disp(),plt.layout_disp);//create real refractive index graph
+        Plotly.purge("graph_disp-holder");
+        Plotly.newPlot('graph_disp-holder', compute_data_disp(),plt.layout_disp);//create real refractive index graph
 
-        Plotly.purge("graph_phi");
-        Plotly.newPlot('graph_phi', compute_data_phi(), plt.layout_disp2);
+        Plotly.purge("graph_phi-holder");
+        Plotly.newPlot('graph_phi-holder', compute_data_phi(), plt.layout_disp2);
 
         dom.pswitch.on("change", update_graph);//update graph animation
         dom.wSlider.on("input",update_graph);
@@ -519,12 +519,12 @@ class Wave{//wave object used to produce em wave
             nPlot = !nPlot;
 
             if(nPlot){
-                $('#graph_disp').show();
-                $('#graph_phi').hide();
+                $('#graph_disp-holder').show();
+                $('#graph_phi-holder').hide();
                 $('#graphChangeButton').html('Phase Shift');
             } else {
-                $('#graph_disp').hide();
-                $('#graph_phi').show();
+                $('#graph_disp-holder').hide();
+                $('#graph_phi-holder').show();
                 $('#graphChangeButton').html('Dispersion Relation');
             }
         });
