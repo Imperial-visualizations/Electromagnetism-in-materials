@@ -13,8 +13,8 @@ function displayImage(){
 
 function main(){
 //jQuery to update the plot as the value of the slider changes.
-    document.getElementById("NIMImage").style.display = "block"
-    document.getElementById("CloakingImage").style.display = "none"
+    document.getElementById("NIMImage").style.display = "block";
+    document.getElementById("CloakingImage").style.display = "none";
     $("input[type=radio]").each(function () {
         /*Allows for live update for display values*/
         $(this).on('input', function(){

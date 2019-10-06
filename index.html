@@ -1447,7 +1447,7 @@
                                     The Fresnel equations follow directly from Maxwell’s equations. To see why this
                                     is the case, consider the following pill-box volume.
                                     <br>
-                                    <img class="journeyImage" src="EM2/images/7PillboxImage.png" alt="Pill Box">
+                                    <img class="journeyImage" src="images/7PillboxImage.png" alt="Pill Box">
                                     <br><br>
                                     Applying the 4-field form of Maxwell’s equations on this pill-box, we arrive at
                                     4 general boundary conditions for an EM wave incident on a dielectric boundary.
@@ -1482,9 +1482,9 @@
                             <span class="mathJaxInline">$ t $</span> and <span class="mathJaxInline">$ r $</span> denote
                             the incident, transmitted and reflected wave respectively.
                             <br>
-                            <img class="journeyImage" src="EM2/images/7P-Polarisation.png" alt="P-Polarisation">
+                            <img class="journeyImage" src="images/7P-Polarisation.png" alt="P-Polarisation">
                             <br>
-                            <img class="journeyImage" src="EM2/images/7S-Polarisation.png" alt="S-Polarisation">
+                            <img class="journeyImage" src="images/7S-Polarisation.png" alt="S-Polarisation">
                             <br><br>
                             Thus, for a p-polarised incident wave, we obtain the boundary conditions
                             <span class="mathJaxDisplay">
@@ -1596,7 +1596,7 @@
                             infinite number of reflections within the dielectric, with some transmission at each
                             stage.
                             <br>
-                            <img class="journeyImage" src="EM2/images/11Infinite_Reflections_Diagram.png"
+                            <img class="journeyImage" src="images/11Infinite_Reflections_Diagram.png"
                                  alt="Infinite Reflections">
                             <br><br>
                             It can then be shown that the sum of the energies of an infinite series of
@@ -1812,7 +1812,7 @@
                     </span>
                     with the symbols defined as shown in the image.
                     <br>
-                    <img class="journeyImage" src="EM2/images/Snell1.png"/>
+                    <img class="journeyImage" src="images/Snell1.png"/>
                     <br><br>
                     We can rewrite this in terms of <span class="mathJaxInline">$ \theta $</span> as
                     <span class="mathJaxDisplay">
@@ -2010,7 +2010,7 @@
                 ELECTROMAGNETISM IN MATERIALS
             </h1>
             <a href="https://www.imperialvisualisations.com/learn/">
-                <img id="vis-logo" src="VisualisationsLogoWhite2.png">
+                <img id="vis-logo" src="images/VisualisationsLogoWhite2.png">
             </a>
         </div>
         <!--    Space into which visualisations are loaded    -->
@@ -2068,34 +2068,34 @@
                         <!--Interactive Zone Sub Containers-->
                         <div class="rightload text" id='loadout5sub1' key="loadout5sub1"
                              v-if="subSection[4] === 1">
-                            <!--                        <iframe src="EM2/7Diel_BoundA_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                            <iframe src="right-5aDieBoundFres.html"></iframe>
                         </div>
                         <div class="rightload text" id='loadout5sub2' key="loadout5sub2"
                              v-else-if="subSection[4] === 2">
-                            <!--                        <iframe src="EM2/8Diel_BoundB_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                            <iframe src="right-5bDieBoundEvan.html"></iframe>
                         </div>
                         <div class="rightload text" id='loadout5sub3' key="loadout5sub3"
                              v-else-if="subSection[4] === 3">
-                            <!--                        <iframe src="EM2/11Diel_BoundC_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                            <iframe src="right-5cDieBoundTran.html"></iframe>
                         </div>
                     </transition>
                 </div>
                 <div class="rightload text even" id='loadout6' key="loadout6" v-if="currentSection === 6">
                     <transition name="fade">
                         <!--Interactive Zone Sub Containers-->
-                        <!--                    <iframe src="EM2/9Cond_Bound_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                        <iframe src="right-6ConBound.html"></iframe>
                     </transition>
                 </div>
                 <div class="rightload text even" id='loadout7' key="loadout7" v-if="currentSection === 7">
                     <transition name="fade">
                         <!--Interactive Zone Sub Containers-->
-                        <!--                    <iframe src="EM2/10Plas_Bound_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                        <iframe src="right-7PlaBound.html"></iframe>
                     </transition>
                 </div>
                 <div class="rightload text even" id='loadout8' key="loadout8" v-if="currentSection === 8">
                     <transition name="fade">
                         <!--Interactive Zone Sub Containers-->
-                        <!--                        <iframe src="EM2/12Outro_interactive.html" style="width: 67vw; height: 96vh"></iframe>-->
+                        <iframe src="right-8MetaMaterials.html"></iframe>
                     </transition>
                 </div>
             </transition-group>

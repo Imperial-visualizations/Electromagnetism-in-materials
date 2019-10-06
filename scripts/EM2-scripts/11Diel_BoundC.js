@@ -420,7 +420,7 @@ function AnimateAll(data, plt){
         }
     );
 
-    Plotly.animate("graph transmission",
+    Plotly.animate("graph_transmission",
         {data: plot_data_transmission()},//updated data
         {
             fromcurrent: true,
@@ -430,7 +430,7 @@ function AnimateAll(data, plt){
         }
     );
 
-    Plotly.animate("graph amplitude",
+    Plotly.animate("graph_amplitude",
         {data: plot_data_amplitude()},//updated data
         {
             fromcurrent: true,
@@ -527,11 +527,11 @@ function initial() {
     Plotly.purge("graph_individual");
     Plotly.newPlot('graph_individual', data[1],plt.layout_individual);//create animation
 
-    Plotly.purge("graph transmission");
-    Plotly.newPlot('graph transmission', plot_data_transmission(), plt.layout_trans);//create animation
+    Plotly.purge("graph_transmission");
+    Plotly.newPlot('graph_transmission', plot_data_transmission(), plt.layout_trans);//create animation
 
-    Plotly.purge("graph amplitude");
-    Plotly.newPlot('graph amplitude', plot_data_amplitude(),plt.layout_amp);//create animation
+    Plotly.purge("graph_amplitude");
+    Plotly.newPlot('graph_amplitude', plot_data_amplitude(),plt.layout_amp);//create animation
 
     dom.tSlider.on("input", update_graphs);
     dom.rfSlider.on("input", update_graphs);

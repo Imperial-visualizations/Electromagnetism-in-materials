@@ -161,7 +161,7 @@ $(window).on('load', function() {//main
         $("#refractive_index_ratio-display").html(n2.toFixed(2));//update value of refractive index
 
         if (isNaN(Math.asin(n2))=== true){//update value of citical angle
-            $("#critical_angle-display").html("No Total Internal Reflection possible");
+            $("#critical_angle-display").html("N/A");
         }else{
             $("#critical_angle-display").html(((180*Math.asin(n2))/Math.PI).toFixed(2).toString()+"°");
         }
@@ -266,7 +266,7 @@ $(window).on('load', function() {//main
 
     function update_graph(){//update animation
 
-        Plotly.react("graph",
+        Plotly.react("graph-holder",
             {data: plot_data()},//updated data
             {
                 fromcurrent: true,
@@ -288,7 +288,7 @@ $(window).on('load', function() {//main
     function play_loop(){//adds time evolution
         if(isPlay === true) {
             t++;
-            Plotly.react("graph",
+            Plotly.react("graph-holder",
                 {data: plot_data()},
                 {
                     fromcurrent: true,
@@ -310,7 +310,7 @@ $(window).on('load', function() {//main
         dom.afSlider.on("change", update_graph);
 
         $('#playButton').on('click', function() {
-            document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
+            document.getElementById("playButton").innerHTML = (isPlay) ? "Play" : "Stop";//change play/stop label
             isPlay = !isPlay;
             t = 0;//reset time
             requestAnimationFrame(play_loop);

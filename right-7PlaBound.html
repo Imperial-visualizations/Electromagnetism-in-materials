@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-7PlaBound</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="scripts/plotly-1.47.4.min.js"></script> <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout7">
+<div id="graph-holder">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!--Buttons/Sliders-->
+<div class="overall-sliders-container">
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="DensityController" class="slider-label">
+            Relative Plasma Density,
+            <br>
+            $\rho=$
+            <output id="x" for="DensityController">0.09</output>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0</span>
+            <input id="DensityController" class="inputs" type="range" value="0.09" min="0" max="0.5" step="0.01" oninput="x.value=DensityController.value"/>
+            <span class="sliderMax">0.5</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="Initial_Angle" class="slider-label">
+            Angle of Incidence,
+            <br>
+            $\theta=$
+            <output id="beta" for="Initial_Angle">1</output>
+            rad
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0</span>
+            <input id="Initial_Angle" class="inputs" type="range" value="1" min="0.01" max="1.5" step="0.01" oninput="beta.value=Initial_Angle.value"/>
+            <span class="sliderMax">1.5</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="OmegaController" class="slider-label">
+            Relative EM Wave Frequency,
+            <br>
+            $\omega=$
+            <output id="omega" for="OmegaController">1</output>
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0</span>
+            <input id="OmegaController" class="inputs" type="range" value="1" min="0" max="1" step="0.01" oninput="omega.value=OmegaController.value"/>
+            <span class="sliderMax">1</span>
+        </label>
+        <!--END Slider-->
+    </div>
+</div>
+</body>
+<script src="scripts/EM2-scripts/10Plas_Bound.js"></script>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-5cDieBoundTran</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="scripts/plotly-1.47.4.min.js"></script> <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout5sub3">
+<div class="leftGraphContainer">
+    <div id="graph_sum"></div>
+    <div id="graph_individual"></div>
+</div>
+<div class="rightGraphContainer">
+    <div id="graph_transmission"></div>
+    <div id="graph_amplitude"></div>
+</div>
+<div id="iC1" class="inputsContainer">
+    <div class="partial-buttons-container">
+        <button id="playButton" value=false>Play</button>
+    </div>
+    <div class="coefficient-container">
+        <span class="coefficient-display"> <b>Reflection Coeff. $R$:</b> <span id="energy_reflection_coefficient-display"></span></span>
+        <span class="coefficient-display"> <b>Transmission Coeff. $T_{layer}$:</b> <span id="energy_transmission_coefficient-display"></span></span>
+    </div>
+</div>
+<div id="iC2" class="inputsContainer">
+    <div class="overall-sliders-container">
+        <div class="partial-sliders-container">
+            <!--BEGIN Slider-->
+            <label for="thickness" class="slider-label">
+                Thickness of Dielectric:
+                <span id="thickness-display"></span>
+            </label>
+            <label class="slider">
+                <span class="sliderMin">0</span>
+                <input type="range" id="thickness" class="inputs" name="thickness" min="0" max="5" step = "0.01" value="2">
+                <span class="sliderMax">5</span>
+            </label>
+            <!--END Slider-->
+        </div>
+        <div class="partial-sliders-container">
+            <!--BEGIN Slider-->
+            <label for="refractive_index" class="slider-label">
+                Refractive Index of Dielectric:
+                <span id="refractive_index-display"></span>
+            </label>
+            <label class="slider">
+                <span class="sliderMin">1</span>
+                <input type="range" id="refractive_index" class="inputs" name="refractive_index" min="1" max="20" step = "0.01" value="3">
+                <span class="sliderMax">10</span>
+            </label>
+            <!--END Slider-->
+        </div>
+        <div class="partial-sliders-container">
+            <!--BEGIN Slider-->
+            <label for="number_of_terms" class="slider-label">
+                Number of Terms:
+                <span id="number_of_terms-display"></span>
+            </label>
+            <label class="slider">
+                <span class="sliderMin">1</span>
+                <input type="range" id="number_of_terms" class="inputs" name="number_of_terms" min="1" max="7" step = "1" value="7">
+                <span class="sliderMax">7</span>
+            </label>
+            <!--END Slider-->
+        </div>
+    </div>
+</div>
+</body>
+<script src="scripts/EM2-scripts/11Diel_BoundC.js"></script>
+</html>

@@ -38,11 +38,11 @@ $(window).on('load', function() {//main
                 range: [-1, 2.1]
             },
             margin: {
-                l: 50, r: 10, b: 10, t: 1, pad: 5
+                l: 50, r: 10, b: 50, t: 10, pad: 5
             },
             legend: {
-                x: 0, y: 10,
-                orientation: "h"
+                x: 0.6, y: 1.0,
+                // orientation: "h"
             },
             font: {
                 family: "Fira Sans",
@@ -248,7 +248,7 @@ class Wave{//class handles the creation of waves
         let Transmitted = Incident.transmit(refractive_ratio);//create transmitted wave
 
         if (isNaN(Math.asin(refractive_ratio))=== true){//update value of citical angle
-            $("#critical_angle-display").html("No Total Internal Reflection Possible");
+            $("#critical_angle-display").html("N/A");
         }else{
             $("#critical_angle-display").html(((180*Math.asin(refractive_ratio))/Math.PI).toFixed(2).toString()+"°");
         }
@@ -256,7 +256,7 @@ class Wave{//class handles the creation of waves
         if (polarisation_value ==="p-polarisation"){
             $("#brewster_angle-display").html(((180/Math.PI)*Math.atan(refractive_ratio)).toFixed(2).toString()+"°");
         }else{
-            $("#brewster_angle-display").html("No Brewster Angle");
+            $("#brewster_angle-display").html("N/A");
         }
 
         let opacity_1;
@@ -487,7 +487,7 @@ class Wave{//class handles the creation of waves
 
     function update_graph(){//update animation
 
-        Plotly.animate("graph",
+        Plotly.animate("graph-holder",
             {data: computeData()},//updated data
             {
                 fromcurrent: true,
@@ -498,7 +498,7 @@ class Wave{//class handles the creation of waves
         );
 
 
-        Plotly.animate("graph_fresnel",
+        Plotly.animate("graph_fresnel-holder",
             {data: compute_fresnel()},//updated data
             {
                 fromcurrent: true,
@@ -514,7 +514,7 @@ class Wave{//class handles the creation of waves
     function play_loop(){
         if(isPlay === true) {
             w_t++;
-            Plotly.animate("graph",
+            Plotly.animate("graph-holder",
                 {data: computeData()},
                 {
                     fromcurrent: true,
@@ -531,11 +531,11 @@ class Wave{//class handles the creation of waves
 
     function initial(){
 
-        Plotly.purge("graph");
-        Plotly.newPlot('graph', computeData(), plt.layout);//create animation
+        Plotly.purge("graph-holder");
+        Plotly.newPlot('graph-holder', computeData(), plt.layout);//create animation
 
-        Plotly.purge("graph_fresnel");
-        Plotly.newPlot("graph_fresnel", compute_fresnel(),plt.layoutFres);//create fresnel curves
+        Plotly.purge("graph_fresnel-holder");
+        Plotly.newPlot("graph_fresnel-holder", compute_fresnel(),plt.layoutFres);//create fresnel curves
 
         dom.pswitch.on("change", update_graph);//on any change the graph will update
         dom.aSlider.on("input", update_graph);

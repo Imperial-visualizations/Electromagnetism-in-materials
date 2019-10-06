@@ -243,7 +243,7 @@ function dataPlot (xMin, xMax, yMin, yMax, xEdge, t, c, plotStep) {
 
 //plotting the data depending on the option selected.
 function plot(data, layout) {
-    Plotly.react("Boundary_Plot_9", data, layout);
+    Plotly.react("graph-holder", data, layout);
 }
 
 function compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, layout){
@@ -267,7 +267,10 @@ function main(){
 
     const plotLayout = {
         title: "Radiation Pressure Exerted on a Conductor Boundary",
-//        showlegend: false,
+        showlegend: true,
+        legend: {
+            x: 0.01, y: 0.015,
+        },
         xaxis: {
             constrain: "domain",
             range: [xMin, xEdge],
@@ -281,7 +284,7 @@ function main(){
             title: "y"
         },
         margin: {
-            l: 1, r: 1, b: 30, t: 30, pad: 10
+            l: 50, r: 1, b: 50, t: 50, pad: 10
         },
     };
 
@@ -293,7 +296,7 @@ function main(){
 //I decided to use Plotly.react eventually because Plotly.animate creates problem that the frame speed keeps increasing when sliders are changed.
     function playLoop(){//adds time evolution
         if (isPlay === false) {
-    //        Plotly.animate("Boundary_Plot_9",
+    //        Plotly.animate("graph-holder",
     //        {data: dataPlot(xMin, xMax, t, c, plotStep, initialAmplitude)},
     //        {
     //            fromcurrent: true,
@@ -305,7 +308,7 @@ function main(){
             compileAndPlot(xMin, xMax, yMin, yMax, xEdge, t, c, plotStep, plotLayout);
         } else if (isPlay === true) {
             t += 1e-17;
-    //        Plotly.animate("Boundary_Plot_9",
+    //        Plotly.animate("graph-holder",
     //            {data: dataPlot(xMin, xMax, t, c, plotStep, initialAmplitude)},
     //            {
     //                fromcurrent: true,
@@ -354,7 +357,7 @@ function main(){
     });
 
     $('#playButton').on('click', function() {
-        document.getElementById("playButton").value = (isPlay) ? "Play" : "Stop";//change play/stop label
+        document.getElementById("playButton").innerHTML = (isPlay) ? "Play" : "Stop";//change play/stop label
         isPlay = !isPlay;
         requestAnimationFrame(playLoop);
     });

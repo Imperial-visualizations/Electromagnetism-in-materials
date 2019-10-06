@@ -463,7 +463,7 @@
     flex: 0 0 auto;
     margin-bottom: 2vh;
     margin-left: 1vw;
-    font-size: calc(10px + 0.8vw);
+    font-size: calc(8px + 0.7vw);
 }
 
 #loadout3sub1 .radio input {
@@ -561,7 +561,7 @@
     flex: 0 0 auto;
     margin-bottom: 2vh;
     margin-left: 1vw;
-    font-size: calc(10px + 0.8vw);
+    font-size: calc(8px + 0.7vw);
 }
 
 #loadout3sub2 .radio input {
@@ -969,85 +969,600 @@
 
 /* SECTION 5 */
 
-#loadout5 {
+#loadout5sub1 {
+    overflow: hidden;
 }
 
-#loadout5 #graph1Sec5 {
-    width: 45%;
-    height: 45%;
+#loadout5sub1 #graph-holder {
+    width: 45vw;
+    height: 70vh;
     position: absolute;
-    left: 2.5%;
-    top: 2.5%;
+    left: 2.5vw;
+    top: 2.5vh;
 }
 
-#loadout5 #graph2Sec5 {
-    width: 45%;
-    height: 45%;
+#loadout5sub1 #graph_fresnel-holder {
+    width: 45vw;
+    height: 60vh;
     position: absolute;
-    left: 2.5%;
-    bottom: 2.5%;
+    right: 2.5vw;
+    top: 5vh;
 }
 
-#loadout5 #graph3Sec5 {
-    width: 45%;
-    height: 45%;
-    position: absolute;
-    right: 2.5%;
-    bottom: 2.5%;
-}
-
-#loadout5 #inputSec5 {
-    flex-basis: 0;
-    flex-grow: 1;
-}
-
-#loadout5 #coefficientSec5 {
-    flex-basis: 0;
-    flex-grow: 1;
-}
-
-#loadout5 .inputsContainer {
+#loadout5sub1 .inputsContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 5%;
-    right: 2.5%;
-    width: 45%;
-    height: 40%;
+    align-items: stretch;
+    justify-content: space-around;
 }
 
-#loadout5 * {
-    flex-basis: 0;
-    flex-grow: 1;
-}
-
-#loadout5 .partial-sliders-container {
+#loadout5sub1 .innerInputsContainer {
     display: flex;
     flex-direction: row;
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
     align-items: center;
+    justify-content: space-around;
 }
 
-#loadout5 .slider-label {
-    font-size: 14pt;
+#loadout5sub1 #iC1 {
+    position: absolute;
+    left: 2.5vw;
+    bottom: 2.5vh;
+    width: 45vw;
+    height: 20vh;
+}
+
+#loadout5sub1 #iC2 {
+    position: absolute;
+    right: 2.5vw;
+    bottom: 2.5vh;
+    width: 45vw;
+    height: 25vh;
+}
+
+#loadout5sub1 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    flex: 0.2 0 auto;
+}
+
+#loadout5sub1 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout5sub1 .slider-label {
+    font-size: calc(12px + 1vw);
     text-align: left;
     padding-left: 8px;
     margin: 0;
     padding-top: 0;
-    flex-basis: 0;
-    flex-grow: 0.5;
-    flex-shrink: 1;
+    flex: 0.5 1 0;
+}
+
+#loadout5sub1 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+#loadout5sub1 .sliderMin, #loadout5sub1 .sliderMax {
+    margin-top: 30px;
+    width: 60px;
+    flex: 0 0 60px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout5sub1 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout5sub1 .partial-radio-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1 0 auto;
+}
+
+#loadout5sub1 .radio-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 0;
+    margin: 0;
+    padding-top: 0;
+    flex: 0 0 auto;
     left: 0;
 }
 
-#loadout5 .slider {
-    flex-basis: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
-    right:0;
+#loadout5sub1 .radio {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-left: 2vw;
+    font-size: calc(8px + 0.7vw);
+}
+
+#loadout5sub1 .radio input {
+    margin: 0 30px 0 0;
+}
+
+#loadout5sub1 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#loadout5sub1 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout5sub1 button:hover {
+    background-color: #eaf2ff;
+}
+
+#loadout5sub1 .angle-container {
+    display: flex;
+    flex-direction: row;
+    font-size: calc(12px + 1vw);
+}
+
+#loadout5sub1 .angle-display {
+    flex: 1 0 0;
+}
+
+#loadout5sub2 {
+    overflow: hidden;
+}
+
+#loadout5sub2 #graph-holder {
+    width: 95vw;
+    height: 70vh;
+    position: absolute;
+    left: 2.5vw;
+    top: 2.5vh;
+}
+
+#loadout5sub2 .inputsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+#loadout5sub2 #iC1 {
+    position: absolute;
+    left: 5vw;
+    bottom: 5vh;
+    width: 45vw;
+    height: 25vh;
+}
+
+#loadout5sub2 #iC2 {
+    position: absolute;
+    right: 2.5vw;
+    bottom: 2.5vh;
+    width: 45vw;
+    height: 25vh;
+}
+
+#loadout5sub2 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    flex: 0.2 0 auto;
+}
+
+#loadout5sub2 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout5sub2 .slider-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+}
+
+#loadout5sub2 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+#loadout5sub2 .sliderMin, #loadout5sub2 .sliderMax {
+    margin-top: 30px;
+    width: 60px;
+    flex: 0 0 60px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout5sub2 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout5sub2 .partial-radio-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1 0 auto;
+}
+
+#loadout5sub2 .radio-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 0;
+    margin: 0;
+    padding-top: 0;
+    flex: 0 0 auto;
+    left: 0;
+}
+
+#loadout5sub2 .radio {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-left: 2vw;
+    font-size: calc(8px + 0.7vw);
+}
+
+#loadout5sub2 .radio input {
+    margin: 0 30px 0 0;
+}
+
+#loadout5sub2 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#loadout5sub2 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout5sub2 button:hover {
+    background-color: #eaf2ff;
+}
+
+#loadout5sub2 .angle-container {
+    display: flex;
+    flex-direction: row;
+    font-size: calc(12px + 1vw);
+}
+
+#loadout5sub2 .angle-display {
+    flex: 1 0 0;
+    padding-top: 1.5vh;
+}
+
+#loadout5sub3 {
+    overflow: hidden;
+}
+
+#loadout5sub3 .leftGraphContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: 2.5vh;
+    left: 2.5vw;
+    width: 45vw;
+    height: 75vh;
+}
+
+#loadout5sub3 #graph_sum {
+    flex: 0.5 0 0;
+}
+
+#loadout5sub3 #graph_individual {
+    padding-top: 2vh;
+    flex: 1 0 0;
+}
+
+#loadout5sub3 .rightGraphContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 2.5vh;
+    right: 2.5vw;
+    width: 45vw;
+    height: 50vh;
+}
+
+#loadout5sub3 #graph_transmission {
+    padding-bottom: 2vh;
+    flex: 1 0 0;
+}
+
+#loadout5sub3 #graph_amplitude {
+    padding-top: 2vh;
+    flex: 1 0 0;
+}
+
+#loadout5sub3 .inputsContainer {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+#loadout5sub3 #iC1 {
+    flex-direction: row;
+    position: absolute;
+    left: 2.5vw;
+    bottom: 2.5vh;
+    width: 45vw;
+    height: 15vh;
+}
+
+#loadout5sub3 #iC2 {
+    flex-direction: column;
+    position: absolute;
+    right: 2.5vw;
+    bottom: 2.5vh;
+    width: 45vw;
+    height: 40vh;
+}
+
+#loadout5sub3 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    flex: 0.2 0 auto;
+}
+
+#loadout5sub3 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout5sub3 .slider-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+}
+
+#loadout5sub3 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+#loadout5sub3 .sliderMin, #loadout5sub3 .sliderMax {
+    margin-top: 30px;
+    width: 60px;
+    flex: 0 0 60px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout5sub3 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout5sub3 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#loadout5sub3 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout5sub3 button:hover {
+    background-color: #eaf2ff;
+}
+
+#loadout5sub3 .coefficient-container {
+    display: flex;
+    flex-direction: column;
+    font-size: calc(8px + 0.7vw);
+}
+
+#loadout5sub3 .coefficient-display {
+    flex: 1 0 0;
+    padding-top: 1.5vh;
+}
+
+/* SECTION 6 */
+
+#loadout6 {
+    overflow: hidden;
+}
+
+#loadout6 #graph-holder {
+    width: 60vw;
+    height: 90vh;
+    position: absolute;
+    left: 2.5vw;
+    top: 2.5vh;
+}
+
+#loadout6 .inputsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+    position: absolute;
+    right: 2.5vw;
+    top: 2.5vh;
+    width: 30vw;
+    height: 40vh;
+}
+
+#loadout6 .partial-radio-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 1 1 auto;
+}
+
+#loadout6 .radio-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 2vh 0;
+    padding-top: 0;
+    flex: 0 0 auto;
+    left: 0;
+}
+
+#loadout6 .radio {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-bottom: 2vh;
+    margin-left: 1vw;
+    font-size: calc(8px + 0.7vw);
+}
+
+#loadout6 .radio input {
+    margin: 0 30px 0 0;
+}
+
+#loadout6 .innerInputsContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#loadout6 .param-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+#loadout6 .param-display {
+    font-size: calc(7px + 0.6vw);
+    flex: 1 0 0;
+}
+
+#loadout6 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 50vh;
+    position: absolute;
+    bottom: 2.5vh;
+    right: 2.5vw;
+}
+
+#loadout6 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout6 .slider-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+    left: 0;
+}
+
+#loadout6 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+#loadout6 .sliderMin, #loadout6 .sliderMax {
+    margin-top: 30px;
+    width: 40px;
+    flex: 0 0 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout6 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+#loadout6 .partial-buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#loadout6 button {
+    text-align: center;
+    font-size: calc(7px + 0.6vw);
+    border: solid 1px #033482;
+    color: #033482;
+    box-shadow: none;
+    flex: 0 1 auto;
+}
+
+#loadout6 button:hover {
+    background-color: #eaf2ff;
+}
+
+#loadout6 #approximationMessage {
+    width: 60vw;
+    height: 5vh;
+    position: absolute;
+    bottom: 2.5vh;
+    left: 2.5vw;
+    border: 3px solid #FF0000;
+    line-height: 5vh;
+    text-align: center;
+    vertical-align: middle;
 }
 
 #loadoutblank {
@@ -1055,4 +1570,114 @@
     line-height: 100vh;
     vertical-align: middle;
     font-size: 30pt;
+}
+
+/* SECTION 7 */
+
+#loadout7 {
+    overflow: hidden;
+}
+
+#loadout7 #graph-holder {
+    width: 60vw;
+    height: 90vh;
+    position: absolute;
+    left: 2.5vw;
+    top: 2.5vh;
+}
+
+#loadout7 .overall-sliders-container {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 90vh;
+    position: absolute;
+    bottom: 2.5vh;
+    right: 2.5vw;
+}
+
+#loadout7 .partial-sliders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 1 0;
+}
+
+#loadout7 .slider-label {
+    font-size: calc(12px + 1vw);
+    text-align: left;
+    padding-left: 8px;
+    margin: 0;
+    padding-top: 0;
+    flex: 0.5 1 0;
+    left: 0;
+}
+
+#loadout7 .slider {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+#loadout7 .sliderMin, #loadout7 .sliderMax {
+    margin-top: 30px;
+    width: 40px;
+    flex: 0 0 40px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#loadout7 .inputs {
+    height: 40px;
+    flex: 1 1 auto;
+}
+
+/* SECTION 8 */
+
+#loadout8 {
+    overflow: hidden;
+}
+
+#loadout8 .radioButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 90vw;
+    height: 10vh;
+    position: absolute;
+    left: 5vw;
+    bottom: 4vh;
+}
+
+#loadout8 .radio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+#loadout8 .radio * {
+    margin: 0;
+}
+
+#loadout8 .radio-text {
+    font-size: calc(10px + 1.2vw);
+    margin-left: 2vw;
+}
+
+#loadout8 .imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90vw;
+    height: 80vh;
+    position: absolute;
+    left: 5vw;
+    top: 4vh;
+}
+
+#loadout8 .imageContainer img {
+    height: 100%;
 }

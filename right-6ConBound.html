@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-6ConBound</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="scripts/plotly-1.47.4.min.js"></script> <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout6">
+<div id="graph-holder">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div id="approximationMessage">
+    Approximation is invalid as the medium is no longer a good conductor.
+</div>
+<!--Buttons/Sliders-->
+<div class="inputsContainer">
+    <div id="wave-switch" name="wave-switch" class="partial-radio-container">
+        <label class="radio-label">Wave:</label>
+        <label for="incident" class="radio">
+            <input type="radio" id="incident" value="incident" name="wave-switch" checked="checked">
+            <span>Incident & Transmitted</span>
+        </label>
+        <label for="reflected" class="radio">
+            <input type="radio" id="reflected" value="reflected" name="wave-switch">
+            <span>Reflected</span>
+        </label>
+        <label for="resultant" class="radio">
+            <input type="radio" id="resultant" value="resultant" name="wave-switch">
+            <span>Resultant</span>
+        </label>
+        <label for="all" class="radio">
+            <input type="radio" id="all" value="all" name="wave-switch">
+            <span>All</span>
+        </label>
+    </div>
+    <div class="innerInputsContainer">
+        <div class="partial-buttons-container">
+            <button id="playButton" value=false>Play</button>
+        </div>
+        <div class="param-container">
+            <span class="param-display"> <b>$P_{rad}=$</b> <output id="radiationPressureFactor"></output> $\frac{< S^i >}{c}\,$ </span>
+            <span class="param-display"> <b>$P_{rad}=$</b> <output id="radiationPressure"></output> $\times 10^{19}\,Pa$ </span>
+            <span class="param-display"> <b>$\delta=$</b> <output id="skinDepth"></output> $\times 10^{-8} m$ </span>
+        </div>
+    </div>
+</div>
+<div class="overall-sliders-container">
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="Slider_omega_9" class="slider-label">
+            $\omega=$
+            <output id="Slider_omega_9_value" for="Slider_omega_9">2</output> $\times 10^{15} \, rad \, s^{-1}$
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0.5</span>
+            <input id="Slider_omega_9" class="inputs" type="range" value="2" min="0.5" max="3" step="0.001" oninput="Slider_omega_9_value.value=Slider_omega_9.value"/>
+            <span class="sliderMax">3</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="Slider_E_9" class="slider-label">
+            $E=$
+            <output id="Slider_E_9_value" for="Slider_E_9">2</output> $\times 10^{15} \, V \, m^{-2}$
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0.5</span>
+            <input id="Slider_E_9" class="inputs" type="range" value="2" min="0.5" max="3.5" step="0.001" oninput="Slider_E_9_value.value=Slider_E_9.value"/>
+            <span class="sliderMax">3.5</span>
+        </label>
+        <!--END Slider-->
+    </div>
+    <div class="partial-sliders-container">
+        <!--BEGIN Slider-->
+        <label for="Slider_sigma_9" class="slider-label">
+            $\sigma=$
+            <output id="Slider_sigma_9_value" for="Slider_sigma_9">2</output> $\times 10^{5} \, \Omega^{-1} \, m$
+        </label>
+        <label class="slider">
+            <span class="sliderMin">0.5</span>
+            <input id="Slider_sigma_9" class="inputs" type="range" value="2" min="0.5" max="200" step="0.001" oninput="Slider_sigma_9_value.value=Slider_sigma_9.value"/>
+            <span class="sliderMax">200</span>
+        </label>
+        <!--END Slider-->
+    </div>
+</div>
+</body>
+<script src=scripts/EM2-scripts/9Cond_Bound.js></script>
+<script src=scripts/EM2-scripts/Objects_EMM.js></script>
+</html>

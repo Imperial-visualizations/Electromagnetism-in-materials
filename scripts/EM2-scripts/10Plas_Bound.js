@@ -14,8 +14,11 @@ let layout= {
         range: [-20,20]
         //y axis attributes here
     },
-    height: 500,
-    width: 500
+    margin: {
+        l: 50, r: 1, b: 50, t: 50, pad: 10
+    },
+    // height: 500,
+    // width: 500
 };
 
 //when you make the new plot, you need to name the div or the id of the div that youre drawing onto
@@ -70,7 +73,7 @@ function colourgrad(alpha_colour){
 }
 
 function initslide() {
-    Plotly.purge("graph");
+    Plotly.purge("graph-holder");
     let initX = numeric.linspace(-25, 25, 1000);
     let initTheta = pi/2;
 
@@ -82,7 +85,7 @@ function initslide() {
     let omega = parseFloat(document.getElementById('OmegaController').value);
 
     let plot_data = compute_xy(alpha,beta,omega).concat(colourgrad(alpha));
-    Plotly.newPlot("graph", plot_data, layout);
+    Plotly.newPlot("graph-holder", plot_data, layout);
 }
 function updatePlot() {
     let data = [];
@@ -93,7 +96,7 @@ function updatePlot() {
     //data = compute_xy(alpha,beta,omega);
     data = compute_xy(alpha,beta,omega).concat(colourgrad(alpha));
     console.log(data);
-    Plotly.react('graph', data, layout);
+    Plotly.react('graph-holder', data, layout);
 }
 
 function main() {

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-8MetaMaterials</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="scripts/plotly-1.47.4.min.js"></script> <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="scripts/numeric/src/numeric.js"></script>
+    <script src="scripts/math.min.js"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout8">
+<!--NIM Example Image-->
+<div class="imageContainer">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <img id="NIMImage" src="images/12NIM.jpg" alt = "Elevation Map of Europe">
+</div>
+<!--Cloaking Example Image-->
+<div class="imageContainer">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <img id="CloakingImage" src="images/12Cloaking.jpg" alt = "Ocean Currents">
+</div>
+<!--Swap Image Button-->
+<div class="radioButtonContainer">
+    <label for="NIM" class="radio">
+        <input type="radio" id="NIM" value="NIM" name="wave-switch" checked="checked">
+        <span class="radio-text">Negative Index Meta-Materials</span>
+    </label>
+    <label for="Cloaking" class="radio">
+        <input type="radio" id="Cloaking" value="Cloaking" name="wave-switch" >
+        <span class="radio-text">Meta-Material Cloaking</span>
+    </label>
+</div>
+</body>
+<script src=scripts/EM2-scripts/12Outro.js></script>
+</html>
