@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Title-->
+    <title>right-5bDieBoundEvan</title>
+    <!--css links-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet"
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/skeleton.css" rel="stylesheet">
+    <link href="styles/index_Style.css" rel="stylesheet">
+    <link href="styles/loadout_Style.css" rel="stylesheet">
+    <!--Required JS resources-->
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="scripts/debounce_and_throttle.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.47.4/plotly.min.js"
+            integrity="sha256-H/OgTJu16926oS2asyDpBQkSsZym43jAaWRoCBoRQeI=" crossorigin="anonymous"></script>
+    <!--For some reason the field visualisations updating only works with older version of plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"
+            integrity="sha256-t7CAuaRhODo/cv00lxyONppujwTFFwUWGkrhD/UB1qM=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.2/math.min.js"
+            integrity="sha256-D/MkugLuxx4Xx0Kb92cUhpxlCMhUvQ0eOtEL8Ol23jM=" crossorigin="anonymous"></script>
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+
+    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body id="loadout5sub2">
+<!--Graph-->
+<div id="graph-holder">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!--Sliders/Buttons-->
+<div id="iC1" class="inputsContainer">
+    <div class="partial-buttons-container">
+        <button id="playButton" value=false>Play</button>
+    </div>
+    <div id="wave-switch" name="wave-switch" class="partial-radio-container">
+        <label class="radio-label">Wave:</label>
+        <label for="incident" class="radio">
+            <input type="radio" id="incident" value="incident" name="wave-switch">
+            <span>Incident</span>
+        </label>
+        <label for="reflected" class="radio">
+            <input type="radio" id="reflected" value="reflected" name="wave-switch">
+            <span>Reflected</span>
+        </label>
+        <label for="reflected plus incident" class="radio">
+            <input type="radio" id="reflected plus incident" value="reflected plus incident" name="wave-switch"
+                   checked="checked">
+            <span>Combined</span>
+        </label>
+    </div>
+    <div class="angle-container">
+        <span class="angle-display"> <b>RI Ratio \(n_{2}/n_{1}\):</b> <span id="refractive_index_ratio-display"></span></span>
+        <span class="angle-display"> <b>Critical Angle:</b> <span id="critical_angle-display"></span></span>
+    </div>
+</div>
+<div id="iC2" class="inputsContainer">
+    <div class="overall-sliders-container">
+        <div class="partial-sliders-container">
+            <!--BEGIN Slider-->
+            <label for="angle" class="slider-label">
+                Angle of Incidence:
+                <span id="angle-display"></span>
+            </label>
+            <label class="slider">
+                <span class="sliderMin">0&deg;</span>
+                <input type="range" id="angle" class="inputs" name="angle" min="0" max="85" value="5">
+                <span class="sliderMax">85&deg;</span>
+            </label>
+            <!--END Slider-->
+        </div>
+        <div class="partial-sliders-container">
+            <!--BEGIN Slider-->
+            <label for="angular_frequency" class="slider-label">
+                Ratio of Angular frequencies \(\omega/\omega_0\):
+                <span id="angular_frequency-display"></span>
+            </label>
+            <label class="slider">
+                <span class="sliderMin">0.5</span>
+                <input type="range" id="angular_frequency" class="inputs" name="angular_frequency" step="0.01" min="0.5"
+                       max="1.5" value="0.9">
+                <span class="sliderMax">1.5</span>
+            </label>
+            <!--END Slider-->
+        </div>
+    </div>
+</div>
+</body>
+<!--THE BRAINS-->
+<script src="scripts/EM2-scripts/5b-DieBoundEvan.js"></script>
+</html>
