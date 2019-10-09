@@ -4,7 +4,7 @@ let cubeList = [];
 let cubeFace = [];
 let onValue = 1;
 let EMag = 100;
-let sN=1;
+let sN = 1;
 
 //sliders input and display:
 
@@ -39,7 +39,7 @@ function toggleButtonText() {
 }
 
 function setup() {
-    let C = createCanvas(windowWidth / 1.7, windowWidth / 1.7, WEBGL);
+    let C = createCanvas(document.querySelectorAll("#sketch-holder")[0].offsetWidth, document.querySelectorAll("#sketch-holder")[0].offsetWidth, WEBGL);
     C.parent('sketch-holder');
     frameRate(60);
 }
@@ -91,7 +91,6 @@ class EFieldLine {
         rotateZ(this.Rz);
         rotateY(this.Ry);
         rotateZ(-this.Rz);
-
 
 
         beginShape();
@@ -204,7 +203,7 @@ class element {
             plane(cubeSize - 2, cubeSize - 2);
             pop();
 
-            if (sN==0) {
+            if (sN == 0) {
                 push();
                 stroke("black");
                 translate(cubeFace[i][0], cubeFace[i][1], cubeFace[i][2]);
@@ -231,12 +230,13 @@ class element {
 }
 
 function showN() {
-    if (sN==1) {
+    if (sN == 1) {
         sN = 0;
     } else {
-        sN=1
+        sN = 1
     }
 }
+
 function move_X() {
     let a = prePos[prePos.length - 1][0] - (cubeSize + 2);
     let b = prePos[prePos.length - 1][1];

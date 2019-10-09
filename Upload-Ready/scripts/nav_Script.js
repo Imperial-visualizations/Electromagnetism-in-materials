@@ -11,7 +11,7 @@ let app = new Vue({
         currentSection: 0,
         sectionTops: [],
         sectionBottoms: [],
-        sectionTitleLong: ["Introduction", "Materials","Fields",  "Dispersion", "Dielectric Boundary","Conductor Boundary","Plasma Boundary","Meta-material"],
+        sectionTitleLong: ["Introduction", "Materials", "Fields", "Dispersion", "Dielectric Boundary", "Conductor Boundary", "Plasma Boundary", "Meta-material"],
         sectionTitleShort: ["1", "2", "3", "4", "5", "6", "7", "8"],
         sectionTitle: [],
         hoverPos: '',
@@ -21,7 +21,8 @@ let app = new Vue({
         journeyHeightOld: "",
         journeyHeightNew: "",
         firstRunDone: false,
-        subSection: [1,1,1,1,1,1,1,1],
+        subSection: [1, 1, 1, 1, 1, 1, 1, 1],
+        showJourney: true,
     },
 
     methods: {
@@ -129,6 +130,25 @@ let app = new Vue({
                 event.currentTarget.querySelectorAll('span')[0].innerHTML = "Show"
             }
         },
+
+        // toggles visibility of journey section
+        toggleJourney: function () {
+            let sectionCache = app.currentSection;
+            document.querySelectorAll("#rightloadSpace")[0].classList.add("rightLoadInterim");
+            app.showJourney = !app.showJourney;
+            setTimeout(function () {
+                if (app.showJourney === false) {
+                    document.querySelectorAll("#rightloadSpace")[0].classList.add("fullRightLoadSpace");
+                } else {
+                    document.querySelectorAll("#rightloadSpace")[0].classList.remove("fullRightLoadSpace");
+                }
+                app.currentSection = "noShow";
+            }, 500);
+            setTimeout(function () {
+                app.currentSection = sectionCache;
+                document.querySelectorAll("#rightloadSpace")[0].classList.remove("rightLoadInterim");
+            }, 525);
+        },
     },
 
     watch: {
@@ -140,22 +160,24 @@ let app = new Vue({
     },
 
     mounted() {
+
         // $nextTick ensures initial functions only run once Vue is initialised sufficiently
         this.$nextTick(function () {
-            // makes n equal to total number of sections
-            app.n = document.querySelectorAll(".section-container").length;
-            // calculates initial div section positions in journey with respect to the top
-            app.sectionPos();
-            // checks if journey div height changes every x seconds
-            // if it does change, re-runs sectionPos to calculate section div positions
-            app.journeyHeightOld = document.querySelectorAll(".journey")[0].scrollHeight;
-            window.setInterval(() => {
-                app.journeyHeightNew = document.querySelectorAll(".journey")[0].scrollHeight;
-                if (app.journeyHeightOld !== app.journeyHeightNew) {
-                    app.journeyHeightOld = app.journeyHeightNew;
-                    this.sectionPos();
-                }
-            }, 2000)
-        }
-    )}
+                // makes n equal to total number of sections
+                app.n = document.querySelectorAll(".section-container").length;
+                // calculates initial div section positions in journey with respect to the top
+                app.sectionPos();
+                // checks if journey div height changes every x seconds
+                // if it does change, re-runs sectionPos to calculate section div positions
+                app.journeyHeightOld = document.querySelectorAll(".journey")[0].scrollHeight;
+                window.setInterval(() => {
+                    app.journeyHeightNew = document.querySelectorAll(".journey")[0].scrollHeight;
+                    if (app.journeyHeightOld !== app.journeyHeightNew) {
+                        app.journeyHeightOld = app.journeyHeightNew;
+                        this.sectionPos();
+                    }
+                }, 2000)
+            }
+        )
+    }
 });

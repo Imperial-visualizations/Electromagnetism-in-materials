@@ -27,7 +27,9 @@
 #loadout1sub1 #sketch-holder {
     background: #ffffff;
     width: 60vw;
-    height: 60vw;
+    height: 90vh;
+    max-width: 90vh;
+    max-height: 60vw;
     position: absolute;
     left: 3vw;
     top: 7.5vh;
@@ -128,7 +130,9 @@
 #loadout1sub2 #sketch-holder {
     background: #ffffff;
     width: 60vw;
-    height: 60vw;
+    height: 90vh;
+    max-width: 90vh;
+    max-height: 60vw;
     position: absolute;
     left: 3vw;
     top: 7.5vh;

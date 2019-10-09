@@ -39,7 +39,7 @@ function toggleButtonText() {
 }
 
 function setup() {
-    let C = createCanvas(windowWidth / 1.7, windowWidth / 1.7, WEBGL);
+    let C = createCanvas(document.querySelectorAll("#sketch-holder")[0].offsetWidth, document.querySelectorAll("#sketch-holder")[0].offsetWidth, WEBGL);
     C.parent('sketch-holder');
     frameRate(60);
 }
@@ -195,12 +195,12 @@ class element {
             let J = [(M[1] * n[2] - M[2] * n[1]), -(M[0] * n[2] - M[2] * n[0]), (M[0] * n[1] - M[1] * n[0])];
 
 
-            line(-J[0]*20,-J[1]*20,-J[2]*20,J[0]*20,J[1]*20,J[2]*20);
+            line(-J[0] * 20, -J[1] * 20, -J[2] * 20, J[0] * 20, J[1] * 20, J[2] * 20);
 
             push();
             stroke("red");
             //strokeWeight(5)
-            line(J[0]*20,J[1]*20,J[2]*20,(J[0]+J[0]/3)*20,(J[1]+J[1]/3)*20,(J[2]+J[2]/3)*20);
+            line(J[0] * 20, J[1] * 20, J[2] * 20, (J[0] + J[0] / 3) * 20, (J[1] + J[1] / 3) * 20, (J[2] + J[2] / 3) * 20);
             pop();
             //console.log(J);
             pop();
