@@ -112,7 +112,7 @@ $(window).on('load', function() {//main
 
         extra_spacing = (1 / number_of_arrows);//value used to position field lines in center of the capacitor
 
-        if ((c_material === "vacuum" && c_field === "b-field") || (c_material === "vacuum" && c_field === "h-field") || (c_material === "dielectric" && c_field === "h-field")) {
+        if ((c_material === "vacuum" && c_field === "b-field") || (c_material === "vacuum" && c_field === "h-field") || (c_material === "dielectric" && c_field === "b-field")) {
             for (let i = 0; i < number_of_arrows; i++) {//used to create grid of field lines hence only square numbers possible
                 for (let q = 0; q < number_of_arrows; q++) {
                     number_x = ((2 * (i / number_of_arrows)) - 1) + extra_spacing;
@@ -189,7 +189,7 @@ $(window).on('load', function() {//main
                 }
             }
         }
-        else if (c_material === "dielectric" && c_field === "b-field") {
+        else if (c_material === "dielectric" && c_field === "h-field") {
             top_of_arrow_above = 0.9;
             bottom_of_arrow_above = dielectric_h+0.15;
             mid_top_of_arrow = dielectric_h;
